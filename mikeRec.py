@@ -12,10 +12,15 @@
 
 import alsaaudio, time, audioop
 
+from sys import argv
+
 import screwMatlab
 import numpy as np
 
+
 if(__name__ == "__main__"):
+	outputFilename = argv[1]
+	
 	# Open the device in nonblocking capture mode. The last argument could
 	# just as well have been zero for blocking mode. Then we could have
 	# left out the sleep call in the bottom of the loop
@@ -23,7 +28,7 @@ if(__name__ == "__main__"):
 	
 	# Set attributes: Mono, 8000 Hz, 16 bit little endian samples
 	inp.setchannels(1)
-	inp.setrate(8000)
+	inp.setrate(44100)
 	inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
 	
 	# The period size controls the internal number of frames per period.
@@ -41,14 +46,16 @@ if(__name__ == "__main__"):
 	time_v = []
 	data_v = []
 	
-	
-	while ( (time.time() - initTime) < 20.0 ):
-		# Read data from device
-		l,data = inp.read()
-		if l:
-			# Return the maximum of the absolute value of all samples in a fragment.
-			print audioop.max(data, 2), (time.time() - initTime)
-			time_v.append(time.time() - initTime)
-			data_v.append(audioop.max(data, 2))
-		time.sleep(.001)
-	screwMatlab.plotSpectrogram(np.array(time_v), np.array(data_v))
+
+	try:
+		while (True):
+			# Read data from device
+			l,data = inp.read()
+			if l:
+				# Return the maximum of the absolute value of all samples in a fragment.
+				print audioop.max(data, 2), (time.time() - initTime)
+				time_v.append(time.time() - initTime)
+				data_v.append(audioop.max(data, 2))
+			time.sleep(.001)
+	except KeyboardInterrupt:	
+		screwMatlab.plotSpectrogram(np.array(time_v), np.array(data_v), outputFilename)

@@ -11,10 +11,28 @@ import math
 
 from scipy import signal
 
+def Mean(dataSet):
+	output = 0
+	for cy in dataSet:
+		output += cy
+	output /= float(len(dataSet))
+	## gotta make sure its a float, otherwise our mean gets rounded like
+	## an integer, which we dont want
+	return output
+
 def plotSpectrogram(time, data, savefigTo='show'):
 	print 'foo'
-	NFFT = 200     # the length of the windowing segments
-	Fs = 8000  # the sampling rate
+	NFFT = 160     # the length of the windowing segments
+	
+	gaps = []
+	for i in (0, len(time)-2):
+		gaps.append(time[i+1] - time[i])
+	dt = Mean(gaps)
+	print "dt ", dt
+	Fs = int(1.0/dt)
+	##NFFT = Mean([])
+	
+	##Fs = 8000  # the sampling rate
 
 	# plot signal and spectrogram
 
@@ -22,8 +40,8 @@ def plotSpectrogram(time, data, savefigTo='show'):
 	plt.plot(time,data)   # for this one has to either undersample or zoom in 
 	plt.xlim([0,max(time)])
 	plt.subplot(212 )  # don't share the axis
-	##Pxx, freqs, bins, im = plt.specgram(data, NFFT=NFFT,   Fs=Fs,noverlap=100, cmap=plt.cm.gist_heat)
-	Pxx, freqs, bins, im = plt.specgram(data,noverlap=100, cmap=plt.cm.gist_heat)	
+	Pxx, freqs, bins, im = plt.specgram(data, NFFT=NFFT,   Fs=Fs,noverlap=100, cmap=plt.cm.gist_heat)
+	##Pxx, freqs, bins, im = plt.specgram(data,noverlap=100, cmap=plt.cm.gist_heat)	
 	if(savefigTo == 'show'):
 		plt.show() 
 	else:
