@@ -56,6 +56,6 @@ if(__name__ == "__main__"):
 				print audioop.max(data, 2), (time.time() - initTime)
 				time_v.append(time.time() - initTime)
 				data_v.append(audioop.max(data, 2))
-			time.sleep(.001)
+			time.sleep(.00000001)
 	except KeyboardInterrupt:	
 		screwMatlab.plotSpectrogram(np.array(time_v), np.array(data_v), outputFilename)
