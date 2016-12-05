@@ -1,0 +1,1046 @@
+220
+
+IEEE TRANSACTIONS ON ENERGY CONVERSION, VOL. 16, NO. 3, SEPTEMBER 2001
+
+A New Approach to Direct Torque Control of
+
+Induction Motor Drives for Constant Inverter
+
+Switching Frequency and Torque Ripple Reduction
+
+Yen-Shin Lai , Member, IEEE and Jian-Ho Chen
+
+Abstract-In this paper a new approach to direct torque control For digital implementation, the system sampling frequency
+
+(DTC) of induction motor drive is presented. In comparison with
+
+for the calculations of torque and flux should be very fast in
+
+the conventional DTC methods [1], [22] the inverter switching fre-order to provide good tracking performance and limit the errors
+
+quency is constant and is dramatically increased, requiring neither
+
+of torque and flux within the specified bands, respectively. The
+
+any increase of the sampling frequency, nor any high frequency
+
+dither signal. The well-developed space vector modulation tech-
+
+inverter switching frequency, which varies with speed of drives
+
+nique is applied to inverter control in the proposed DTC-based
+
+and the associated error bands, is very low in comparison with
+
+induction motor drive system, thereby dramatically reducing the
+
+the system sampling frequency; a sampling frequency of 40 kHz
+
+torque ripple and speed ripple. As compared to the existing DTC
+
+gives the inverter switching frequency about 3 kHz as shown in
+
+approach [2], [23] with constant inverter switching frequency, the
+
+[7]. Although the inverter switching frequency can be increased presented new approach does not invoke any concept of deadbeat
+
+control, thereby dramatically reducing the computations. Experi-
+
+by mixing high frequency dither signals with the error signals of
+
+mental results are illustrated in this paper confirming that the pro-
+
+torque and flux, respectively, the inverter switching frequency
+
+posed DTC method has the above-mentioned features even at the
+
+is not constant for small error bands [8] and the difficulty of low speed range down to
+
+1 r/min.
+
+designing inverter output filter becomes difficult. For the DTC-
+
+Index Terms-Direct torque control, induction motor drives, based drives, the torque ripple is significantly for not invoking
+
+inverter.
+
+the zero inverter switching states; especially at motor start-up
+
+[9] or under transient state [10].
+
+I. I
+
+Alternatively, space vector modulation (SVM) modulator
+
+NTRODUCTION
+
+is incorporated with direct torque control for induction motor
+
+IT IS well known that the basic concept of direct torque drivesasshownin [2], [23],[11] toprovideaconstantinverter control of induction motor drives is to control both stator
+
+switching frequency. Noting that the torque ripple and noise
+
+flux and electromagnetic torque of machine simultaneously.
+
+issue for this SVM-based DTC approach are significantly
+
+As demonstrated in [1], [22], [3]-[6], both torque and flux of a improved for invoking zero inverter switching state within
+
+DTC-based drive are controlled in the manner of closed-loop
+
+every switching period of inverter control. In [2], [23] a system without using current loops in comparison with the con-deadbeat controller is used to generate the voltage command of
+
+ventional vector-controlled drives. In principle, the DTC-based
+
+SVM modulator, which requires calculating several complicate
+
+drives require the knowledge of stator resistance only, and
+
+equations on-line. In [11], a predictive controller is used thereby decreasing the associated sensitivity to parameter
+
+to generate the voltage command for inverter control using
+
+variations. Moreover, the DTC-based drives do not require ful-
+
+space vector modulation technique. However, the predictive
+
+filling the coordinate transformation between stationary frame
+
+controller consists of a deadbeat controller, a feed forward
+
+and synchronous frame, in comparison with the conventional
+
+controller and two integrators, and no experimental results are
+
+vector-controlled drives.
+
+presented in the paper.
+
+Since a DTC-based drive [1], [22] selects the inverter
+
+In this paper, it is intended to solve the issues associated
+
+switching states using switching table, neither current con-
+
+with the conventional switching-table-based DTC drives as
+
+trollers nor pulse-width modulation (PWM) modulator is
+
+mentioned previously in this section. It will be demonstrated
+
+required, thereby providing fast torque response. However, this
+
+in this paper that the inverter switching frequency is increased
+
+switching-table-based DTC approach is accompanied by some
+
+requiring neither the increase of sampling frequency, nor any
+
+disadvantages; more details are described as follows.
+
+dither high frequency dither signal. And, the inverter switching
+
+frequency is kept constant without invoking any complicate
+
+deadbeat controller. Furthermore, the well-developed space
+
+Manuscript received June 21, 1999. This work was supported by the National Science Council under Grants NSC 88-2213-E-027-014.
+
+vector modulation technique is applied to inverter control
+
+Y.-S. Lai is with the Department of Electrical Engineering, National Taipei in the proposed DTC-based induction motor drive system,
+
+University of Technology, 1, Sec. 3, Chung-Hsiao E. Rd., Taipei, Taiwan.
+
+thereby dramatically reducing the torque ripple and speed
+
+J.-H. Chen is with the Institute of Mechatronic Engineering, National Taipei University of Technology, 1, Sec. 3, Chung-Hsiao E. Rd., Taipei, Taiwan.
+
+ripple. Experimental results derived from a test drive system
+
+Publisher Item Identifier S 0885-8969(01)07334-X.
+
+are presented to firmly support the claims of this paper.
+
+0885-8969/01$10.00 © 2001 IEEE
+
+
+
+
+
+LAI AND CHEN: A NEW APPROACH TO DIRECT TORQUE CONTROL OF INDUCTION MOTOR DRIVES
+
+221
+
+II. THEORY
+
+A. Machine Modeling
+
+An induction motor is modeled using voltage and flux equa-
+
+tions which are referred to a general reference frame, denoted
+
+by the superscript " " and are shown as follows [12], [13].
+
+Stator Voltage Equation:
+
+(1)
+
+Rotor Voltage Equations:
+
+(2)
+
+Stator Flux Equation:
+
+(3)
+
+Rotor Flux Equation:
+
+(4)
+
+Mechanical Equation:
+
+Fig. 1.
+
+Block diagram of the conventional direct torque control of induction
+
+(5)
+
+motor drives.
+
+(6)
+
+The electromagnetic torque is calculated by (15), which is
+
+derived by (12).
+
+By referring to a stationary frame, denoted by the superscript
+
+" ," which is with
+
+-axis attached on the stator winding of
+
+(15)
+
+phase " ," the mathematical equations of induction motor can
+
+be rewritten as follows.
+
+Fig. 1 shows the direct block diagram of the conventional
+
+direct torque control for induction motor drive. As shown in
+
+Stator Voltage Equation:
+
+Fig. 1, the inverter switching states are selected according to the
+
+(7)
+
+errors of the torque and flux, which are indicated by,
+
+and
+
+Rotor Voltage Equations:
+
+, respectively. Noting that
+
+(8)
+
+(16)
+
+Stator Flux Equation:
+
+(17)
+
+(9)
+
+Rotor Flux Equation:
+
+where
+
+(10)
+
+Mechanical Equation:
+
+(18)
+
+(11)
+
+Table I shows the associated inverter switching states for two-
+
+level inverter control of the conventional direct torque control
+
+(12)
+
+approach. As shown in Table I, the inverter switching states are
+
+determined by the errors of torque and flux, and the position of
+
+Substituting (9) and (10) into (12), yields
+
+stator flux, which is denoted by
+
+and given by
+
+(13)
+
+(19)
+
+where
+
+total leakage factor,
+
+.
+
+The definition of sectors is shown in Fig. 2, in which the
+
+position relationship between stator voltage vector and stator
+
+B. The Conventional Direct Torque Control Approach
+
+flux vector is clearly identified. As shown in Fig. 2, the stator
+
+The stator flux is by (14), which is derived from (7).
+
+flux vector,
+
+, lags the associated stator voltage vector,
+
+, by
+
+90 degrees if the voltage drop across the stator resistance shown
+
+in (14) is negligible.
+
+(14)
+
+Noting that a speed controller can be added to Fig. 1 to gen-
+
+erate the torque command, and therefore fulfill a DTC-based ad-
+
+where
+
+and
+
+indicate the measured stator voltage and cur-
+
+justable speed drive as illustrated in Fig. 3. As shown in Fig. 3,
+
+rent, respectively.
+
+the shaft speed of induction motor drive can be derived using
+
+
+
+
+
+222
+
+IEEE TRANSACTIONS ON ENERGY CONVERSION, VOL. 16, NO. 3, SEPTEMBER 2001
+
+TABLE I
+
+SWITCHING TABLE FOR THE CONVENTIONAL DIRECT TORQUE CONTROL OF INDUCTION MOTOR DRIVES
+
+The phase voltages and the associated stator voltage vector
+
+shown in (14) are estimated using the scheme shown in [14],
+
+[15] and are summarized in (20) and (21).
+
+(20)
+
+(21)
+
+where
+
+Fig. 2.
+
+Relationship between stator voltage vector and flux vector.
+
+,
+
+, and
+
+phase voltages;
+
+,
+
+, and
+
+denote the inverter switching states, in
+
+which
+
+(
+
+, if the upper
+
+leg switch is on and
+
+(
+
+,
+
+if the upper leg switch is off;
+
+is the dc link voltage;
+
+,
+
+two-axis stator voltage in the stationary
+
+frame.
+
+Noting that the field oriented control approach invokes the
+
+concept of transforming the stationary quantities into syn-
+
+chronous ones and orienting the referred flux along the -axis
+
+of the synchronous frame. More details about the discussion of
+
+field oriented control can be found in [12], [13]. In contrast the direct torque control (DTC) shown in Fig. 3 [1], [22], [2], [23],
+
+[3]-[11] does not invoke any of the above-mentioned works for field oriented control; more details about the DTC can be
+
+found in [1], [22], [2], [23], [3]-[11]. As shown in [1], [22],
+
+[2], [23], [3]-[11] "
+
+," the position of stator flux, is essential
+
+to inverter switching control.
+
+C. Conventional Space Vector Modulation Techniques
+
+Fig. 3.
+
+Block diagram of a DTC-based adjustable speed drive.
+
+As shown in Fig. 2, the switching states of inverter control in-
+
+clude eight switching states; six of them, (100), (010), (001), de-
+
+an encoder in a closed-loop system or by the speed estimation
+
+noted by
+
+, and (110), (011) and (101), represented using
+
+,
+
+skills in a sensorless system.
+
+are named active switching states, and (000) and (111), denoted
+
+
+
+
+
+LAI AND CHEN: A NEW APPROACH TO DIRECT TORQUE CONTROL OF INDUCTION MOTOR DRIVES
+
+223
+
+goals can be achieved by selecting the inverter switching states
+
+according to the errors of torque and flux.
+
+Therefore the main theme of direct torque control is to regu-
+
+late the torque and magnitude of flux directly without invoking
+
+any concept of field orientation. Following this essential con-
+
+cept, Fig. 5 shows the block diagram of the new DTC-based
+
+induction motor drives. As shown in Fig. 5, two proportional-
+
+integral (PI) type controllers regulate the flux amplitude and
+
+torque, respectively. Therefore, both the torque and the mag-
+
+nitude of flux are under control, thereby generating the voltage
+
+command for inverter control. Noting that no decoupling mech-
+
+anism is required since the flux magnitude and torque can be
+
+regulated by the PI controllers. Experimental results derived
+
+from a test induction motor drive will be given later in this paper
+
+to strongly support this point of view.
+
+As shown in Fig. 5, the inverter is controlled by the SVM
+
+technique [16], [24] using Symmetrical Regular-Sampling technique [18]. Therefore, the inverter switching frequency is significantly increased, and the associated torque ripple and current
+
+Fig. 4.
+
+(a) Switching patterns. (b) Sampling instants for SVM technique.
+
+harmonics can be dramatically reduced, in comparison with the
+
+conventional switching-table-based DTC drives. More details
+
+by
+
+and
+
+, respectively. The vector times associated with the
+
+of these merits of the new DTC drives over the conventional
+
+switching states are shown in (22) [16], [24] and the switching approach are clearly analyzed in next section and will be sup-pattern in one carrier period is shown in Fig. 4.
+
+ported by the experimental results shown later in this paper.
+
+E. Advantages of the New DTC-Based Drives
+
+It is well known that for conventional DTC approach, no in-
+
+verter leg changes switching state during a sampling period. Due
+
+to this fact, the inverter switching frequency is less than that of
+
+(22)
+
+sampling frequency and the associated torque ripple is also significant for low sampling frequency control. As reported in [7],
+
+where
+
+,
+
+.
+
+the sampling is increased up to 40 kHz (25 sec of sampling pe-
+
+Noting that zero switching states, (000) and (111), are in-
+
+riod) at the cost of using dedicated high performance hardware;
+
+cluded in the switching pattern in a sampling period as shown
+
+however, the inverter switching frequency is about 3 kHz.
+
+in Fig. 4. In a sampling period the zero switching states, (000)
+
+Fig. 6 illustrates the PWM pulses for the SVM technique
+
+and (111), with the same vector times, are placed at two edges,
+
+[16], [24] using Asymmetrical Regular-Sampling technique. As respectively. It has been demonstrated [17] that the Total Har-shown in Fig. 6, the inverter switching frequency is 50% of
+
+monic Distortion (THD) associated the space vector modula-
+
+sampling frequency. For Asymmetrical Regular-Sampled SVM
+
+tion technique is approximate to that of an optimal PWM tech-
+
+technique, the zero switching states, (000) and (111), are placed
+
+nique; and therefore the torque ripple can be reduced in compar-
+
+in the edges of switching pattern in every sampling period. It
+
+ison with other three-phase modulation techniques. In the linear
+
+has been demonstrated [17] that the Total Harmonic Distortion modulation range, the inverter switching frequency is constant
+
+(THD) of the space vector modulation technique with switching
+
+and is 50% of the sampling frequency. The details about these
+
+patterns as shown in Fig. 6, is approximate to that of an optimal
+
+advantages will be highlighted later in this paper as compared
+
+PWM technique; and therefore the torque ripple can be reduced.
+
+with the switching table technique of the conventional DTC-
+
+To increase the inverter switching frequency for the same
+
+based system.
+
+sampling frequency, the Symmetrical Regular-Sampled SVM
+
+technique with switching patterns as shown in Fig. 7 is used
+
+D. New DTC-Based Drives
+
+for inverter control of the new DTC-based drive. The inverter
+
+It is well known that the principle of vector control of induc-
+
+switching frequency is constant and is equal to sampling
+
+tion motor drive is to align the flux and torque current along
+
+frequency.
+
+the -axis and -axis of the reference fame, respectively. And
+
+Therefore, for the same sampling frequency, in comparison
+
+therefore, the torque can be controlled by the associated current
+
+with the conventional switching-table-based DTC drive, the new
+
+component, once the flux is kept constant. In contrast, as men-
+
+DTC-based drive dramatically increases the inverter switching
+
+tioned previously in this paper, the fundamental idea of direct
+
+frequency; and thereby significantly reducing the torque ripple.
+
+torque control is to control both the torque and the magnitude of
+
+Experimental results will be shown later in this paper to confirm
+
+flux within the associated error bands in real time. These control
+
+this analysis.
+
+
+
+
+
+224
+
+IEEE TRANSACTIONS ON ENERGY CONVERSION, VOL. 16, NO. 3, SEPTEMBER 2001
+
+Fig. 5.
+
+Block diagram of the proposed DTC-based induction motor drives.
+
+Fig. 6.
+
+Illustration of PWM pulses of inverter control, asymmetrical
+
+regular-sampled SVM technique. (a) Switching patterns. (b) Sampling instant.
+
+Fig. 8.
+
+Stator flux estimation for implementation.
+
+about the specification and parameters of the induction motor
+
+are listed in the Appendix.
+
+It is well known that both switching losses and sampling fre-
+
+quency of controller of drives limit the inverter switching fre-
+
+quency. The discussion about these two topics and the related
+
+solutions can be found in [20]-[22]. Since the inverter switching frequency for conventional DTC schemes depends upon the hys-teresis band and is not constant, the experimental results for
+
+comparisons are conducted based upon the same sampling fre-
+
+quency of controller of drives.
+
+Noting that the accuracy of the estimated stator flux using
+
+(14) will be affected by the initial conditions caused by the pure
+
+integral operation. The signals of voltage and current are domi-
+
+nated by the harmonics at low speed range, thereby significantly
+
+Fig. 7.
+
+Illustration of PWM pulses of inverter control for the new DTC-based
+
+affecting the accuracy of estimation. A stator flux estimation
+
+drive system; asymmetrical regular-sampled SVM technique. (a) Switching
+
+patterns. (b) Sampling instant.
+
+scheme as shown in Fig. 8 and (23), which is similar to that pro-
+
+posed in [19] for rotor flux estimation, is used to overcome the above-mentioned issue for stator flux estimation.
+
+III. IMPLEMENTATION AND EXPERIMENTAL RESULTS
+
+As shown in Fig. 8 at high speed range, the estimated stator
+
+A PC-based induction motor drive is used as the test system.
+
+flux is approximate to the value shown in (14) while without in-
+
+The system consists of a 586 PC, an IGBT inverter, and an
+
+voking any integral operation. At low speed range, in which the
+
+induction motor with a 1000 pulses/rev encoder. More details
+
+current and voltage signals are dominated by the harmonics, the
+
+
+
+
+
+LAI AND CHEN: A NEW APPROACH TO DIRECT TORQUE CONTROL OF INDUCTION MOTOR DRIVES
+
+225
+
+(a)
+
+(a)
+
+(b)
+
+(b)
+
+(c)
+
+(c)
+
+(d)
+
+Fig. 10.
+
+Experimental results of the proposed DTC system. (a) Speed
+
+(d)
+
+response; x-axis in sec, y-axis in rpm. (b) Estimated torque; x-axis in sec, y
+
+Fig. 9.
+
+Experimental results of the conventional DTC system. (a) Speed
+
+-axis in Nt-m. (c) Spectrum of inverter switching pulses; x-axis in kHz, y-axis response; x-axis in sec, y-axis in rpm. (b) Estimated torque; x-axis in sec, in volt. (d) Phase current; x-axis in sec, y-axis in amp.
+
+y-axis in Nt-m. (c) Spectrum of inverter switching pulses; x-axis in kHz, y-axis in volt. (d) Phase current; x-axis in sec, y-axis in amp.
+
+oscilloscope: Tektronix TDS 460 A
+
+voltage differential probe: SI-900
+
+command value of stator flux is used instead, thereby providing
+
+Fig. 9 shows the experimental results for the conventional
+
+satisfied accuracy even at low speed range.
+
+DTC system as shown in Fig. 3; the error bands of torque and
+
+flux are 2% of rated torque and nominal flux value, respectively.
+
+The experiment is conducted at a profile of 1600 r/min and a
+
+step load, 1.8 N-m which is 45% of rated torque, is applied at
+
+sec. The sampling frequency is 5 kHz and the inverter
+
+switching frequency is less than 5 kHz as shown in Fig. 9(c).
+
+As shown in Fig. 9(a) and (b), the speed and torque ripple is
+
+significant.
+
+(23)
+
+Fig. 10 shows the experimental results for the proposed DTC
+
+system as shown in Fig. 5. The experimental is conducted using
+
+where
+
+and
+
+cut-off frequency of filter.
+
+the same profile as that for the experimental results shown in
+
+The experimental results are measured using the following
+
+Fig. 10. Noting that the SVM technique is Symmetrical SVM
+
+equipment.
+
+technique, which gives the inverter switching frequency equal
+
+
+
+
+
+226
+
+IEEE TRANSACTIONS ON ENERGY CONVERSION, VOL. 16, NO. 3, SEPTEMBER 2001
+
+(a)
+
+Fig. 12.
+
+Experimental results of the proposed DTC system; 61 r/min; x-axis
+
+in sec, y-axis in rpm.
+
+As shown in Fig. 11(a) and (b), the torque and speed ripples
+
+are trivial, and the inverter switching frequency is constant as
+
+demonstrated in Fig. 11(c).
+
+(b)
+
+The performance of the proposed DTC drive system at low
+
+speed region has been further explored by experimental results.
+
+The experiment is conducted at a speed profile of
+
+1 r/min. A
+
+step load, 50% of rated torque, is applied at
+
+sec. Fig. 12
+
+shows the associated experimental results. As shown in Fig. 12,
+
+the speed ripples is trivial even at such a low speed range.
+
+IV. CONCLUSION
+
+In this paper, a new direct torque control method is pre-
+
+(c)
+
+sented and its merits over the conventional DTC approach
+
+are confirmed by the experimental results. The features of
+
+the proposed direct torque control method include 1) pro-
+
+viding constant inverter switching frequency, 2) dramatically
+
+increasing the inverter switching frequency without requiring
+
+any high frequency dither signal, 3) significantly reducing the
+
+torque and speed ripple. Experimental results are illustrated in
+
+this paper confirming that the proposed DTC method has the
+
+above-mentioned features even at the low speed range down to
+
+1 r/min.
+
+(d)
+
+The proposed DTC approach is verified using a two-level in-
+
+verter system, it can also be applied to a three-level inverter
+
+Fig. 11.
+
+Experimental results of the proposed DTC system; 6900 r/min.
+
+(a) Speed response; x-axis in sec, y-axis in rpm. (b) Estimated torque; x-axis system and multi-level inverter system. The authors wish to re-in sec, y-axis in Nt-m. (c) Spectrum of inverter switching pulses; x-axis in port more details of the experimental results in these aspects in
+
+kHz, y-axis in volt. (d) Phase current; x-axis in sec, y-axis in amp.
+
+the near future.
+
+APPENDIX
+
+to that of sampling frequency. As shown in Fig. 10(c), the first
+
+List of motor specification and parameters
+
+dominant harmonic cluster locates at 5 kHz, indicating that the
+
+inverter switching frequency is 5 kHz.
+
+220 V, 3 , 1 HP 0.75 KW, 4 poles, 1680 rpm.
+
+In comparison with Fig. 9(c) for the conventional DTC
+
+Motor Parameters
+
+system, the proposed method indeed increases the inverter
+
+switching frequency. As shown in Fig. 10(c), the inverter
+
+switching frequency is constant and depends on the sampling
+
+H
+
+frequency only. As shown in Fig. 10(a) and (b), the speed and
+
+H
+
+torque ripple is dramatically reduced as compared with those
+
+kg-m
+
+shown in Fig. 9(a) and (b) for the conventional DTC system.
+
+Nt-m/rad/s
+
+Similar remarks can be derived for other speed range and load
+
+conditions.
+
+REFERENCES
+
+The second experiment is conducted at a speed profile of
+
+[1] I. Takahashi and Y. Ohmori, "High-performance direct torque control of 900 r/min. The profile accelerates from 0 r/min to 900 r/min
+
+induction motor," IEEE Trans. Ind. Appl. , vol. 25, no. 2, pp. 257-264, in 1 s and decelerates from 900 r/min to
+
+900 r/min during 4 s
+
+1989.
+
+[2] T. G. Habetler, F. Profumo, M. Pastorelli, and L. M. Tolbert, "Direct to 6 s. A step load, about 50% of rated torque, is applied at
+
+torque control of induction machines using space vector modulation,"
+
+sec. Fig. 11 shows the associated experimental results.
+
+IEEE Trans. Ind. Appl. , vol. 28, no. 5, pp. 1045-1053, 1992.
+
+LAI AND CHEN: A NEW APPROACH TO DIRECT TORQUE CONTROL OF INDUCTION MOTOR DRIVES
+
+227
+
+[3] M. Depenbrock, "Direct-self control of inverter-fed induction machine,"
+
+[18] S. R. Bowes, "New sinusoidal pulsewidth-modulated inverter," Proc.
+
+IEEE Trans. Power Electrons, vol. 3, no. 4, pp. 420-429, 1988.
+
+IEE, vol. 122, no. 11, pp. 1279-1285, 1975.
+
+[4]
+
+, "Direct self control for high dynamics performance of inverter
+
+[19] T. Ohtani and H. Takasaki, "High performance vector control of in-
+
+feed a.c. machines," ETZ Archiv. , vol. 7, no. 7, pp. 211-218, 1985.
+
+duction motor using torque-producing current," in IPEC Conference
+
+[5]
+
+, "Direct-self control of the flux and rotary moment of a rotary-field
+
+Record, 1990, pp. 61 and 84-90.
+
+machine," US Patent 4 678 248, 1987.
+
+[20] Y. S. Lai and S. R. Bowes, "A universal space vector modulation based
+
+[6] P. Tiitinen, "The next generation motor control method, DTC direct
+
+on regular-sampled pulse-width modulation," in Proc. of the IEEE
+
+torque control," in Proceedingss of the IEEE Intl. Conf. on Power Elec-IECON, 1996, pp. 120-126.
+
+tronics, Drives, and Energy Systems for Industrial Growth, 1996, pp.
+
+[21]
+
+, "Investigations into optimising high switching frequency reg-
+
+37-43.
+
+ular-sampled PWM for drives and static power converter," in IEE Proc.
+
+[7] J. N. Nash, "Direct torque control, induction motor vector control
+
+Electr. Power Appl. , vol. 143, 1996, pp. 281-292.
+
+without an encoder," IEEE Trans. Ind. Appl. , vol. 33, no. 2, pp.
+
+[22] I. Takahashi and Y. Ohmori, "High-performance direct torque control 333-341, 1997.
+
+of induction motor," in Conference Record IEEE IAS Annual Meeting,
+
+[8] T. Noguchi, M. Yamamoto, S. Kondo, and I. Takashi, "High frequency
+
+1985, pp. 495-502.
+
+switching operation of PWM inverter for direct torque control of induc-
+
+[23] T. G. Habetler, F. Profumo, M. Pastorelli, and L. M. Tolbert, "Direct tion motor," in Conference Record IEEE IAS Annual Meeting, 1997, pp.
+
+torque control of induction machines using space vector modulation,"
+
+775-780.
+
+in Conference Record IEEE IAS Annual Meeting, vol. 1, 1991, pp.
+
+[9] M. P. Kazmierkowski and A. B. Kasprowicz, "Improved direct torque
+
+428-435.
+
+and flux vector control of PWM inverter-fed induction motor drives,"
+
+[24] H. W. van der Broeck, H. C. Skudelny, and G. V. Stanke, "Analysis and IEEE Trans. Ind. Electron. , vol. 42, no. 4, pp. 344-349, 1995.
+
+realization of a pulsewidth based on voltage space vectors," IEEE Trans.
+
+[10] D. Casadei, G. Grandi, G. Serra, and A. Tani, "Switching strategies in Ind. Appl. , vol. 24, no. 1, pp. 142-150, 1988.
+
+direct torque control of induction machines," in Proc. of the Internal Conference on Electrical Machines (ICEM), 1994, pp. 204-209.
+
+[11] G. Buja, D. Casadei, and G. Serra, "Direct stator flux and torque control of an induction motor: Theoretical analysis and experimental results,"
+
+in Proceedings of the IECON '98, vol. 1, 1998, pp. T50-T64.
+
+Yen-Shin Lai (M'96) received the M.S. degree from the National Taiwan Uni-
+
+[12] G. R. Slemon, "Modeling of induction machines for electric drives,"
+
+versity of Science and Technology, Taipei, Taiwan, and the Ph.D. degree from IEEE Trans. Ind. App. , vol. 25, no. 6, pp. 1126-1131, 1989.
+
+the University of Bristol, Bristol, England, U.K., both in electronic engineering.
+
+[13] Y. S. Lai, "Modeling and vector control of induction machines-A new In 1987, he joined the National Taipei University of Technology, Taipei, Taiwan, unified approach," in Proc. of the IEEE Power Engineering Society
+
+as a Lecturer and is currently a Professor.
+
+Winter Meeting, 1999, pp. 47-52.
+
+He received the John Hopkinson Premium for the session 1995/1996 from the
+
+[14] T. C. Green and B. W. Williams, "Derivation of motor line-current wave-Institute of Electrical Engineers (IEE).
+
+forms from the dc link current of an inverter," Proc. Inst. Elect. Eng. , pt.
+
+His research interests include design of microprocessor-based systems, de-B, vol. 136, no. 4, pp. 196-204, 1989.
+
+velopment of PWM techniques, and drives and converter control.
+
+[15] Y. Xue, X. Xu, T. G. Habetler, and D. M. Divan, "A stator flux-ori-
+
+ented voltage source variable-speed drive based on dc link measure-
+
+ment," IEEE Trans. Ind. Appl. , vol. 27, no. 5, pp. 962-969, 1991.
+
+[16] H. W. van der Broeck, H. C. Skudelny, and G. V. Stanke, "Analysis and realization of a pulsewidth based on voltage space vectors," in IEEE IAS
+
+Jian-Ho Chen received the B.S. degree in electrical engineering, from the Na-Ann. Meet. , 1986, pp. 244-251.
+
+tional Taiwan University of Science and Technology, Taipei, Taiwan, and is cur-
+
+[17] S. R. Bowes and Y. S. Lai, "The relationship between space vector mod-rently working for the M.S. degree in the Institute of Mechatronic Engineering, ulation and regular-sampled pulse-width modulation," IEEE Trans. In-National Taipei University of Technology, Taipei, Taiwan.
+
+dustrial Electronics, vol. 44, no. 5, pp. 670-679, 1997.
+
+His research interests include inverter control and PC-based control.
+
+
+
+
+

@@ -1,0 +1,2308 @@
+Combining Undersampled Dithered Images
+
+Author(s): Tod R. Lauer
+
+Source: Publications of the Astronomical Society of the Pacific, Vol. 111, No. 756 (February 1999), pp. 227-237
+
+Published by: Astronomical Society of the Pacific
+
+Stable URL: http://www.jstor.org/stable/10.1086/316319
+
+Accessed: 27-10-2016 20:18 UTC
+
+
+
+JSTOR is a not-for-profit service that helps scholars, researchers, and students discover, use, and build upon a wide range of content in a trusted digital archive. We use information technology and tools to increase productivity and facilitate new forms of scholarship. For more information about JSTOR, please contact support@jstor.org.
+
+
+
+Your use of the JSTOR archive indicates your acceptance of the Terms & Conditions of Use, available at http://about.jstor.org/terms
+
+Astronomical Society of the Pacific, The University of Chicago Press are collaborating with JSTOR to digitize, preserve and extend access to Publications of the Astronomical Society of the Pacific
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+Publications of the Astronomical Society of the Pacific, 111:227-237, 1999 February 䉷 1999. The Astronomical Society of the Pacific. All rights reserved. Printed in U.S.A.
+
+
+
+
+
+Combining Undersampled Dithered Images
+
+
+Tod R. Lauer
+
+National Optical Astronomy Observatories,1 P.O. Box 26732, Tucson, AZ 85726; lauer@noao.edu Received 1998 October 23; accepted 1998 November 18
+
+
+
+
+
+ABSTRACT.
+
+
+Undersampled images, such as those produced by the HST WFPC-2, misrepresent fine-scale structure intrinsic to the astronomical sources being imaged. Analyzing such images is difficult on scales close to their resolution limits and may produce erroneous results. A set of "dithered" images of an astronomical source generally contains more information about its structure than any single undersampled image, however, and may permit reconstruction of a "superimage" with Nyquist sampling. I present a tutorial on a method of image reconstruction that builds a Nyquist superimage from a complex linear combination of the Fourier transforms of a set of undersampled dithered images. This method works by algebraically eliminating the high-order satellites in the periodic transforms of the aliased images. The reconstructed image is an exact representation of the data set with no loss of resolution at the Nyquist scale. The algorithm is directly derived from the theoretical properties of aliased images and involves no arbitrary parameters, requiring only that the dithers are purely translational and constant in pixel space over the domain of the object of interest. I show examples of its application to WFC
+
+and PC images. I argue for its use when the best recovery of point sources or morphological information at the HST diffraction limit is of interest.
+
+
+
+
+
+1. INTRODUCTION
+
+
+additional observations with the same camera system that con-
+
+It is nice to work with well-sampled astronomical images.
+
+tain information lost in the original images. For example, if
+
+A well-sampled image can be readily resampled to various
+
+the camera can be offset by a fraction of a pixel over a sequence
+
+scales, orientations, or more complex geometries without loss
+
+of exposures, or "dithered," one can observe how the structure
+
+of information. Its spatial resolution is well understood, per-
+
+of objects in the image varies with respect to their positions
+
+mitting a clear analysis of the relative contributions of infor-
+
+on the pixel grid and thus recover details not contained in any
+
+mation and noise. Further, many image-processing algorithms
+
+single image. This suggests that one might construct a well-
+
+will only work on well-sampled data. In some cases, however,
+
+sampled superimage from a set of undersampled, but dithered,
+
+it is not practical or even desirable to obtain well-sampled
+
+images.
+
+images. Given detectors with a finite number of pixels and
+
+In general, when the size of a pixel is important with respect
+
+significant readout noise, one may prefer to trade off resolution
+
+to the intrinsic point-spread function (PSF), the image as ob-
+
+for increased field size or photometric sensitivity. Both con-
+
+served is
+
+siderations were central to the design of the HST WFPC-1 and
+
+WFPC-2 cameras, both of which are examples of instruments
+
+I( x, y) ⫽ O( x, y) ∗ P( x, y) ∗ P( x, y), (1)
+
+that produce undersampled astronomical images. WFPC-2 in
+
+particular has generated the largest library of high-resolution
+
+where O is the intrinsic projected appearance of the astronom-
+
+optical astronomical images to date, but ironically the severe
+
+ical field being imaged, P is the PSF owing to the telescope
+
+undersampling in the WFC system, and the still less than critical
+
+and camera optics, P is the spatial form of the pixel itself
+
+sampling of the PC at all but the reddest wavelengths, limit
+
+(which is often assumed to be a uniform square, although this
+
+the resolution of HST observations as much as the telescope
+
+need not be the case), and ∗ means convolution. Both P and
+
+optics themselves.
+
+P limit the resolution of I and thus implicitly specify the min-
+
+There is no magic that can undo the undersampling in a
+
+imum sampling requirements-a dilemma if P is too big, since
+
+single image; analysis of such data always requires respect for
+
+it sets what the sampling really is, regardless of what is needed.
+
+their peculiarities. At the same time, it may be possible to obtain
+
+If the astronomical scene and camera are time stable, however,
+
+dithering the camera allows proper sampling of the field con-
+
+volved with the pixel response as well as the PSF, to be obtained.
+
+If the camera is pointed on a fine and regular n # n grid of
+
+1
+
+The National Optical Astronomy Observatories are operated by the
+
+Association of Universities for Research in Astronomy, Inc., under cooperative
+
+subpixel steps, where n is the number of substeps within the
+
+agreement with the National Science Foundation.
+
+original large pixel, then the images can be simply interleaved
+
+227
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+228
+
+LAUER
+
+into a superimage that has small pixels equal to the dither step
+
+resolution from the data and stands on a solid theoretical foun-
+
+size. If the step size is small enough, the superimage will be
+
+dation, I present a method that reconstructs a superimage from
+
+critically sampled. A simple way to view this is to consider an
+
+an arbitrary set of dithered observations with no degradation
+
+image consisting of the astronomical field just convolved with
+
+of resolution. This method is only a modest extension to two-
+
+the PSF due to the optics alone. The sampling would be done
+
+dimensional data of a method for recovering one-dimensional
+
+on pixels equal to the size of the dither step, chosen to be fine
+
+functions from undersampled data presented by Bracewell
+
+enough to ensure critical sampling. The image is then blurred
+
+(1978, p. 201-202). The method works by computing the
+
+by the original pixel response. Drawing every n th pixel in x
+
+Fourier transform of the superimage as a linear combination
+
+and y clearly recreates one of the dithered images as actually
+
+of the transforms of the individual images; the aliased com-
+
+created by the camera. Therefore, conversely interleaving the
+
+ponents are eliminated algebraically. I have also extended the
+
+dithered images creates the well-sampled superimage.
+
+method to estimate the superimage when it is actually over-
+
+In practice, however, it may not be possible to step the cam-
+
+determined by the dithered observations. None of this is par-
+
+era in a regular pattern. Subpixel dithers have been used in
+
+ticularly complex, and not surprisingly, the professional image
+
+many WFPC-2 programs, for example, but were often not ex-
+
+processing literature already contains discussions of this
+
+ecuted with enough precision to fall on a regular pattern; simple
+
+method (see Tsai & Huang 1984 or Kim, Bose, & Valenzuela
+
+interlacing of the image set cannot be done in such cases. This
+
+1990). However, given the strong interest in using dithers in
+
+problem is critical for the Hubble Deep Field (HDF) obser-
+
+the context of HST imaging, I considered it worthwhile to
+
+vations (Williams et al. 1996). A regular dither was specified,
+
+present this paper as a tutorial on the method of Fourier al-
+
+but did not actually occur.
+
+gebraic reconstruction and explore its use in the context of HST
+
+To solve the problem of combining images with an irregular
+
+observations.
+
+dither pattern, a Drizzle algorithm was developed (Williams et
+
+al. 1996; Fruchter & Hook 1999) that works by simply dropping
+
+2. THE THEORY OF RECONSTRUCTING AN IMAGE
+
+or "drizzling" the pixels in any single image onto a finer grid,
+
+
+
+
+
+FROM ALIASED DATA SETS
+
+
+offsetting the image by the actual subpixel step obtained, slicing
+
+2.1. The Sampling of a One-dimensional Function
+
+up its pixels as they fall on the finer grid. The Drizzle algorithm
+
+works well, producing the now famous well-sampled full-color
+
+To understand how to reconstruct an image from undersam-
+
+image of the HDF. The Drizzle algorithm is appealing, as it is
+
+pled data, I start by considering the effects of sampling on a
+
+intuitive-one is just shifting and overlapping the images on
+
+one-dimensional function, f ( x). For reconstruction to work,
+
+a fine grid, shrinking the original pixels small enough so as to
+
+f ( x) must be band-limited, so that its Fourier transform,
+
+minimize any blurring associated with forcing the pixels into
+
+⬁
+
+the new grid but keeping them big enough so that there are no
+
+"holes" of empty data in the new super image. Further, because
+
+⫺2p ixu
+
+冕
+
+f ( x) ⫽ F( u) ⫽
+
+f ( x) e
+
+dx,
+
+(2)
+
+Drizzle works in the spatial domain, it is easy to correct for
+
+⫺⬁
+
+cosmic-ray events, hot pixels, or any other data missing in any
+
+single images, as well as correcting for any geometric distor-
+
+is nonzero only for ⫺ u ! u ! u , where u is the critical fre-c
+
+c
+
+c
+
+tion. Development of Drizzle represents a significant improve-
+
+quency. If x is expressed in terms of pixels, then sampling at
+
+ment in the software available to astronomers for analyzing
+
+every integer pixel is sufficient provided that u ! 1/2. This
+
+c
+
+undersampled images and has greatly improved the recovery
+
+can be understood by considering the Fourier transform of the
+
+of information from HST images.
+
+sampled function, The sampling of f ( x) is equivalent to mul-
+
+Despite the success of Drizzle, however, it is frankly justified
+
+tiplying it by a shah-function,
+
+on intuitive rather than formal theoretical grounds and indeed
+
+depends on two ad hoc parameters, namely the spacing of the
+
+⫹⬁
+
+1
+
+n
+
+F a F 冘
+
+superimage grid and the size of the pixels to be drizzled. It
+
+III( ax) {
+
+d x ⫺
+
+,
+
+(3)
+
+n⫽⫺⬁
+
+( a)
+
+also introduces its own blurring function,
+
+
+
+P , which statistically
+
+is about the size of the superimage pixel; in detail, the actual
+
+where a ⫽ 1 for the specific case of integer pixel sampling.
+
+resolution for any object depends on how it falls with respect
+
+The Fourier transform of the sampled function is then
+
+to the final grid. Although
+
+
+
+P in practice may be much smaller
+
+than P, it still may be large compared to the PSF and introduce
+
+f ( x) 7 III( x) ⫽ F( u) ∗ III( u),
+
+significant blurring in its own right. Last, in general, there is
+
+⫹⬁
+
+no guarantee that the Drizzle-reconstructed image will be
+
+⫽ 冘 F( u ⫺ n),
+
+(4)
+
+Nyquist-sampled. These issues were indeed discussed in the
+
+n⫽⫺⬁
+
+context of the HDF and limit its deconvolution or interpretation
+
+of its power spectrum on the finest scales.
+
+where I have used the fact that the transform of a shah-function
+
+In attempt to develop an algorithm that both mines better
+
+is itself a shah-function. As is well known, the Fourier trans-
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+COMBINING UNDERSAMPLED DITHERED IMAGES
+
+229
+
+form of a sampled function is periodic, repeating over the entire
+
+frequency domain. If f ( x) is band-limited, however, none of
+
+the copies or satellites of F( u) overlap. The satellites are spaced at each integer step in u, but the requirement that u ! 1/2 means c
+
+that they also reach zero before crossing over the midpoint of
+
+the interval (Fig. 1). This condition is no longer obeyed when
+
+the sampling interval is larger than each integer pixel step. For
+
+example, if every other pixel is sampled, then
+
+x
+
+f ( x) 7 III
+
+⫽ F( u) ∗ III(2 u),
+
+(2)
+
+⫹⬁
+
+n
+
+⫽ 冘
+
+2
+
+F u ⫺
+
+.
+
+(5)
+
+n⫽⫺⬁
+
+( 2)
+
+The
+
+transformed
+
+shah-function now samples at every
+
+half-integer step in the Fourier domain, causing strong overlaps
+
+or aliasing between the satellites of F( u) (Fig. 1). If f ( x) is unknown, the full extent of its transform cannot be deduced
+
+from the aliased sample, which in turn means that the sample
+
+Fig. 1.-Schematically representation of the effects of sampling on the
+
+is itself an incomplete representation of f ( x).
+
+Fourier power spectrum of a continuous one-dimensional function. Sampling
+
+causes the power spectrum to be periodic, with the period inversely propor-
+
+tional to the spatial sampling frequency. When the function is well sampled,
+
+2.2. Recovery of a One-dimensional Function
+
+the satellites occur at intervals of 2 u , or greater, where u is the critical c
+
+c
+
+Bracewell (1978, p. 201-202) shows that a function can be
+
+frequency, or the highest frequency at which the intrinsic function has nonzero
+
+recovered from collection of undersampled data sets given prior
+
+power ( upper graph). With coarser sampling, the function becomes undersampled and the satellites begin to overlap. With 2# undersampling ( bottom
+
+knowledge of u (as might exist given a detector pixel shape
+
+c
+
+graph), the satellites occur at every integer multiple of u . The total transform c
+
+and optical point-spread function), provided that the sampling
+
+( dotted line) is the sum over all satellites and is severely aliased.
+
+among the various data sets is interlaced by some fraction of
+
+the sampling interval and that the basic sampling interval is
+
+not too sparse compared to u . Consider again the alternate
+
+c
+
+ples by some x ( 2 n (one might presume 0 ! x ! 2, but this 0
+
+0
+
+pixel sample above, which I relabel as d ( x). For the funda-
+
+0
+
+is not required). The transform of the new data set, d ( x), is
+
+x
+
+mental interval ⫺1/2 ! u ! 1/2,
+
+0
+
+x
+
+x
+
+D ( u) ⫽ f( x)
+
+(
+
+D ( u)
+
+0
+
+⫽ f( x)
+
+(2 )
+
+2)
+
+7 III
+
+,
+
+0
+
+7 III
+
+⫺ x ,
+
+x
+
+0
+
+1
+
+1
+
+1
+
+x
+
+⫽
+
+⫽ F( u) ∗ III
+
+∗ d( x ⫺ x ) ,
+
+[ (2)
+
+]0
+
+2 [ F u ⫺
+
+⫹ F( u) ⫹ F u ⫹
+
+( )2
+
+( )2].
+
+(6)
+
+⫺2p iux 0
+
+⫽ F( u) ∗ [III (2 u)7 e
+
+] .
+
+(9)
+
+Since I have specified that F( u) is band-limited to F u F ! 1/2, for 0 ≤ u ! 1/2,
+
+This reduces to
+
+1
+
+1
+
+D ( u)
+
+2
+
+( )
+
+0
+
+⫽ [ F u ⫺ ⫹ F( u)
+
+2
+
+],
+
+(7)
+
+1
+
+1
+
+⫺p ix
+
+2
+
+( )
+
+x 0
+
+[
+
+2 ]
+
+0
+
+D ( u) ⫽
+
+F( u) ⫹ e
+
+F u ⫺
+
+,
+
+0 ≤ u ! 1/2,
+
+(10)
+
+and for ⫺1/2 ! u ! 0,
+
+1
+
+1
+
+⫹p ix
+
+2 [
+
+( )2]
+
+1
+
+1
+
+0
+
+⫽
+
+F( u) ⫹ e
+
+F u ⫹
+
+,
+
+⫺ 1/2 ! u ! 0. (11)
+
+D ( u)
+
+2
+
+( 2)
+
+0
+
+⫽ [ F( u) ⫹ F u ⫹ ] .
+
+(8)
+
+Now let there be a second data set that also samples f ( x) with
+
+Note that d ( x) is no less aliased than is d ( x), but since the x
+
+0
+
+0
+
+alternate pixel spacing but spatially offset from the d ( x) sam-
+
+overlap portion has a differing phase, the transforms of the two
+
+0
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+230
+
+LAUER
+
+samples can be combined to solve for the transform of f ( x),
+
+⫺p ix 0
+
+D ( u) ⫺ e
+
+D ( u)
+
+x
+
+0
+
+0
+
+F( u) ⫽ 2
+
+,
+
+0 ≤ u ! 1/2,
+
+(12)
+
+⫺p ix 0
+
+1 ⫺ e
+
+⫹p ix 0
+
+D ( u) ⫺ e
+
+D ( u)
+
+x
+
+0
+
+0
+
+⫽ 2
+
+,
+
+⫺ 1/2 ! u ! 0. (13)
+
+⫹p ix 0
+
+1 ⫺ e
+
+In other words, one can reconstruct f ( x) exactly from two data
+
+sets offset from each other, each undersampled by a factor of
+
+2. Note that in the special case, where x 0 ⫽ 1, d ( x) holds the 0
+
+even-numbered pixels and d ( x) holds the odd-numbered ones,
+
+x 0
+
+then
+
+F( u) ⫽ D ( u) ⫹ D ( u),
+
+(14)
+
+x
+
+0
+
+0
+
+as would be expected, since the sum in equation (4) can clearly
+
+be separated this way. With exact interlacing, one can just add
+
+the transforms of the two individual data sets (provided that
+
+the transform preserves their relative phases).
+
+
+
+
+
+2.3. Recovery of an Image
+
+
+This method can be directly generalized to the case of re-
+
+constructing a two-dimensional image. The shah-function be-
+
+comes a two-dimensional regular grid of d-functions, and the
+
+two-dimensional Fourier transform of an image is
+
+Fig. 2.-Schematic representation of the configuration of the Fourier domain
+
+for reconstructing an image with 2 # 2 subsampling. For real images, Fourier
+
+⬁
+
+⬁
+
+transforms need only be calculated for the semiplane with 0 ≤ u ≤ 1/2,
+
+⫺(2p ixu⫹2p iyv)
+
+⫺1/2 ! v ≤ 1/2 (this presumes that the x-axis transform is computed first), 冕冕
+
+f ( x, y) ⫽ F( u, v) ⫽
+
+f ( x, y) e
+
+dx dy.
+
+(15)
+
+where the frequencies are defined with respect to the pixels of the reconstructed
+
+⫺⬁ ⫺⬁
+
+image. Each image in the observed set is aliased, and has satellites at all
+
+integer multiples of ( u, v) ⫽ 1/2 in the Fourier domain, with each satellite having significant power over D u ⫽ Ⳳ1/2, and D v ⫽ Ⳳ1/2 about its central If there is an observation d
+
+( x, y) that is a factor of 2 under-
+
+x , y
+
+1
+
+1
+
+location. The figure shows as heavy dots the central location of all satellites
+
+sampled in both x and y (thus having one-fourth of the pixels
+
+that overlap with the fundamental transform centered at ( u, v) ⫽ 0. Algebraic of the critically sampled image) and offset by x , y from the
+
+1
+
+1
+
+elimination of the satellites is done in two regions, marked 1 and 2; the satellites nominal grid defining f ( x, y), then in the domain 0 ≤ u !
+
+that contribute to a given region are those at its corners.
+
+1/2, 0 ≤ v ! 1/2,
+
+efficients:
+
+⫺p ix 1
+
+⫺p iy 1
+
+⫺p i( x ⫹ y )
+
+1
+
+1
+
+1
+
+1
+
+1 e
+
+e
+
+e
+
+⫺p ix 1
+
+D
+
+( u,
+
+⫺p ix
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+2
+
+2
+
+2
+
+2
+
+1
+
+4 [
+
+( 2 )
+
+x , y
+
+v)
+
+1
+
+1
+
+⫽
+
+F( u, v) ⫹ e
+
+F u ⫺ , v
+
+1 e
+
+e
+
+e
+
+F ⫽ D,
+
+(17)
+
+( ⫺p ix ⫺p iy ⫺p i( x⫹ y)
+
+4
+
+4
+
+4
+
+4
+
+)
+
+⫺p ix
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+3
+
+3
+
+3
+
+3
+
+4
+
+1 e
+
+e
+
+e
+
+1 e
+
+e
+
+e
+
+1
+
+1
+
+1
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+1
+
+1
+
+1
+
+⫹ e
+
+F u, v ⫺
+
+⫹ e
+
+F u ⫺ , v ⫺
+
+.
+
+(16)
+
+( 2)
+
+( 2
+
+)2]
+
+where F is a 4-vector holding F( u, v) in the first position, followed by the u, v, and last u, v satellites, and D is a 4-vector There are analogous expressions in the other three quadrants
+
+of the transforms of the four undersampled data sets. One can
+
+of the u, v plane; however, for real-valued images, half of the then invert this matrix to find
+
+u, v plane will simply be the complex conjugate of the other
+
+4
+
+half and thus need not be computed (see Fig. 2). As can be
+
+冘
+
+F( u, v) ⫽
+
+c D
+
+( u,
+
+n
+
+x , y
+
+v),
+
+(18)
+
+seen, with four data sets, each having a unique offset in x or
+
+n
+
+n
+
+n⫽1
+
+y, it is again possible to eliminate the overlap contributions.
+
+This requires solving a system of equations with complex co-
+
+where c will be a complex coefficient. Solution for the second
+
+n
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+COMBINING UNDERSAMPLED DITHERED IMAGES
+
+231
+
+quadrant is analogous-the phases differ only in sign, being
+
+to include weighting, giving
+
+positive when the domain of the frequency is negative. As an
+
+example, for the special case of where the four data sets contain
+
+H
+
+T
+
+⫺1
+
+H
+
+T
+
+F ⫽ (F W WF)
+
+F W WD,
+
+(25)
+
+the exact interlaces of integer pixels in x and y, F and D are more simply related as
+
+where
+
+is an
+
+matrix of weights and
+
+T
+
+
+
+
+
+W
+
+
+n # n
+
+W is its transpose
+
+(the weights are real-valued). W can account for any covariance
+
+1
+
+1
+
+1
+
+1
+
+between the images, but it is most likely to be diagonal on the
+
+1
+
+1 ⫺1
+
+1 ⫺1
+
+presumption that the individual images will probably be
+
+F ⫽ D,
+
+(19)
+
+(
+
+)
+
+4
+
+1
+
+1 ⫺1 ⫺1
+
+independent.
+
+1 ⫺1 ⫺1
+
+1
+
+2.5. Generalization to Higher Degrees of Subsampling
+
+which has the solution, as expected of
+
+Double sampling is likely to be sufficient to remove modest
+
+aliasing, but higher levels of subsampling may be required
+
+4
+
+冘
+
+F( u, v) ⫽
+
+D
+
+( u,
+
+when the undersampling is severe. Generalization to finer levels
+
+x , y
+
+v).
+
+(20)
+
+n
+
+n
+
+n⫽1
+
+of subsampling is straightforward, if somewhat tedious. As the
+
+observed images become coarser with respect to the recon-
+
+structed image, the aliased satellites become closer together
+
+and overlap more severely. Algebraic elimination of the sat-
+
+2.4. Recovery of an Image Overdetermined by the Data
+
+ellites requires identifying all satellites contributing power to
+
+a given location in the Fourier domain. In practice, this means
+
+Four images determine F( u, v), exactly, but if one actually slicing the Fourier domain into an increasingly large number
+
+has additional images available, F( u, v) is overdetermined, and of subsets. Figure 3 sketches out the structure of the Fourier
+
+a least-squares solution is required. This means finding the
+
+domain for 3 # 3 subsampling. In the 3 # 3 case, the Fourier
+
+F( u, v) that minimizes the norm
+
+domain is divided into six regions, with nine differing satellites
+
+E ⫽ kF F ⫺ D k,
+
+(21)
+
+contributing to F in each one; at least n ≥ 9 dithered images will be required to find a solution, and F is will now be an
+
+where, as above, F is the matrix of phases. In this case, how-
+
+n # 9 matrix. An important distinction between the 2 # 2 and
+
+ever, F is now an n # 4 matrix,
+
+3 # 3 cases is that in the former, since the satellites are spaced
+
+exactly by u , only the six satellites that are visible within the
+
+c
+
+⫺p ix
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+Fourier semidomain need be considered. In the 3 # 3 case, the
+
+1
+
+1
+
+1
+
+1
+
+1 e
+
+e
+
+e
+
+⫺p ix
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+satellites are separated only by multiples of 2 u /3; thus, the
+
+2
+
+2
+
+2
+
+2
+
+1
+
+1 e
+
+e
+
+e
+
+c
+
+F ⫽
+
+,
+
+(22)
+
+(
+
+first set of satellites with their centers actually falling outside
+
+⫺p ix
+
+⫺p iy
+
+⫺p i( x ⫹ y )
+
+the semidomain will still overlap with it.
+
+n
+
+n
+
+n
+
+n
+
+)
+
+4
+
+_
+
+_
+
+_
+
+_
+
+1 e
+
+e
+
+e
+
+where n ≥ 4 is the number of data sets, and D is now a vector 3. IMPLEMENTATION OF THE FOURIER IMAGE
+
+of length n holding the data sets; F is still the same 4-vector.
+
+
+
+
+
+RECONSTRUCTION
+
+
+Expanding equation (21) gives
+
+
+
+
+
+3.1. Data Set Requirements
+
+
+The present reconstruction method works only if the data
+
+2
+
+H
+
+E ⫽ (F F ⫺ D) (F F ⫺ D) satisfy a number of conditions, the most important of which
+
+H
+
+H
+
+H
+
+H
+
+H
+
+H
+
+⫽ F F F F ⫺ F F D ⫺ D F F ⫹ D D, (23)
+
+is that the intrinsic image structure remain constant over the
+
+extent of the dithered data-taking sequence. The PSF should
+
+where H denotes the Hermitian (or complex-conjugate) trans-
+
+not vary significantly in time, or if the dither steps are large,
+
+pose. Minimizing E implies
+
+in space as well. "Significantly" in this context means variations
+
+on spatial scales where the Fourier S/N ratio is greater than
+
+H
+
+⫺1
+
+H
+
+F ⫽ (F F)
+
+F D.
+
+(24)
+
+unity; bright point sources are more vulnerable to PSF varia-
+
+tions than faint or more diffuse sources. Bright noise spikes,
+
+hot pixels, cosmic-ray hits, or any other variable sources must
+
+In the case of an overdetermined situation, one might further
+
+also be eliminated or repaired prior to reconstruction. A final
+
+want to weight the observations differently. For example, it
+
+obvious requirement is that reconstruction can work only on
+
+may not be practical to obtain exposures of identical length
+
+the portions of the dither set in common to all images; as the
+
+over the sequence of observations, or they may have variable
+
+dither takes place, it is likely that a larger region of the sky
+
+backgrounds. In this case, it is easy to generalize equation (24)
+
+will be imaged than is present on any single image-subimages
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+232
+
+LAUER
+
+ramic data sets. This issue will be discussed further in § 4, but
+
+I emphasize that the present approach is concerned solely with
+
+the
+
+specific
+
+task
+
+of
+
+accurate
+
+reconstruction
+
+of
+
+a
+
+Nyquist-sampled image. Geometric rectification or defect re-
+
+jection are problems that can be separated from the actual re-
+
+construction algorithm; the caveats presented above do not nec-
+
+essarily prevent use of the present method if they can be
+
+addressed apart from the reconstruction task.
+
+Two other requirements on the data set concern the pattern
+
+and measurement of the dithers. Ideally, the fractional portion
+
+of the dither steps (that is, ignoring the integer number of pixels
+
+stepped over) should match the nominal 2 # 2 or 3 # 3 equal
+
+substepping patterns as closely as possible or, if the problem
+
+is heavily overdetermined, be at least evenly spread over the
+
+area of a single pixel. In this case, solution of equation (25)
+
+will generate a set of complex coefficients, c of nearly equal
+
+n
+
+power (presuming equal weights). Formally, solutions can be
+
+calculated for any nondegenerate dither pattern; however, as
+
+the dither pattern moves away from optimal, the images will
+
+be combined unevenly, with heavy weight being placed on
+
+those with less redundant positions. For real images, this means
+
+that the relative noise contributed by such images will be am-
+
+plified compared to others in the dither set. Noise properties
+
+of the reconstructed image will be discussed below; in practice,
+
+excess amplification of noise is only important for large de-
+
+partures from an ideal pattern.
+
+Fig. 3.-As for the 2 # 2 case, this figure schematically shows the config-
+
+Accurate measurement of the dither steps is required to con-
+
+uration of the Fourier domain for reconstructing an image with 3 # 3 sub-
+
+struct the F matrix. This may be done iteratively. Initially one
+
+sampling. Again, the Fourier transforms are calculated only for the semiplane
+
+with 0 ≤ u ≤ 1/2, ⫺1/2
+
+might use simple centroids of stars or other compact objects
+
+! v ≤ 1/2. Satellites now occur at all integer multiples
+
+of ( u, v) ⫽ 1/3, but each satellite still has significant power over D u ⫽ Ⳳ
+
+within a given image to measure dither offsets. Once a recon-
+
+1/2, and D v ⫽ Ⳳ1/2 about its central location. The figure shows as heavy dots structed image has been generated, it can be cross-correlated
+
+the central location of all satellites that overlap with the fundamental transform with the individual images to refine the offsets, permitting a
+
+centered at ( u, v) ⫽ 0. Algebraic elimination of the satellites is now done in more accurate reconstruction to be done in a second iteration.
+
+six regions; the satellites that contribute to a given region are the one at its center, and the eight surrounding it.
+
+
+
+
+
+3.2. Computing the Reconstructed Image
+
+
+of the common overlap region must be isolated prior to
+
+Given the prepared set of dithered images and measured
+
+reconstruction.
+
+dither steps, computation of the reconstructed image can pro-
+
+The mathematics of the Fourier reconstruction method do
+
+ceed. In practice I have done this within the Vista image-
+
+not strictly require that the angular size of the pixels be constant
+
+processing system, making use of its native image arithmetic
+
+over the extent of any image, provided that the dither steps are
+
+and Fourier routines, augmenting it only with a new subroutine
+
+small enough that they can be regarded as constant over the
+
+to construct F, and then solving for and appling c to the Fourier
+
+n
+
+complete area of the images. Images that have variations in
+
+transform of a given image.
+
+their pixel scale large enough so that the amplitude of the
+
+For each image, the first steps are to normalize it to a com-
+
+dithers (in pixels) varies significantly over the extent of the
+
+mon exposure level, and to then expand it into a sparse array,
+
+image must be processed in subsets small enough that the dith-
+
+spacing out the pixels by 2# or 3# as desired. Each pixel in
+
+ers can be regarded as constant over the angular domain se-
+
+an input image then occupies one of the corners of a cell of
+
+lected. Last, the dithers must be translational only, with no
+
+2 # 2 or 3 # 3 new pixels in the expanded image, with the
+
+rotation.
+
+other n # n ⫺ 1 pixels in each cell set to zero. This actualizes The reader familiar with Drizzle may object that these re-each image as a sparse III function; one can see that for exact
+
+quirements are too restrictive for many sets of dithered data.
+
+n # n dithers, the other images would simply be interlaced at
+
+Drizzle performs cosmic-ray event and defect rejection, as well
+
+the vacant locations.
+
+as geometric rectification, when building a subsampled image.
+
+Once an image is expanded, its Fourier transform is com-
+
+Drizzle is thus attractive for the complete reduction of pano-
+
+puted; a power spectrum at this stage clearly shows the aliased
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+
+
+COMBINING UNDERSAMPLED DITHERED IMAGES
+
+233
+
+Fig. 4.-Reconstruction of the HST PC PSF with 2 # 2 subsampling is shown based on 20 dithered F555W images of a star in q Cen. The image at left shows a linear stretch of one of the PSF images (selected to be nearly centered on a pixel). The central image shows the reconstructed PSF with the same intensity stretch. The last image is a logarithmic stretch (with dynamic range 3.5 in log units) of the reconstructed PSF.
+
+satellites. The next step is to multiply the transform by c ,
+
+This step resets the coordinate system to that of the sky, cor-
+
+n
+
+remembering that different coefficients must be used for the
+
+rectly phasing the various III functions of the dither set.
+
+various regions within the domain. The adjusted transform is
+
+then added to the adjusted transforms of the other images. The
+
+
+
+
+
+3.3. Examples of Reconstructed Images
+
+
+reconstructed image is the inverse transform of the complete
+
+sum.
+
+Figures 4 and 5 show PC and WFC PSFs reconstructed from
+
+One important caveat is that each the transform of each image
+
+a calibration program of 20 F555W dithered images of a field
+
+must be multiplied by a complex phase, exp [⫺2p Ki ( x
+
+within the q Cen globular cluster. The PC PSF was recon-
+
+j ⫹
+
+y )] , where ( x , y ) is its spatial offset from the average of the structed with 2 # 2 subsampling, while 3 # 3 subsampling
+
+j
+
+j
+
+j
+
+other images and K is the degree of subsampling. This is re-
+
+was used for the WFC PSF. The cores of the PSFs are now
+
+quired because the mathematics presented in the previous sec-
+
+well resolved, and no "boxy" artifacts are seen as can occur
+
+tion presume a two-dimensional coordinate system anchored
+
+in Drizzle reconstructions (Fruchter & Hook 1999). It is also
+
+to the sky, rather than the grid of the detector. In other words,
+
+worthwhile to note the strong blurring introduced by the WFC
+
+as each image is expanded, initially its III function has identical
+
+pixel function, P, itself. Again, the reconstruction does not
+
+coordinates to those in the other images, with the object ap-
+
+recover the intrinsic PSF due to the optics only but also the
+
+parently moving with respect to the detector coordinate system.
+
+intrinsic PSF convolved with P. The PC PSF clearly has the
+
+Fig. 5.-Reconstruction of the HST WFC PSF with 3 # 3 subsampling is shown based on 20 dithered F555W images of a star in q Cen. The image at left shows a linear stretch of one of the PSF images (selected to be nearly centered on a pixel). The central image shows the reconstructed PSF with the same intensity stretch. The last image is a logarithmic stretch (with dynamic range 3.5 in log units) of the reconstructed PSF.
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+234
+
+LAUER
+
+sharper and rounder core, while the center of the WFC PSF is
+
+can be configured to produce a simple interlaced reconstruction,
+
+strongly determined by the pixel shape.
+
+while at the opposite end of the scale, Drizzle can do simple
+
+Figures 6 and 7 show the power spectra at various stages in
+
+"shift-and-add" reconstructions on the original pixel scale,
+
+the reconstruction of the WFC PSF to illustrate the algorithm
+
+which implies highly significant smoothing. In general, it ap-
+
+concretely. The final combination of 20 images has reduced
+
+pears from a number of additional experiments that when a
+
+the contribution of the aliased satellites by ∼105. The final
+
+large image set is available, Drizzle effectively smooths a per-
+
+power spectrum also ratifies the strong contribution of the WFC
+
+fect reconstruction with a Gaussian with width of about 1 pixel,
+
+pixel to the total PSF. The shape of the spectrum is clearly
+
+as in the HDF galaxy above. For WFC PSFs, for example, the
+
+boxy; further, the central lobe is surrounded by a strong zero,
+
+blurring can cause a 10% reduction in the flux of the central
+
+which would be expected in the power spectrum of a nearly
+
+pixel. This is not guaranteed, however; in one WFC PSF ex-
+
+square and uniform pixel function.
+
+periment with only four nearly exactly interlaced images, Driz-
+
+Turning to more interesting objects, Figure 8 shows the
+
+zle produced a result that was apparently sharper than the
+
+2 # 2 reconstruction of the nucleus of the early-type galaxy
+
+Fourier reconstruction. Close examination, however, showed
+
+NGC 1023. Unlike the situation for the PSFs, which were
+
+that the Drizzle result was still aliased; aliasing can cause fea-
+
+highly overdetermined, only five dithered images were avail-
+
+tures to be artificially sharpened as well as broadened. Further
+
+able for NGC 1023. The dither pattern was close to a nominal
+
+comparison of the Fourier method to Drizzle is thus best done
+
+exact interlace, but the offsets typically differed from the nom-
+
+in a context specific to the scientific problem at hand.
+
+inal 0.5 pixel by ∼0.1 pixel; thus, the present method was
+
+required. This galaxy has a particularly compact center (Lauer
+
+3.4. Noise in the Reconstructed Image
+
+et al. 1995). The present observations were obtained to observe
+
+As alluded to in § 3.1, the noise level in the reconstructed
+
+its
+
+central
+
+structure
+
+with
+
+the
+
+best
+
+resolution
+
+availa-
+
+image depends on how well the dither pattern matches an ideal
+
+ble-reconstructing the image without introducing additional
+
+interlace pattern. For N images, the solutions presented in equa-
+
+blurring is thus critical. The reconstructed image clearly shows
+
+tions (24) or (25) reduce to a set of complex coefficients
+
+the sharp compact nucleus of NGC 1023 but is also smooth
+
+{ c } relating F( u,
+
+n
+
+v) to the data, as in the exact solution shown
+
+and free from artifact; indeed this image can now be processed
+
+in equation (18). On the presumption that the noise from image
+
+further with PSF deconvolution.
+
+to image is uncorrelated, then the average power in noise in
+
+Last, I show a 2 # 2 reconstruction of a chain galaxy at
+
+the reconstructed image is simply
+
+z ⫽ 1.355 (Cohen et al. 1996) in the Hubble Deep Field (Fig.
+
+9), along with a Drizzle reconstruction.2 Superficially the two
+
+N
+
+1/2
+
+images look identical; the gross morphology is not strongly
+
+∗
+
+2
+
+F
+
+(冘
+
+h ⫽
+
+c c h
+
+n
+
+n
+
+n )
+
+,
+
+(26)
+
+dependent on the reconstruction algorithm. Detailed compari-
+
+n⫽1
+
+son shows, however, that the present reconstruction is slightly
+
+sharper-the peak of the brightest knot in the image is ∼7%
+
+where h is the noise power in image n. With a nearly ideal
+
+n
+
+brighter, for example. Matching the resolution of the Drizzled
+
+dither pattern (and equally weighted data),
+
+∗
+
+1/2
+
+2
+
+( c c )
+
+≈ K / N,
+
+n
+
+n
+
+image requires smoothing the Fourier reconstruction with a
+
+where K is the degree of subsampling; the noise level is as
+
+Gaussian with FWHM ≈ 1 pixel (on the subsampled scale).
+
+expected for the simple addition of N images. As the dither
+
+The Fourier reconstruction does appear to have more noise,
+
+pattern becomes less ideal, however, unequal weight is placed
+
+but again this is due to the smoothing inherent in the Drizzle
+
+on the images, depending on the uniqueness of their positions.
+
+algorithm. The Fourier reconstruction can be smoothed, but
+
+Highly redundant images will have small coefficients, while
+
+one of the nice things about having a well-sampled image is
+
+more isolated images contribute relatively higher power. The
+
+that optimal filters can be used to improve its appearance. A
+
+linear combination of the images still produces an exact so-
+
+Wiener filter (Wiener 1949), for example, can be used to reject
+
+lution for the reconstructed image, but because the noise is
+
+much of the noise in the present image with little effect on its
+
+incoherent from image to image, it may be amplified in the
+
+resolution, an option that is not possible with aliased images.
+
+final image, relative to its level in the ideal case. Equation (26)
+
+A more general comparison of the present method to Drizzle
+
+allows the noise in the reconstructed image to be calculated in
+
+is complex, as the difference between the two depends on the
+
+advance for any particular dither pattern.
+
+dither pattern, the size of the image set, choice of the recon-
+
+Figure 10 shows how noise in the reconstructed image varies
+
+structed pixel size, and the Drizzle drop size. For example,
+
+as the dither pattern moves away from the ideal interlace for
+
+when the dither pattern is close to an exact interlace, Drizzle
+
+two examples of 2 # 2 subsampling. In these tests, variations
+
+in the pattern were treated as random Gaussian errors about
+
+the exact interlace. For a given standard deviation of the random
+
+2 The Drizzle reconstruction shown was done with the same image set,
+
+offset, several simulated image reconstructions were computed.
+
+weights, and pixel grid used for the Fourier reconstruction, and differs from
+
+the Drizzle-reconstructed image of the same galaxy in the official release of For the example with only four images, there is no redundant
+
+the HDF.
+
+information, and the noise level depends strongly on the par-
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+
+
+COMBINING UNDERSAMPLED DITHERED IMAGES
+
+235
+
+Fig. 6.-Power spectra are shown at various stages in the reconstruction of the WFC PSF with 3 # 3 subsampling. The left-hand image shows the power spectrum of a single PSF image expanded as a sparse III function. The low contrast of the minima between the bright peaks of the satellites shows the effects of the severe aliasing in WFC images. The middle image shows the spectrum of the penultimate reconstruction. At this stage, 19 of the 20 images have been combined and the flanking satellites have been greatly reduced in power. The right-hand image shows the power spectrum of the final reconstructed PSF-the partial combination shown in the middle has now been completed by the addition of the last image. The display scale is identical and logarithmic (with a range of 105) for all three spectra. The power spectra are shown for the full Fourier domain for ease of visual interpretation, even though the transforms are computed only in a semiplane.
+
+ticulars of the dither pattern once excursions from the exact
+
+interlace become large. For nine images, the reconstruction is
+
+more stable to departures from the ideal, the final noise level
+
+showing smaller excursions. The real importance of this dem-
+
+onstration, however, is to show that the noise level rises only
+
+slowly above its ideal for small errors in the dither pattern.
+
+Experience with WFPC-2, for example, shows that typical dith-
+
+ering errors (ⱗ0.1 PC pixel) will give results within the regime
+
+of modest noise amplification.
+
+
+
+
+
+4. DISCUSSION AND SUMMARY
+
+
+As noted in the Introduction, my interest in the Fourier re-
+
+construction method presented here stemmed from a strong
+
+desire to avoid the random blurring,
+
+
+
+P , that Drizzle may in-
+
+troduce into the reconstructed image. The present method per-
+
+mits exact reconstruction of the superimage, with no blurring
+
+at the Nyquist scale, nor requires any arbitrary decisions or
+
+parameters to control the form of the reconstructed image. One
+
+might object that the degree of subsampling selected is such a
+
+parameter; however, it is really specified by the intrinsic spatial
+
+scale of the Nyquist frequency. A Nyquist-sampled image can
+
+be resampled at finer scales without loss of information content
+
+or introduction of artifact-images generated at various sub-
+
+sampling scales past the Nyquist scale are essentially equivalent
+
+Fig. 7.-Cuts along the u-axis of the power spectra (shown in the previous figure) are plotted at various stages in the reconstruction of the WFC PSF with
+
+representations of the image.
+
+3 # 3 subsampling. The dashed line shows the power spectrum of a single
+
+The present algorithm places several preconditions on the
+
+PSF image expanded as a sparse III function. The dotted line shows the
+
+data; thus, it is worthwhile to consider (1) the optimal data-
+
+spectrum of the penultimate reconstruction. At this stage, 19 of the 20 images
+
+taking strategy and (2) how to best perform the related tasks
+
+have been combined and the flanking satellites have been greatly reduced in
+
+of artifact rejection, geometric rectification, and so on. The
+
+power. The solid line shows the power spectrum of the final reconstructed
+
+PSF-the partial combination has now been completed by the addition of the
+
+mathematics of the Fourier method strongly recommends se-
+
+last image.
+
+lecting a dither pattern that contains fractional offsets as close
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+
+
+236
+
+LAUER
+
+Fig. 8.-Reconstruction of the center of NGC 1023 with 2 # 2 subsampling. Five F555W PC images were used. Four of the images ( left) define an approximate 2 # 2 interlace pattern; however, the offsets typically differed from the nominal 0.5 pixel steps by ∼0.1 pixel (the fifth image falls within 0.1 pixel of one of the four images shown). The stretch is linear.
+
+to the ideal interlace pattern, itself. If a good dither pattern is
+
+step to allow for cosmic-ray rejection. This strategy clearly
+
+realized, little is demanded of the linear combination of the
+
+demands a rather large data set, which may not be feasible for
+
+images-one is simply accounting for the slight errors in its
+
+programs lasting only an orbit or two on HST; however, it
+
+execution. It should be emphasized that the dither pattern can
+
+presents no difficulties for multiorbit programs, where one will
+
+also contain integer pixel offsets as well, as might be desired
+
+be obtaining a large number of exposures in any case.
+
+to eliminate hot pixels, traps, blocked columns, and other fixed
+
+With regards to the second issue above, I have focused solely
+
+detector defects as well as cosmic rays. A nearly ideal program
+
+on the problem of reconstructing a Nyquist-sampled image.
+
+for the present algorithm would be to attempt a 2 # 2 sub-
+
+Tasks that are required before this stage include image regis-
+
+sampling interlace but taking multiple exposures at each dither
+
+tration and defect repair. Tasks that might follow reconstruction
+
+Fig. 9.-Two reconstructions of a z ⫽ 1.355 chain galaxy in the Hubble Deep Field with 2 # 2 subsampling, based on 11 F450W WFC images. The left-hand image was done with the present Fourier method, while the image on the right is a Drizzle reconstruction. The stretch is linear.
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+COMBINING UNDERSAMPLED DITHERED IMAGES
+
+237
+
+changes across the image may be unimportant; if variations in
+
+the local dither step over the image domain are limited to a
+
+few percent of a pixel, then the entire domain may be recon-
+
+structed and then later rectified. If the dither steps are large,
+
+however, the fractional pixel offsets may vary significantly over
+
+the image, requiring the reconstruction to be done in subsets
+
+of the domain and later patched together. This may be unat-
+
+tractive for some problems requiring panoramic imaging but
+
+may be irrelevant if the primary objects of interest are compact
+
+or occupy only small portions of the images.
+
+While the Fourier reconstruction method presented here
+
+works only for translational dithers, I note in passing that the
+
+professional image-processing literature does contain algo-
+
+rithms related to be present one that can combine undersampled
+
+images with more complex geometric interrelationships.
+
+Granrath & Lersch (1998) present an algorithm that constructs
+
+a Nyquist-sampled image from an image set whose members
+
+can be related to each other with affine transformations, i.e.,
+
+the geometric transformations that include rotation, scale
+
+change, and shear, as well as simple translations. The Granrath
+
+& Lersch algorithm constructs a "projection-onto-convex-sets"
+
+estimate that gives the best reproduction of the image set, in
+
+Fig. 10.-Simulations of the relative amplification of noise as a function
+
+of the departure of the dither pattern from a perfect interlace are shown. The
+
+contrast to the present method, which yields a closed-form
+
+departure is parameterized as a normal distribution of random offsets with the
+
+solution to the Nyquist image. Methods of this sort may be of
+
+standard deviation specified in original pixels. The solid curve and points show interest in cases where the image does not meet the conditions
+
+the case for when only four images are used in the reconstruction. The dashed
+
+required for the present Fourier method, but precise treatment
+
+line and open symbols show the simulations done with nine input images.
+
+of the Nyquist scale is still important.
+
+The Fourier technique presented here may not be the first
+
+include geometric rectification, deconvolution, and filtering.
+
+choice to construct a Nyquist image when the geometrical re-
+
+Drizzle is attractive in part because it is a complete package
+
+lationships among the image set are complex or the dither
+
+that does many of these steps together within the familiar IRAF/
+
+pattern is strongly nonoptimal. Further, its resolution gains may
+
+STSDAS environment. This said, however, I emphasize that
+
+appear to be superficially modest. There are HST imaging prob-
+
+many of the preliminary reduction steps can be done indepen-
+
+lems that push right against the diffraction scale of the instru-
+
+dently of the Fourier reconstruction algorithm-these issues
+
+ment. These include crowded field stellar photometry, the nu-
+
+should not impede its use. Indeed, one might use Drizzle for
+
+clear structure of galaxies-particularly those with bright
+
+an initial reconstruction to provide for defect rejection prior to
+
+AGNs, the morphology of lensed QSOs, and so on. This
+
+a second reconstruction cycle using the present algorithm. Geo-
+
+method allows clean access to the Nyquist scale and should be
+
+metric rectification is simple in principle if one is working with
+
+of use for these problems and more.
+
+well-sampled images; the issue is generating such an image if
+
+geometric distortions are important in the undersampled ob-
+
+I wish to thank Bobby Hunt, Christoph Keller, and Ken
+
+servations. As noted earlier, if the dithers are small, scale
+
+Mighell for useful conversations.
+
+
+
+
+
+REFERENCES
+
+
+Bracewell, R. N. 1978, The Fourier Transform and Its Applications
+
+Lauer, T. R., Ajhar, E. A., Byun, Y.-I., Dressler, A., Faber, S. M.,
+
+(New York: McGraw-Hill)
+
+Grillmair, C., Kormendy, J., Richstone, D., & Tremaine, S. 1995,
+
+Cohen, J. G., Cowie, L. L., Hogg, D. W., Songaila, A., Blanford, R.,
+
+AJ, 110, 2622
+
+Hu, E. M., & Shopbell, P. 1996, ApJ, 471, L5
+
+Tsai, R. Y., & Huang, T. S. 1984, Adv. Comput. Vision Image Process.,
+
+Fruchter, A. S., & Hook, R. N. 1999, PASP, in press (astro-ph/
+
+1, 317
+
+9808087)
+
+Wiener, N. 1949, Extrapolation and Smoothing of Stationary Time
+
+Granrath, D., & Lersch, J. 1998, J. Opt. Soc. Am. A, 15, 791
+
+Series (New York: Wiley)
+
+Kim, S. P., Bose, N. K., & Valenzuela, H. M. 1990, IEEE Trans., 38,
+
+Williams, R. E., et al. 1996, AJ, 112, 1335
+
+1013
+
+1999 PASP, 111:227-237
+
+This content downloaded from 129.97.58.73 on Thu, 27 Oct 2016 20:18:49 UTC
+
+All use subject to http://about.jstor.org/terms
+
+
+
+
+

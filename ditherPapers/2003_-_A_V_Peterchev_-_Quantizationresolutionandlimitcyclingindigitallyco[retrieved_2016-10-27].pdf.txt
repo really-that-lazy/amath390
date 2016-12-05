@@ -1,0 +1,1116 @@
+IEEE TRANSACTIONS ON POWER ELECTRONICS, VOL. 18, NO. 1, JANUARY 2003
+
+301
+
+Quantization Resolution and Limit Cycling in
+
+Digitally Controlled PWM Converters
+
+Angel V. Peterchev , Student Member, IEEE, and Seth R. Sanders , Member, IEEE
+
+Abstract-This paper discusses the presence of steady-state II. DIGITAL CONTROLLER STRUCTURE
+
+limit cycles in digitally controlled pulse-width modulation (PWM) converters, and suggests conditions on the control law and the A block diagram of a digitally controlled PWM buck con-quantization resolution for their elimination. It then introduces verter is shown in Fig. 1. The controller consists of an analog-to-single-phase and multi-phase controlled digital dither as a means digital converter (ADC) which digitizes the regulated quantity of increasing the effective resolution of digital PWM (DPWM) (e.g., the output voltage
+
+), a DPWM module, and a dis-
+
+modules, allowing for the use of low resolution DPWM units in crete-time control law. A discrete-time PID control law has the high regulation accuracy applications. Bounds on the number of bits of dither that can be used in a particular converter are form
+
+derived. Finally, experimental results confirming the theoretical analysis are presented.
+
+Index Terms-Analog-digital conversion, digital control, dither, (1)
+
+finite wordlength effects, power conversion, pulse-width modulation, quantization, stability, voltage regulation.
+
+where
+
+is the duty cycle command at discrete time
+
+,
+
+is the error signal
+
+I. INTRODUCTION
+
+(2)
+
+DIGITAL controllers for pulse-width modulation (PWM)
+
+converters enjoy growing popularity due to their low
+
+and
+
+is the state of an integrator
+
+power, immunity to analog component variations, compatibility with digital systems, and faster design process, as discussed (3)
+
+in [1] and the references therein. They have the potential to implement sophisticated control schemes and to accurately
+
+Further,
+
+is the proportional gain,
+
+is the derivative gain,
+
+match duty cycles in interleaved converters. Their applications and
+
+is the integral gain. Variable
+
+represents the ref-
+
+include microprocessor voltage regulation modules (VRMs),
+
+erence voltage, and
+
+is the digital representation of
+
+.
+
+portable electronic devices, and audio amplifiers, among many All variables are normalized to the input voltage,
+
+. Variable
+
+others.
+
+is used as a feedforward term in (1). Note that
+
+by it-
+
+This paper discusses conditions for the elimination of limit
+
+self would give the correct duty cycle command for steady state cycles, steady state oscillations at frequencies lower than the operation with constant load, if there were no load-dependent switching frequency, in digitally controlled PWM converters, as voltage drop along the power train and no other nonidealities in well as techniques for increasing the effective resolution of dig-the output stage [2]. Design of digital PID control law is dis-ital PWM (DPWM) modules. Section II gives an overview of
+
+cussed in [3]-[5].
+
+the structure of digital PWM controllers. Section III describes limit cycles and presents conditions for their elimination. Sec-III. CONDITIONS FOR THE ELIMINATION OF LIMIT CYCLES
+
+tion IV introduces controlled digital dither as a technique that effectively increases the resolution of the DPWM module, al-For the converter of Fig. 1, limit cycles refer to steady-state lowing for the use of low resolution DPWM modules in applica-oscillations of
+
+and other system variables at frequencies
+
+tions requiring high regulation accuracy, such as VRMs. The use lower than the converter switching frequency
+
+. Limit cy-
+
+of low resolution DPWM modules in these applications, without cles may result from the presence of signal amplitude quan-incurring limit cycles, can result in substantial power and silicon tizers like the ADC and DPWM modules in the feedback loop.
+
+area savings. Section V presents results from a prototype con-Steady-state limit cycling may be undesirable if it leads to large, verter implementing the findings of this paper.
+
+unpredicted output voltage variations. Furthermore, since the limit cycle amplitude and frequency are hard to predict, it is difficult to analyze and compensate for the resulting
+
+noise
+
+Manuscript received January 30, 2002; revised December 1, 2002. This work and the electro-magnetic interference (EMI) produced by the
+
+was presented in part at the Power Electronics Specialists Conference (PESC), Vancouver, BC, Canada, June 17-22, 2001. Recommended by Associate Editor converter.
+
+S. B. Leeb.
+
+Let us consider a system with ADC resolution of
+
+bits
+
+The authors are with the Department of Electrical Engineering and Com-and DPWM resolution of
+
+bits. For a buck converter, this
+
+puter Science, University of California, Berkeley, CA 94720 USA (e-mail: pe-terch@eecs.berkeley.edu; sanders@eecs.berkeley.edu).
+
+will correspond to voltage quantization of
+
+Digital Object Identifier 10.1109/TPEL.2002.807092
+
+steps for the ADC, and
+
+for the
+
+0885-8993/03$17.00 © 2003 IEEE
+
+
+
+
+
+302
+
+IEEE TRANSACTIONS ON POWER ELECTRONICS, VOL. 18, NO. 1, JANUARY 2003
+
+Fig. 1.
+
+Block diagram of a digitally controlled PWM buck converter.
+
+DPWM. Fig. 2(a)1 illustrates qualitatively the behavior of
+
+in steady state when the DPWM resolution is less than
+
+the ADC resolution, and there is no DPWM level that maps
+
+into the ADC bin corresponding to the reference voltage
+
+(this ADC bin will be referred to as the zero-error bin). In steady state, the controller will be attempting to drive
+
+to
+
+the zero-error bin, however due to the lack of a DPWM level
+
+there, it will alternate between the DPWM levels around the
+
+zero-error bin. This results in nonequilibrium behavior, such as steady-state limit cycling.
+
+The first step toward eliminating limit cycles is to ensure that under all circumstances there is a DPWM level that maps into
+
+the zero-error bin. This can be guaranteed if the resolution of (a)
+
+the DPWM module is finer than the resolution of the ADC. A
+
+one-bit difference in the resolutions,
+
+, seems
+
+sufficient in most applications since it provides two DPWM
+
+levels per one ADC level
+
+(4)
+
+Yet, even if the above condition is met, limit cycling may
+
+still occur if the feedforward term is not perfect and the control law has no integral term
+
+. In this case, the con-
+
+troller relies on nonzero error signal
+
+to drive
+
+toward
+
+the zero-error bin. However, once
+
+is in the zero-error bin,
+
+(b)
+
+the error signal becomes zero, and
+
+droops back below the
+
+Fig. 2.
+
+Qualitative behavior of V
+
+with (a) DPWM resolution lower than the
+
+zero-error bin. This sequence repeats over and over again, re-ADC resolution and (b) DPWM resolution two times the ADC resolution and sulting in steady-state limit cycling. This problem can be solved with integral term included in control law.
+
+by the inclusion of an integral term in the control law. After a transient, the integrator will gradually converge to a value that Fig. 3(a) shows a simulation of the transient response of a dig-drives
+
+into the zero-error bin, where it will remain as long
+
+itally controlled PWM converter. The resolution of the DPWM
+
+as
+
+, since a digital integrator is perfect [Fig. 2(b)]
+
+module,
+
+bits, is higher than the resolution of the
+
+ADC,
+
+bits, however steady-state limit cycling is ob-
+
+served both before and after the load current step, since no in-
+
+(5)
+
+tegral term was used in the control law. On the other hand, in Fig. 3(b) an integral term is added to the control law, and the An upper bound of unity is imposed on the integral gain, since steady-state limit cycling is eliminated.
+
+the digital integrator is intended to fine-tune the output voltage, The two conditions suggested above are not sufficient for the therefore it has to be able to adjust the duty cycle command by elimination of steady-state limit cycles, since the nonlinearity steps as small as a least significant bit
+
+.
+
+of the quantizers in the feedback loop may still cause limit cycling for high loop gains. Non-linear system analysis tools, such 1In all simulations the data is sampled at the switching frequency, therefore the switching ripple on V
+
+cannot be seen. For the discussions in this paper
+
+as describing functions [5]-[7], can be used to determine the the switching ripple is not of interest and its omission makes the plots clearer.
+
+maximum allowable loop gain not inducing limit cycles. The
+
+
+
+
+
+PETERCHEV AND SANDERS: QUANTIZATION RESOLUTION AND LIMIT CYCLING
+
+303
+
+resentation of
+
+. The corresponding describing function,
+
+, is plotted in Fig. 4(b), where
+
+is the ac amplitude of
+
+. From the plot it can be seen that the describing function
+
+has a maximum value of about 1.3, corresponding to maximum
+
+effective ADC gain. The control law (1), and hence
+
+, can
+
+then be designed to exclude limit cycles by ensuring that
+
+(6)
+
+Nyquist Criterion
+
+holds for all nonzero finite signal amplitudes
+
+and frequencies
+
+. In practice, conventional loop design methods (e.g., Bode
+
+plots) can be used, keeping in mind that the effective ADC gain peaks somewhat above unity.
+
+IV. CONTROLLED DIGITAL DITHER
+
+(a)
+
+The precision with which a digital controller regulates
+
+is determined by the resolution of the ADC. In particular,
+
+can be regulated with a tolerance of one
+
+of the ADC.
+
+Many present-day applications, such as microprocessor VRMs,
+
+demand regulation precision of about 10 mV [8], requiring ADCs and DPWM modules with very high resolution. For example,
+
+regulation resolution of 10 mV at
+
+V corresponds
+
+to ADC resolution of
+
+V
+
+mV
+
+bits,
+
+implying DPWM resolution of at least
+
+bits to avoid
+
+steady-state limit-cycling. For a converter switching frequency of
+
+MHz, such resolution would require a
+
+GHz fast clock in a counter-comparator implementation of
+
+the DPWM module, or
+
+stages in a ring oscillator
+
+implementation, resulting in high power dissipation or large
+
+area [7], [9], [1]. Thus, it is beneficial to look for ways to use low-resolution DPWM modules to achieve the desired high
+
+resolution.
+
+One method which can increase the effective resolution of
+
+(b)
+
+a DPWM module is dithering. It amounts to adding high-fre-
+
+Fig. 3.
+
+Simulation of a DPWM converter output voltage under a load current quency periodic or random signals to a certain quantized signal, transient with integral term: (a) not included and (b) included in control law.
+
+which is later filtered to produce averaged dc levels with in-V = 5 V, V
+
+= 1:5 V, f
+
+= 250 kHz, N
+
+= 9 b, and N
+
+= 10 b.
+
+creased resolution. Analog dither has been used to increase the effective resolution of a DPWM module [10]. However, analog feedback loop of the converter includes two quantizers-the
+
+dither is difficult to generate and control, it is sensitive to analog ADC and the DPWM-however in the present analysis we will
+
+component variations, and it can be mixed only with analog sig-consider only the ADC nonlinearity, since it performs coarser nals in the converter, and not with signals inside a digital con-quantization if the DPWM resolution is made higher than that
+
+troller. On the other hand, digital dither generated inside the of the ADC (as recommended above). The describing func-controller is simpler to implement and control, is insensitive tion of an ADC (a round-off quantizier) represents its effective to analog component variations, and can offer more flexibility.
+
+gain as a function of the input signal ac amplitude and dc bias.
+
+Therefore, the use of digital dither to improve the resolution of When the control law contains an integral term, only limit cy-DPWM modules is discussed in the present section.
+
+cles that have zero dc component can be stable, because the
+
+integrator drives the dc component of the error signal to the A. Single-Phase Dither
+
+zero-error bin. Since in steady state the dc bias is driven to The idea behind digital dither is to vary the duty cycle by
+
+zero, and since the loop transmission,
+
+, from the output
+
+an
+
+over a few switching periods, so that the average duty of the ADC to its input has a low-pass characteristic, the sinu-cycle has a value between two adjacent quantized duty cycle soidal-input describing function of a round-off quantizer can be levels. The averaging action is implemented by the output
+
+used to analyze the stability of the system. The characteristic filter. The dither concept is illustrated in Fig. 5. Let
+
+and
+
+of a round-off quantizer is plotted in Fig. 4(a), where
+
+correspond to two adjacent quantized duty cycle levels put
+
+is the ADC input voltage,
+
+is the ADC quantization bin
+
+out by the DPWM module,
+
+. If the duty
+
+size corresponding to one
+
+, and
+
+is the quantized rep-
+
+cycle is made to alternate between
+
+and
+
+every next
+
+
+
+
+
+304
+
+IEEE TRANSACTIONS ON POWER ELECTRONICS, VOL. 18, NO. 1, JANUARY 2003
+
+Fig. 5.
+
+Use of switching waveform dither to realize a (1=2)LSB DPWM level (1-b dither).
+
+(a)
+
+Fig. 6.
+
+Switching waveform dither patterns realizing (1=4)LSB, (1=2)LSB, and (3=4)LSB DPWM levels (2-b dither).
+
+cycle creates an additional ac ripple at the output of the
+
+filter, which is superimposed on the ripple from the converter switching action. It is desirable to keep the amplitude of the dither ripple low, in order to avoid poor output regulation,
+
+EMI, and limit cycles (which may result from the interaction
+
+(b)
+
+between the dither ripple and the ADC). Thus it is beneficial to Fig. 4.
+
+Characteristic of: (a) a round-off quantizer and (b) the corresponding select dither patterns that minimize the dither ripple.
+
+describing function for sinusoidal signals with zero dc bias.
+
+For a dither sequence with a particular length (
+
+switching
+
+cycles for
+
+-bit dither) there may be a few different dither pat-
+
+switching period, the average duty cycle over time will equal terns that average to the same dc level. For example, in Fig. 6
+
+. Thus, an intermediate
+
+the
+
+level can be implemented with two different
+
+sub-bit level can be implemented by averaging over
+
+sequences:
+
+or
+
+.
+
+two switching periods, resulting in an increase of the effective The latter pattern has higher fundamental frequency, and thus DPWM resolution of 1 b. Using the same reasoning,
+
+produces less output voltage ripple, due to the low-pass charac-and
+
+levels can be implemented by averaging over
+
+teristic of the output
+
+filter.
+
+four switching periods (Fig. 6), which increases the effective Two sets of 3-b dither sequences are shown in Table I, with
+
+DPWM resolution by 2 b. Finally, it can be seen that by using
+
+"1" standing for the addition of an
+
+to the duty cycle.
+
+dither patterns spanning
+
+switching periods, the effective
+
+Table I(a) corresponds to a simple rectangular waveform dither DPWM resolution can be increased by
+
+b
+
+discussed in [11]. The generation of these patterns is very (7)
+
+systematic and thus easy to implement. On the other hand, the dither sequences in Table I(b) were chosen with the aim of
+
+where
+
+is the hardware DPWM resolution, and
+
+minimizing their low frequency spectral content. Thus, when
+
+is the effective DPWM resolution.
+
+filtered, they produce the lowest ripple for a given average duty cycle. Notice that, while for the rectangular-waveform dither B. Dither Patterns
+
+the sequences producing lowest ripple are 0, 0, 0, 0, 0, 0, 0, 1
+
+Of course, the effective increase in DPWM resolution by
+
+and its complement, for the minimum-ripple dither the ripple
+
+dithering does not come for free. The dithering of the duty
+
+produced by any sequence does not exceed the ripple produced
+
+
+
+
+
+PETERCHEV AND SANDERS: QUANTIZATION RESOLUTION AND LIMIT CYCLING
+
+305
+
+by 0, 0, 0, 0, 0, 0, 0, 1 and its complement. Therefore, the
+
+TABLE I
+
+minimum-ripple sequences have a clear advantage over the
+
+3-B DITHER SEQUENCES
+
+rectangular-waveform sequences, with respect to dither ripple size.
+
+Yet another dither generation approach is to use
+
+modu-
+
+lation, however it does not guarantee minimum-ripple patterns, and further the dither spectral content is hard to predict.
+
+modulation in power electronics applications is discussed, for example, in [12] and [13].
+
+C. Dither Generation Scheme
+
+Fig. 7 shows a dither generation scheme that can produce
+
+patterns of any shape, and can therefore implement minimum-ripple dither such as the one in Table I(b). A look-up table stores dither sequences, each
+
+b long, corresponding to the
+
+sub-bit levels implemented with
+
+-bit dither. The
+
+s
+
+(a)
+
+of the duty cycle command
+
+select the dither sequence cor-
+
+responding to the appropriate sub-bit level, while the
+
+-bit
+
+counter sweeps through this dither sequence. The dither pattern is then added to the
+
+s of
+
+to produce the duty cycle
+
+command
+
+which is sent to the hardware DPWM module.
+
+D. Dither Ripple Size
+
+In Section IV-A it was shown that the longer the dither pat-
+
+terns used, the larger the effective DPWM resolution. However, longer dither patterns can cause higher output ripple, since they contain lower frequency components, and the
+
+filter has less
+
+attenuation at lower frequencies. This consideration puts a practical limit on the number of bits of dither that can be added to increase the resolution of the DPWM module.
+
+For the rectangular-waveform dither in Table I(a) some
+
+(b)
+
+simple mathematical analysis (see the Appendix) can give an
+
+estimate of the maximum peak-to-peak ripple added to the
+
+output voltage as a result of the dither
+
+(8)
+
+for
+
+, and
+
+(9)
+
+Fig. 7.
+
+Structure for adding arbitrary dither patterns to the duty cycle.
+
+for
+
+, where
+
+is the fundamental frequency
+
+for
+
+, where
+
+of the dither
+
+(10)
+
+(13)
+
+is the
+
+filter cutoff frequency, and
+
+is the
+
+zero
+
+is the difference between the effective resolutions of the DPWM
+
+frequency associated with the output capacitor.
+
+and the ADC (in bits). For example, in Section III it was sug-Once the amplitude of the dither is known, we can develop a
+
+gested that making the resolution of the DPWM one bit higher
+
+condition on how many bits of dither,
+
+, can be used in a certain
+
+then that of the ADC adequately satisfies the condition to elimi-system, without inducing limit cycles (see the Appendix),
+
+nate steady-state limit cycling, hence
+
+. The above equa-
+
+tions can be used by starting with a guess for
+
+, obtaining the
+
+(11)
+
+corresponding dither frequency from (10), and then using (11) or (12), respectively, to obtain a bound on
+
+. If the result is not
+
+consistent with the initial guess for
+
+, the procedure should be
+
+for
+
+, and
+
+repeated with a reduced value of
+
+. On the other hand, if the
+
+inequalities are satisfied, the value of
+
+can be increased, and
+
+(12)
+
+the procedure can be repeated.
+
+
+
+
+
+306
+
+IEEE TRANSACTIONS ON POWER ELECTRONICS, VOL. 18, NO. 1, JANUARY 2003
+
+(a)
+
+Fig. 8.
+
+Block diagram of a four-phase buck converter.
+
+Fig. 9.
+
+Four-phase switching waveform dither patterns implementing a
+
+(1=2)LSB DPWM level.
+
+In Section IV-B it was shown that there are dither patterns,
+
+(b)
+
+such as the minimum-ripple dither in Table I, that produce lower Fig. 10.
+
+Experimental four-phase buck converter transient response under a ripple compared to the rectangular-waveform dither on which
+
+load current step with: (a) N
+
+= 7 b and (b) N
+
+= 7 b + 3-b
+
+the above analysis is based. If such dither patterns are used, dither = 10 b. N
+
+= 9 b, V = 5 V, V
+
+= 1:5 V, f
+
+= 250 kHz.
+
+(8) and (9) give an overestimate, while (11) and (12) yield an underestimate. Nevertheless, these equations are still a useful in a multi-phase converter we can exploit the additional degrees tool for conservative design, since ripple amplitude analysis of of freedom associated with the independent switching of the dif-the minimum-ripple dither is far more involved.
+
+ferent phases to further reduce the dither ripple, and thus allow more bits of dither, and respectively less bits of hardware reso-E. Multi-Phase Dither
+
+lution of the DPWM module.
+
+The concept of controlled dither can be extended to multi-
+
+Consider again the case of a
+
+level.
+
+phase (interleaved) VRMs. In a multi-phase converter, multiple This level can be implemented by commanding, in the same
+
+single-phase power trains are connected to a common output
+
+switching period,
+
+to two of the phases and
+
+to the
+
+capacitor and switched with the same duty cycle, but out of
+
+other two, so that the average duty cycle over all phases is
+
+phase, which decreases the ripple in the output voltage and
+
+for that period. The next switching period
+
+input current. For example, the block diagram of a four-phase the duty cycle commands are toggled, so that the average over buck converter is shown in Fig. 8. In this case, the four power all phases is still
+
+, however the average over
+
+train legs are switched
+
+out of phase.
+
+time for each phase is
+
+as well (Fig. 9). The
+
+The controlled dither technique developed for single phase
+
+equal averaging over time for each phase is necessary to avoid converters can be applied directly to the multi-phase case. For dc current mismatch among the phases. This approach can be
+
+example, to achieve a
+
+level, duty cycle
+
+extended for other sub-bit levels, like
+
+, noting
+
+is applied to all phases for one switching period, followed by that for a multiphase converter with
+
+phases,
+
+bits
+
+applied to all phases, and so on. However,
+
+of dither can be implemented by averaging over the phases.
+
+
+
+
+
+PETERCHEV AND SANDERS: QUANTIZATION RESOLUTION AND LIMIT CYCLING
+
+307
+
+APPENDIX
+
+DITHER RIPPLE CALCULATIONS
+
+Since the dither constitutes switching between two adjacent
+
+quantized duty cycle levels, it can be modeled as a square
+
+wave with peak-to-peak amplitude of one hardware
+
+of
+
+the DPWM module equal to
+
+. For
+
+-bit rectan-
+
+gular-waveform dither [Table I(a)], the dither waveform with
+
+the largest low frequency component is a square wave with
+
+50% duty ratio at frequency
+
+(14)
+
+This waveform can be used to study the worst case dither
+
+Fig. 11.
+
+Maximum dither ripple amplitude constraint. Illustrated case is for N
+
+= N
+
++ 2
+
+ripple. Since the dither is smoothed by the converter output
+
+.
+
+filter, it is sufficient to consider only its fundamental frequency component, which is a sine wave with frequency
+
+and
+
+Multiphase dither can increase the dither frequency seen at the peak-to-peak amplitude
+
+output node about
+
+times, thus reducing the resulting ripple,
+
+and allowing approximately
+
+more bits of DPWM
+
+(15)
+
+resolution to be implemented with dither.
+
+The peak-to-peak output voltage ripple can then be bounded
+
+approximately as
+
+V. EXPERIMENTAL RESULTS
+
+(16)
+
+The digital dither technique was tested on a prototype four-
+
+phase buck converter with results confirming the theoretical
+
+where
+
+is the attenuation of the output
+
+filter at fre-
+
+expectations. In the prototype, the ADC had 9-b resolution
+
+quency
+
+.
+
+and the DPWM had 7 b of hardware resolution. The control
+
+The
+
+filter has a cutoff frequency at
+
+law included an integral term, thus (5) was satisfied. Condition after which it rolls off at
+
+40 dB/dec. A real capacitor has fi-
+
+(6) was satisfied as well, by design of the proportional gain.
+
+nite effective series resistance (
+
+) which causes a zero in
+
+The transient response of the converter due to a load current the filter characteristic at frequency
+
+,
+
+step is shown in Fig. 10(a). The system exhibits steady-state changing the rolloff to
+
+20 dB/dec. Thus
+
+limit cycling since condition (4) is not met. Subsequently 3-b single-phase digital dither was introduced, using the minimum for
+
+(17)
+
+ripple sequences from Table I(b), thus increasing the effective resolution of the DPWM module to
+
+bits. The step
+
+and
+
+response of the modified system is shown in Fig. 10(b). The
+
+for
+
+(18)
+
+effective resolution of the DPWM is now higher than that of
+
+the ADC, and all three no-limit-cycle conditions (4)-(6) are Substituting back in (16), we obtain upper bounds for the
+
+satisfied. Consequently, limit cycles are prevented. It should peak-to-peak output voltage ripple due to dither
+
+be noted that in this case the steady state ripple is only due to the multiphase switching and the dither, and it does not
+
+exceed a few millivolts. This example illustrates the validity (19)
+
+of the no-limit-cycle conditions, as well as the effectiveness of the controlled dither concept.
+
+for
+
+, and
+
+(20)
+
+VI. CONCLUSION
+
+for
+
+.
+
+This paper discussed the presence of steady-state limit cy-
+
+Once the amplitude of the dither is known, a condition on how cles in digitally controlled PWM converters, and suggested
+
+many bits of dither,
+
+, can be used in a certain system can be
+
+conditions on the control law, and the ADC and DPWM res-
+
+developed. To ensure that the dither does not cause steady-state olutions for their elimination. It then introduced single-phase limit cycling, there should always be an effective DPWM level and multi-phase controlled digital dither as a means of in-that completely fits into one ADC quantization bin, taking into creasing the effective resolution of DPWM modules, allowing
+
+account the dither ripple. With
+
+-b dither, the effective DPWM
+
+for the use of low resolution DPWM units in high regulation
+
+quantization bin size is
+
+accuracy applications. Bounds on the number of bits of dither that can be used in a particular converter were derived.
+
+(21)
+
+
+
+
+
+308
+
+IEEE TRANSACTIONS ON POWER ELECTRONICS, VOL. 18, NO. 1, JANUARY 2003
+
+Geometric considerations show that the case which allows
+
+[8] Intel Corp. (2002, Apr.) VRM 9.0 DC-DC converter design guidelines.
+
+for the smallest dither ripple amplitude is when the effective Tech. Rep.. [Online]. Available: http://developer.intel.com/design/pen-tium4/guides
+
+DPWM levels are located at one-half effective DPWM bin size
+
+[9] A. P. Dancy and A. P. Chandrakasan, "Ultra low power control circuits from the center of the ADC bin (Fig. 11). Then the tolerable
+
+for PWM converters," in Proc. IEEE Power Electron. Spec. Conf. , vol.
+
+peak-to-peak dither ripple amplitude is bounded by
+
+1, 1997, pp. 21-27.
+
+[10] S. Canter and R. Lenk, "Stabilized power converter having quantized duty cycle," U.S. Patent 5 594 324, Jan. 1997.
+
+(22)
+
+[11] L. Peng, X. Kong, Y. Kang, and J. Chen, "A novel PWM technique in digital control and its application to an improved DC/DC converter," in Assuming that the ADC has resolution
+
+b coarser than the
+
+Proc. IEEE Power Electron. Spec. Conf. , 2001.
+
+[12] G. Luckjiff, I. Dobson, and D. Divan, "Interpolative sigma delta modu-effective resolution of the DPWM module
+
+lators for high frequency power electronic applications," in Proc. IEEE
+
+Power Electron. Spec. Conf. , vol. 1, 1995, pp. 444-449.
+
+(23)
+
+[13] C. Pascual, P. T. Krein, P. Midya, and B. Roeckner, "High-fidelity PWM
+
+inverter for audio amplification based on real-time dsp," in Proc. Work-shop Comput. Power Electron. , 2000, pp. 227-232.
+
+the ADC bin size is
+
+(24)
+
+Angel V. Peterchev (S'96) was born in Sofia,
+
+Substituting (21) and (24) in (22), we obtain
+
+Bulgaria, in 1976. He received the B.A. degree in
+
+physics and electrical engineering from Harvard
+
+University, Cambridge, MA, in 1999, and the M.S.
+
+(25)
+
+degree in electrical engineering from University of
+
+California, Berkeley, in 2002, where he is currently
+
+Combining (25) with (19) and (20) we obtain an upper bound
+
+pursuing the Ph.D. degree.
+
+His current research work is in the field of digital
+
+on
+
+control of power converters, with applications to
+
+microprocessor voltage regulation modules and
+
+portable electronics. From 1997 to 1999, he was
+
+(26)
+
+a member of the Rowland Institute at Harvard, Cambridge, MA, where he developed scientific instrumentation.
+
+Mr. Peterchev received the 2001 Outstanding Student Designer Award from for
+
+, and
+
+Analog Devices, Inc.
+
+(27)
+
+Seth R. Sanders (M'88) received the S.B. degrees
+
+for
+
+.
+
+in electrical engineering and physics and the S.M.
+
+and Ph.D. degrees in electrical engineering from the
+
+Massachusetts Institute of Technology, Cambridge,
+
+REFERENCES
+
+in 1981, 1985, and 1989, respectively.
+
+He was a Design Engineer at the Honeywell Test
+
+[1] A. V. Peterchev, J. Xiao, and S. R. Sanders, "Architecture and IC imple-Instruments Division, Denver, CO. Since 1989,
+
+mentation of a digital VRM controller," IEEE Trans. Power Electron. , he has been on the faculty of the Department of
+
+vol. 18, pp. 356-364, Jan. 2003.
+
+Electrical Engineering and Computer Sciences,
+
+[2] A. M. Wu, J. Xiao, D. Markovic, and S. R. Sanders, " PWM control: University of California, Berkeley, where he is
+
+Application in voltage regulation modules," in Proc. IEEE Power Elec-presently Professor. His research interests are in high
+
+tron. Spec. Conf. , vol. 1, 1999, pp. 77-83.
+
+frequency power conversion circuits and components, in design and control of
+
+[3] T. W. Martin and S. S. Ang, "Digital control of switching converters,"
+
+electric machine systems, and in nonlinear circuit and system theory as related in Proc. IEEE Int. Symp. Ind Electron. , vol. 2, 1995, pp. 480-484.
+
+to the power electronics field. He is presently actively supervising research
+
+[4] Y. Duan and H. Jin, "Digital controller design for switching mode power projects in the areas of flywheel energy storage, novel electric machine converters," in Proc. IEEE Appl. Power Electron. Conf. , vol. 2, 1999, pp.
+
+design, renewable energy, and digital pulse-width modulation strategies and 967-973.
+
+associated IC designs for power conversion applications. During the 1992 to
+
+[5] G. F. Franklin, J. D. Powell, and M. Workman, Digital Control of Dy-1993 academic year, he was on industrial leave with National Semiconductor, namic Systems, Third ed.
+
+Menlo Park, CA: Addison-Wesley, 1998.
+
+Santa Clara, CA.
+
+[6] A. Gelb and W. E. Vander Velde, Multiple-Input Describing Functions Dr. Sanders received the NSF Young Investigator Award in 1993 and Best and Nonlinear System Design.
+
+New York: McGraw-Hill, 1968.
+
+Paper Awards from the IEEE Power Electronics Society and the IEEE Industry
+
+[7] A. P. Dancy, R. Amirtharajah, and A. P. Chandrakasan, "High-efficiency Applications Society. He has served as Chair of the IEEE Technical Committee multiple-output DC-DC conversion for low-voltage systems," IEEE
+
+on Computers in Power Electronics, and as a Member-At-Large of the IEEE
+
+Trans. VLSI Syst. , vol. 8, pp. 252-263, June 2000.
+
+PELS Adcom.
+
+
+
+
+

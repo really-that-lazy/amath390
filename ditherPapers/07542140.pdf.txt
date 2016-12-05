@@ -1,0 +1,5496 @@
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+5887
+
+Dithered Quantization via Orthogonal
+
+Transformations
+
+Ran Hadad and Uri Erez , Member, IEEE
+
+Abstract-Dithered quantization is a technique used to reduce or eliminate the statistical dependence between the signal and quantization error. This is most often achieved via adding pseudo-random
+
+noise prior to quantization. The present work develops a different
+
+dithering method, where dithering is accomplished by applying an
+
+orthogonal transformation to a vector of samples prior to quan-
+
+tization, and applying its inverse to the output of the quantizer.
+
+Focusing on uniform scalar quantization, it is shown that for any
+
+quantization rate, the proposed architecture approaches second-
+
+order independence, i.e., asymptotically vanishing correlation, as
+
+the dimension of the vector of samples processed jointly grows.
+
+Fig. 1.
+
+A schematic overview of dithering using subtractive dithering.
+
+Index Terms-Multidimensional signal processing, quantiza-
+
+tion, dither, diversity, multiple descriptions.
+
+constructed given only one available output branch, or from
+
+any combination of available branch outputs with improved
+
+I. INTRODUCTION
+
+performance.
+
+Our interest will be in quantization of an independent, iden-
+
+DITHERED quantization is a well-known technique to re- tically distributed (i.i.d.) Gaussian source. Indeed, transform duce the statistical dependence between a signal and its
+
+coding (see, e.g., [6]) may be seamlessly combined with the
+
+quantization error, as such dependence is often undesirable. The
+
+proposed scheme to justify this assumption. We note that the
+
+original and most common approach to achieving this goal is
+
+purpose of transform coding is to reduce the correlation be-
+
+by adding a (pseudo-) random noise prior to quantization, as
+
+tween different samples, whereas our goal is to reduce correla-
+
+first proposed by Roberts [1]. Indeed, in subtractive dithering
+
+tion between the samples and their corresponding quantization
+
+(depicted in Fig. 1), where the dither is further subtracted from
+
+errors.1
+
+the quantizer's output, statistical independence is achieved in
+
+As a baseline for comparison, we will consider subtractive
+
+the limit of high resolution. In practical scenarios, when sub-
+
+dithered quantization (SDQ), schematically depicted in Fig. 1.2,3
+
+tractive dithering is considered too complex for implementation,
+
+It is well known that multi-dimensional SDQ, i.e., nested lat-
+
+non-subtractive dithering may be employed, achieving a certain
+
+tice quantization, can approach the rate-distortion optimal per-
+
+measure of "reduced" statistical dependence, see, e.g., [2].
+
+formance in the limit of high-dimensional lattices (see, e.g., [7]).
+
+The effectiveness of a dithering method, in general, depends
+
+Our interest is in low-complexity schemes, and we therefore
+
+on the specific application. For instance, in audio and image
+
+limit our attention to one-dimensional scalar quantization. Fur-
+
+processing, where dithering is often employed, it is desirable
+
+ther, we also do not consider entropy coding and thus the bit
+
+to reduce perceptual artifacts. In this work, in contrast, we will
+
+rate is dictated solely by the number of quantization levels.
+
+consider the effect of dithering only on the mean-squared er-
+
+Under these constraints, it is known (see also Section II-B)
+
+ror (MSE), similarly to the approach of [3]. In this context, the
+
+that the performance of SDQ is severely degraded at low
+
+role of dithering is to reduce second order correlations. Such
+
+bit rates, due to the loss incurred by using a "shifted" (non-
+
+a criterion is relevant in applications where multiple quantized
+
+symmetric around the origin) quantizer. For example, consider
+
+signals, each encoded separately (distributed encoders), are lin-
+
+a single branch in Fig. 1, e.g., SDQ performed on x
+
+early combined.
+
+1 . For a
+
+Gaussian signal, the power of the quantization noise of a 1-bit
+
+An important such application is the multiple description
+
+quantizer with SDQ (without imposing zero correlation between
+
+coding problem (see, e.g., [4]), and its use in diversity-based
+
+input and error) is amplified by a factor of 1.221 w.r.t. its per-
+
+transmission over fading channels [5]. In fact, the multiple de-
+
+formance without dithering. Furthermore, the correlation coef-
+
+scription problem corresponds to the extreme case where all
+
+ficient between signal and (quantization) noise is approximately
+
+inputs are identical in Fig. 1. The source may be coarsely re-
+
+0.66 which implies that the two signals are rather far from being
+
+independent. As will be shown, one may impose zero correla-
+
+Manuscript received December 9, 2015; revised June 26, 2016; accepted July
+
+tion between input and error by incorporating a multiplicative
+
+24, 2016. Date of publication August 11, 2016; date of current version September 21, 2016. The associate editor coordinating the review of this manuscript and approving it for publication was Prof. Ruixin Niu. The work of U. Erez was
+
+1Indeed, we will require more than this when we consider multiple branches.
+
+supported in part by the Israel Science Foundation under Grant 1956-15.
+
+2The role of scaling the output of the quantizer by κL is to impose zero The authors are with the Department of Electrical Engineering-Systems,
+
+correlation between the input and quantization error of a single branch, where L
+
+Tel-Aviv University, Tel-Aviv 69978, Israel (e-mail: ranhadad@post.tau.ac.il; is the number of quantization levels. For high rates, κL ≈ 1, yielding the more uri@eng.tau.ac.il).
+
+common depiction of SDQ.
+
+Color versions of one or more of the figures in this paper are available online 3The mapping of the quantizer's output to bits is of no importance for our
+
+at http://ieeexplore.ieee.org.
+
+purposes and hence the mapping/demapping operations are omitted in both
+
+Digital Object Identifier 10.1109/TSP.2016.2599482
+
+encoder and decoder blocks.
+
+1053-587X © 2016 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+
+See http://www.ieee.org/publications standards/publications/rights/index.html for more information.
+
+5888
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+Nonetheless, as discussed in the sequel, beyond achieving lower
+
+distortion at low bit rates, the scheme may also have implemen-
+
+tation advantages in the sense that the resolution of the dither
+
+needed to attain good performance may be lower than for SDQ.
+
+On the other hand, the scheme involves the application of an
+
+orthogonal transformation to a block of samples and thus is ill-
+
+suited to delay-sensitive scenarios such as when the output of
+
+the quantizer is to be fed into a feedback loop.
+
+Another difference when compared to SDQ is that the
+
+Fig. 2.
+
+A schematic overview of dithering using orthogonal transformations.
+
+marginal distribution of the quantization error (for a large
+
+factor ( κL in Fig. 1) at the output. However, the power of the
+
+enough block length and under the Lindeberg condition [8],
+
+1
+
+resulting uncorrelated error for SDQ is amplified to a factor of
+
+see Section II-C3) is approximately Gaussian, whereas for SDQ
+
+1.398 w.r.t. the undithered error (see Section II).
+
+it is uniform at high bit rates.
+
+Another limitation of SDQ is that it requires using uni-
+
+The organization of the paper is as follows. Section II estab-
+
+form quantizers and precludes source-optimized non-uniform
+
+lishes notation, provides background on SDQ, as well as recalls
+
+quantization.4 For the sake of easy comparison with SDQ, we
+
+some basic definitions and properties of some ensembles of
+
+will assume uniform quantization in the sequel.
+
+orthogonal transformations. Section III presents the proposed
+
+Considering a single Gaussian source passing through mul-
+
+scheme. Section IV develops a bound on achievable perfor-
+
+tiple SDQ branches, correlation exists also between the quan-
+
+mance, with an exact analysis for the symmetric 1-bit case.
+
+tization errors of different branches. Even after imposing zero
+
+Section V introduces an algorithm for numerically designing
+
+correlation between input and error in each branch, with 1-bit
+
+(non-random) orthogonal matrices. Conclusions are given in
+
+quantization, the correlation coefficient between the errors in
+
+Section VI. Technical proofs are deferred to the Appendix.
+
+different branches amounts to 0.208.
+
+Our goal will be to design an alternative dithering scheme
+
+II. NOTATION AND BACKGROUND
+
+that operates at least as well, in the sense of achieved distortion,
+
+as one-dimensional SDQ (with no entropy coding), at all bit
+
+A. Notation
+
+rates, while offering significant improvement at low bit rates.
+
+We use lowercase to denote scalars, e.g., a ∈ R, boldface
+
+The architecture considered is schematically depicted in Fig. 2.
+
+lowercase to denote column vectors, e.g., a ∈ R N , and boldface Essentially, the dither addition and subtraction operations are
+
+uppercase for matrices, e.g., A ∈ R N ×M . The transpose of a replaced by multiplication by a judiciously chosen orthogonal
+
+matrix A is denoted by A T , and its n-th column by col n (A).
+
+transformation and its inverse. In other words, rather than using
+
+The trace of a square matrix A is denoted by tr(A). The 2-randomly shifted codebooks, we consider randomly rotated (and
+
+
+
+norm of a vector a is denoted by a
+
+a 2 . We denote by
+
+reflected) ones.
+
+i
+
+i
+
+diag(a), a square diagonal matrix with the entries of a appearing Unlike for subtractive dithering, which results in an approx-on the diagonal.
+
+imately (at high resolution) additive quantization noise model,
+
+We use square brackets to denote an element-wise operation
+
+where the noise is independent of the source, the more modest
+
+of a scalar function on a vector or matrix, e.g., f [A]. The
+
+goal of "second-order" independence will be pursued in this
+
+n-dimensional identity matrix is denoted by I and the all-zero work, where the signal and quantization errors will be required
+
+matrix by 0, where the dimension will be clear from the context.
+
+to be mutually uncorrelated. In applications where performance
+
+We will consider M Gaussian sources, generally spatially cor-
+
+is measured in terms of MSE, this weaker notion of second-order
+
+related, that are i.i.d. w.r.t. the time axis. Thus, each source is an
+
+independence is sufficient.
+
+i.i.d. Gaussian vector, x
+
+I), where k = 1 , . . . , M .
+
+We begin by analyzing the performance of the proposed
+
+k ∼ N (0 , σ 2
+
+k
+
+Considering the Gaussian source vectors over a block of N time
+
+scheme when drawing the transformations from the random
+
+instants results in a matrix X ∈ R M ×N where
+
+(Haar) ensemble of orthogonal matrices and show that asymp-
+
+⎡
+
+⎤
+
+totic second-order independence is achieved in the limit of large
+
+x T 1
+
+dimension. It is further shown that the latter goal may also be
+
+⎢ . ⎥
+
+X ⎣ . ⎦ ,
+
+achieved, albeit with slightly slower convergence, by drawing
+
+.
+
+the transformations from a much more structured (Hadamard
+
+x TM
+
+based) ensemble of orthogonal matrices, allowing greatly
+
+reduced implementation complexity. The goal of finding by
+
+such that col n (X) ∼ N (0 , C) for all n = 1 , . . . , N . Thus, C is numerical means explicit (non-random) matrices with close to
+
+the spatial covariance matrix with entries
+
+optimal performance is also pursued. It is demonstrated that,
+
+as is to be expected, for moderate dimensions the obtained
+
+ck,l (C) k,l,
+
+(1)
+
+matrices achieve significantly better performance (i.e., smaller
+
+where c
+
+and |c
+
+correlation) than that of both random ensembles.
+
+k ,k = σ 2
+
+k
+
+k ,l | ≤ σk σl for all k = l.
+
+Similarly to subtractive dithering, the proposed scheme re-
+
+quires knowledge of the dither at both transmission ends.
+
+B. Subtractive Dithered Quantization
+
+Consider M branches (realizations) of SDQ elements oper-
+
+4A partial remedy to this drawback is developed in [3].
+
+ating in parallel as depicted in Fig. 1. The k-th reconstruction
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5889
+
+( k = 1 , . . . , M ), denoted by ˆ
+
+x k , is described by
+
+ˆ
+
+x k = κL (x q − u
+
+k
+
+k
+
+k )
+
+= κL ( q
+
+[x ] − u
+
+k
+
+L k
+
+k
+
+k ) ,
+
+(2)
+
+where x = x
+
+[ · ] is an element-wise
+
+k
+
+k + u k , and where qL k
+
+operation of a uniform scalar quantizer with Lk levels and step
+
+size Δ k . A more formal definition of the quantizer is given in
+
+Section III. The quantization error is given by
+
+e k = x k − ˆ
+
+x k
+
+= x k + κL (u
+
+[x
+
+k
+
+k − qL k
+
+k + u k ]) .
+
+(3)
+
+Since the input/output vectors (in scalar SDQ) are i.i.d., we
+
+may restrict attention to an arbitrary entry. We denote such an
+
+Fig. 3.
+
+The ratio D SD Q , uc /D U D , uc , as a function of the rate, R = log2 ( L), entry by x
+
+for SDQ and undithered scalar quantization of a Gaussian source.
+
+k , uk , xq , ˆ
+
+x
+
+k
+
+k , etc. It is assumed that the step size
+
+of qL ( ·) is optimized to minimize (given the choice of dither TABLE I
+
+k
+
+vector) the average MSE distortion measure
+
+THE ERROR CORRELATION COEFFICIENTS r SDQ( L) WITH L = 2 R LEVELS, FOR R = 1 , . . . , 8
+
+1
+
+
+
+
+
+Dk =
+
+E x − x q 2
+
+N
+
+k
+
+k
+
+
+
+
+
+2
+
+= E ( x − xq ) .
+
+k
+
+(4)
+
+k
+
+The most common choice of dither is taking u k to be an
+
+i.i.d. vector with entries uniformly distributed over the inter-
+
+
+
+
+
+Section III that the relation between the correlated and uncorre-
+
+val − Δ k , Δ k . For this choice of dither, as demonstrated by 2
+
+2
+
+lated distortion satisfies (7) in the case of undithered quantiza-
+
+Schuchman [9], the quantization error is independent of the
+
+tion as well.
+
+input, conditioned on the event that the quantizer does not over-
+
+Let D SDQ , uc denote the uncorrelated distortion with SDQ.
+
+load. For a quantizer optimized to minimize the quantization
+
+Similarly, let D UD , uc denote the uncorrelated distortion with-MSE, this condition in general (and specifically for Gaussian
+
+out dithering. In Fig. 3, the ratio D SDQ , uc /D UD , uc is plotted as sources) is approximately satisfied at high resolution.
+
+a function of the rate R = log2( L), for (scalar uniform) quan-On the other hand, the assumption that the quantization error
+
+tization with L = 2 R levels. Evidently, for low bit rates, sub-is independent of the input is far from valid at low bit rates.
+
+tractive dithering incurs considerable performance degradation.
+
+Nonetheless, we can always impose the condition that the error
+
+The loss is maximal for 1-bit quantization, and amounts to a
+
+be uncorrelated with the input, i.e.,
+
+factor of 1.398 in excess distortion (1.455 dB).
+
+When considering multiple SDQ branches, the second order
+
+E {xk ek } = 0 ,
+
+(5)
+
+independence of the quantization errors is satisfied at high rates
+
+by choosing the constant κ
+
+only. Consequently, there are two sources of performance loss
+
+L
+
+accordingly. The minimal distor-
+
+k
+
+tion (MSE) attainable subject to this constraint is referred to as
+
+at low to moderate bit rates. One is the excess distortion of
+
+the optimal uncorrelated distortion. For a quantizer with optimal
+
+a single SDQ branch w.r.t. undithered scalar quantization, as
+
+step size (see Appendix A) this constant is given by
+
+can be seen in Fig. 3. The second loss is due to the non-zero
+
+correlation between the errors of different branches.
+
+σ 2
+
+To demonstrate these two sources of loss, we consider a cen-
+
+κ
+
+k
+
+L
+
+=
+
+,
+
+(6)
+
+k
+
+σ 2 − D
+
+tral decoder receiving the output of M branches where the input
+
+k
+
+k
+
+x k = x is common to all. This may be seen as an instance of the with corresponding uncorrelated distortion
+
+
+
+multiple description problem (see, e.g., [4]). When considering
+
+D uc =
+
+e 2
+
+further the case D SDQ , uc = D SDQ , uc (or equivalently Lk = L) k
+
+E
+
+k
+
+k
+
+for all k = 1 , . . . , M , which is referred to as the balanced case, σ 2 D
+
+the error correlation coefficient between different SDQ branches
+
+=
+
+k
+
+k
+
+.
+
+(7)
+
+σ 2 − D
+
+is given by
+
+k
+
+k
+
+The last equality is the well-known relation (see, e.g. [10]) be-
+
+E {ek el}
+
+tween optimal correlated and uncorrelated distortion. The con-
+
+r SDQ ( L) =
+
+.
+
+D SDQ , uc ( L)
+
+stant κL depends on the bit rate, and κ
+
+≈ 1 for high rates.
+
+k
+
+L k
+
+Note that the dependence of Dk and D uc on the number of
+
+Table I gives some numerically computed values of r SDQ ( L).
+
+k
+
+quantization levels Lk is implicit throughout this paper.
+
+Clearly, the quantization errors are quite far from being uncor-
+
+It is instructive to compare the performance of SDQ with
+
+related for these rates. As we now show, this has a significant
+
+that of undithered (scalar) quantization. The distortion achieved
+
+impact on performance.
+
+with the latter can be found in [11], and is also computed
+
+Ideally, if the errors were uncorrelated (and also uncorre-
+
+in Appendix A for various bit rates. It is further shown in
+
+lated with the input), and there were no excess distortions due
+
+5890
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+d
+
+where = denotes equality in distribution (see [13] for efficient
+
+generation). It is well-known that if U ∈ O( N ) is uniformly distributed according to the Haar measure, then by the translation-
+
+invariance property, all of the entries of U are identically
+
+distributed.
+
+The probability density function (PDF) of each entry of an
+
+N ×N orthogonal Haar-distributed matrix is given by [14]:
+
+
+
+N − 3
+
+νN (1 − u 2) 2 , |u| ≤ 1
+
+fu ( u) =
+
+,
+
+(8)
+
+0
+
+, else
+
+where
+
+Γ( N )
+
+ν
+
+2
+
+N = √
+
+,
+
+(9)
+
+Fig. 4.
+
+The ratio between D SD Q , uc and D ideal , uc as a function of the bit π Γ( N − 1 )
+
+c e nt ra l
+
+c e nt ra l
+
+2
+
+rate R = log2 ( L) for M = 2 branches, with uniform scalar quantization of a
+
+∞
+
+Gaussian source.
+
+for all N ≥ 2, and where Γ( α) =
+
+tα− 1 e−t dt is the Gamma
+
+0
+
+function. By Stirling's formula Γ( t+ α) ∼ tα−β , as t → ∞.
+
+to dithering, simple averaging of the outputs (which is opti-
+
+Γ( t+ β )
+
+Therefore, asymptotically as N → ∞,
+
+mal since we are considering the balanced case) would achieve
+
+
+
+central uncorrelated distortion,
+
+N
+
+νN ∼
+
+.
+
+(10)
+
+D UD , uc ( L)
+
+2 π
+
+D ideal , uc ( L, M ) =
+
+,
+
+central
+
+M
+
+The second and fourth moments of each entry are given by,
+
+for all bit rates. Applying optimal weighted least squares estima-
+
+1
+
+tion which again amounts to simple averaging, when correlation
+
+E {u 2 } =
+
+,
+
+N
+
+between errors is non-zero, yields central distortion
+
+3
+
+D SDQ , uc ( L)
+
+
+
+E {u 4 } =
+
+.
+
+(11)
+
+D SDQ , uc ( L, M ) =
+
+1 + ( M − 1) r SDQ ( L) ,
+
+N ( N + 2)
+
+central
+
+M
+
+2) Randomized Hadamard Matrix Ensemble: To reduce
+
+where the last equality follows from considering the balanced
+
+computational complexity, it may be more useful to utilize an
+
+case. Moreover, for large M we have that
+
+ensemble based on Hadamard matrices. We further restrict at-
+
+D SDQ , uc ( L, M ) −→ D SDQ , uc( L) r SDQ ( L) , tention to dimensions that are a powers of 2 (i.e., we assume
+
+central
+
+M →∞
+
+that N = 2 n ), so that we may utilize the fast Walsh-Hadamard rather than approaching zero as in the case of zero correlation.
+
+transform. We propose to employ (random) orthogonal matrices
+
+We turn our attention back to the case of M = 2 branches.
+
+of the form,
+
+In Fig. 4, the ratio between D S D Q , u c and D id eal , u c is plotted c e n t r a l
+
+c e n t r a l
+
+U = H
+
+as a function of the bit rate R, illustrating the degradation in
+
+N B ,
+
+(12)
+
+performance.
+
+where H N is the normalized Hadamard matrix of size N × N , As we show in the sequel, the ideal (corresponding to zero
+
+and B is a diagonal orthogonal matrix defined as,
+
+correlation) central distortion can be approached for all bit rates,
+
+B = diag(b) ,
+
+assuming a large enough block length N , by replacing SDQ with
+
+the proposed dithering scheme.
+
+where b in turn is an i.i.d. vector with entries equal to ± 1 with probability 1 . We note that such an ensemble has been used
+
+2
+
+C. Orthogonal Matrix Preliminaries
+
+in the literature on sparse coding, see, e.g., [15] and references
+
+therein.
+
+The set of all N × N real orthogonal matrices is called the
+
+Right-multiplying H
+
+orthogonal group, O( N ).5 The set of N × N orthogonal ma-N by B is equivalent to multiplying the
+
+columns of H
+
+trices with determinant 1 is called the special orthogonal group
+
+N by ± 1 randomly. It is for this reason that we refer
+
+to the ensemble as randomized Hadamard. This ensemble has the
+
+SO( N ). The sets O( N ) and SO( N ) are compact Lie groups.
+
+advantage of greatly reduced computational complexity (if one
+
+See [12] for further details.
+
+leverages the fast Walsh-Hadamard transform), while nearly
+
+1) Random Haar-Distributed Orthogonal Matrix Ensemble:
+
+attaining the same performance as that of the Haar ensemble (as
+
+There is a unique translation-invariant probability measure,
+
+shown in Section IV-B).
+
+called the Haar measure on O( N ). A random U ∈ O( N ) is 3) Lindeberg Condition and Robustness to the Input Distri-uniformly distributed according to the Haar measure, if for any
+
+bution: Consider a single quantization branch in the proposed
+
+fixed M ∈ O( N ), we have
+
+scheme. Although the output of the quantizer is not Gaus-
+
+d
+
+d
+
+MU = UM = U ,
+
+sian, since it is i.i.d., the resulting entries of ˆ
+
+x k are approxi-
+
+mately Gaussian, and so are also the entries of e k = x k − ˆ
+
+x k ,
+
+5All orthogonal matrices in this paper are assumed to have normalized col-
+
+if the orthogonal transformation U k satisfies the Lindeberg
+
+umn/row vectors.
+
+condition [8].
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5891
+
+For a source with finite variance, Lindeberg's condition es-
+
+TABLE II
+
+sentially requires that the entries of each row of the orthogonal
+
+VALUES OF κL FOR OPTIMAL UNIFORM SCALAR QUANTIZATION WITH
+
+L = 2 R LEVELS, R = 1 , . . . , 8
+
+matrix are proportional to N − 0 . 5 , so that there is no single entry that dominates the norm of its row. The orthogonal matrices
+
+should therefore be such that this condition is satisfied. It is read-
+
+ily verified that matrices drawn from the two random orthogonal
+
+ensembles considered in this section indeed satisfy Lindeberg's
+
+condition with high probability.
+
+It is worthwhile noting that if the Lindeberg condition holds,
+
+where Δ0 ,L ∈ R
+
+k
+
++
+
+is the optimal step size (as given in
+
+the distortion will essentially remain unchanged if the source is
+
+Appendix A). The uniform midrise quantizer is defined by
+
+non-Gaussian (but i.i.d.). It follows that optimizing the quantiz-
+
+qL ( x) = argmin |x − λ|.
+
+k
+
+ers for a Gaussian source, ensures that the system is robust to
+
+λ∈QL k
+
+any (i.i.d.) source distribution (c.f. [16]).
+
+The decoder Dk computes
+
+III. PROPOSED ARCHITECTURE AND BASIC PROPERTIES
+
+ˆ
+
+x k = κL U T x q ,
+
+(15)
+
+k
+
+k
+
+k
+
+A schematic overview of the system with M branches (real-
+
+where κL ∈ R
+
+is chosen so that the error
+
+k
+
++ . The constant κL k
+
+izations) operating in parallel is depicted in Fig. 2. Henceforth,
+
+vector
+
+we will assume without loss of generality that each of the M
+
+
+
+
+
+e
+
+
+source vectors x
+
+k = x k − ˆ
+
+x k
+
+(16)
+
+k ( k = 1 , . . . , M ), is not only zero-mean Gaus-
+
+sian but also that its covariance matrix is the identity matrix,
+
+= U T (x − κ x q ) ,
+
+k
+
+k
+
+L
+
+(17)
+
+k
+
+k
+
+i.e., the diagonal entries of the spatial covariance matrix C are
+
+c
+
+is uncorrelated with its corresponding source vector x
+
+k ,k = 1, and the off-diagonal entries satisfy |ck ,l | ≤ 1.6
+
+k . The
+
+Each encoder E
+
+quantities x T e
+
+k left-multiplies x k by an orthogonal matrix
+
+k
+
+k
+
+and e k 2 are invariant to a transforma-
+
+
+
+
+
+U
+
+
+tion U
+
+k ∈ O( N ), resulting in
+
+k ∈ O( N ) and completely determined by x k (as seen from (13) and (17)). As shown in [3], for an optimal deter-x = U
+
+k
+
+k x k ,
+
+(13)
+
+ministic quantizer, the constraint that the input and error be
+
+uncorrelated is satisfied by setting
+
+so that x ∼ N (0 , I), since the distribution of x k
+
+k , being i.i.d.
+
+Gaussian, is invariant to orthogonal transformations (and thus
+
+1
+
+κL =
+
+(18)
+
+k
+
+to expectation over any random orthogonal ensemble). For the
+
+E {xq 2 }
+
+k
+
+time being, the orthogonal matrices may be taken from any
+
+1
+
+ensemble. Specific choices are considered in Section V. Next,
+
+=
+
+,
+
+(19)
+
+scalar quantization of x is performed, yielding
+
+1 − Dk
+
+k
+
+and the resulting uncorrelated distortion is given by
+
+x q = q
+
+[x ] .
+
+k
+
+L k
+
+k
+
+
+
+
+
+D uc 1 E e
+
+Since the input/output vectors of the scalar quantizers are
+
+k
+
+k 2
+
+N
+
+i.i.d., we may restrict attention to arbitrary entries denoted by xk
+
+Dk
+
+and xq . It is assumed that q
+
+( ·) is a uniform midrise quantizer
+
+=
+
+.
+
+(20)
+
+k
+
+L k
+
+1 − D
+
+with an even number of L
+
+k
+
+k levels, with step size optimized to
+
+minimize the average MSE distortion measure
+
+Thus, a "second order additive" (uncorrelated) noise model
+
+is obtained for each branch. By applying (47) to (18), we also
+
+1
+
+
+
+
+
+D
+
+have that
+
+k =
+
+E x − x q 2
+
+(14)
+
+N
+
+k
+
+k
+
+
+
+
+
+1
+
+κ
+
+=
+
+= E ( x − xq )2 .
+
+L k
+
+k
+
+k
+
+E {x xq } ,
+
+(21)
+
+k
+
+k
+
+Note that we could equivalently define the quantizer to be
+
+Table II gives the values of κL for various bit rates.
+
+k
+
+as specified for SDQ in Section II-B, taking the dither to be
+
+identically zero. In this respect, there is a slight abuse of notation,
+
+A. Optimization Goal
+
+as the dependence of qL (via the optimal step size) on the dither
+
+k
+
+The proposed scheme is now characterized up to specifying
+
+(or lack of it) is not explicit.
+
+the orthogonal transformations to be used. We now formalize the
+
+Let us define the output alphabet of such a quantizer by
+
+
+
+
+
+criterion for choosing the matrices {U k }M so as to ensure that k = 1
+
+Q
+
+Δ
+
+
+
+the errors of the different branches have vanishing correlation.
+
+0 , L k
+
+L
+
+=
+
+(2 i + 1 − L i = 0 , . . . , L
+
+,
+
+k
+
+2
+
+k )
+
+k − 1
+
+Let us define the error correlation coefficient.
+
+Definition 1 (Error correlation coefficient): Let
+
+1 E {e T e
+
+6
+
+l }
+
+We assume that the k-th quantizer is matched to its input variance σ 2 , such N
+
+k
+
+
+
+
+
+k
+
+rk,l( N )
+
+,
+
+(22)
+
+that all quantities (output, error, etc.) are scaled by σk accordingly. Since we D uc
+
+D uc
+
+k
+
+l
+
+are only interested in the normalized (Pearson) correlation coefficient between the errors, scaling of the sources has no effect.
+
+for k, l = 1 , . . . , M , and k = l.
+
+5892
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+Our goal is therefore to find (a family of) orthogonal matrices
+
+such that rk,l( N ) vanishes for all k, l as N → ∞.
+
+IV. PERFORMANCE ANALYSIS
+
+We wish to choose the orthogonal ensembles so as to min-
+
+imize (22), which may be written as an expectation over the
+
+conditional error correlation coefficient defined by
+
+1 E {e T e l|U k , U l}
+
+r
+
+N
+
+k
+
+k ,l ( N ; U k , U l )
+
+
+
+
+
+,
+
+(23)
+
+D uc
+
+D uc
+
+k
+
+l
+
+so that rk,l( N ) = E {rk,l( N ; U k , U l) }.
+
+We first investigate the conditional correlation between the
+
+error vectors for a given set of (non-random) orthogonal matrices
+
+{U
+
+Fig. 5.
+
+Numerical evaluation of ϕL
+
+( ρ) as defined in (25). For reference
+
+k }M
+
+. To that end, we need some additional definitions. Let
+
+k , L l
+
+k = 1
+
+we plot the function ρ 3 that is used as a bound in Corollary 1.
+
+P k,l U k U T ,
+
+l
+
+
+
+
+
+Corollary 1 (Error correlation coefficient function
+
+and denote ρk,l P
+
+.
+
+i,j
+
+k ,l i,j
+
+properties): The error correlation coefficient function sat-
+
+Definition 2 (Output correlation function): The output cor-
+
+isfies the following properties:
+
+relation function γL
+
+: [ − 1 , 1] → R is given by
+
+1) ϕ
+
+( ρ) may be rewritten as
+
+k ,L l
+
+L k ,L l
+
+γL
+
+( ρ) κ κ E {q ( x ) q ( x ) |ρ}, γ
+
+( ρ) − ρ
+
+k ,L l
+
+L k
+
+L l
+
+L k
+
+k
+
+L l
+
+l
+
+L k ,L l
+
+
+
+
+
+ϕL
+
+( ρ) =
+
+
+
+.
+
+(28)
+
+k ,L l
+
+D uc
+
+D uc
+
+1
+
+ρ
+
+k
+
+l
+
+( x , x ) |ρ ∼ N 0 ,
+
+,
+
+k
+
+l
+
+(24)
+
+ρ
+
+1
+
+2) The error correlation coefficient function satisfies:
+
+where k, l = 1 , . . . , M , and k = l.
+
+∞
+
+
+
+1
+
+aLk , 2 n+1 aLl , 2 n+1
+
+Definition 3 (Error correlation coefficient function): The
+
+ϕL
+
+( ρ) =
+
+
+
+
+
+ρ 2 n+1 .
+
+k ,L l
+
+(2 n + 1)!
+
+D uc
+
+D uc
+
+error correlation coefficient function ϕ
+
+n = 1
+
+k
+
+l
+
+L
+
+: [ − 1 , 1] → [ − 1 , 1]
+
+k ,L l
+
+(29)
+
+is given by
+
+3) For the symmetric case where Lk = Ll,
+
+− κ q ( x )) ( x − κ q ( x)) |ρ}
+
+ϕ
+
+L k L k
+
+k
+
+l
+
+L l L l
+
+l
+
+L
+
+( ρ) E {( xk
+
+
+
+
+
+,
+
+ϕ
+
+(1) = −ϕ
+
+( − 1) = 1 .
+
+k ,L l
+
+L
+
+L
+
+D uc
+
+D uc
+
+k ,L k
+
+k ,L k
+
+k
+
+l
+
+
+
+
+
+4) ϕL
+
+( ρ) is an odd function of ρ, and for Lk = Ll is also 1
+
+ρ
+
+k ,L l
+
+( x , x ) |ρ ∼ N 0 ,
+
+,
+
+a monotonically increasing function of ρ.
+
+k
+
+l
+
+(25)
+
+ρ
+
+1
+
+5) For all Lk , Ll,
+
+
+
+
+
+where k, l = 1 , . . . , M , and k = l.
+
+ϕ
+
+
+
+L
+
+( ρ) ≤ |ρ| 3 .
+
+(30)
+
+k ,L l
+
+The output correlation and error correlation coefficient func-
+
+tions play a key role in the analysis. The following two lemmas
+
+Fig. 5 depicts the error correlation coefficient function for a
+
+characterize the output correlation function and are proved in
+
+few pairs of bit rates, as well as ρ 3 for reference.
+
+Appendix B and C, respectively. These are followed by a corol-
+
+Remark 1: Numerical analysis of the error correlation co-
+
+lary concerning the error correlation coefficient function that is
+
+efficient function indicates that |ϕL
+
+( ρ) | ≤ |ϕ
+
+k ,L l
+
+2 , 2 ( ρ) |, and
+
+proved in Appendix D.
+
+also ϕL
+
+( |ρ|) ≥ 0, as is evident from Fig. 5. That is,
+
+k ,L l
+
+Lemma 1 (Output correlation function expansion): The
+
+the error correlation function for 1-bit quantization serves
+
+output correlation function satisfies:
+
+as an upper bound for all other values of ( Lk , Ll). Further,
+
+|
+
+∞
+
+
+
+ρ||ϕL
+
+( ρ) | = ρϕ
+
+( ρ) as a product of odd functions. Fi-
+
+k ,L l
+
+L k ,L l
+
+a
+
+nally, ϕ
+
+( ρ) is a monotonically increasing function of ρ
+
+γ
+
+L k , 2 n +1 aL l , 2 n +1
+
+L k ,L l
+
+L
+
+( ρ) = ρ +
+
+ρ 2 n+1 ,
+
+(26)
+
+k ,L l
+
+(2 n + 1)!
+
+also when Lk = Ll. We conjecture that these properties hold n = 1
+
+and they will guide us in the numerical optimization procedure
+
+for all |ρ| ≤ 1 using Mehler's formula [17], where
+
+developed in Section V. We note however, that the bound on
+
+∞
+
+performance given in Proposition 1 derived below does not rely
+
+aL
+
+κ
+
+q
+
+( z) He
+
+k , 2 n + 1
+
+1
+
+√
+
+L
+
+L
+
+2 n + 1 ( z) e− z 2
+
+2
+
+dz,
+
+(27)
+
+on this conjecture.
+
+2 π
+
+k
+
+k
+
+−∞
+
+It is easy to verify that the conjecture in Remark 1 holds in
+
+He 2 n+1( z) being the probabilists' Hermite polynomials.
+
+the vicinity of the origin by inspecting the first summand in
+
+Lemma 2 (Output correlation function properties): The
+
+(29). That is from (29), the error correlation coefficient function
+
+output correlation function satisfies the following properties:
+
+satisfies7
+
+1) For the symmetric case where Lk = Ll,
+
+ϕL
+
+( ρ) = ˜
+
+a
+
+k ,L l
+
+L k , 3 ˜
+
+aLl , 3 ρ 3 + o( ρ 3)
+
+γL
+
+(1) = −γ
+
+( − 1) = κ .
+
+k ,L k
+
+L k ,L k
+
+L k
+
+
+
+
+
+2) For the case Lk = Ll = 2, we have γ 2 , 2( ρ) = arcsin( ρ).
+
+7
+
+f
+
+The notation f ( x) ∈ o g( x) means lim
+
+( x )
+
+x → 0
+
+= 0.
+
+g ( x )
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5893
+
+TABLE III
+
+expectation over (35).
+
+THE COEFFICIENT ˜
+
+aL , 3 GIVEN BY (31) FOR L = 2 R , R = 1 , . . . , 8
+
+|rk,l( N) | = | E {rk,l( N; U k, U l) }|
+
+
+
+
+
+N
+
+N
+
+
+
+1
+
+
+
+
+
+=
+
+E ρk,l ϕ
+
+
+
+L
+
+ck,lρk,l
+
+N
+
+i,j
+
+k ,L l
+
+i,j
+
+
+
+i= 1 j = 1
+
+N
+
+N
+
+
+
+
+
+4
+
+where
+
+≤ 1
+
+E
+
+ρk,l
+
+,
+
+(37)
+
+N
+
+i,j
+
+i= 1 j = 1
+
+˜
+
+aL, 3 = −
+
+aL, 3
+
+
+
+.
+
+(31)
+
+6 · D uc( L)
+
+where the triangle inequality, property (30) in Corollary 1, and
+
+that |ck,l| ≤ 1 were used in (37).
+
+To evaluate the latter coefficient we compute aL, 3 using (27),
+
+and D uc ( L) using (20) and Table VI in Appendix A. In Table III, A. Bound on Performance for the Haar and Randomized
+
+we provide values of ˜
+
+aL, 3 for various bit rates. As can be seen,
+
+Hadamard Ensembles
+
+˜
+
+a 2 , 3 dominates ˜
+
+aL, 3 for all other values of L in agreement with
+
+We now consider the performance for the two orthogonal
+
+the conjecture.
+
+ensembles defined in Section II-C. The next proposition gives an
+
+We are now ready to compute the conditional error correla-
+
+explicit upper bound on the attained error correlation coefficient.
+
+tion. The conditional correlation between the errors in branch k
+
+Proposition 1: Consider a random orthogonal dithered quan-
+
+and l, given U k and U l, is given by
+
+tization system as described by (13), (15), and (16). Then the
+
+
+
+
+
+error correlation coefficient for the Haar distributed ensemble
+
+E e T e
+
+k
+
+l |U k , U l
+
+satisfies:
+
+
+
+
+
+= E (x k − ˆ
+
+x k ) T (x l − ˆ
+
+x l) |U k , U l
+
+
+
+
+
+r Haar( N) ≤ 3
+
+∀ k = l.
+
+k ,l
+
+= tr E (x
+
+N + 2
+
+k − ˆ
+
+x k )(x l − ˆ
+
+x l) T |U k , U l
+
+
+
+
+
+T
+
+Similarly for the randomized Hadamard ensemble ( N = 2 n ):
+
+= tr E U T (x − κ x q )(x − κ x q ) U
+
+k
+
+k
+
+L
+
+(32)
+
+k
+
+k
+
+l
+
+L l
+
+l
+
+l |U k , U l
+
+
+
+
+
+T
+
+= tr U
+
+
+
+
+
+l U T
+
+(x − κ x q )(x − κ x q ) |U
+
+≤ 3 N − 2 ∀
+
+k E
+
+k
+
+L
+
+r rHad( N )
+
+k = l.
+
+k
+
+k
+
+l
+
+L l
+
+l
+
+k , U l
+
+k ,l
+
+
+
+
+
+N 2
+
+T
+
+= tr P T
+
+x − κ x q (x − κ x q ) |P
+
+k ,l E
+
+k
+
+L
+
+(33)
+
+k
+
+k
+
+l
+
+L l
+
+l
+
+k ,l
+
+In particular, the error correlation coefficient vanishes as
+
+
+
+
+
+=
+
+D uc
+
+D uc tr P T ϕ
+
+[ c
+
+,
+
+(34)
+
+N → ∞ for both ensembles.
+
+k
+
+l
+
+k ,l
+
+L k ,L l
+
+k ,l P k ,l ]
+
+Proof: For the Haar distributed ensemble, by the translation
+
+invariance property of the Haar measure, the product of any
+
+where (32) follows from (17), (33) follows from the cyclic
+
+two independent Haar-distributed random orthogonal matrices
+
+property of the trace, and in (34) the function ϕL
+
+( ·) is
+
+k ,L l
+
+
+
+
+
+P
+
+
+is also Haar distributed. It follows that the entries
+
+used element-wise according to (25), since x q = q
+
+[x ],
+
+k ,l = U k U T
+
+l
+
+k
+
+L k
+
+k
+
+of P
+
+x q = q
+
+[x ], and E {x x T } = c k ,l remain identically distributed. Using (11) and (36) we
+
+l
+
+L l
+
+l
+
+k
+
+l
+
+k ,l P k ,l , where ck ,l is the spa-
+
+have,
+
+tial correlation between the sources as defined in (1).
+
+We may now express the conditional error correlation coeffi-
+
+
+
+
+
+N
+
+N
+
+
+
+
+
+cient as defined in (23) using ϕ
+
+
+
+
+
+4
+
+L
+
+( ·) as,
+
+r Haar( N ) ≤ 1
+
+E
+
+ρk,l
+
+k ,L l
+
+k ,l
+
+N
+
+i,j
+
+i= 1 j = 1
+
+r
+
+
+
+k ,l ( N ; U k , U l ) = rk ,l ( N ; P k ,l )
+
+= N E ρ 4
+
+1
+
+
+
+
+
+=
+
+tr P T ϕ
+
+3
+
+L
+
+[ ck,lP k,l]
+
+(35)
+
+N
+
+k ,l
+
+k ,L l
+
+=
+
+.
+
+N + 2
+
+N
+
+N
+
+1
+
+
+
+
+
+=
+
+ρk,l ϕ
+
+We turn now to the randomized Hadamard ensemble. It is
+
+L
+
+ck,lρk,l .
+
+N
+
+i,j
+
+k ,L l
+
+i,j
+
+i= 1 j = 1
+
+shown in Appendix E that for this ensemble too, all entries of
+
+P k,l have the same distribution, and this distribution is given by Corollary 2: The error correlation coefficient satisfies
+
+
+
+
+
+n
+
+N
+
+Pr ρ = 2
+
+− 1 =
+
+2 −N , n = 0 , . . . , N.
+
+(38)
+
+N
+
+N
+
+
+
+
+
+N
+
+n
+
+|
+
+4
+
+rk,l( N ) | ≤ 1
+
+E
+
+ρk,l
+
+.
+
+(36)
+
+N
+
+i,j
+
+Straightforward calculation reveals that the fourth moment of
+
+i= 1 j = 1
+
+each entry is given by
+
+Proof: We obtain the following upper bound on the absolute
+
+3 N − 2
+
+value of the error correlation coefficient by writing it as an
+
+E {ρ 4 } =
+
+.
+
+N 3
+
+5894
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+Using these two properties, we obtain
+
+TABLE IV
+
+
+
+THE EXACT VALUES OF r 1-bit( N ) USING THE HAAR AND RANDOMIZED
+
+
+
+
+
+r rHad( N ) ≤ N
+
+ρ 4
+
+HADAMARD ENSEMBLES FOR N = 2 n , n = 1 , . . . , 8
+
+k ,l
+
+E
+
+3 N − 2
+
+=
+
+.
+
+N 2
+
+Remark 2: We note that Proposition 1 is not limited
+
+to uniform quantization. It holds for the system described
+
+by (13), (15), and (16) as long as the scalar quantizers satisfy
+
+the constraint that the input and error are uncorrelated. This fol-
+
+C. Conjectured Tighter Bound on the Error Correlation
+
+lows since the bound (30) only requires that the latter property
+
+Coefficient
+
+is satisfied.
+
+We note that the bound |ϕL
+
+( ρ) | ≤ |ρ| 3 (as appears
+
+k ,L l
+
+in (30)), while being simple, is however quite loose, as
+
+B. Performance Analysis for Symmetric 1-bit Quantization
+
+can be inferred from Fig. 5. As a consequence, the per-
+
+For the symmetric 1-bit case ( L
+
+formance guarantee provided in Proposition 1 is also quite
+
+k = Ll = 2), we derive an
+
+exact expression for the error correlation coefficient, for the
+
+loose. We observed through numerical analysis that the true
+
+two orthogonal ensembles. Since the matrices of both ensem-
+
+performance is governed by replacing in inequality (37),
+
+bles have identically distributed entries, the error correlation
+
+the bound |ϕL
+
+( ρ) | ≤ |ρ| 3 with the conjectured bound
+
+k ,L l
+
+coefficient may be written as
+
+|ϕL
+
+( ρ) | ≤ |ϕ
+
+k ,L l
+
+2 , 2 ( ρ) | (see Remark 1 above). Once this
+
+is done, one arrives at the tighter (conjectured) bound
+
+rk,l( N ; Lk = 2 , Ll = 2) = N E {ρ ϕ 2 , 2( ck,lρ) }, (39)
+
+|rk,l( N) | ≤ r 1-bit( N), where r 1-bit( N) is given by (41) for the Haar ensemble, and by (42) for the randomized Hadamard
+
+where by property 1 of Corollary 1, and property 2 of Lemma 2
+
+ensemble. The conjectured bound appears (based on numer-
+
+arcsin( c
+
+ical evidence) to hold also for optimal non-uniform scalar
+
+ϕ
+
+k ,l ρ) − ck ,l ρ
+
+2 , 2 ( ck ,l ρ) =
+
+.
+
+(40)
+
+quantization.
+
+π/ 2 − 1
+
+Note that rk,l( N ) is a function of the spatial correlation ck,l.
+
+V. NUMERICAL DESIGN OF ORTHOGONAL TRANSFORMATIONS
+
+In order to arrive at a simple objective function, we make use
+
+of the fact that (39) is maximized by setting c
+
+We would like to find a set of non-random orthogonal matrices
+
+k ,l = 1. This
+
+follows by inspection of (40), which reveals that the function
+
+{U1 , . . . , U M } that achieve error correlation coefficients as ρ ϕ
+
+close as possible to zero. As an aid to design, we consider a single
+
+2 , 2 ( ck ,l ρ) is a monotonically increasing function of ck ,l , for all values |ρ| ≤ 1. We therefore define the worst-case correlation
+
+Gaussian source x ∼ N (0 , I) giving rise to M branches as coefficient for 1-bit quantization as
+
+described in Section III for the case ck,l = 1 for all k, l. As we've
+
+
+
+observed via numerical analysis, these are the worst conditions
+
+
+
+for a choice of a spatial covariance matrix, and therefore the
+
+r
+
+
+
+1-bit( N ) rk ,l ( N )
+
+.
+
+L
+
+optimization is carried out for such a covariance matrix. Since
+
+k = L l = 2 ,
+
+ck , l =1
+
+in the considered setting the error correlation coefficients are
+
+non-negative (see Remark 1), the best one can hope for is that
+
+1) Random Haar-Distributed Orthogonal Matrix Ensemble:
+
+they are all zero. To obtain a simple (scalar) objective function let
+
+Using the distribution of ρ as given in (8), by standard integration us consider the average conditional error correlation coefficient
+
+methods, we obtain
+
+over all different branch pairs
+
+r Haar( N ) = N
+
+
+
+
+
+1-bit
+
+E {ρ ϕ 2 , 2( ρ) }
+
+
+
+
+
+M
+
+r
+
+k = 1
+
+l= k
+
+k ,l ( N ; P k ,l )
+
+1
+
+N
+
+¯
+
+r( N, M ; {P k,l})
+
+=
+
+2 πν 2
+
+− 1 ,
+
+(41)
+
+M ( M − 1)
+
+π/ 2 − 1
+
+N ( N − 1)2
+
+
+
+
+
+M
+
+1 tr P T ϕ
+
+[P
+
+k = 1
+
+l= k N
+
+k ,l
+
+L k ,L l
+
+k ,l ]
+
+where νN is defined in (9). Note that by (10), r Haar( N ) vanishes 1-bit
+
+=
+
+,
+
+as N → ∞ as expected.
+
+M ( M − 1)
+
+2) Randomized Hadamard Matrix Ensemble: Using the dis-
+
+(43)
+
+tribution of ρ as given by (38), we compute the expression
+
+
+
+
+
+where P k,l = U k U T and the second equality follows by sub-l
+
+r rHad( N ) = N
+
+ρϕ
+
+ρ
+
+1-bit
+
+E
+
+2 , 2
+
+stituting (35) with ck,l = 1.
+
+N
+
+
+
+
+
+N
+
+N
+
+n
+
+n
+
+=
+
+2
+
+− 1 ϕ 2 , 2 2
+
+− 1 . (42) A. Numerical Optimization Procedure
+
+2 N
+
+n
+
+N
+
+N
+
+n = 0
+
+Our objective is to find a family of orthogonal matrices for
+
+A comparison between the error correlation coefficient (for
+
+a given number of branches M and a block of length N , for
+
+1-bit quantization and ck,l = 1) using the Haar and randomized
+
+which the average error correlation coefficient ¯
+
+r( N, M ; {P k,l})
+
+Hadamard ensembles is given in Table IV.
+
+as given in (43) is minimized. We pose this as the following
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5895
+
+minimization problem,
+
+TABLE V
+
+THE ERROR CORRELATION COEFFICIENT FOR M = 2 BRANCHES WITH
+
+L
+
+min
+
+¯
+
+r( N, M ; {P
+
+1 = L 2 = 2, WHEN P1 , 2 = H N , FOR N = 2 n , n = 1 , . . . , 8
+
+k ,l })
+
+U 1 ,..., U M
+
+U k U T = I ∀ k
+
+k
+
+
+
+
+
+M
+
+1 tr P T ϕ
+
+[P
+
+k = 1
+
+l= k N
+
+k ,l
+
+L k ,L l
+
+k ,l ]
+
+=
+
+min
+
+U 1 ,..., U M
+
+M ( M − 1)
+
+U k U T = I ∀ k
+
+k
+
+where for the objective function h (U1 , . . . , U M ) (44)
+
+as given in (45),
+
+
+
+
+
+where P
+
+∂h
+
+k ,l = U k U T .
+
+l
+
+= 2
+
+β U k U T U
+
+l
+
+l
+
+We choose to optimize for the balanced case, where the
+
+∂U k
+
+l= k
+
+quantization rates of all branches are equal. We observed that
+
+this choice is the most challenging case, and thus results in
+
+and β( x) = arcsin( x) +
+
+x
+
+√
+
+is used element-
+
+1 −x 2
+
+a system that is robust to different choices of quantization
+
+wise.
+
+rates in the various branches. Further, recall that, as stated in
+
+b) Update:
+
+Remark 1, we conjecture that |ϕ
+
+
+
+
+
+L
+
+( ρ) | ≤ |ϕ
+
+k ,L l
+
+2 , 2 ( ρ) |. There-
+
+fore, we will optimize the orthogonal matrices, setting L
+
+U( i+1) = exp −μ G( i) U( i) , k = 2
+
+k
+
+k
+
+k
+
+for all k = 1 , . . . , M . Thus, our objective is to find matrices
+
+{U
+
+where exp(A) is the matrix exponential of A.
+
+1 , . . . , U M } minimizing
+
+3) Stopping criterion: Stop when relative change in objective
+
+
+
+
+
+M
+
+1
+
+function is less than a chosen > 0, i.e.,
+
+tr P T ϕ
+
+k = 1
+
+l= k N
+
+k ,l
+
+2 , 2 [P k ,l ]
+
+
+
+
+
+¯
+
+r 1-bit( N, M ; {P k,l})
+
+
+
+
+
+M ( M − 1)
+
+h U( i) , . . . , U( i) − h U( i+1) , . . . , U( i+1)
+
+
+
+1
+
+M
+
+1
+
+M
+
+
+
+
+
+< ,
+
+M
+
+1 tr P T arcsin [P
+
+− 1
+
+
+
+h U( i) , . . . , U( i)
+
+
+
+k = 1
+
+l= k N
+
+k ,l
+
+k ,l ]
+
+1
+
+M
+
+=
+
+
+
+
+
+.
+
+M ( M − 1) π − 1
+
+2
+
+else i := i + 1, and go to step 2.
+
+To that end, we will find a local minimum of the following
+
+B. Numerical Optimization Results
+
+objective function,
+
+We were able to obtain very satisfying results for M = 2 , 3 , 4
+
+M
+
+
+
+
+
+branches with dimension ranging up to N = 16. Indeed, the set
+
+T
+
+h (U1 , . . . , U M ) =
+
+tr
+
+U k U T
+
+arcsin U
+
+.
+
+l
+
+k U T
+
+l
+
+of transformations {U1 , . . . , U M } that we obtained from the k = 1 l= k
+
+algorithm results in better performance than the expectation of
+
+(45)
+
+both random ensembles, i.e., ¯
+
+r 1-bit( N, M ; {P k,l}) ≤ r 1-bit( N ).
+
+Finding orthogonal matrices (locally) minimizing (45) re-
+
+1) The Special Case of M = 2 Branches and Appropri-
+
+quires performing numerical search over the Lie group SO( N )
+
+ate Hadamard Dimensions: In Appendix F we show that for
+
+defined in Section II-C. Without the orthogonality constraint,
+
+M = 2 and quantizers of equal rate, taking P1 , 2 as a Hadamard the standard gradient descent procedure could be used. How-matrix minimizes ¯
+
+r( N, 2; P1 , 2 ), for dimensions N where such ever, as there would be no guarantee that the output matrices are
+
+a matrix exists. Thus, as we know the optimal solution, there is
+
+orthogonal, this method is inapplicable.
+
+no need for numerical optimization. Nonetheless, precisely for
+
+In order to use a gradient descent procedure that starts with
+
+this reason, this is an ideal case to test our algorithm. That is, we
+
+orthogonal matrices and maintains the orthogonality constraints,
+
+take the solution of U1, U2 satisfying P1 , 2 = U1U T = H
+
+2
+
+N as
+
+we use the method of geodesic flow on Lie groups. For details
+
+our benchmark.8 The corresponding expression for ¯
+
+r( N, 2; H N )
+
+on the method, see [18], [19] and [20].
+
+(for quantizers of equal rate) is given by (74). Specifically, for
+
+1) Algorithm Description: The algorithm consists of the fol-
+
+L 1 = L 2 = 2, substituting (28) in (74) we have
+
+lowing steps.
+
+√
+
+1) Initialization: The matrices U(0), k = 1 , . . . , M , are N arcsin( 1
+
+√ ) − 1
+
+k
+
+¯
+
+r
+
+N
+
+,
+
+Haar-distributed random orthogonal matrices generated
+
+1-bit( N, 2; H N ) =
+
+π/ 2 − 1
+
+independently. Set a constant step size μ.
+
+as given in Table V. The algorithm indeed locates U
+
+2) Steps for a single matrix U( i) in the i th iteration (in each 1 , U2 with
+
+k
+
+P1 , 2 = H N for N = 2 , 4 , 8 , 12 , 16.
+
+iteration perform for U( i), k = 1 , . . . , M , in ascending k
+
+2) General Number of Branches: Interestingly, for small
+
+order):
+
+values of M and N (where the Hadamard structure is inap-
+
+a) Gradient computation:
+
+plicable), the located matrices P k,l nonetheless exhibit clear structure, where also the alphabet cardinality of the entries is
+
+∂h
+
+
+
+Γ( i) =
+
+U( i+1) , . . . , U( i+1) , U( i) , . . . , U( i) k
+
+∂U
+
+1
+
+k − 1
+
+k
+
+M
+
+k
+
+8
+
+T
+
+T
+
+We note that this structure is different from the randomized Hadamard
+
+G( i) = Γ( i)U( i)
+
+− U( i)Γ( i) ,
+
+ensemble studied in earlier sections.
+
+k
+
+k
+
+k
+
+k
+
+k
+
+5896
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+small. This hints at the possibility of global optimality. For ex-
+
+advantage is that it may equally be used with non-uniform quan-
+
+ample: For M = 2 and N = 6, the choice of U1 and U2 with tizers, unlike subtractive dithered quantization.
+
+⎡
+
+⎤
+
+A numerical optimization procedure was further proposed
+
+0
+
+1
+
+1
+
+1
+
+1
+
+1
+
+⎢
+
+for finding a set of orthogonal matrices with better performance
+
+⎢ 1
+
+0 − 1
+
+1 − 1
+
+1 ⎥
+
+⎥
+
+than the average of either random ensemble. Furthermore, for
+
+1 ⎢ 1 − 1
+
+0 − 1
+
+1
+
+1 ⎥
+
+
+
+
+
+P
+
+
+the case of two quantization branches, it was demonstrated that
+
+1 , 2 = U1 U T = √
+
+⎢
+
+⎥
+
+2
+
+5 ⎢ 1
+
+1 − 1
+
+0
+
+1 − 1
+
+⎣
+
+⎥
+
+⎦
+
+the Hadamard matrix (for dimensions where such a matrix ex-
+
+1 − 1
+
+1
+
+1
+
+0 − 1
+
+ists) yields optimal performance. It is interesting to prove the
+
+1
+
+1
+
+1 − 1 − 1
+
+0
+
+conjectured bound that motivates the objective function that we
+
+is located, which results in ¯
+
+r
+
+use for optimization in Section V.
+
+1-bit(6 , 2; P1 , 2 ) = 0 . 0644. Sim-
+
+ilar solutions with the entries of P
+
+Implementation of the scheme using the randomized
+
+1 , 2
+
+belonging to the
+
+alphabet { 0 , ± 1
+
+√
+
+} are located for N = 10 , 14, with Hadamard ensemble has many advantages. The alphabet has N − 1
+
+a cardinality of two, and the fast Walsh-Hadamard transform
+
+¯
+
+r 1-bit(10 , 2; P1 , 2 ) = 0 . 0342, and ¯
+
+r 1-bit(14 , 2; P1 , 2 ) = 0 . 0233 re-may be leveraged for low computational complexity and stor-
+
+spectively. One method to extract the matrices U1, U2 is via
+
+age. Further, the Lindeberg condition is always met for a large
+
+the singular value decomposition of P1 , 2. Alternatively, we may enough dimension, so that robustness (w.r.t. source distribution)
+
+take U1 = I and U2 = P1 , 2. For M = 3 and N = 4, an interis guaranteed. In practice, the random sequences of ± 1 en-
+
+esting solution is found,
+
+⎡
+
+tries that appear in the ensemble, may be replaced by adequate
+
+−
+
+⎤
+
+1
+
+1
+
+1
+
+1
+
+pseudo-random sequences found offline via numerical search.
+
+1 ⎢ 1 − 1
+
+1
+
+1 ⎥
+
+U1 = I , U2 = H4 , U3 =
+
+⎣
+
+⎦ ,
+
+2
+
+1
+
+1 − 1
+
+1
+
+1
+
+1
+
+1 − 1
+
+APPENDIX
+
+such that all the entries of P1 , 2, P1 , 3, and P2 , 3 are ± 1 , with A. Optimal Scalar Uniform Quantizer For a Gaussian Source
+
+2
+
+¯
+
+r 1-bit(4 , 3; {P k,l}) = ¯
+
+r 1-bit(4 , 2; H4 ) = 0 . 0827. Further exam-
+
+We optimize (according to the MSE distortion measure) a
+
+ples of specific structured solutions may be found in [21]. In
+
+scalar uniform quantizer for a Gaussian random variable with
+
+general, although there is no guarantee of a global optimum,
+
+zero mean and variance σ 2 , i.e., x ∼ N (0 , σ 2). We do so for the performance with the output of this algorithm is clearly
+
+both undithered quantization as well as for SDQ with a uniform
+
+better than the performance with random matrices, and usually
+
+dither.
+
+exhibits some structure.
+
+Remark 3: Given any set {U
+
+The quantizer is assumed to be midrise with uniform step size
+
+k }M
+
+, right-multiplying all
+
+k = 1
+
+matrices by an orthogonal fixed matrix A resulting in a set
+
+and with L levels, where L is an even integer,
+
+{U kA }M , yields an equivalent solution since the matrices k = 1
+
+⎛
+
+⎞
+
+P k,l are invariant to this operation. Further, permuting the rows L − 1
+
+2
+
+
+
+of any of the resulting matrices, or multiplying any row by − 1,
+
+Δ
+
+q
+
+⎝
+
+⎠
+
+L ( x) =
+
+· sign( x) 1 + 2
+
+1 {i·Δ ≤|x|} ,
+
+(46)
+
+yields an equivalent solution performance-wise.
+
+2
+
+i= 1
+
+Remark 4: A permutation matrix (including the identity ma-
+
+trix) which has a single 1 entry in any row or column should
+
+be avoided since it does not satisfy the Lindeberg condition as
+
+where 1 {·} is the indicator function, and Δ ∈ R+ is the step size.
+
+explained in Section II-C3. Using such a matrix has two down-
+
+The same optimality conditions may similarly be established for
+
+sides. First, the marginal distribution of the error vector of each
+
+midtread quantizers with an odd number of quantization levels.
+
+branch will not be (even approximately) Gaussian. Second, it
+
+1) Undithered Quantizer: Optimal Step Size: As shown by
+
+results in the loss of robustness [16] when the source is not Gaus-
+
+Max [11], the optimal step size satisfies the condition,
+
+sian. This problem may be resolved by right multiplying by an
+
+orthogonal matrix as explained in the previous remark, which
+
+should be chosen such that all matrices satisfy the Lindeberg
+
+E {( x − qL ( x)) qL ( x) } = E {xqL ( x) } − E {q 2 ( x) } = 0 .
+
+L
+
+(47)
+
+condition.
+
+Remark 5: The algorithm may be improved, utilizing more
+
+The optimal step size Δ
+
+advanced techniques such as incorporating an adaptive step
+
+0 ,L > 0 may be found numerically by
+
+applying this condition.
+
+size for the geodesic flow algorithm as proposed by Abrudan
+
+Substituting the optimal step size, the achieved distortion is
+
+et al. in [22].
+
+VI. CONCLUSION
+
+D 0 ,L = E {( x − qL ( x))2 }
+
+We have developed a novel dithering scheme based on the ap-
+
+= σ 2 − E {xqL ( x) },
+
+(48)
+
+plication of orthogonal transformations before and after quanti-
+
+zation. For fixed-rate low resolution quantization, the proposed
+
+scheme offers improved performance w.r.t. that attained with
+
+where the second equality follows from the optimality condi-
+
+subtractive dithering. Further, the gain over the latter grows
+
+tion (47). Table VI gives the optimal step sizes and achieved
+
+when considering multiple quantization branches. A further
+
+distortions for σ 2 = 1 and integer bit rates up to R = 8.
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5897
+
+TABLE VI
+
+TABLE VII
+
+OPTIMAL STEP SIZES AND DISTORTIONS FOR A GAUSSIAN SOURCE WITH ZERO
+
+OPTIMAL STEP SIZES AND DISTORTIONS FOR SDQ OF A GAUSSIAN SOURCE
+
+MEAN AND UNIT VARIANCE FOR L = 2 R , R = 1 , . . . , 8
+
+WITH ZERO MEAN AND UNIT VARIANCE, FOR L = 2 R , R = 1 , . . . , 8
+
+2) Subtractive Dithered Quantizer: Optimal Step Size: For
+
+3) Subtractive Dithered Quantizer: Uncorrelated Distortion:
+
+SDQ, the distortion (MSE) is given by
+
+To impose the condition that the input and error be uncorrelated,
+
+D SDQ = E {( x + u − q
+
+we scale the output by a constant κL to attain
+
+L
+
+L ( x + u))2 }
+
+(49)
+
+= E {( x + Δ · ˜
+
+u − q
+
+ˆ
+
+x = κL ( qL ( x + u) − u)
+
+(52)
+
+L ( x + Δ · ˜
+
+u))2 }
+
+
+
+⎡ ⎛
+
+= x − e,
+
+L
+
+1
+
+− 1
+
+
+
+
+
+2
+
+( i−˜ u)Δ
+
+2
+
+2
+
+=
+
+⎣2 ⎝
+
+x + Δ · ˜
+
+u − 2 i − 1 Δ
+
+fx ( x) dx
+
+where e is the uncorrelated error satisfying
+
+− 1
+
+( i− 1 −˜
+
+u )Δ
+
+2
+
+2
+
+i= 1
+
+
+
+"#
+
+E {xe} = 0 .
+
+(53)
+
+∞
+
+
+
+2
+
++2
+
+x + Δ · ˜
+
+u − L − 1 Δ
+
+fx ( x) dx
+
+d˜
+
+u,
+
+By substituting e = x − ˆ
+
+x, condition (53) is equivalent to
+
+( L − 1 −˜
+
+u )Δ
+
+2
+
+2
+
+E {xˆ
+
+x} = σ 2 ,
+
+(54)
+
+where u = Δ · ˜
+
+u, and ˜
+
+u is uniformly distributed over the interval
+
+
+
+
+
+− 1 , 1 .
+
+2
+
+2
+
+since E {x 2 } = σ 2. The optimal step size that minimizes the The derivative of the MSE w.r.t. Δ can be written, using the
+
+distortion satisfies condition (50). Multiplying (50) by κ 2 , and
+
+L
+
+Leibniz integral rule for the inner integrals w.r.t. x, as
+
+then substituting (52), we get the equivalent condition
+
+
+
+
+
+2E ( x + Δ · ˜
+
+u − qL ( x + Δ · ˜
+
+u))(˜
+
+u − 1 q
+
+Δ
+
+L ( x + Δ · ˜
+
+u))
+
+E {(ˆ
+
+x − κL x) ˆ
+
+x} = 0 .
+
+(55)
+
+
+
+$ L − 1%
+
+Δ 2 1
+
+2
+
+
+
+We therefore have that
+
+2
+
++ 2
+
+( i − ˜
+
+u) fx (( i − ˜
+
+u)Δ)
+
+
+
+2
+
+− 1
+
+E ˆ
+
+x 2
+
+= κ
+
+2
+
+i= 1
+
+L E {xˆ
+
+x}
+
+&
+
+− ( i − 1 − ˜ u) f
+
+= κ
+
+x (( i − 1 − ˜
+
+u)Δ)
+
+L σ 2 ,
+
+(56)
+
+"
+
+
+
+
+
+where the last equality follows from (54).
+
+− L − 1 − ˜ u f
+
+L − 1 − ˜ u Δ
+
+d˜
+
+u
+
+Inserting (52) into (54), we obtain
+
+2
+
+x
+
+2
+
+σ 2
+
+κL = E {xq
+
+= 2 E {( x + u − q
+
+L ( x + u) }
+
+Δ
+
+L ( x + u))( u − qL ( x + u)) }
+
+
+
+σ 2
+
+Δ 2 1
+
+=
+
+,
+
+2
+
+(57)
+
++ 2
+
+˜
+
+uf
+
+σ 2 − D SDQ
+
+x ( −Δ · ˜
+
+u) d˜
+
+u,
+
+2
+
+0 ,L
+
+− 12
+
+where the last equality follows from (51). The resulting uncor-
+
+where in the explicit integral w.r.t ˜
+
+u, the terms in the sum can-
+
+related distortion is given by
+
+cel each other, so that only the term appearing in last equality
+
+
+
+remains, and equals zero as an integral of an odd function.
+
+D SDQ , uc = E e 2
+
+0 ,L
+
+Setting the derivative equal to zero results in the condition
+
+
+
+
+
+= E ( x − ˆ
+
+x)2
+
+E {( x + u − qL ( x + u))( u − qL ( x + u)) } = 0 .
+
+(50)
+
+
+
+= E ˆ
+
+x 2 − σ 2
+
+The optimal step size ΔSDQ > 0 may be found using numeri-
+
+0 ,L
+
+cal search, such that condition (50) is satisfied. By imposing (50)
+
+σ 2 D SDQ
+
+0 ,L
+
+in (49), the optimal distortion is given by
+
+=
+
+,
+
+(58)
+
+
+
+
+
+σ 2 − D SDQ
+
+0 ,L
+
+D SDQ = E ( x + u − q
+
+0 ,L
+
+L ( x + u)) x
+
+where the third equality follows from (54).
+
+= σ 2 − E {xqL ( x + u) } ,
+
+(51)
+
+B. Output Correlation Function Expansion
+
+where we used E {x( x + u) } = E {x 2 } = σ 2 since x and u are independent and zero-mean. Table VII gives the optimal step
+
+We compute the Taylor expansion of γL
+
+( ρ) around the
+
+k ,L l
+
+sizes and the achieved distortions for σ 2 = 1 and integer bit
+
+point ρ = 0. To that end, we will use Mehler's formula [17] for
+
+rates up to R = 8.
+
+the bivariate Gaussian probability density function. Specifically,
+
+5898
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+for a Gaussian vector
+
+2) For the case of L
+
+
+
+
+
+k = Ll = 2, Price's theorem [23] yields
+
+1 ρ
+
+( z 1 , z 2) ∼ N 0 ,
+
+,
+
+(59)
+
+˙ γ
+
+) ˙
+
+q
+
+) |ρ},
+
+ρ 1
+
+2 , 2 ( ρ) = κ 2
+
+2 E { ˙
+
+q 2( xk 2( xl
+
+Mehler's formula states that
+
+where ˙
+
+f ( x) denotes the derivative of f ( x) w.r.t. x.
+
+The derivative of q
+
+1
+
+−
+
+− z 2 2 ρ z
+
+2 ( z) as given in (46), is a scaled Dirac
+
+1
+
+1
+
+1 z 2 + z 2
+
+2
+
+f
+
+2
+
+z
+
+( z
+
+
+
+e
+
+1 −ρ 2
+
+(60)
+
+delta function
+
+1 ,z 2
+
+1 , z 2 ) = 2 π 1 − ρ 2
+
+∞
+
+˙
+
+q 2( z) = Δ0 , 2 δ( z) ,
+
+1
+
+1
+
+=
+
+e− 1 ( z 2 + z 2 )
+
+2
+
+1
+
+2
+
+Hen ( z 1) Hen ( z 2) ρn ,
+
+2 π
+
+n!
+
+Performing the expectation for ( z
+
+n = 0
+
+1 , z 2 ) as specified in (59)
+
+√
+
+and substituting κ 2 · Δ0 , 2 =
+
+2 π results in
+
+where Hen ( z) are the probabilists' Hermite polynomials defined as,
+
+1
+
+˙ γ 2 , 2( ρ) =
+
+∀ |ρ| < 1 ,
+
+z 2
+
+dn
+
+1 − ρ 2
+
+Hen ( z) = ( − 1) n e 2
+
+e− z 22 , n ≥ 0 ,
+
+(61)
+
+dzn
+
+so that
+
+with the recursion relation,
+
+He
+
+γ 2 , 2( ρ) = arcsin( ρ)
+
+∀ |ρ| ≤ 1 .
+
+(64)
+
+n + 1 ( z) = zHen ( z) − nHen − 1 ( z) , (62)
+
+He 0( z) = 1 ,
+
+D. Properties of the Error Correlation Coefficient Function
+
+He 1( z) = z,
+
+We prove the properties of ϕL
+
+( ρ) as stated in
+
+k ,L l
+
+resulting in He
+
+Corollary 1:
+
+2 m ( z) and He 2 m + 1 ( z) being even and odd functions of z, respectively, for m ≥ 0.
+
+1) ϕL
+
+( ρ) may be rewritten as
+
+k ,L l
+
+Using (60), the Taylor expansion of γL
+
+( ρ) is given by
+
+k ,L l
+
+E {( x − κ q ( x )) ( x − κ q ( x )) |ρ}
+
+ϕ
+
+( ρ) =
+
+k
+
+L k L k
+
+k
+
+l
+
+L l L l
+
+l
+
+
+
+
+
+γ
+
+L
+
+L
+
+( ρ) = κ
+
+κ E {q ( x ) q ( x ) |ρ}
+
+k ,L l
+
+k ,L l
+
+L k
+
+L l
+
+L k
+
+k
+
+L l
+
+l
+
+D uc
+
+D uc
+
+k
+
+l
+
+∞
+
+1
+
+κ
+
+κ E {q ( x ) q ( x ) |ρ} − ρ
+
+=
+
+a
+
+L k
+
+L l
+
+L k
+
+k
+
+L l
+
+l
+
+L
+
+=
+
+
+
+
+
+n!
+
+k ,n aL l ,n ρn ,
+
+D uc
+
+D uc
+
+n = 0
+
+k
+
+l
+
+where
+
+
+
+γL
+
+( ρ) − ρ
+
+k ,L l
+
+∞
+
+=
+
+
+
+,
+
+D uc
+
+D uc
+
+a
+
+k
+
+l
+
+L
+
+κ
+
+q
+
+( z) He
+
+k ,n
+
+1
+
+√
+
+L
+
+L
+
+n ( z) e− z 2
+
+2
+
+dz.
+
+(63)
+
+2 π
+
+k
+
+k
+
+−∞
+
+where the second equality follows since
+
+Since He 2 m ( z) and qL ( z) are even and odd functions of z, k
+
+respectively, aL
+
+E {x κ q ( x ) |ρ} = ρ,
+
+k , 2 m = 0 for all m ≥ 0, as an integral of an odd k
+
+L l L l
+
+l
+
+function of z. For n = 1, substituting He 1 ( z) = z into (63) we have from (21) that
+
+for all k = l. This may be derived by writing
+
+
+
+
+
+x = v + ρx , where v ∼ N 0 , 1 − ρ 2 , independent of 1
+
+∞
+
+k
+
+l
+
+a
+
+x , and using relation (21).
+
+L
+
+√
+
+κ
+
+q
+
+( z) ze− z 22 dz
+
+k , 1 =
+
+L
+
+L
+
+l
+
+2 π
+
+k
+
+k
+
+−∞
+
+2) Substituting (26) into (28) results in the expansion
+
+= κL E {zq ( z) }
+
+k
+
+L k
+
+∞
+
+
+
+1
+
+aLk , 2 n+1 aLl , 2 n+1
+
+
+
+
+
+= 1
+
+ϕL
+
+( ρ) =
+
+ρ 2 n+1 .
+
+k ,L l
+
+(2 n + 1)!
+
+D uc
+
+D uc
+
+n = 1
+
+k
+
+l
+
+for all Lk . It follows that for |ρ| ≤ 1,
+
+3) For ρ = ± 1, and the symmetric case where L
+
+∞
+
+
+
+k = Ll , we
+
+a
+
+have
+
+γ
+
+L k , 2 n +1 aL l , 2 n +1
+
+L
+
+( ρ) = ρ +
+
+ρ 2 n+1 .
+
+k ,L l
+
+(2 n + 1)!
+
+n = 1
+
+ϕL
+
+(1) = −ϕ
+
+( − 1)
+
+k ,L k
+
+L k ,L k
+
+C. Properties of the Output Correlation Function
+
+γ
+
+(1) − 1
+
+=
+
+L k ,L k
+
+We prove the properties of γ
+
+D uc
+
+L
+
+( ρ) as stated in Lemma 2:
+
+k
+
+k ,L l
+
+1) For ρ = ± 1, and for the symmetric case where Lk = Ll,
+
+= 1 ,
+
+we have x = ±x , and hence
+
+l
+
+k
+
+where we used D uc = κ
+
+− 1, and γ
+
+(1) = κ
+
+.
+
+γ
+
+k
+
+L k
+
+L k ,L k
+
+L k
+
+L
+
+(1) = −γ
+
+( − 1)
+
+k ,L k
+
+L k ,L k
+
+4) ϕL
+
+( ρ) is an odd function, since its expansion (29)
+
+k ,L l
+
+= κ 2
+
+( x ) }
+
+contains only odd powers of ρ. Moreover, ϕ
+
+( ρ)
+
+L E {q 2
+
+L
+
+k
+
+L k
+
+k
+
+k ,L k
+
+(symmetric case where L
+
+= κ
+
+k = Ll ) is also a monotonically
+
+L ,
+
+k
+
+increasing function of ρ, since its expansion consists only
+
+where the last equality follows from (18).
+
+of positive coefficients.
+
+HADAD AND EREZ: DITHERED QUANTIZATION VIA ORTHOGONAL TRANSFORMATIONS
+
+5899
+
+5) Using (29) for the symmetric case Lk = Ll yields,
+
+denote by ρ, as
+
+∞
+
+N
+
+
+
+
+
+a 2
+
+1
+
+|
+
+1
+
+ρ =
+
+b
+
+ϕ
+
+L k , 2 n +1
+
+i
+
+L
+
+( ρ) | =
+
+|ρ| 2 n+1
+
+(65)
+
+k ,L k
+
+N
+
+D uc
+
+(2 n + 1)!
+
+k
+
+i= 1
+
+n = 1
+
+$
+
+"
+
+∞
+
+
+
+2
+
+a 2
+
+=
+
+( s − E {s}) ,
+
+≤
+
+1
+
+L k , 2 n +1
+
+|ρ| 3
+
+(66)
+
+N
+
+D uc
+
+(2 n + 1)!
+
+k
+
+n = 1
+
+where b are i.i.d. and equal ± 1 with equal probability, and i
+
+
+
+
+
+= ϕ
+
+s ∼ B N, 1 (binomially distributed) with E {s} = N . Thus, L
+
+(1) |ρ| 3
+
+2
+
+2
+
+k ,L k
+
+the entries of P k,l are centralized binomial random variables up
+
+= |ρ| 3 ,
+
+(67)
+
+to scaling, and are distributed according to,
+
+
+
+
+
+n
+
+N
+
+where (66) follows from the fact that |ρ| 2 n+1 ≤ |ρ| 3 for Pr ρ = 2
+
+− 1 =
+
+2 −N , n = 0 , . . . , N,
+
+all |ρ| ≤ 1 and n ≥ 1, and in the last equality we used
+
+N
+
+n
+
+
+
+ϕL
+
+(1) = 1 for all L
+
+N
+
+k ,L k
+
+k . For the general case, we have
+
+where
+
+=
+
+N !
+
+is the binomial coefficient. The second
+
+n
+
+( N −n )! n !
+
+and fourth moments are given by
+
+|ϕL
+
+( ρ) |
+
+k ,L l
+
+
+
+1
+
+
+
+
+
+E {ρ 2 } =
+
+,
+
+∞
+
+
+
+
+
+1
+
+a
+
+
+
+N
+
+=
+
+L k , 2 n +1 aL l , 2 n +1
+
+
+
+
+
+ρ 2 n+1
+
+(2 n + 1)!
+
+D uc
+
+D uc
+
+
+
+3 N − 2
+
+n = 1
+
+k
+
+l
+
+E {ρ 4 } =
+
+.
+
+(71)
+
+N 3
+
+∞
+
+
+
+1
+
+1
+
+|
+
+2 |
+
+2
+
+≤
+
+aL
+
+a
+
+k , 2 n + 1 ||ρ|n +
+
+
+
+L l , 2 n +1 ||ρ|n +
+
+
+
+(68)
+
+F. Hadamard Matrix of Order N is Optimal for M = 2 and
+
+D uc (2 n + 1)!
+
+D uc (2 n + 1)!
+
+n = 1
+
+k
+
+l
+
+L
+
+'
+
+1 = L 2 .
+
+(
+
+'
+
+( ∞
+
+
+
+(
+
+a 2
+
+|ρ| 2 n+1 ( ∞
+
+a 2
+
+|ρ| 2 n+1
+
+We consider the case of M = 2 branches with quantizers
+
+≤ )
+
+L k , 2 n +1
+
+)
+
+L l , 2 n +1
+
+of equal rate L
+
+D uc (2 n + 1)!
+
+D uc (2 n + 1)!
+
+1 = L 2 . We show that any U1 and U2 with
+
+n = 1
+
+k
+
+n = 1
+
+l
+
+P1 , 2 = U1U T = H
+
+2
+
+N , where N is a dimension for which a
+
+(69)
+
+Hadamard matrix is known to exist, is a local minimum of
+
+*
+
+the error correlation coefficient (43), which for the considered
+
+=
+
+|ϕL
+
+( ρ) ||ϕ
+
+( ρ) |,
+
+scenario can be written as
+
+k ,L k
+
+L l ,L l
+
+1
+
+
+
+
+
+¯
+
+r
+
+tr P T ϕ
+
+[P
+
+(72)
+
+where (68) follows from the triangle inequality, and (69)
+
+symm( N, 2; P1 , 2 ) =
+
+L
+
+1 , 2 ]
+
+N
+
+1 , 2
+
+1 ,L 1
+
+follows from the Cauchy-Schwarz inequality for se-
+
+N
+
+N
+
+
+
+
+
+quences. Therefore, using (67), we have
+
+1
+
+=
+
+ρ 1 , 2 ϕL
+
+ρ 1 , 2 ,
+
+N
+
+i,j
+
+1 ,L 1
+
+i,j
+
+*
+
+i= 1 j = 1
+
+|ϕL
+
+( ρ) | ≤
+
+|ϕ
+
+( ρ) ||ϕ
+
+( ρ) |
+
+k ,L l
+
+L k ,L k
+
+L l ,L l
+
+with the constraint that P1 , 2 is orthogonal, where (P1 , 2) i,j
+
+≤ |ρ| 3 .
+
+(70)
+
+= ρ 1 , 2 . The error correlation coefficient function for the sym-i,j
+
+metric case may be written using (29) as
+
+∞
+
+
+
+E. Properties of the Randomized Hadamard Matrix Ensemble
+
+a 2
+
+ϕ
+
+L 1 , 2 n +1
+
+L
+
+[P
+
+[P
+
+1 ,L 1
+
+1 , 2 ] =
+
+1 , 2 ]2 n + 1 ,
+
+(73)
+
+D uc (2 n + 1)!
+
+We find the distribution of the entries of P
+
+1
+
+k ,l = U k U T ,
+
+n = 1
+
+l
+
+where {U k }M
+
+are independent randomized Hadamard ma-
+
+k = 1
+
+where [P1 , 2] n is an element-wise n th power of P1 , 2. Substitut-trices for N = 2 n , as defined in Section II-C2. We have
+
+ing (73) into (72) we obtain
+
+ρk,l = (P
+
+¯
+
+r symm( N, 2; P1 , 2 )
+
+i,j
+
+k ,l ) i,j
+
+
+
+
+
+∞
+
+
+
+
+
+= H
+
+1
+
+a 2
+
+N B k B T H T
+
+L
+
+l
+
+N
+
+1 , 2 n + 1
+
+i,j
+
+=
+
+tr P T [P1 , 2]2 n+1 .
+
+N
+
+D uc (2 n + 1)!
+
+1 , 2
+
+1
+
+N
+
+
+
+n = 1
+
+=
+
+(H N ) i,m bk,m (H N ) j,m bl,m .
+
+We show that subject to the orthogonality constraint, the
+
+m = 1
+
+Hadamard matrix minimizes each element in the sum separately.
+
+In fact, we show that the Hadamard matrix minimizes each
+
+Using the fact that the entries of the Hadamard matrix equal
+
+element in the sum subject to a weaker constraint, requiring
+
+± 1
+
+√ , any entry of P
+
+N
+
+k ,l is a sum of independent random vari-
+
+only that all rows have unit norm. It follows that the Hadamard
+
+ables taking the values ± 1 with equal probability. That is, we
+
+matrix also minimizes the sum since all the summands are
+
+N
+
+may express each entry, which with abuse of notation we now
+
+positive.
+
+
+
+
+
+5900
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 64, NO. 22, NOVEMBER 15, 2016
+
+To that end, write the constrained minimization using La-
+
+[8] J. W. Lindeberg, "Eine neue Herleitung des Exponentialgesetzes in der
+
+grange multipliers as the minimization of
+
+Wahrscheinlichkeitsrechnung," Math. Z. , vol. 15, no. 1, pp. 211-225, 1922.
+
+
+
+
+
+[9] L. Schuchman, "Dither signals and their effect on quantization noise,"
+
+
+
+
+
+IEEE Trans. Commun. Technol. , vol. 12, no. 4, pp. 162-165, Dec. 1964.
+
+J = tr P T [P
+
+− tr λ P
+
+− I
+
+n ≥ 1 ,
+
+1 , 2
+
+1 , 2 ]2 n + 1
+
+1 , 2 P T
+
+1 , 2
+
+[10] J. M. Cioffi, G. P. Dudevoir, V. M. Eyuboglu, and D. G. Forney, Jr., "MMSE
+
+decision-feedback equalizers and coding. I. Equalization results," IEEE
+
+such that λ = diag ([ λ
+
+Trans. Commun. , vol. 43, no. 10, pp. 2582-2594, Oct. 1995.
+
+1 · · · λN ]) (optimization subject to nor-
+
+malized rows). Differentiating with respect to P
+
+[11] J. Max, "Quantizing for minimum distortion," IRE Trans. Inf. Theory, 1 , 2 , we obtain
+
+vol. 6, no. 1, pp. 7-12, Mar. 1960.
+
+∂J
+
+[12] N. Jacobson, Lie Algebras. North Chelmsford, MA, USA: Courier Cor-
+
+= (2 n + 2) [P
+
+poration, 2013.
+
+1 , 2 ]2 n + 1 − 2 λP1 , 2 .
+
+∂P1 , 2
+
+[13] G. W. Stewart, "The efficient generation of random orthogonal matrices
+
+with an application to condition estimators," SIAM J. Numer. Anal. , vol. 17, Setting the derivative to zero, we get
+
+no. 3, pp. 403-409, 1980.
+
+
+
+
+
+[14] A. Stam, "Limit theorems for uniform distributions on spheres in high-
+
+2 n + 1
+
+dimensional Euclidean spaces," J. Appl. Probab. , vol. 19, pp. 221-228, ( n + 1) ρ 1 , 2
+
+− λ
+
+= 0 ,
+
+i,j
+
+i ρ 1 , 2
+
+i,j
+
+1982.
+
+
+
+
+
+[15] E. Liberty, N. Ailon, and A. Singer, "Dense fast random projections and 1
+
+2 n
+
+lean Walsh Transforms," Discr. Comput. Geom. , vol. 45, no. 1, pp. 34-44, with real solutions ρ 1 , 2 = 0 , ±
+
+λi
+
+for λ
+
+i,j
+
+n + 1
+
+i ≥ 0. Choosing
+
+2011.
+
+[16] A. C. Hung and T. H. Meng, "Multidimensional rotations for robust quan-
+
+the i th row to have Ni non-zero entries results in λi = n+1
+
+N n
+
+tization of image data," IEEE Trans. Image Process. , vol. 7, no. 1, pp. 1-12, i
+
+after substituting in the constraint. Thus, the possible solutions
+
+Jan. 1998.
+
+are ρ 1 , 2 = 0 , ± 1
+
+√
+
+. The objective function's value at a local
+
+[17] W. Kibble, "An extension of a theorem of Mehler's on Hermite polyno-
+
+i,j
+
+N i
+
+mials," Math. Proc. Camb. Phil. Soc. , vol. 41, no. 01, pp. 12-15, 1945.
+
+minimum is given by
+
+[18] Y. Nishimori, "Learning algorithm for independent component analysis
+
+by geodesic flows on orthogonal group," in Proc. Int. Joint Conf. Neural N
+
+N
+
+
+
+
+
+1
+
+2 n + 2
+
+Netw. , 1999, vol. 2, pp. 933-938.
+
+tr P T [P
+
+=
+
+ρ 1 , 2
+
+[19] M. Plumbley, "Lie group methods for optimization with orthogonality
+
+1 , 2
+
+1 , 2 ]2 n + 1
+
+N
+
+i,j
+
+constraints," in Proc. Int. Conf. Ind. Compon. Anal. Blind Signal Separa-i= 1 j = 1
+
+tion, 2004, pp. 1245-1252.
+
+N
+
+[20] D. A. Karpuk and C. Hollanti, "Rotating non-uniform and high-
+
+1 1
+
+=
+
+,
+
+dimensional constellations using geodesic flow on lie groups," in Proc.
+
+N
+
+N n
+
+Int. Conf. Commun. (ICC), Jun. 2014, pp. 5884-5889.
+
+i= 1
+
+i
+
+[21] R. Hadad, "Dithered quantization via orthogonal transformations and
+
+and is minimized taking N
+
+a Cauchy-Schwarz like inequality," Master's thesis, Dept. Elect.
+
+i = N for all i = 1 , . . . , N , thus
+
+Eng., Tel Aviv Univ, Tel Aviv, Israel, 2016. [Online]. Available:
+
+yielding a global minimum. Choosing P1 , 2 = H N (assuming http://www.eng.tau.ac.il/ uri/theses/hadad_msc.pdf
+
+the dimension N is valid) satisfies this condition, since the en-
+
+[22] T. E. Abrudan, J. Eriksson, and V. Koivunen, "Steepest Descent Algo-
+
+tries of H
+
+rithms for Optimization Under Unitary Matrix Constraint." IEEE Trans.
+
+N equal ± 1
+
+√ , and also the constraint is satisfied. The
+
+N
+
+Signal Process. , vol. 56, no. 3, pp. 1134-1147, Mar. 2008.
+
+error correlation coefficient for P
+
+[23] R. Price, "A useful theorem for nonlinear devices having Gaussian inputs,"
+
+1 , 2 = H N with ρ 1 , 2 = ± 1
+
+√
+
+i,j
+
+N
+
+IRE Trans. Inf. Theory, vol. 4, no. 2, pp. 69-72, Jun. 1958.
+
+is given by
+
+N
+
+N
+
+1
+
+
+
+
+
+¯
+
+r symm( N, 2; H N ) =
+
+ρ 1 , 2 ϕL
+
+ρ 1 , 2
+
+N
+
+i,j
+
+1 ,L 1
+
+i,j
+
+Ran Hadad was born in Rishon LeZion, Israel,
+
+i= 1 j = 1
+
+on October 18, 1985. He received the B.Sc. ( cum
+
+√
+
+
+
+
+
+1
+
+laude), and M.Sc. ( summa cum laude) degrees in
+
+=
+
+N ϕL
+
+√
+
+,
+
+(74)
+
+electrical engineering from Tel Aviv University,
+
+1 ,L 1
+
+N
+
+Tel Aviv, Israel, in 2013 and 2016, respectively.
+
+His research interests include signal processing and
+
+where the second equality follows since ρϕL
+
+( ρ) is an even
+
+1 ,L 1
+
+communications.
+
+and positive function of ρ.
+
+REFERENCES
+
+[1] L. Roberts, "Picture coding using pseudo-random noise," IRE Trans. Inf.
+
+Theory, vol. 8, no. 2, pp. 145-154, 1962.
+
+[2] R. M. Gray and D. L. Neuhoff, "Quantization," IEEE Trans. Inf. Theory, Uri Erez (M'09) was born in Tel Aviv, Israel, on
+
+vol. 44, no. 6, pp. 2325-2383, Oct. 1998.
+
+October 27, 1971. He received the B.Sc. degree in
+
+[3] E. Akyol and K. Rose, "On constrained randomized quantization," IEEE
+
+mathematics and physics, and the M.Sc. and Ph.D.
+
+Trans. Signal Process. , vol. 61, no. 13, pp. 3291-3302, Jul. 2013.
+
+degrees in electrical engineering from Tel Aviv Uni-
+
+[4] V. K. Goyal, "Multiple description coding: Compression meets the net-
+
+versity, Tel Aviv, Israel, in 1996, 1999, and 2003,
+
+work," IEEE Signal Process. Mag. , vol. 18, no. 5, pp. 74-93, Sep. 2001.
+
+respectively. During 2003/2004, he was a Postdoc-
+
+[5] S.-M. Yang and V. A. Vaishampayan, "Low-delay communication for
+
+toral Associate at the Signals, Information, and Algo-
+
+rayleigh fading channels: An application of the multiple description quan-
+
+rithms Laboratory, Massachusetts Institute of Tech-
+
+tizer," IEEE Trans. Commun. , vol. 43, no. 11, pp. 2771-2783, Nov. 1995.
+
+nology, Cambridge, MA, USA. Since 2005, he has
+
+[6] A. Gersho and R. M. Gray, Vector Quantization and Signal Compression.
+
+been with the Department of Electrical Engineering-
+
+New York, NY, USA: Springer, 2012, vol. 159.
+
+Systems,Tel-Aviv University. His research interests
+
+[7] R. Zamir, S. Shamai, and U. Erez, "Nested linear/lattice codes for struc-include the general areas of information theory and digital communication.
+
+tured multiterminal binning," IEEE Trans. Inf. Theory, vol. 48, no. 6, From 2009 to 2011, he was an Associate Editor for Coding Techniques for the
+
+pp. 1250-1276, Jun. 2002.
+
+IEEE TRANSACTIONS ON INFORMATION THEORY.
+
+
+
+
+

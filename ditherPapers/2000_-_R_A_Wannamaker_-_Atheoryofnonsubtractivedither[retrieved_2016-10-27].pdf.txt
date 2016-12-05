@@ -1,0 +1,3170 @@
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+499
+
+A Theory of Nonsubtractive Dither
+
+Robert A. Wannamaker, Stanley P. Lipshitz , Member, IEEE, John Vanderkooy, and J. Nelson Wright , Senior Member, IEEE
+
+Abstract-A detailed mathematical investigation of multibit cent interest. The following provides a brief history of the theory quantizing systems using nonsubtractive dither is presented.
+
+of NSD quantization.
+
+It is shown that by the use of dither having a suitably chosen
+
+It must be acknowledged that all theoretical treatments of
+
+probability density function, moments of the total error can be dithered quantization owe a substantial debt to the work of
+
+made independent of the system input signal but that statistical independence of the error and the input signals is not achievable.
+
+Widrow [5]-[8], who developed many of the essential mathe-Similarly, it is demonstrated that values of the total error signal matical tools while studying undithered quantization. Among
+
+cannot generally be rendered statistically independent of one
+
+Widrow's contributions was the "quantizing theorem," which
+
+another but that their joint moments can be controlled and that, is a counterpart in discrete-valued systems to the better-known
+
+in particular, the error sequence can be rendered spectrally white.
+
+"sampling theorem" in discrete-time systems. Important exten-
+
+The properties of some practical dither signals are explored, and recommendations are made for dithering in audio, video, and
+
+sions to Widrow's treatment were made by Sripad and Snyder
+
+measurement applications. The paper collects all of the important
+
+[9], Sherwood [4], and Gray [10].
+
+results on the subject of nonsubtractive dithering and introduces Early investigations into nonsubtractive dither per se were important new ones with the goal of alleviating persistent and
+
+conducted by Wright [11] in 1979, resulting in discovery of widespread misunderstandings regarding the technique.
+
+many of the important results that follow. This work remained
+
+Index Terms-Dither, quantization.
+
+unpublished until it was brought to the attention of the other
+
+authors of this article [12]. The results concerning moments of I. I
+
+the error signal were rediscovered independently by Stockham
+
+NTRODUCTION
+
+[13] in 1980 and documented in an unpublished Master's thesis ANALOG-TO-DIGITALconversioniscustomarilydecom- by Brinton [14], who was a student of Stockham's, in 1984.
+
+posed into two separate processes: sampling of the input
+
+Stockham otherwise remained silent on the matter until the
+
+analog waveform and quantization of the sample values in order 1990's [15], making commercial use of triangular-pdf dither in to represent them with binary words of a prescribed length. The
+
+digital recording/editing systems since the early 1980's.
+
+sampling operation incurs no loss of information as long as the
+
+The properties of nonsubtractive dither (and, in particular,
+
+input is appropriately bandlimited, but the approximating nature
+
+triangular-pdf dither) were again discovered independently by
+
+of the quantization operation always results in signal degrada-Lipshitz and Vanderkooy in the mid-1980's. Vanderkooy and
+
+tion. Another common operation with a similar problem is re-
+
+Lipshitz were the first researchers to publish their findings on
+
+quantization, in which the wordlength of digital data is reduced nonsubtractive dither [16]-[20], and this prompted collation after arithmetical processing in order to meet specifications for
+
+and extension of the theoretical aspects by Wannamaker
+
+its storage or transmission.
+
+[21]-[26]. 1 Lipshitz, Wannamaker, and Vanderkooy have Dither, straightforwardly put, is a random "noise" process
+
+published a broad theoretical survey of multibit quantization
+
+added to a signal prior to its (re)quantization in order to con-
+
+treating both undithered and dithered systems [27]. They have trol the statistical properties of the quantization error. This is also extended the treatment to include an analysis of dithered
+
+not a new idea. Subtractively dithered (SD) quantizing systems,
+
+quantizing systems using noise-shaping error feedback [25],
+
+in which the dither is subsequently subtracted from the output
+
+[28], [29] and multichannel quantizing systems [30]. The signal after quantization, have been discussed and used for over
+
+theory has been elegantly extended to cover dithered lattice
+
+30 years in speech and video processing applications [1], [2],
+
+quantization by Kirac and Vaidyanathan [31].
+
+and a satisfactory theory of their operation exists in print [3], [4].
+
+The results concerning error moments have been indepen-
+
+Nonsubtractively dithered (NSD) systems, in which the dither
+
+dently discovered by Gray [32], using arguments employing signal is not subtracted from the output, are a subject of more re-Fourier series along with characteristic functions. Gray and
+
+Stockham have published an important paper on the subject
+
+Manuscript received July 7, 1999; revised August 10, 1999. This work was
+
+[15] that establishes the fundamental results regarding nonsub-supported in part by grants from the Natural Sciences and Engineering Research tractive dither using this approach, thus providing an alternative Council of Canada. The associate editor coordinating the review of this paper treatment of which readers interested in the topic should be
+
+and approving it for publication was Editor-in-Chief Jose M. F Moura. An earlier version of this manuscript was submitted on October 18, 1991 and formally aware.
+
+accepted for publication by then associate editor Robert A. Gabel on March 1, Although a handful of individuals in the engineering com-1993, subject to minor revisions. It was considered withdrawn, however, be-munity are aware of the correct results regarding nonsubtrac-
+
+cause the authors did not submit the revised manuscript until July 1999.
+
+R. A. Wannamaker, S. P. Lipshitz, and J. Vanderkooy are with the Audio Retive dither, a number of misconceptions concerning the tech-
+
+search Group, University of Waterloo, Waterloo, Ont., N2L 3G1 Canada.
+
+nique are widespread. A persistent confusion regarding the quite
+
+J. N. Wright is with the Parallax Group, Mountain View, CA 94043 USA.
+
+Publisher Item Identifier S 1053-587X(00)01007-2.
+
+1Reference [26] available online at http://audiolab.uwaterloo.ca/~rob/.
+
+1053-587X/00$10.00 © 2000 IEEE
+
+
+
+
+
+500
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+different properties of subtractive and nonsubtractive dithering
+
+(see, for instance, [33, p. 170]) is particularly serious. The aim of this paper is to provide a consistent and rigorous account of the
+
+theory of nonsubtractively dithered systems in order to promote
+
+a more universal understanding of this dithering technique. As
+
+such, it greatly extends and elaborates the treatment provided
+
+by our earlier presentation [23].
+
+A. The Classical Model of Quantization
+
+Quantization and requantization processes possess similar
+
+transfer characteristics, which are generally of either the
+
+mid-tread or mid-riser variety illustrated in Fig. 1. We will Fig. 1.
+
+Quantizer transfer characteristics. (a) Mid-tread and (b) mid-riser with assume that the quantizers involved are infinite, which, for 1 denoting the size of one LSB.
+
+practical purposes, means that the system input signal is
+
+never clipped by saturation of the quantizer. (Some comments
+
+regarding the application of dither to 1-bit and sigma-delta
+
+converters will be reserved for the Conclusions.) In this case,
+
+the corresponding transfer functions relating the quantizer
+
+output to its input
+
+can be expressed analytically in terms of
+
+the quantizer step size
+
+for a mid-tread quantizer, or
+
+Fig. 2.
+
+Quantization error q(w), as a function of quantizer input, w, for a mid-tread quantizer.
+
+where the rectangular window function of width
+
+is de-
+
+fined as
+
+for a mid-riser quantizer, where the "floor" operator
+
+returns
+
+the greatest integer less than or equal to its argument. The
+
+step size
+
+is commonly referred to as a least significant bit
+
+otherwise.
+
+(LSB), since a change in input signal level of one step width
+
+Such a pdf is referred to as a uniform pdf or RPDF (rectangular corresponds to a change in the LSB of binary coded output.
+
+pdf). If a quantization error signal is uniformly distributed, its Throughout the sequel, quantizers of the mid-tread variety will
+
+moments are
+
+be assumed, but all derived results have obvious analogs for
+
+mid-riser quantizers, and all stated theorems are valid for both
+
+(1)
+
+types.
+
+Quantization or requantization introduces an error signal
+
+(2)
+
+into the digital data stream, which is simply the difference be-
+
+tween the output of the quantizer and its input
+
+and
+
+for
+
+even
+
+(3)
+
+for
+
+odd
+
+where we henceforth use
+
+to indicate equality by definition.
+
+where (2) is the familiar expression for the variance of the quan-
+
+This quantization error is shown as a function of
+
+for a mid-
+
+tization error in the classical model.
+
+tread quantizer in Fig. 2. It has a maximum magnitude of 0.5
+
+The CMQ is valid for input signals that exhibit smooth pdf's
+
+LSB and is periodic in
+
+with a period of 1 LSB.
+
+and are large relative to an LSB [26], [34], [35]. It fails cata-Although is clearly a deterministic function of the input, the
+
+strophically for small signals and many particularly simple (e.g., classical model of quantization (CMQ) [34], [35] holds that the sinusoidal) signals, for which the quantization error retains the
+
+quantization error can be modeled as an additive random process
+
+character of input-dependent distortion, rather than noise. The
+
+that is independent of the system input and iid (i.e., that distinct mid-tread quantization of a small signal of peak amplitude less
+
+samples of the error are statistically independent of one another
+
+than 0.5 LSB provides a simple example of this failure; the
+
+and identically distributed). The CMQ further postulates that the
+
+quantizer output is null, and the quantization error is just the
+
+error is uniformly distributed, meaning that its values exhibit a input sign-inverted. Such an error is not uniformly distributed,
+
+probability density function (pdf) of the form
+
+iid, or independent of the input. In such cases, application of an appropriate dither can be used to temper the statistical properties of the error signal.
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+501
+
+B. Dither: Subtractive versus Nonsubtractive
+
+Schematics of subtractively dithered and nonsubtractively
+
+dithered quantizing systems are shown in Fig. 3. In each case,
+
+we denote the system input by
+
+and the system output by
+
+. We thus distinguish the system input from the quantizer
+
+input, which we continue to denote by
+
+and which is given by
+
+.
+
+represents the dither signal, which is a strict-sense
+
+stationary random process assumed to be statistically indepen-
+
+dent of . Similarly, the total error of each quantizing system is defined as the difference between the system output and system
+
+input, and is denoted by
+
+to distinguish it from the
+
+quantizer error
+
+.
+
+The total errors introduced by subtractively dithered and non-
+
+subtractively dithered systems are not identical. In a subtrac-
+
+tively dithered system, the dither is subtracted from the quan-
+
+tizer output to yield the system output. Hence, for such a system
+
+Fig. 3.
+
+Dithered quantizing systems. (a) Subtractively dithered (SD). (b)
+
+Nonsubtractively dithered (NSD).
+
+random process satisfying Schuchman's condition is one ex-
+
+hibiting a uniform pdf
+
+, whose associated char-
+
+acteristic function is a "sinc" function
+
+On the other hand, for the nonsubtractively dithered system
+
+sinc
+
+It can also be shown [4], [9], [10], [27] that subtractive dither will render distinct samples of the total error signal statistically In neither case is the total error equal to
+
+, as in an undithered
+
+independent of one another for arbitrary input distributions if
+
+system (i.e., one for which
+
+), although in an SD system,
+
+and only if
+
+the total error does equal the quantization error associated with
+
+the total quantizer input
+
+.
+
+(5)
+
+It has been shown by Schuchman [3] that the total error induced by an SD quantizing system can be rendered uniformly
+
+where
+
+and
+
+represent dither values separated in time by
+
+distributed for arbitrary input distributions if and only if the
+
+, and where
+
+represents their joint charac-
+
+dither's characteristic function or cf (the Fourier transform of its teristic function [the two-dimensional (2-D) Fourier transform
+
+pdf [36], [37]) obeys a certain condition. Defining the Fourier of their joint pdf
+
+). This condition is satisfied by
+
+transform operator
+
+by
+
+any dither that is iid so that
+
+and satisfies (4). For instance, this means that a subtractively
+
+dithered quantizing system employing iid dither of uniform dis-
+
+tribution produces an iid (hence white) total error signal whose
+
+values are uniformly distributed and statistically independent of
+
+and denoting the dither pdf and cf as
+
+and
+
+, respec-
+
+the input. The error thus behaves like a purely additive inde-
+
+tively, Schuchman's condition is that
+
+pendent white noise process, as postulated by the CMQ. This
+
+beautiful result represents the ideal outcome for a quantization
+
+operation.
+
+(4)
+
+Unfortunately, subtractive dithering is difficult to use in many
+
+practical systems since the dither signal must be available at
+
+where we take this opportunity to define the set
+
+as the set of
+
+each end of the channel. This requires either the transmission
+
+all -vectors with integer components with the exception of the
+
+of the dither values or the use of synchronized noise sources
+
+zero vector
+
+, i.e.,
+
+\ . (Note that this
+
+(pseudo-random number generators) separated, in general, by
+
+definition does not correspond to a Cartesian product of
+
+'s.)
+
+both time and distance. Furthermore, any digital processing of
+
+Furthermore, it can be shown [4], [9], [10], [27] that the total the dithered signal would necessitate processing of the dither
+
+error in an SD quantizing system is statistically independent of
+
+prior to subtraction. For reasons such as these, the possibility of the system input if and only if (4) holds. Thus, dither obeying
+
+using dither without subsequently subtracting it is frequently of
+
+Schuchman's condition renders the error statistically indepen-
+
+interest.
+
+dent of the input and uniformly distributed. In particular, it ex-
+
+We will see that nonsubtractively dithered systems, as distinct
+
+hibits a variance of
+
+. In these regards, then, it resem-
+
+from subtractively dithered ones, cannot render the total error bles the idealized quantization error of the CMQ. The simplest
+
+statistically independent of the input. Neither can they make
+
+
+
+
+
+502
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+temporally separated values of the total error statistically inde-
+
+pendent of one another. However, we will prove that they can
+
+render any desired statistical moments of the error signal inde-
+
+pendent of the input and regulate the joint moments of errors
+
+that are separated in time. The theory underlying these features
+
+of nonsubtractive dither is developed in Section II and is subse-
+
+quently used to explore the properties of some practical dither
+
+signals in Section III. Important previously unpublished results
+
+regarding the optimality of triangular-pdf dither and the prop-
+
+erties of a form of spectrally colored dither we call highpass dither are included. Section IV presents new results concerning Fig. 4.
+
+Conditional pdf of the quantizer input showing its justification relative the important special case of quantizing systems in which the
+
+to the quantizer transfer characteristic.
+
+available dither is discrete valued while Section V summarizes
+
+the most significant observations and conclusions.
+
+is a train of Dirac delta functions separated by intervals of width
+
+. 2 Thus, the pdf of
+
+is given by
+
+II. NONSUBTRACTIVE DITHER THEORY
+
+A. Total Error PDF's
+
+(7)
+
+The dependence of the total error on the system input can
+
+be analyzed in terms of its pdf as a function of a specified input As discussed in Section I-B in association with subtractively
+
+value. This function is referred to as the conditional pdf (cpdf) of dithered systems, the quantization error
+
+will be statistically
+
+the total error and is denoted
+
+throughout the following
+
+independent of
+
+and uniformly distributed if the dither statistics
+
+discussion.
+
+obey Schuchman's condition (4). Unfortunately,
+
+is not the
+
+In order to derive an expression for
+
+, we consider
+
+total error of a nonsubtractively dithered system. Indeed, we will a nonsubtractively dithered quantizing system, as in Fig. 3(b),
+
+now show the following:
+
+with a specified system input value
+
+. The input to the quan-
+
+Theorem 1: In an NSD quantizing system, it is not possible tizer is
+
+, which is the sum of the system input and
+
+to render the total error either statistically independent of the
+
+the statistically independent dither process. This sum has a cpdf
+
+system input or uniformly distributed for system inputs of arbi-
+
+.
+
+trary distribution.
+
+Fig. 4 shows that the total error depends not only on the
+
+Proof:
+
+In (6), it is clear that
+
+cannot be rendered
+
+system input value but on the value of the dither as well. In par-
+
+independent of
+
+by any choice of dither pdf since the convolu-
+
+ticular, if the input to the quantizer
+
+is between
+
+and
+
+tion of any dither pdf (which must be nonnegative everywhere)
+
+, the output will be null (for a mid-tread characteristic) so
+
+with a rectangular window function yields a function that is at
+
+that the error is
+
+. Similarly, if the input to the quantizer
+
+least as wide as the rectangular window. Hence, at least one delta is between
+
+and
+
+, the output will be
+
+so that
+
+function always makes a contribution to the sum, and the posi-
+
+. Hence, the pdf of the error for a fixed input is a
+
+tion of that delta function is dependent on the system input. (A
+
+series of delta functions separated by intervals of
+
+, where each
+
+different proof that is based on the properties of characteristic
+
+is weighted by the probability that
+
+falls on the corresponding
+
+functions may be found in [26].)
+
+quantizer step
+
+Taking the Fourier transform of (7), we find that the charac-
+
+teristic function of
+
+is given by
+
+sinc
+
+sinc
+
+(8)
+
+In the parlance of Widrow [7], the error cpdf is an area sampled version of the quantizer input cpdf.
+
+where
+
+is the arbitrary cf of the input signal, and
+
+is the
+
+Writing the integral in the last equation as a convolution
+
+cf of the dither. In order for
+
+to be uniformly distributed, this
+
+(which is denoted by
+
+) of
+
+with a rectangular window
+
+must reduce to
+
+for some choice of
+
+. Suppose that this
+
+function
+
+reduces it to
+
+is possible, in which case, we obtain
+
+(6)
+
+sinc
+
+sinc
+
+where
+
+2A problem arises in the formalism if the dither is null [p () = ()] and the system input occurs at a quantizer step edge since the product of the generalized functions W ( 0 (2n + 1)1=2) and 5 () is not conventionally defined. It is shown in [26] that an appropriate definition of this product for the purposes at hand is 1=2[( 0 n1) + ( 0 (n + 1)1)].
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+503
+
+Now, let
+
+, where
+
+. Then, we have
+
+From (8), we obtain
+
+sinc
+
+(10)
+
+which contradicts the assumption that
+
+is arbitrary. Thus, the
+
+where
+
+total error cannot be made uniformly distributed in a nonsub-
+
+tractively dithered system for inputs of arbitrary distribution.
+
+sinc
+
+(11)
+
+The counterintuitive nature of this result is the source of much
+
+confusion regarding NSD systems. For instance, it is tempting
+
+Since the cf
+
+of the system input is arbitrary, we obtain the
+
+to accept the following line of reasoning. Suppose that a dither
+
+following result [27].
+
+satisfying Schuchman's condition (4) is used so that
+
+is inde-
+
+Theorem 2: In an NSD quantizing system,
+
+is indepen-
+
+pendent of . Then, since
+
+is also independent of , the total
+
+dent of the distribution of the system input
+
+if and only if
+
+error
+
+is the sum of two random processes , both
+
+of which are independent of
+
+and, thus, should be indepen-
+
+(12)
+
+dent of
+
+as well. This conclusion is flatly false. In an NSD
+
+quantizing system, given the value of , we know that the pos-
+
+If the conditions of Theorem 2 are satisfied, from (10)
+
+sible values of
+
+satisfy the equation
+
+so that the distribution of
+
+is highly dependent
+
+on
+
+, in agreement with Theorem 1. To further elucidate the
+
+source of the problem, we consider the following. For arbitrary
+
+random variables
+
+and
+
+and a fourth
+
+(none of
+
+which is precisely the
+
+th moment of a notional random process
+
+these necessarily represent quantities in a quantizing system), with cf
+
+and pdf
+
+, although this is not, of course,
+
+it is clear that
+
+. Then, by di-
+
+the pdf of . We can derive the following expressions for the
+
+rect integration,
+
+, the
+
+moments of the total error in terms of the moments of the dither
+
+Fourier transform of which yields the joint cf of
+
+and
+
+as
+
+signal by direct differentiation of
+
+:
+
+. By definition,
+
+and
+
+are
+
+statistically independent of each other if and only if
+
+(13)
+
+can be written as a product of two functions, where one involves
+
+(14)
+
+alone, whereas the other involves
+
+alone. We see that this is
+
+the case if and only if
+
+(We note that
+
+is the cf of
+
+.) Unfortu-
+
+(15)
+
+nately, we know only that
+
+and
+
+, which is insufficient to estab-
+
+lish the result. (The signals in an NSD quantizing system furnish
+
+We emphasize that each of these equations for
+
+is only
+
+a convenient counterexample.)
+
+valid when Theorem 2 is satisfied for that particular value of
+
+Since we have shown that statistical independence of the total
+
+and that the validity of one of these equations does not imply
+
+error from the system input is not achievable, we now turn our
+
+the validity of any others corresponding to different
+
+values.
+
+attention to the possibility of controlling moments of the error.
+
+Equation (14) merits special comment. It indicates that if the
+
+For many applications, controlling relevant error moments is
+
+total error variance in an NSD quantizing system is input in-
+
+just as good as having full statistical independence of the input
+
+dependent, then it always exceeds that of an SD system (or a
+
+and error processes.
+
+system described by the CMQ) by an amount equal to the vari-
+
+ance of the dither. This characteristic increase in the error power B. A Condition for the Independence of Total Error Moments
+
+is not problematic in most multibit applications, and the bene-
+
+fits of dithering typically far outweigh the slight noise penalty.
+
+The
+
+th moment of the error signal is the expectation value
+
+Two corollaries to Theorem 2 follow.
+
+of
+
+Corollary 1: In an NSD quantizing system, if the condition (12) is satisfied for any given
+
+, then for any choice of
+
+It can be shown that these moments may also be expressed in
+
+terms of the cf of the given random variable as [37]
+
+i.e.,
+
+and
+
+are uncorrelated.
+
+Proof: We observe that if
+
+, then
+
+(9)
+
+where
+
+denotes the
+
+th derivative of
+
+. (This expression
+
+is easily derived by differenting with respect to
+
+the definition
+
+of
+
+as the Fourier transform of
+
+.)
+
+(16)
+
+
+
+
+
+504
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+By Theorem 2,
+
+is independent of the choice of
+
+, and in
+
+values will be denoted as
+
+and
+
+, respectively. Employing a
+
+particular, it is independent of the choice of
+
+when
+
+derivation analogous to that of Section II-A, we find that
+
+, as above. Thus,
+
+for
+
+any . In this case
+
+where the convolution is 2-D, involving both
+
+and
+
+, and
+
+where
+
+In particular, if
+
+is independent of the distribution of ,
+
+then
+
+and
+
+are uncorrelated in the usual mathematical sense
+
+that
+
+and
+
+The second corollary is somewhat better known than The-
+
+orem 2 itself but demands satisfaction of a stronger condition
+
+[11], [32].
+
+Corollary 2: In an NSD quantizing system,
+
+is indepen-
+
+represents the joint pdf of the dither values
+
+and
+
+dent of the distribution of the system input
+
+for
+
+associated with the inputs
+
+and
+
+, respectively.
+
+if and only if
+
+Hence, we have (17), shown at the bottom of the page. The
+
+joint characteristic function of
+
+and
+
+is found by taking the
+
+and
+
+2-D Fourier transform of (17) with respect to
+
+and
+
+, resulting
+
+in an expression in the corresponding frequency variables
+
+and
+
+Proof: Proof of the "if" direction follows immediately from repeated differentiation of (11), where
+
+sinc
+
+We see that the th and all lower derivatives of
+
+will all go to
+
+zero at
+
+if the first
+
+derivatives of
+
+do.
+
+(18)
+
+The "only if" direction is easily proven using induction, but this requires more space than is justified here (see [26]).
+
+No choice of dither pdf will allow (18) to be expressed as a
+
+In most practical applications, we are interested in dither sig-
+
+product of two characteristic functions, where one involves
+
+nals that satisfy the conditions of Corollary 2, and it turns out
+
+alone and the other
+
+alone for arbitrary choices of
+
+.
+
+that the conditions of this corollary will be of interest when we
+
+Thus,
+
+and
+
+cannot be rendered statistically independent for
+
+examine the statistics of the quantizer output (Section II-D) and
+
+arbitrary joint input distributions. Let us therefore proceed to
+
+the special nature of digital dither signals (Section IV).
+
+investigate the joint moments of
+
+and
+
+in the hope that we
+
+can exercise some control over them by an appropriate choice
+
+C. Second-Order Statistics of Total Error Values
+
+of the dither statistics.
+
+We now begin an investigation into the joint statistics of tem-
+
+The
+
+th joint moment of the two signals of interest is
+
+porally separated total error values, corresponding to input sam-
+
+given by
+
+ples separated in time, in order to derive conclusions about the
+
+spectral characteristics of the total error sequence.
+
+Consider two total error values
+
+and
+
+, which are separated
+
+in time by
+
+. (In the special case where
+
+, the analysis
+
+(19)
+
+reduces to that of Section II-B.) The corresponding system input
+
+(17)
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+505
+
+where
+
+ensure that for two error values
+
+and
+
+separated in time by
+
+, we have
+
+Substituting (18) into (19), we find that
+
+In this case,
+
+and
+
+will be given by (15). In partic-
+
+ular, for an iid dither with zero mean, we note that
+
+.
+
+In a digital system, the total error is a discrete-time signal;
+
+therefore,
+
+, where
+
+represents the sampling period,
+
+and
+
+. The autocorrelation function of such a signal is
+
+defined to be
+
+. The power spectral density (PSD) of
+
+(20)
+
+a discrete-time random process is equal, by definition, to the
+
+discrete-time Fourier transform (DTFT) of its autocorrelation
+
+where
+
+function, where we define the DTFT as
+
+sinc
+
+(26)
+
+At this point, we may deduce a theorem that represents a second-
+
+order analog of Theorem 2.
+
+where the continuous frequency variable
+
+is in hertz if
+
+is in
+
+Theorem 3: In an NSD quantizing system, the
+
+th
+
+seconds. This definition is normalized such that the integral of
+
+joint moment
+
+of two total error values
+
+and
+
+the PSD from zero to the Nyquist frequency
+
+yields the
+
+separated in time by
+
+is independent of the system input
+
+variance of the signal.
+
+for arbitrary input distributions if and only if
+
+Using (14), we find that for an NSD quantizing system using
+
+iid dither satisfying the conditions of Corollary 2 for
+
+,
+
+(21)
+
+the autocorrelation function of the error is
+
+The proof is completely analogous to that of Theorem 2. When
+
+otherwise.
+
+(21) is satisfied, we have
+
+Comparing this with the autocorrelation function of the dither
+
+(22)
+
+sequence
+
+so that by explicitly performing the differentiation, we can write otherwise
+
+an expression that is analogous to (15), relating the joint mo-
+
+ments of the total error to those of the dither
+
+we conclude that
+
+PSD
+
+so that the total error signal must be spectrally white since the
+
+dither is spectrally white (apart from a dc component if the
+
+(23)
+
+dither is not zero mean).
+
+Using the product rule to explicitly perform the differentia-
+
+We attach the caveat that satisfaction of (23) for some particular tions in (21), it is straightforward to derive conditions that en-and
+
+does not imply its satisfaction for any other values
+
+sure its satisfaction for the case where
+
+but do not
+
+thereof.
+
+require statistical independence of distinct dither values [25],
+
+If the dither process is iid so that
+
+and
+
+are statisti-
+
+[26]. This will allow the use of certain dither signals that are not cally independent, we have
+
+.
+
+spectrally white.
+
+Then, if the conditions of Corollary 2 are satisfied for
+
+Theorem 4: In an NSD system where all dither values are
+
+, we have
+
+statistically independent of all system input values
+
+(24)
+
+(27)
+
+(25)
+
+for arbitrary input distributions if and only if the following three conditions are satisfied:
+
+so that
+
+and
+
+are uncorrelated. In this case, of course,
+
+. Hence, we have the following corol-
+
+(28)
+
+lary.
+
+Corollary 3: Any iid nonsubtractive dither signal that satis-
+
+(29)
+
+fies the conditions of Corollary 2 for
+
+will
+
+
+
+
+
+506
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+and
+
+(30)
+
+Taking the Fourier transform of this expression yields
+
+This can be thought of as a second-order counterpart to Corol-
+
+lary 2 for the simple case
+
+. When the conditions
+
+of the theorem are satisfied, (27) follows immediately from di-
+
+(33)
+
+rect differentiation of (22). It is possible to gain further insight into the meaning of the conditions involved by noting that
+
+and therefore
+
+The last term is equal to zero as long as (28) is satisfied (see
+
+[27, (5), Th. 2]), whereas it can be shown that the second and third terms vanish subject to the satisfaction of (29) and (30),
+
+thus yielding (27). Necessity of the conditions follows from the
+
+(34)
+
+arbitrariness of the input distribution.
+
+Suppose that the conditions of both Theorem 4 and Corollary
+
+2 with
+
+are satisfied. Then, the autocorrelation function
+
+Now, if the first
+
+derivatives of
+
+are zero at all nonzero
+
+of the error is given by
+
+multiples of
+
+, then (34) reduces to
+
+(31)
+
+(35)
+
+otherwise.
+
+This indicates that the power spectrum of the error will be iden-
+
+where the expectation values of the total error are given in terms tical to the power spectrum of the dither, apart from a contribu-of the expectation values of the dither by (15). By direct differ-
+
+tion due to the
+
+case, manifested as an additive constant
+
+entiation of
+
+, the above condition is easily shown to be
+
+present at all frequencies (i.e., a white spectral component intro-equivalent to the condition of Corollary 2. For the special cases
+
+duced by the properly dithered quantization operation). Hence,
+
+and
+
+, we note that
+
+as before
+
+PSD
+
+PSD
+
+(32)
+
+and
+
+except that now, the dither PSD is not necessarily white. This
+
+will be illustrated by the discussion of highpass dither in Section III-E.
+
+where (13) and (14) have been substituted for the error mo-
+
+ments.3
+
+Proceeding similarly for the joint moments of output values
+
+D. Statistics of the System Output
+
+and
+
+separated in time by
+
+, we find (36), shown at
+
+It is of interest to express the statistical attributes of the output the bottom of the next page. If the indicated partial derivatives
+
+in terms of those of the input
+
+since it is frequently required
+
+of
+
+are zero for all
+
+that one be deduced from the other. We apply the same brand
+
+, then (36) reduces to
+
+of reasoning as used to determine the cpdf of the total error in
+
+Section II-A. The values of the quantizer output are restricted
+
+to values of
+
+. Therefore,
+
+will consist of delta
+
+functions at these locations weighted by the probability that the
+
+quantizer input
+
+falls in the range of the corre-
+
+(37)
+
+sponding quantizer step
+
+.
+
+3
+
+This probability is just the integral of
+
+over this range,
+
+Note that the so-called dither averaged transfer characteristic E[y j x] is given by
+
+where, since
+
+and
+
+are statistically independent,
+
+is given
+
+by [39]
+
+. Thus, we have
+
+E[y j x] =E[Q(x + ) j x] =
+
+Q(x+)p ()d =Q(x) 3 p (0x)
+
+which is the convolution of the quantizer staircase with the dither pdf. For the m = 1 case, this defines the line y = x (see the illustrations in [17] and [18]).
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+507
+
+where the joint moments of the total error are given in terms of
+
+with a corresponding cf
+
+sinc
+
+Hence, from
+
+those of the dither by (23).
+
+(11)
+
+Beginning from (36) with
+
+, it is straightfor-
+
+ward to show that if the conditions of Theorem 4 are satisfied,
+
+sinc
+
+i.e., (28)-(30), then
+
+so that, with
+
+the aid of (35) and (15), we find that the output has an autocor-
+
+The first two derivatives of this function are plotted in Fig. 5.
+
+relation function
+
+The first derivative clearly satisfies the condition of going to
+
+zero at the regularly spaced points stipulated by (12), whereas
+
+the second derivative does not (nor do higher derivatives). This
+
+indicates that the first moment of the error signal is independent (38)
+
+otherwise.
+
+of the input, but its variance remains dependent. These conclu-
+
+sions are borne out by the accompanying plots in Fig. 5 of the
+
+Then, the spectrum of the output is the sum of the input and
+
+conditional moments
+
+dither spectra apart from a white noise component, which is
+
+contributed by the
+
+case of (38). The latter component is
+
+comparable with the white "quantization noise" posited in the
+
+CMQ. In particular, for a system using a zero-mean dither
+
+as computed using (6). The first moment, or mean error, is zero
+
+for all inputs, indicating that the quantizer has been linearized PSD
+
+PSD
+
+PSD
+
+by the use of this dither. The error variance, on the other hand,
+
+is clearly signal dependent; therefore, the noise power in the
+
+signal varies with the input. This is sometimes referred to as
+
+III. E
+
+noise modulation and is undesirable in audio or video signals.
+
+RROR MOMENTS IN SOME REPRESENTATIVE SYSTEMS
+
+If the dither is iid, then (as shown in Section II-C) temporally
+
+We proceed to apply the above results to realizable quan-
+
+separated error values will be uncorrelated. Thus, short-time
+
+tizing systems using those dither signals that we consider to be
+
+error spectra will appear flat, but their level will be input de-
+
+of greatest interest in practical applications. Some of the many
+
+pendent.
+
+other possible dither signals are investigated in [16], [18], and
+
+[38].
+
+C. Triangular-PDF Dither
+
+A. Null Dither
+
+The most straightforward means of generating dither sig-
+
+We begin by considering an undithered system. The pdf of a
+
+nals with more complicated pdf's is to simply sum two or
+
+"null dither" is
+
+, the Fourier transform of which is
+
+more statistically independent RPDF random processes. For
+
+equal to unity everywhere. Hence, by (11)
+
+instance, the sum of two such processes
+
+and
+
+, each of 1
+
+LSB peak-to-peak amplitude, yields a dither with a triangular
+
+pdf (TPDF) of two LSB peak-to-peak amplitude since the
+
+sinc
+
+summation of statistically independent random processes
+
+convolves their pdf's (see Fig. 6)
+
+No derivatives of this function vanish at nonzero multiples of
+
+; therefore, no moments of the total error (excepting the ze-
+
+roth) will be independent of the input distribution. Of course, it is not expected that they would be. We know that in the absence
+
+(39)
+
+of dither, the error is a deterministic function of the input. The error
+
+as a function of the input is shown in Fig. 2.
+
+Convolution of pdf's corresponds to multiplication of the respec-
+
+tive cf's [39] so that in a system employing this kind of dither, B. Rectangular-PDF Dither
+
+is a squared sinc function, and
+
+is given by
+
+Now, consider a system using dither with a simple rectangular
+
+(i.e., uniform) pdf of 1 LSB peak-to-peak amplitude
+
+sinc
+
+(36)
+
+
+
+
+
+508
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+(a)
+
+(b)
+
+Fig. 5.
+
+Derivatives of G (u) (left) and conditional moments of the error (right) for a quantizer using RPDF dither of 1 LSB peak-to-peak amplitude. (a) G
+
+(u)
+
+and E[" j x] (both in units of 1). (b) G
+
+(u) and E[" j x] (both in units of 1 ). The frequency variable, u is plotted in units of 1=1 and the system input, x in units of 1.
+
+The first and second derivatives of this function go to zero at the required places; therefore, this dither renders both the first and second moments of the total error independent of the system
+
+input.4 The second derivative of
+
+is shown in Fig. 7, along
+
+with the second conditional moment of the total error, which is
+
+a constant
+
+for all inputs, in agreement with (14). Higher
+
+derivatives of
+
+do not meet the required conditions; therefore,
+
+higher moments of the error remain dependent on the input.
+
+We now show that a triangular pdf of two LSB peak-to-peak
+
+amplitude is the only choice of zero-mean dither pdf, which
+
+renders the first two moments of the total error independent of
+
+the input while minimizing the second. We will begin by noting,
+
+Fig. 6.
+
+Triangular pdf, formed by the convolution of two rectangular pdf's.
+
+from Corollary 2 and the stipulation of zero mean, that
+
+In addition,
+
+must be equal to unity at
+
+if it is to be
+
+a valid characteristic function since
+
+and
+
+We conclude that the dither cf and its first derivative are
+
+completely specified at all integer multiples of
+
+. According
+
+4A different proof of this result, using a direct method, was given in [17].
+
+to the generalized sampling theorem [39], this is sufficient to
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+509
+
+Fig. 7.
+
+G (u) (left) and E[" j x] (right) (both in units of 1 ) for a quantizer using triangular-pdf dither of 2 LSB peak-to-peak amplitude. The frequency variable u is plotted in units of 1=1, and the system input, x in units of 1.
+
+Fig. 8.
+
+p ("; x) evaluated at x = 1=2 for systems using (a) a triangular-pdf dither of 2 LSB peak-to-peak amplitude and (b) a wider dither pdf (the delta functions possess the indicated weightings).
+
+uniquely specify
+
+for all
+
+if
+
+is
+
+-bandlimited
+
+Now, by direct integration of (40), we have
+
+(i.e., if
+
+for
+
+). Since the pdf of (39) is
+
+-bandlimited, and its corresponding cf satisfies all the given
+
+conditions, it must be the unique pdf in question.
+
+It remains to be shown that any dither pdf that is not thus ban-
+
+dlimited will produce a greater error variance. Since this vari-
+
+ance is assumed to be constant with respect to the input, it is
+
+sufficient to show that this holds for a single input value. We
+
+(42)
+
+will do so for
+
+.
+
+for
+
+is obtained from (7) using
+
+Substituting (41) yields
+
+[see (16)]. As is shown in Fig. 8(a), it consists of
+
+two equally weighted delta functions at
+
+when tri-
+
+angular-pdf dither of two LSB peak-to-peak amplitude is em-
+
+ployed. Use of a wider dither pdf will result in the appear-
+
+ance of more delta functions in the error's cpdf, as shown in
+
+Fig. 8(b), where we denote the weighting of the delta function
+
+which is always greater than
+
+since the
+
+'s must be posi-
+
+at
+
+,
+
+, by
+
+, so that we have (40),
+
+tive. We have thus shown the following theorem.
+
+shown at the bottom of the page. We proceed by expressing the
+
+Theorem 5: The choice of zero-mean dither pdf that ren-
+
+fundamental condition that the integral of this pdf must equal
+
+ders the first and second moments of the total error indepen-
+
+unity
+
+dent of the input, such that the first moment is zero and the
+
+second is minimized, is unique and is a triangular pdf of two
+
+(41)
+
+LSB peak-to-peak amplitude.
+
+(40)
+
+
+
+
+
+510
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+D. The Sum of
+
+Independent Rectangular-PDF Random
+
+Processes
+
+Theorem 6: A nonsubtractive dither signal generated by the summation of
+
+statistically independent RPDF random pro-
+
+cesses renders
+
+independent of the system input distribu-
+
+tion for
+
+and results in a total error variance for
+
+of
+
+.
+
+This must be the case since the use of
+
+such dithers gives
+
+Fig. 9.
+
+Highpass dither generator.
+
+sinc
+
+that the sampling period of the system is
+
+. For time lags
+
+, the dither values are statistically independent so that
+
+the first
+
+derivatives of which will consist entirely of terms
+
+containing nonzero powers of sinc
+
+. Since this function goes
+
+to zero at the required places, the first
+
+moments of the error
+
+will always be independent of the input. Higher derivatives will
+
+not share this property [26]. Dithers of this form are sometimes and
+
+referred to as
+
+RPDF so that, for instance, TPDF dither may
+
+also be referred to as 2RPDF.
+
+sinc
+
+sinc
+
+It is important to note that using uniformly distributed pro-
+
+cesses of peak-to-peak amplitude not equal to one LSB (or,
+
+The nontrivial cases are those for
+
+. Consider two suc-
+
+rather, not equal to an integral number of LSB's) will not render
+
+cessive dither values (i.e.,
+
+)
+
+and
+
+error moments independent of the input since the zeros of the as-
+
+. Then, we have the expression at the bottom of the next
+
+sociated sinc functions will not fall at integral multiples of
+
+page. Taking the Fourier transform of this expression with re-
+
+(see illustrations in [17]).
+
+spect to all variables present yields
+
+Finally, it is easily shown from the generalized sampling the-
+
+orem that the
+
+-bandlimited dither pdf that renders the
+
+first
+
+moments of the total error independent of the input is
+
+unique and must therefore be the pdf of Theorem 6.
+
+E. Highpass Dither
+
+A very simple discrete-time noise generator capable of pro-
+
+ducing dither with a highpass spectrum [19], [20] is shown in Desired marginal cf's can be obtained from a given joint cf by
+
+Fig. 9. The system contains a pseudo-random number gener-
+
+simply setting unwanted variables to zero since
+
+ator that is marked PRN, producing iid, uniformly distributed
+
+random numbers and a one-sample delay element marked
+
+.
+
+The output is the difference between the pseudo-random number
+
+most recently generated by the PRN
+
+and the previous one
+
+, i.e.,
+
+. The (first-order) pdf of the resulting
+
+Thus, we have
+
+dither sequence is triangular (TPDF) since it results from the
+
+summation of two statistically independent RPDF sequences,
+
+Proceeding similarly for the case of
+
+, we find that
+
+albeit one of these is simply a delayed version of the other.
+
+. For our pur-
+
+This means that all the beneficial effects of the TPDF dither
+
+poses,
+
+sinc
+
+so that for both
+
+discussed in Section III-C will also be associated with dither
+
+cases
+
+, we have
+
+thus generated. Such highpass TPDF dither may be preferable
+
+in some audio applications since it is less audible than spec-
+
+sinc
+
+sinc
+
+sinc
+
+trally white TPDF dither due to the ear's reduced sensitivity at
+
+high frequencies (although these dithers have equal variances
+
+Finally, using
+
+, we can write that
+
+of
+
+). Similar comments apply regarding reduced error vis-
+
+ibility in imaging applications. Furthermore, the use of high-
+
+pass TPDF dither is more computationally efficient since it re-
+
+quires the calculation of only one new RPDF random number sinc
+
+sinc
+
+sinc
+
+(43)
+
+per sample as compared with two when iid TPDF dither is used.
+
+sinc
+
+sinc
+
+In order to investigate the spectral characteristics of the total
+
+error associated with this sort of dither, we must derive an ex-
+
+It is straightforward to check that this joint cf satisfies all three pression for
+
+as defined in Section II-C. Suppose
+
+conditions of Theorem 4.
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+511
+
+Using (43) and the knowledge that TPDF dither has a variance
+
+under the following conditions.
+
+of
+
+, we find using (19) that the autocorrelation function of
+
+1) For each
+
+, there exists an such that of
+
+and
+
+,
+
+the dither under consideration is
+
+one is zero, and the other is a nonzero integer, and
+
+2) either
+
+is RPDF with
+
+and there exist at least two
+
+distinct values of
+
+such that
+
+is a nonzero integer or
+
+is RPDF with
+
+, and there exists at least one value
+
+otherwise.
+
+of such that
+
+is a nonzero integer.
+
+In particular, simple highpass TPDF dither satisfies the above
+
+This corresponds to a simple highpass power spectral density
+
+conditions.
+
+PSD
+
+IV. DIGITAL DITHER
+
+where the frequency variable
+
+is in units of hertz if
+
+is in
+
+Some comment is required concerning the special nature of
+
+seconds. (Of course, this is just as expected from inspection of
+
+re quantization operations, in which the binary wordlength of Fig. 9, which is nothing but a linear discrete-time filter with
+
+data is reduced prior to its storage or transmission. This opera-
+
+transfer function
+
+.) Then, according to (31)
+
+tion takes place entirely within the digital domain so that both
+
+the input and dither signals are discrete valued due to the finite wordlengths available in practical digital systems. The continuous pdf's discussed thus far are unattainable in a purely digital otherwise
+
+scheme so that the properties of true digital dither signals re-
+
+quire further investigation.
+
+which corresponds to a power spectral density of
+
+The following discussion represents a theoretical comple-
+
+ment to empirical results presented in [17]. It is not intended to be exhaustive but merely to demonstrate that there is no
+
+PSD
+
+great difficulty in extending the results obtained for analog
+
+systems to digital ones and to illustrate how this may be done.
+
+This is simply the highpass spectrum of the dither plus a white
+
+In particular, the discussion will be restricted to a treatment of
+
+"quantization noise" component of
+
+(which has a total
+
+first-order statistics with the extension to second-order being
+
+power of
+
+up to the Nyquist frequency
+
+) in agree-
+
+straightforward.
+
+ment with (32).
+
+Consider a quantizing system that applies digital dither to dig-
+
+Of course, it is possible to imagine many other spectrally
+
+ital data before removing its
+
+least significant bits. We will use
+
+shaped dither signals. The properties of such signals have now
+
+to denote the magnitude of an LSB of the higher precision
+
+been investigated in detail. In particular, there is the following signal to be requantized and
+
+for an LSB of the re-
+
+theorem, which is proven and extensively illustrated in [26] and quantized output.
+
+[28]:
+
+Let us consider the following digital dither pdf:
+
+Theorem 7: In an NSD quantizing system using dither of the form
+
+(44)
+
+where
+
+represents an absolutely integrable function that
+
+serves as a "weighting" for the impulse train.
+
+is assumed to
+
+be normalized such that
+
+where
+
+is an iid RPDF random process, the total error will be
+
+wide-sense stationary and independent of the system input with
+
+a PSD given by
+
+For instance,
+
+might be the pdf of a dither of order , such as
+
+PSD
+
+PSD
+
+an
+
+RPDF dither, in which case, it is straightforward to show
+
+
+
+
+
+512
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+using Poisson's summation formula [40] that
+
+has the above
+
+That is, the indicated derivative must vanish for all integral
+
+normalization. In general, however,
+
+is merely a mathematical
+
+values of , except those that are integral multiples of
+
+, the
+
+device used to specify arbitrary weights for the delta functions
+
+value of this derivative being immaterial in the latter cases. In
+
+in (44) and need not even correspond to a pdf since it need not
+
+order to see that this is so, note that if a dither is chosen such subtend unit area.
+
+that (51) holds, then many terms vanish from (50), leaving
+
+Taking the Fourier transform of (44), we find that
+
+(45)
+
+Now, from (48), we know that
+
+where
+
+is the Fourier transform of
+
+. Note that even if
+
+satisfies the conditions of Corollary 2 (for some
+
+),
+
+will
+
+not, due to the modulation of
+
+by the impulse train
+
+.
+
+Fortunately, we do not require that these conditions be satisfied
+
+This leaves
+
+in a digital system since the requirement that
+
+be con-
+
+stant for all values of the system input is not of interest. Instead, we require only that the moments be constant for a subset of all
+
+(52)
+
+conceivable
+
+values, namely,
+
+, which
+
+includes all values that are representable in the digital system.
+
+which does not depend on the input distribution. The necessity
+
+Thus, we assume that the pdf of the system input can be ex-
+
+of (51) follows from the arbitrariness of
+
+(apart from its nor-
+
+pressed in the form
+
+malization). Furthermore, by inspection, (52) is precisely the
+
+(46)
+
+th moment of a notional random variable with pdf
+
+where
+
+is an absolutely integrable function normalized such
+
+that the integral of (46) is unity. Then
+
+(47)
+
+although this is not, of course, the pdf of . Some algebraic
+
+manipulation of this expression, exploiting the discrete-valued
+
+(48)
+
+character of , reveals that it is equivalent to
+
+Now, from (11), we have
+
+(53)
+
+This may be regarded as the pdf of a notional random variable
+
+that is the sum of the dither and an independent discrete-valued
+
+(49)
+
+"quantization noise."
+
+In addition, note that in the limit as
+
+(i.e., as
+
+),
+
+Then, from (8)
+
+(51) becomes (12), which is the condition of Theorem 2 for
+
+analog systems.
+
+Returning to (49) and differentiating, we have
+
+so that
+
+(54)
+
+If
+
+meets the conditions of Corollary 2, then all terms in (54)
+
+(50)
+
+involving the derivatives of
+
+go to zero at the places required
+
+by (51), except for the single
+
+term involving the
+
+th
+
+The only way that this quantity can be independent of
+
+is if
+
+derivative. Fortunately, this term involves the zeroth derivative
+
+we require that
+
+of the leading sinc function, which goes to zero at all the re-
+
+quired places. This yields the following theorem.
+
+(51)
+
+Theorem 8: For a digital NSD system in which requanti-
+
+zation is used to remove the
+
+least significant bits of binary
+
+for all
+
+, except possibly for those values of
+
+such that
+
+data,
+
+is independent of the input distribution for
+
+.
+
+
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+513
+
+if a nonsubtractive digital dither (with the same pre-
+
+with
+
+cision as the input data) is applied for which
+
+and
+
+This expression should be compared with (45). Note that if
+
+satisfies the conditions of the theorems, then so will the quantity This theorem is the digital counterpart of Corollary 2. It is
+
+interesting to note that no such counterpart exists for Theorem
+
+2 in terms of
+
+.
+
+We observe that using a dither of higher precision than the
+
+input signal is of no benefit. For instance, a dither cf that sat-
+
+Thus far, the behavior of the quantizer at step edges (i.e., when
+
+isfies the conditions of (51) with
+
+for
+
+will also
+
+) has not been explicitly consid-
+
+satisfy them for
+
+, but for a quantizing system in which
+
+ered. This is not a problem if the signals in question are contin-
+
+the precision is reduced by only four bits, there is no advantage
+
+uous valued. In this case, the addition of dither will ensure that associated with this cf over one that only satisfies the conditions the quantizer input resides at a quantizer-step edge with zero
+
+for
+
+.
+
+probability. On the other hand, if digital signals are in use, the Frequently, dithers in digital systems will be given a 2's-com-probability that the quantizer input resides at a step edge is al-
+
+plement [33] representation and, thus, will exhibit a mean that ways greater than zero. In this instance, it makes a considerable
+
+differs slightly from zero. This will be reflected in the appear-
+
+difference to the quantizer output (and total error) whether the
+
+ance of a small nonzero mean error that, of course, will be input
+
+quantizer rounds up, down, or stochastically (up or down with
+
+independent if an appropriate dither pdf has been chosen.
+
+equal probability) at these edges. Technically, it can be shown
+
+To express the moments of the system output, we impose the
+
+[26] that the above formalism yields correct predictions if a sto-conditions of Theorem 8 on (34), obtaining
+
+chastic quantizer is used.
+
+The extension of the results to deterministic (i.e., non-
+
+stochastic) quantizers employs a simple trick. Consider, for
+
+instance, the consequences of choosing a quantizer that always
+
+rounds up at step edges (a similar argument applies to quantizers
+
+that round down). We note that if a (dc) virtual offset
+
+such that
+
+is introduced into the dither signal, the quantizer
+
+output is unaffected, except that quantizer inputs residing at
+
+step edges are consistently rounded up. We can thus analyze
+
+digitally dithered systems with deterministic requantizers using
+
+such a notional dc offset, which is a purely mathematical
+
+where we have observed from (48) that
+
+is periodic with
+
+device without physical counterpart. It can be shown [26] that period
+
+so that for any
+
+Theorem 8 holds precisely as before. Equation (52) holds if the
+
+virtually offset dither pdf
+
+is
+
+used in the calculations. In this case, (53) becomes
+
+is given by (52).
+
+The treatment presented above is most appropriate to dithers
+
+generated entirely in the digital domain using, for instance,
+
+pseudo-random number generation algorithms. In particular,
+
+V. CONCLUSIONS
+
+we have shown that whenever the weighting function
+
+cor-
+
+responds to the pdf of an analog RPDF dither, the associated
+
+The following conclusions bear repeating.
+
+digital dither with pdf given by (44) shares the beneficial
+
+1) Nonsubtractive dithering, unlike subtractive dithering,
+
+properties of its analog counterpart.
+
+cannot render the total error statistically independent of
+
+In the case where a digital dither signal is generated by
+
+the system input, but it can render any desired moments
+
+fine quantization of an analog dither signal, the details of the
+
+of the total error independent of the input distribution
+
+derivation change only slightly. The forms of the theorems,
+
+provided that certain conditions on the cf of the dither
+
+however, remain the same, with
+
+representing the cf of
+
+are met (see Theorems 1 and 2). In particular, a RPDF
+
+the analog signal. This can be seen directly using (33) (with
+
+dither will render the first
+
+moments of the total error
+
+null dither) because the pdf of the digital dither generated by
+
+input independent.
+
+quantization will be
+
+2) Nonsubtractive dithering, unlike subtractive dithering,
+
+cannot render total error values separated in time sta-
+
+tistically independent of one another. It can, however,
+
+
+
+
+
+514
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+regulate the joint moments of such errors, and in par-
+
+may easily be generated using a linear congruential algorithm
+
+ticular, it can render the power spectrum of the total
+
+[22], [41]. The resulting digital dither can be used to feed a error signal equal to the power spectrum of the dither
+
+digital-to-analog converter for analog dithering applications. It
+
+signal plus a white "quantization noise" component [see
+
+should be noted, however, that many analog signals and digital
+
+Theorem 4 and (32)].
+
+conversion systems exhibit a Gaussian noise component that is
+
+3) Nonsubtractive dithering can render any desired moments
+
+of large enough amplitude to act as a satisfactory dither without
+
+of the system input recoverable from those of the system
+
+the requirement of an explicit dithering operation [7], [18].
+
+output, provided that the statistical attributes of the dither
+
+Highpass TPDF dither is of interest for audio processing since
+
+are properly chosen (see Section II-D). This includes joint
+
+it yields a total error that is audibly quieter than that associ-moments of system inputs separated in time; therefore,
+
+ated with iid TPDF dither. It also can be generated with greater
+
+the spectrum of the input can be recovered from the spec-
+
+computational efficiency since only one new pseudo-random
+
+trum of the output.
+
+number needs to be calculated per sampling period instead of
+
+4) Proper nonsubtractive dithering always results in a total
+
+two. Other spectrally shaped dithers can also be used [25], [26].
+
+error variance greater than
+
+[see (14) and Theorem
+
+The use of spectrally shaped dither will often be superseded,
+
+6].
+
+however, by the powerful technique of noise shaping in appli-It is also worth noting that since the dither is simply an additive cations where the total audibility of the error signal needs to be signal that is independent of the system input, we are free to
+
+reduced [42]-[44]. This technique employs error feedback in add it at any time prior to (re)quantization. In particular, once a order to spectrally shape the total error of a quantizing system,
+
+signal is properly dithered, other signals (which are statistically including the white component arising from a properly dithered
+
+independent of the dither) may be added to it, and the resulting
+
+quantization. The necessity of and criteria for proper dithering
+
+total signal will still be properly dithered for (re)quantization
+
+of such systems have now been explored in some detail [25],
+
+purposes.
+
+[28].
+
+For audio signal processing purposes, there seems to be little
+
+With regard to video signals, at least the first two moments
+
+point in rendering any error moments other than the first and
+
+of the total error should be rendered independent of the input
+
+second independent of the input. Variations in higher moments
+
+by the use of an appropriate dither. Some evidence exists that
+
+are believed to be inaudible, and this has been corroborated by a
+
+input-dependent variations in the third moment of the total error
+
+large number of psycho-acoustic tests conducted by the authors
+
+can be perceptually significant in some video signals [14], but and others [14], [22]. These tests involved listening to a large the effects of such variations are probably not noticeable in most variety of signals (sinusoids, sinusoidal chirps, slow ramps, var-cases.
+
+ious periodically switched inputs, piano and orchestral music,
+
+For signal measurement and statistical signal analysis appli-
+
+etc.), which had been very coarsely requantized (from 16 to 8
+
+cations in which signal moments are being measured, appro-
+
+bits) in order to render the requantization error essentially in-
+
+priate dither (possibly of a quite high order) must be used to
+
+dependent of low-level nonlinearities in the digital-to-analog
+
+render the input signal statistics correctly determinable from the conversion system used for listening purposes. In addition, the
+
+statistics of the quantized output, in accordance with (35) and
+
+corresponding error signals (output minus input) were used in
+
+(37).
+
+listening tests in order to check for any vestiges of audible de-
+
+Some of the results obtained above for multi-bit systems
+
+pendence on the input. Using undithered quantizers resulted in
+
+may be applied to 1-bit quantizers with certain caveats. For
+
+clearly audible distortion and noise modulation in the output and
+
+instance, a 1-bit quantizing system using a full-scale RPDF
+
+error signals. Rectangular-pdf dither of one LSB peak-to-peak
+
+dither signal will exhibit a total error signal that is zero-mean
+
+amplitude eliminated all distortion, but the residual noise level
+
+and spectrally white whenever its peak input value always
+
+was found to vary audibly in an input-dependent fashion. When
+
+remains less than the peak dither amplitude. In this instance,
+
+triangular-pdf dither of two LSB peak-to-peak amplitude (ei-
+
+the 1-bit quantizer may be regarded as a RPDF-dithered
+
+ther white or highpass) was employed, no instance was found
+
+multi-bit mid-riser quantizer whose peak input amplitude is
+
+in which the error was audibly distinguishable from a steady
+
+restricted to less than
+
+so that the analysis presented
+
+random noise entirely unrelated to the input. Admittedly, these
+
+above applies without modification. Granted, the amount of
+
+tests were informal, and there remains a need for formal psycho-
+
+dither required is large, but this may be acceptable when
+
+acoustic tests of this sort involving many participants under con-
+
+no distortion is tolerable and the oversampling ratio is high.
+
+trolled conditions.
+
+A sigma-delta converter topology [45] may be employed to We recommend the use of spectrally white triangular-pdf
+
+move the noise power out-of-band as long as the dither is iid
+
+(TPDF) dither of two LSB peak-to-peak amplitude for most
+
+(in order to avoid statistical dependences between the dither
+
+audio applications requiring nonsubtractively dithered multibit
+
+and input, which would otherwise be introduced by the error
+
+quantization or requantization operations since this type of
+
+feedback [25], [28]). We observe that 2RPDF dither cannot dither renders the first and second moments of the total error
+
+be used in such 1-bit systems to eliminate noise modulation
+
+signal constant with respect to the system input while incurring
+
+since no nonzero input could then be accommodated without
+
+the minimum increase in error variance. This kind of dither is
+
+quantizer saturation. The potential benefits of using lower
+
+easy to generate for digital requantization by simply summing
+
+dither amplitudes in sigma-delta conversion systems have
+
+two independent rectangular-pdf (RPDF) pseudo-random
+
+been explored in [45], and a detailed statistical analysis of processes, each of one LSB peak-to-peak amplitude, which
+
+one dithered implementation is presented in [46].
+
+
+
+WANNAMAKER et al. : THEORY OF NONSUBTRACTIVE DITHER
+
+515
+
+We maintain that the use of appropriate dither prior to
+
+[26] R. A. Wannamaker, "The theory of dithered quantization," Ph.D. disser-
+
+(re)quantization is as fundamental as the use of an appropriate
+
+tation, Dept. Appl. Math., Univ. Waterloo, Waterloo, Ont., Canada, June 1997.
+
+anti-aliasing filter prior to sampling; both serve to eliminate
+
+[27] S. P. Lipshitz, R. A. Wannamaker, and J. Vanderkooy, "Quantization and classes of signal-dependent errors. In each case, this is ac-dither: A theoretical survey," J. Audio Eng. Soc. , vol. 40, pp. 355-375, complished by protecting the system from inputs which, if left
+
+May 1992.
+
+[28]
+
+, "Dithered noise shapers and recursive digital filters," presented at unmodified, may introduce such errors.
+
+the 94th Conv. Audio Eng. Soc., Berlin, Germany, Mar. 1993. preprint 3515.
+
+[29] R. A. Wannamaker and S. P. Lipshitz, "Dithered quantizers with and without feedback," presented at the 1993 IEEE Workshop Appl. Signal REFERENCES
+
+Process. Audio Acoust., New Paltz, NY, Oct. 1993.
+
+[30] R. A. Wannamaker, "Efficient generation of multichannel dither sig-
+
+[1] L. G. Roberts, "Picture coding using pseudo-random noise," IRE Trans.
+
+nals," presented at the 103rd Conv. Audio Eng. Soc., New York, NY, Inform. Theory, vol. IT-8, pp. 145-154, Feb. 1962.
+
+Sept. 1997. preprint 4533.
+
+[2] N. S. Jayant and L. R. Rabiner, "The application of dither to the quan-
+
+[31] A. Kirac and P. P. Vaidyanathan, "Results on lattice vector quantization tization of speech signals," Bell Syst. Tech. J. , vol. 51, pp. 1293-1304, with dithering," IEEE Trans. Circuits Syst. II, vol. 43, pp. 811-826, Dec.
+
+July-Aug. 1972.
+
+
+
+
+
+1996.
+
+
+[3] L. Schuchman, "Dither signals and their effect on quantization noise,"
+
+[32] R. M. Gray, private communication, Apr. 1991.
+
+IEEE Trans. Commun. Technol. , vol. COMM-12, pp. 162-165, Dec.
+
+[33] N. S. Jayant and P. Noll, Digital Coding of Waveforms.
+
+Englewood
+
+
+
+
+
+1964.
+
+
+Cliffs, NJ: Prentice-Hall, 1984.
+
+[4] D. T. Sherwood, "Some theorems on quantization and an example using
+
+[34] W. R. Bennett, "Spectra of quantized signals," Bell Syst. Tech. J. , vol.
+
+dither," presented at the 19th Asilomar Conf. Circuits, Syst., Comput., 33, pp. 446-472, July 1948.
+
+Pacific Grove, CA, Nov. 1985.
+
+[35] R. M. Gray and D. L. Neuhoff, "Quantization," IEEE Trans. Inform.
+
+[5] B. Widrow, "A study of rough amplitude quantization by means of Theory, vol. 44, pp. 2325-2383, Oct. 1998.
+
+Nyquist sampling theory," Sc.D. thesis, Dept. Elec. Eng., Mass. Inst.
+
+[36] E. Lukacs, Characteristic Functions.
+
+London, U.K.: Griffin, 1960.
+
+Technol., Cambridge, June 1956.
+
+[37] T. Kawata, Fourier Analysis in Probability Theory.
+
+New York, NY:
+
+[6]
+
+, "A study of rough amplitude quantization by means of Nyquist
+
+Academic, 1972.
+
+sampling theory," IRE Trans. Circuit Theory, vol. CT-3, pp. 266-276,
+
+[38] P. Carbone and D. Petri, "Effect of additive dither on the resolution of Dec. 1956.
+
+ideal quantizers," IEEE Trans. Instrum. Meas. , vol. 43, pp. 389-396,
+
+[7]
+
+, "Statistical analysis of amplitude-quantized sampled-data sys-
+
+June 1994.
+
+tems," Trans. Amer. Inst. Elec. Eng. , pt. II, vol. 79, pp. 555-568, Jan.
+
+[39] A. Papoulis, Probability, Random Variables, and Stochastic Processes, 1961.
+
+2nd ed.
+
+New York: McGraw-Hill, 1984.
+
+[8] B. Widrow, I. Kollár, and M.-C. Liu, "Statistical theory of quantization,"
+
+[40] A. Papoulis, The Fourier Integral and Its Applications.
+
+New York: Mc-
+
+IEEE Trans. Instrum. Meas. , vol. 45, pp. 389-396, June 1996.
+
+Graw-Hill, 1962.
+
+[9] A. B. Sripad and D. L. Snyder, "A necessary and sufficient condition
+
+[41] D. Knuth, The Art of Computer Programming, 2nd ed.
+
+Reading, MA:
+
+for quantization errors to be uniform and white," IEEE Trans. Acoust., Addison-Wesley, 1981, vol. 2.
+
+Speech, Signal Processing, vol. ASSP-25, pp. 442-448, Oct. 1977.
+
+[42] H. A. Spang and P. M. Schultheiss, "Reduction of quantizing noise
+
+[10] R. M. Gray, "Quantization noise spectra," IEEE Trans. Inform. Theory, by use of feedback," IRE Trans. Commun. Syst. , vol. COMM-10, pp.
+
+vol. 36, pp. 1220-1244, Nov. 1990.
+
+373-380, Dec. 1962.
+
+[11] J. N. Wright, unpublished manuscripts, June-Aug. 1979.
+
+[43] S. P. Lipshitz, J. Vanderkooy, and R. A. Wannamaker, "Minimally au-
+
+[12]
+
+, private communication, Apr. 1991.
+
+dible noise shaping," J. Audio Eng. Soc. , vol. 39, pp. 836-852, Nov.
+
+[13] T. G. Stockham, private communication, 1988.
+
+
+
+
+
+1991.
+
+
+[14] L. K. Brinton, "Nonsubtractive dither," M.Sc. thesis, Dept. Elect. Eng.,
+
+[44] R. A. Wannamaker, "Psychoacoustically optimal noise shaping," J.
+
+Univ. Utah, Salt Lake City, UT, Aug. 1984.
+
+Audio Eng. Soc. , vol. 40, pp. 611-620, July-Aug. 1992.
+
+[15] R. M. Gray and T. G. Stockham, "Dithered quantizers," IEEE Trans.
+
+[45] S. R. Norsworthy, R. Schreier, and G. C. Temes, Eds., Delta-Sigma Data Inform. Theory, vol. 39, pp. 805-811, May 1993.
+
+Converters: Theory, Design and Simulation.
+
+Piscataway, NJ: IEEE,
+
+[16] J. Vanderkooy and S. P. Lipshitz, "Resolution below the least signifi-1997.
+
+cant bit in digital systems with dither," J. Audio Eng. Soc. , vol. 32, pp.
+
+[46] W. Chou and R. M. Gray, "Dithering and its effects on sigma-delta and 106-113, Mar. 1984. Correction ibid, p. 889, Nov. 1984.
+
+multi-stage sigma-delta modulation," IEEE Trans. Inform. Theory, vol.
+
+[17] S. P. Lipshitz and J. Vanderkooy, "Digital dither," in Proc. 81st Conv.
+
+37, pp. 500-513, May 1991.
+
+Audio Eng. Soc. , Los Angeles, CA, Nov. 1986. Preprint 2412; J. Audio Eng. Soc. (Abstracts), vol. 34, p. 1030, Dec. 1986.
+
+[18] J. Vanderkooy and S. P. Lipshitz, "Dither in digital audio," J. Audio Eng.
+
+Soc. , vol. 35, pp. 966-975, Dec. 1987.
+
+[19]
+
+, "Digital dither: Signal processing with resolution far below the least significant bit," in Proc. Audio Eng. Soc. 7th Int. Conf.: Audio in Digital Times, Toronto, Ont., Canada, May 1989, pp. 87-96.
+
+[20] S. P. Lipshitz and J. Vanderkooy, "High-pass dither," in Proc. 4th Reg.
+
+Conv. Audio Eng. Soc. , Tokyo, Japan, June 1989, pp. 72-75. Collected Preprints (Audio Eng. Soc., Japan Section, Tokyo, 1989).
+
+Robert A. Wannamaker received the B.Sc.E. de-
+
+[21] R. A. Wannamaker, S. P. Lipshitz, and J. Vanderkooy, "Dithering to gree in engineering physics from Queen's University,
+
+eliminate quantization distortion," in Proc. Annu. Meeting Can. Acoust.
+
+Kingston, Ont., Canada, in 1988 and the M.Sc. de-
+
+Assoc. , Halifax, N.S., Canada, Oct. 1989, pp. 78-86.
+
+gree in physics in 1991 from the University of Wa-
+
+[22] R. A. Wannamaker, "Dither and noise shaping in audio applications,"
+
+terloo, Waterloo, Ont., Canada. He received the Ph.D.
+
+M.Sc. Thesis, Dept. Phys., Univ. Waterloo, Waterloo, Ont., Canada, Dec.
+
+degree in applied mathematics in 1997 from the Uni-
+
+
+
+
+
+1990.
+
+
+versity of Waterloo for research conducted into the
+
+[23] S. P. Lipshitz, R. A. Wannamaker, J. Vanderkooy, and J. N. Wright, mathematical modeling of dithered quantizing sys-
+
+"Non-subtractive dither," presented at the 1991 IEEE Workshop on
+
+tems. He is also a composer of experimental acoustic
+
+Appl. Signal Process. Audio Acoust., New Paltz, NY, Oct. 1991. Paper and electroacoustic music and holds the B.F.A. de-no. 6.2.
+
+gree in music from York University Toronto, Ont.,
+
+[24] R. A. Wannamaker and S. P. Lipshitz, "Time domain behavior of Canada.
+
+dithered quantizers," presented at the 93rd Conv. Audio Eng. Soc., San He continues to conduct research as a member of the Audio Research Group, Francisco, CA, Oct. 1992. preprint 3418.
+
+University of Waterloo. His interests include quantization, dither, noise-shaping
+
+[25] R. A. Wannamaker, "Subtractive and nonsubtractive dithering: A com-converters, stochastic resonance, fractals, wavelet analysis, data compression, parative analysis," presented at the 97th Conv. Audio Eng. Soc., San and psychoacoustics. His publications have appeared in Physical Review, the Francisco, CA, Nov. 1994. preprint 3920.
+
+Journal of the Audio Engineering Society, and elsewhere.
+
+
+
+
+
+516
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 48, NO. 2, FEBRUARY 2000
+
+Stanley P. Lipshitz (M'83) received the B.Sc.Hons.
+
+J. Nelson Wright (SM'97) received the B.S.E.E.
+
+degree in applied mathematics from the University of
+
+degree in 1976 and the M.S.E.E. degree in 1978
+
+Natal, Durban, South Africa, in 1964, the M.Sc. de-
+
+from the Massachusetts Institute of Technology
+
+gree in applied mathematics from the University of
+
+(MIT), Cambridge.
+
+South Africa, Pretoria, in 1966, and the Ph.D. degree
+
+He was subsequently employed by the MIT
+
+in mathematics from the University of the Witwater-
+
+Lincoln Laboratory, Lexington, as a Member of
+
+srand, Johannesburg, South Africa.
+
+Technical Staff, where he performed research in
+
+He is a Professor with the Departments of Applied
+
+geosynchronous communication satellite technolo-
+
+Mathematics and Physics, University of Waterloo,
+
+gies. In 1981, he joined Acuson, where he was
+
+Waterloo, Ont., Canada, which he joined in 1970.
+
+project manager for the scanner subsystem of the
+
+He is one of the founding members of the Audio
+
+company's first product (the Acuson 128) and a
+
+Research Group at the University of Waterloo, which conducts research in co-inventor of its patented summing delay line architecture. He was later many areas of audio and electroacoustics. His current research interests include responsible for Acuson's Sequoia project, which was chartered to develop a the mathematical theory of dithered quantizers and noise shapers (and their new generation imaging technology for diagnostic ultrasound. In this capacity, relation to stochastic resonance and chaos), physical acoustics, and active he was responsible for conceptualizing a new imaging architecture, leading noise control. He has presented numerous technical papers, on a wide range of the research team to analyze and simulate it, and managing the development topics, at conferences both in North America and overseas.
+
+of the first two Sequoia products. During his tenure at Acuson, he served in Dr. Lipshitz is a Fellow of the Audio Engineering Society, a recipient of its various positions including over five years as Vice President of Advanced Silver Medal for his research contributions to digital audio, and a recipient of Development. The Acuson 128 was introduced in 1983. The basic architecture its Publication Award (jointly with J. Vanderkooy and R. Wannamaker) for a is still in production and has generated in excess of $1 billion in revenue. The survey paper on quantization and dither in the Journal of the Audio Engineering Sequoia products were introduced in 1996 and have received unprecedented Society. He has served as a Governor of that society and was its President from acceptance and recognition, including acquisition by the Smithsonian as part 1988 to 1989. Other society memberships include, the Acoustical Society of of their permanent collection of important medical technology. He founded America and the Canadian Acoustical Association.
+
+the Parallax Group and now acts as a consultant to industry and the venture community. He has 19 patents in the field of ultrasonic imaging.
+
+Mr. Wright is a member of SPIE, ASA, and Sigma Xi.
+
+John Vanderkooy received the B.Eng. degree in en-
+
+gineering physics in 1963 from McMaster University,
+
+Hamilton, Ont., Canada. He continued studies there
+
+in low temperature physics of metals, receiving the
+
+Ph.D. degree in 1967.
+
+He spent two years as a postdoctoral fellow at
+
+the University of Cambridge, Cambridge, U.K., and
+
+joined the faculty at the University of Waterloo,
+
+Waterloo, Ont., Canada, in 1969. For some years,
+
+he followed his doctoral interests in magnetic
+
+properties of electrons in metals, but his research
+
+interests have slowly shifted since the late 1970's to audio and electroacoustics.
+
+He is presently a Professor of physics at the University of Waterloo. He has contributed a wide variety of technical papers in such areas as loudspeaker crossover design, electroacoustic measurement technique, dithered quantizers, and acoustics. He is also a founding member of the Audio Research Group at the University of Waterloo. His current research interests are dithered quantization, transducers, acoustic diffraction from edges, and loudspeaker ports.
+
+Dr. Vanderkooy is a Fellow of the Audio Engineering Society, a recipient of its Silver Medal, and of several publication awards, one of which concerns the measurement of transfer functions with maximum-length sequences.
+
+
+
+
+

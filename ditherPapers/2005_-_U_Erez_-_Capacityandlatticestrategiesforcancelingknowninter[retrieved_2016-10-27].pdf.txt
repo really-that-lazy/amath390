@@ -1,0 +1,3151 @@
+3820
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+Capacity and Lattice Strategies for Canceling
+
+Known Interference
+
+Uri Erez, Shlomo Shamai (Shitz) , Fellow, IEEE, and Ram Zamir , Senior Member, IEEE
+
+Abstract-We consider the generalized dirty-paper channel choice of terminology will be made clear in the sequel. This
+
+=
+
++
+
++
+
+2
+
+, where
+
+is not necessarily
+
+channel model has recently received much attention as it
+
+Gaussian, and the interference
+
+is known causally or noncausally
+
+has been demonstrated that it models well various important
+
+to the transmitter. We derive worst case capacity formulas and
+
+communication problems, among them precoding for inter-
+
+strategies for "strong" or arbitrarily varying interference. In the causal side information (SI) case, we develop a capacity formula
+
+symbol interference (ISI) channels [15], [16], [20], digital based on minimum noise entropy strategies. We then show that
+
+watermarking (e.g., [13], [4]), and various broadcast schemes strategies associated with entropy-constrained quantizers provide
+
+(e.g., [3], [40]). The channel model was proposed by Cover lower and upper bounds on the capacity. At high signal-to-noise
+
+with Gaussian
+
+and
+
+, where he considered an encoder that
+
+ratio (SNR) conditions, i.e., if
+
+is weak relative to the power
+
+has unlimited anticipation, i.e., has knowledge of the entire
+
+constraint
+
+, these bounds coincide, the optimum strategies take
+
+the form of scalar lattice quantizers, and the capacity loss due to interference sequence
+
+at the beginning of trans-
+
+not having
+
+at the receiver is shown to be exactly the "shaping
+
+mission. In [10], Costa showed that in this case the capacity is gain" 1 log( 2
+
+)
+
+2
+
+12
+
+0.254 bit. We extend the schemes to obtain
+
+equal to
+
+. Therefore, the interference
+
+does
+
+achievable rates at any SNR and to noncausal SI, by incorporating
+
+not incur any loss in capacity. We follow [10] and refer to this minimum mean-squared error (MMSE) scaling, and by using
+
+channel model as the "dirty-paper" channel.
+
+-dimensional lattices. For Gaussian
+
+, the capacity loss of this
+
+scheme is upper-bounded by 1 log 2
+
+(3)
+
+2
+
+, where
+
+(3) is the
+
+This result has been extended by several authors. In [15], [16],
+
+normalized second moment of the lattice. With a proper choice
+
+[20] it was shown that it holds for arbitrarily varying interfer-of lattice, the loss goes to zero as the dimension
+
+goes to infinity,
+
+ence, and also for non-Gaussian noise at high signal-to-noise
+
+in agreement with the results of Costa. These results provide
+
+an information-theoretic framework for the study of common
+
+ratio (SNR). In [42] and [6], the result was extended to ergodic communication problems such as precoding for intersymbol
+
+Gaussian noise.1 In [8], the case of arbitrarily varying noise was interference (ISI) channels and broadcast channels.
+
+studied.
+
+Index Terms-Causal side information (SI), common random-A different transmission setting is that of a causal SI encoder.
+
+ness, dirty-paper channel, dither, interference, minimum mean-
+
+A formal definition is given in the next section. In this setting the
+
+squared error (MMSE) estimation, noncausal SI, precoding,
+
+encoder at each time instance prior to the transmission of
+
+has
+
+randomized code.
+
+knowledge only of the interference terms up to and including the
+
+current instance, i.e., of
+
+. We refer to this causal
+
+I. I
+
+counterpart of the dirty-paper channel as the dirty-tape channel
+
+NTRODUCTION
+
+(where "tape" signifies the sequential (causal) availability of the
+
+WE consider power-constrained additive noise channels SI).Thissetting,justastheformer,correspondstomanyappli-where part of the noise is known at the transmitter as
+
+cations. These may be communication problems where the na-
+
+side information (SI), as shown in Fig. 1. That is, the channel is
+
+ture of the interference is indeed causal, but may also correspond
+
+of the form
+
+to dirty-paper coding, where we restrict the encoder to be causal
+
+in the interest of lower complexity of encoder implementation.
+
+(1)
+
+The general formula for the capacity of channels with causal
+
+SI at the transmitter was found by Shannon [34], while the ca-where
+
+is known at the encoder and
+
+is a statistically
+
+pacity with noncausal SI was found by Gelfand and Pinsker
+
+independent random variable (not necessarily Gaussian) with
+
+[23] (see Section II). Both formulas are involved in the sense variance
+
+, and where the encoder has power
+
+. We
+
+that they are given in terms of maximization over an auxil-
+
+refer to
+
+, the known part of the noise, as interference. This
+
+iary random variable (or function). For the Gaussian dirty-paper
+
+channel, however, the solution can be found explicitly [10]. This Manuscript received August 4, 2002; revised October 22, 2004 and July 18, is, of course, due to the fact that there is no rate loss in this case 2005. This work was supported in part by the Israel Academy of Science under Grant 65/01. The material in this paper was presented in part at the Cornell with respect to the interference free additive white Gaussian
+
+Summer Workshop on Information Theory, Ithaca, NY, August 2000, and at the noise (AWGN) channel. Since this does not hold for the dirty-IEEE International Symposium on Information Theory and Its Applications, tape channel, finding explicit solutions is a harder problem in
+
+Honolulu, HI, November 2000.
+
+U. Erez and R. Zamir are with the Department of Electrical Engineering-Sys-this case. Willems was the first to consider the dirty-tape channel
+
+tems, Tel-Aviv University, Ramat-Aviv 699978, Tel-Aviv, Israel.
+
+in [38]. He suggested a causal encoding scheme in which the en-S. Shamai (Shitz) is with the Department of Electrical Engineering, Technion-Israel Institute of Technology, Technion City, Haifa 32000, Israel.
+
+1It was also shown in [6] that the interference need not be Gaussian. However, Communicated by ˙I. E. Telatar, Associate Editor for Shannon Theory.
+
+this result can in fact be deduced from the extension to arbitrary interference Digital Object Identifier 10.1109/TIT.2005.856935
+
+provided in [15], [16], [20].
+
+0018-9448/$20.00 © 2005 IEEE
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3821
+
+Fig. 1.
+
+The generalized dirty-paper channel.
+
+coder uses some of its power to convert the interference
+
+into a
+
+With the exception of Section IV-C, its primary role is as an an-
+
+discrete random variable whose support is an equally spaced lat-
+
+alytic tool in the direct part of the capacity formulas: the dither
+
+tice
+
+which effectively
+
+greatly simplifies the treatment and allows for a rigorous treat-
+
+leaves us (when
+
+is large compared to
+
+) with a Gaussian
+
+ment as well as enables us to relate coding for the dirty-tape
+
+noise channel. However, this scheme entails a power loss due to
+
+channel to well-established results in quantization theory. In this
+
+this "noise concentration" process, equal to
+
+(assuming
+
+respect, the dither may be regarded as merely a method of proof
+
+is much smaller than the amplitude of the interference signal).
+
+while the capacity results do not depend on the availability of In [39], Willems refers to schemes which circumvent the power common randomness in practice. This is due to the fact that
+
+loss of "noise concentration."
+
+common randomness does not result in a greater capacity for
+
+In this paper, we are concerned with both the causal and non-
+
+fixed probabilistic channels with SI at the transmitter (unlike
+
+causal settings, as well as with the case of SI with finite antic-
+
+arbitrarily varying channels (AVC) as will be noted); see [30],
+
+ipation. We focus our attention on the worst interference case,
+
+[1]. In Section IV-C, on the other hand, the dither will prove es-which we show to be equivalent to "strong and smooth" interfer-
+
+sential where we discuss the issue of cancellation of arbitrary
+
+ence, and to arbitrarily varying interference. We derive capacity
+
+interference. In this case, common randomness (e.g., a random-
+
+formulas and bounds as well as coding strategies for these set-
+
+ized codebook known to the receiver) may be in fact advanta-
+
+tings in a unified approach. This allows to bridge the causal and
+
+geous [30]. That is, the capacity formula we give for this case the noncausal settings. We also investigate how much is lost
+
+will assume that common randomness is indeed available.
+
+in capacity by imposing the causality constraint. Our coding
+
+The paper is organized as follows. Section II summarizes
+
+scheme is based on minimum noise entropy strategy, a concept
+
+known results for channels with causal/noncausal SI at the
+
+proposed earlier for unconstrained modulo-additive noise chan-
+
+transmitter and the associated (nonexplicit) capacity for-
+
+nels in [17]. We addressed these issues in a preliminary ver-mulas. Section III treats the worst interference, general noise,
+
+sion of this paper [15], [16], [20]. Schemes similar to those pre-dirty-tape channel, for which a semi-explicit capacity formula
+
+sented in [15], [16], [20] were independently proposed by Chen is derived in terms of a minimum noise entropy strategy. Lattice
+
+and Wornell [4] as well as by Su, Eggers, and Girod [13] in encoding schemes are proposed and are shown to be optimal
+
+the context of information embedding. The present paper gives
+
+in the limit of high SNR. Furthermore, for general SNR, upper
+
+a detailed account of the results reported in [15], [16], for the bounds for the rate loss of inflated lattice strategies are given.
+
+dirty-tape as well as dirty-paper channel, where
+
+may or may
+
+Section IV proposes efficient schemes for SI known with finite
+
+not be Gaussian.
+
+anticipation, linking the dirty-tape and dirty-paper settings, and
+
+One of the insights developed in [15], [16], is that the develops techniques for cancellation of arbitrary interference.
+
+dirty-paper channel model offers a theoretical framework for
+
+Section V offers a summary of the results and discusses some
+
+precoding techniques, and in particular the link to Tomlinson-
+
+extensions of the results.
+
+Harashima precoding [35], [25] was established. Since then, considerable work has been done (and published) by the au-II. CHANNELS WITH SIDE INFORMATION AT THE TRANSMITTER
+
+thors as well as by others, building on this insight. We will thus
+
+The channel model (1) is a special case of a channel with SI
+
+not delve into applications in this paper. Instead, we refer the
+
+at the transmitter. Such channels were introduced by Shannon
+
+reader to [45] and the references therein for a survey of some in [34]. He considered a discrete memoryless channel whose of the recent works. A noteworthy implication of this work is
+
+transition matrix is dependent on the channel "state," as shown
+
+that the capacity of the Gaussian ISI channel may be achieved
+
+in Fig. 2. The transmitter has knowledge of this state prior
+
+using precoding at the transmitter and that there is no inherent
+
+to transmission.2 More precisely, let
+
+and
+
+denote the
+
+precoding loss. Another important application [3], [37] is to input, output, and state alphabets of the channel, respectively,
+
+precoding for broadcast over multiple-input multiple-output
+
+with transition probability
+
+and with state probabil-
+
+(MIMO) antennas, allowing to achieve the capacity region [37].
+
+ities given by
+
+. The transmitter (but not the receiver) has
+
+Finally, the present work leads in turn to a transmision scheme
+
+access to the SI. This problem divides into two categories,
+
+[19], [21] that allows the capacity of the AWGN channel to be according to whether the encoder observes the state process
+
+achieved using lattice encoding and decoding, a problem that
+
+causally, or anticipates future states (corresponding to the was open for many years.
+
+dirty-tape/dirty-paper scenarios when the channel is given
+
+A distinctive feature of our approach, as proposed in [15],
+
+by (1)).
+
+[16], is the introduction of common randomness at the transmitter and receiver ends which enters in the form of a "dither"
+
+2The interference term S of the dirty-paper channel corresponds to the that is added to the interference. This serves a dual purpose.
+
+channel "state."
+
+
+
+
+
+3822
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+Likewise, the decoding function is given by
+
+. The
+
+(average) probability of error is then defined by
+
+(6)
+
+Fig. 2.
+
+Channel with SI at transmitter.
+
+The probability of error for the noncausal case is similarly de-
+
+fined. Note that by interchanging the expectation with the outer
+
+summation in (6) it follows that there must be some specific
+
+In the causal case, considered by Shannon [34], the encoder value , i.e., some deterministic code, with a probability of error
+
+maps the message
+
+into
+
+using
+
+no greater than that of (6). In this sense, randomized codes do
+
+functions
+
+not yield better performance than deterministic ones. However,
+
+this optimal
+
+depends in general on the state distribution; thus
+
+(2)
+
+randomization may be advantageous for arbitrary varying or un-
+
+known state sequences as discussed in Section IV-C. We note
+
+where
+
+are the states up to time . Shannon found
+
+that in the sequel, we will consider transmission (and hence,
+
+the capacity of such channels as described below.
+
+codebooks) that are subject to a power contraint. In this case,
+
+Shannon's work remained largely an isolated result for many
+
+both the probability of error as well as the codeword power de-years (with the notable exception of [27]). Renewed interest was pend on the value of . Nonetheless, using a Langrangian for-sparked in the Russian literature by Kuznetsov and Tsybakov
+
+mulation, it can be shown that a randomized code does not im-
+
+during the 1970s in the context of coding for memories with de-
+
+prove on a deterministic code in this setting as well.
+
+fective cells [29] (The causal version of this problem was sub-sequently studied in [33]. The study of this problem eventually A. Nonexplicit Expressions for Capacity
+
+led to the general formulation of Gelfand and Pinsker [23] for coding with noncausal SI at the transmitter. In this case, the en-For a general memoryless channel
+
+, with memory-
+
+coder observes the entire state sequence before transmitting the
+
+less states, Shannon [34] showed that the capacity with causal code sequence, thus,
+
+SI at the transmitter is equal to the regular capacity of an asso-
+
+ciated discrete memoryless channel (DMC) as shown in Fig. 3.
+
+The input alphabet of the associated channel, denoted
+
+, is the
+
+(3)
+
+set of all possible mappings
+
+In either case (causal or noncausal), the receiver decodes the
+
+message
+
+from the whole received vector as
+
+. For
+
+the causal scenario, the (average) probability of error is given
+
+which we refer to as strategies or strategy functions. The output by
+
+of the associated channel is related to the input according to
+
+the transition probability
+
+(7)
+
+(4)
+
+and also
+
+The probability of error for the noncausal case is similarly
+
+(8)
+
+defined.
+
+We consider also randomized codes. That is, transmission
+
+The capacity with SI at the transmitter is given by [34]
+
+schemes involving common randomness. In such cases, the
+
+transmitter and receiver operation may depend on the value of
+
+(9)
+
+a random variable which is known at both transmission ends.
+
+Denote this random variable by
+
+. For the causal (Shannon)
+
+scenario, the encoder mapping is then given by functions of the
+
+where the maximization is taken over the distribution
+
+of
+
+form
+
+the random variable
+
+. The main feature of Shannon's
+
+capacity formula is that it involves strategy functions that are
+
+(5)
+
+functions only of the current state. This in turn means that to
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3823
+
+Fig. 3.
+
+Shannon's associated channel.
+
+achieve capacity it is sufficient to have an encoder that takes
+
+III. RESULTS FOR CAUSAL SI
+
+into account only the current state of the channel. See also [17].
+
+A. Capacity Formula Via Minimum Noise Entropy
+
+This result can readily be extended to the case where the al-
+
+phabets
+
+are the real line and where the transmitter is
+
+Let us turn our attention back to the generalized dirty-paper
+
+subject to an average power constraint
+
+to yield
+
+channel model (1). In this section, we treat the causal SI scenario
+
+(or dirty-tape channel). We use the general capacity formula of
+
+(10)
+
+Shannon (10) to find the capacity of this channel for the worst
+
+case interference, which will turn out to be the asymptotic case
+
+of strong and smooth interference. This greatly simplifies the
+
+where the expectation is relative to the product measure
+
+treatment, while still incurring only a finite penalty relative to
+
+. The capacity with noncausal SI at the
+
+the case of
+
+which we shall quantify. We assume that
+
+transmitter is given by3 [23]
+
+the noise
+
+has a finite differential entropy and finite first and
+
+second moments. We define the worst interference capacity of
+
+(11)
+
+the dirty-tape channel as
+
+where
+
+is a random strategy, i.e., a random element of the set
+
+of functions
+
+, and the maximization is taken over
+
+(13)
+
+all joint distributions satisfying
+
+where
+
+is the capacity expression in (10) with the
+
+dependence on
+
+made explicit. We now present an expression
+
+where
+
+denotes the Kronecker delta function. Note that un-
+
+for the worst case capacity of the dirty-tape channel which trans-
+
+like in (10) here
+
+is a general joint distribution. This ex-
+
+lates the maximization in (10) into noise entropy minimization.
+
+pression coincides with the causal capacity (9) if the maximiza-
+
+In this sense, the resulting capacity formula is "semi-explicit."
+
+tion is restricted to distributions satisfying
+
+The result is derived by transforming the original channel into
+
+an effective modulo-additive noise channel, whose noise distri-
+
+bution depends on a chosen strategy. In the sequel, we propose
+
+explicit lattice-strategy encoding schemes and prove their opti-
+
+i.e., when
+
+and
+
+are independent. As in the causal case, the ca-
+
+mality in the limit of high SNR.
+
+pacity formula may be extended to the power-constrained/con-
+
+For
+
+, let
+
+. Let
+
+be a
+
+tinuous alphabet case (see [2]). The capacity formula is then strategy function from
+
+to
+
+. Define the minimum ef-
+
+given by
+
+fective noise entropy
+
+(14)
+
+(12)
+
+3This is a modified form [14], [5] of the Gelfand-Pinsker formula, which and the effective noise channel capacity
+
+better shows the relation to Shannon's formula (see (9)) for the causal case. We identify the random variable U in the Gelfand-Pinsker capacity expression with the random function T .
+
+(15)
+
+
+
+
+
+3824
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+Fig. 4.
+
+Universal interference canceling scheme for the dirty-tape channel.
+
+where
+
+denotes differential entropy, and the class of admis-
+
+Lemma 1 (Effective Additive-Noise Channel): The channel
+
+sible strategies is defined as
+
+from
+
+to
+
+defined by (1), (21), and (22) is equivalent in dis-
+
+tribution to the additive-noise channel
+
+(16)
+
+Define
+
+where the effective noise
+
+is independent of
+
+and is given
+
+upper convex envelope of
+
+(17)
+
+by
+
+and let
+
+(18)
+
+Note that the effective channel from
+
+to
+
+is independent
+
+of the interference
+
+. This is not only useful for proving The-
+
+Note that any point in the convex envelope may be obtained by
+
+orem 1, but it also has an important consequence for arbitrarily
+
+time-sharing of at most two points [11].
+
+varying interference, as discussed in Section IV-C.
+
+Theorem 1 (Causal Worst Case Capacity): The worst case
+
+Proof:
+
+(causal) SI capacity of the channel (1), defined in (13), is given
+
+by
+
+(19)
+
+(23)
+
+The theorem is proved in Section III-C. We next describe a
+
+(24)
+
+universal interference canceling scheme that will play a central
+
+(25)
+
+role in the proof.
+
+(26)
+
+B. Universal Interference Canceling Scheme
+
+where
+
+and
+
+We present a randomized transmission scheme, which is in-
+
+dependent of the statistics of the interference
+
+and achieves
+
+(27)
+
+the worst interference capacity
+
+for any
+
+. We transform
+
+in effect the channel into a modulo additive noise channel over
+
+Due to the dither
+
+, for any
+
+and
+
+, the random vari-
+
+the alphabet
+
+. The transmission scheme is
+
+able
+
+is uniformly distributed over
+
+, i.e.,
+
+has the same
+
+outlined in Fig. 4. The transmitter uses an input alphabet that
+
+distribution as
+
+. Consequently,
+
+does not have any effect on
+
+consists of strategies belonging to
+
+the associated channel and
+
+is statistically independent of
+
+and
+
+. Thus, the resulting channel (26) is a modulo additive
+
+(20)
+
+noise channel and
+
+has the same distribution as
+
+.
+
+where
+
+is some strategy function. That is, all strategies are
+
+Applying a uniform distribution upon the class of strategies
+
+a shift modulo
+
+of a single strategy. Let
+
+be a
+
+, i.e.,
+
+yields for any
+
+dither available at both transmission ends.
+
+•
+
+Modulator: For any
+
+, the encoder sends
+
+(28)
+
+(21)
+
+C. Proof of Theorem 1
+
+•
+
+Demodulator: Computes
+
+As noted in Section II, common randomness does not increase
+
+capacity for the channel models we study, i.e., channels with
+
+(22)
+
+SI at the transmitter, see, e.g., [30]. Nonetheless, it will prove useful in the proof to examine the case where common ran-We thus arrive at the following channel from
+
+to
+
+.
+
+domness is available. Let the random variable
+
+be available
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3825
+
+at both transmission ends. As noted, allowing the strategy func-
+
+Lemma 4: If
+
+and
+
+then
+
+tions to depend on the dither
+
+does not increase capacity. We
+
+(38)
+
+may therefore rewrite the worst case capacity of (13) as
+
+where
+
+are independent of
+
+(but
+
+may depend on
+
+)
+
+(29)
+
+and
+
+as
+
+.
+
+where
+
+Therefore, by (37) for
+
+we have
+
+(30)
+
+(39)
+
+Theorem 1 is proved using the following two lemmas.
+
+Let
+
+be any function participating in the expectation of (39).
+
+Denote
+
+Lemma 2 (Direct): For any interference
+
+(31)
+
+Since by the definition of
+
+in (15) we have
+
+for every
+
+.
+
+(40)
+
+Lemma 3 (Converse): For
+
+it follows that (39) reduces to
+
+(32)
+
+where
+
+as
+
+.
+
+Since the worst interference capacity is defined as an in-
+
+(41)
+
+fimum over all interferences
+
+(see (13)), every
+
+gives an upper
+
+where the inequalities follow from the definition of
+
+and
+
+bound on
+
+, in particular
+
+.
+
+and from the convexity and monotonicity of
+
+, and
+
+Thus, Lemmas 2 and 3 imply that
+
+since the power constraint implies
+
+. Since this
+
+inequality holds for any
+
+satisfying the power constraint, the
+
+lemma follows.
+
+for every
+
+, and the desired result follows by taking the limsup
+
+in
+
+.4 We are left to prove the two lemmas.
+
+Remark: In fact, Lemma 4 holds with respect to any
+
+of the
+
+form
+
+where
+
+has a density. Thus, the worst case capacity
+
+Proof of Lemma 2: We employ the universal interference
+
+occurs whenever the interference is "strong and smooth."
+
+canceling scheme described in Section III-B. From (28), for any
+
+choice of basic strategy
+
+, we can achieve the mutual infor-
+
+D. Bounds Via Entropy-Constrained Quantization
+
+mation
+
+From Theorem 1, we see that the capacity formula involves
+
+(33)
+
+finding an optimal
+
+that minimizes
+
+subject
+
+But
+
+to the power constraint
+
+. The following theorem
+
+links this problem to that of finding the optimal entropy-con-
+
+(34)
+
+strained quantizer of
+
+. Let
+
+since the modulo operation can only reduce the entropy. For
+
+(42)
+
+any
+
+, we may take a strategy
+
+that achieves a value ar-
+
+bitrarily close to the minimum effective noise entropy in (14).
+
+denote the minimum entropy in quantizing
+
+with mean squared
+
+Combining with the definition of
+
+in (15), we conclude
+
+distortion
+
+, where
+
+denotes regular entropy and the in-
+
+that we can achieve mutual information
+
+fimum is over all quantizers
+
+satisfying
+
+.
+
+(35)
+
+Lemma 5: Suppose
+
+has a finite differential entropy. Then
+
+for any
+
+. By the definition of
+
+in (17), we may
+
+(43)
+
+achieve mutual information of
+
+by time-sharing (at
+
+most two basic strategies), and the lemma follows.
+
+(44)
+
+Proof of Lemma 3: The proof is similar to the Proof of
+
+Theorem 1 in [17]. Let
+
+be any strategy random variable. We
+
+On the other hand, for any
+
+have
+
+(36)
+
+(45)
+
+(37)
+
+(46)
+
+where
+
+and
+
+denotes expectation over
+
+. In
+
+where
+
+is independent of
+
+and is uniformly distributed over
+
+the Appendix, part A, we prove the following lemma.
+
+.
+
+4Note that this implies also that C (P ) = lim C (P ).
+
+The proof of the lemma is given in the Appendix, part B.
+
+
+
+
+
+3826
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+p
+
+Fig. 5.
+
+Uniform lattice strategy: t (s) = 0s mod 1 with 1 =
+
+12P .
+
+We now restrict our attention to the case of high SNR, i.e.,
+
+The function
+
+is depicted in Fig. 5. We now apply a uniform
+
+to the limit
+
+. Define
+
+. From
+
+distribution upon the class of strategies which are shifts of
+
+(44), taking
+
+, we have
+
+(47)
+
+(52)
+
+From (46), we have
+
+where the modulo operation is to the interval
+
+(53)
+
+(48)
+
+Due to the periodic nature of
+
+, the shift
+
+may be limited to
+
+the interval
+
+, and it is sufficient to take the dither to be
+
+From (47) and (48), we have
+
+. Also, due to the dither
+
+being added at the receiver
+
+side, reducing the output (after the dither is added) modulo
+
+produces a sufficient statistic at the receiver. We therefore use
+
+the following transmission scheme.
+
+(49)
+
+•
+
+Transmitter: For any
+
+, the encoder sends
+
+Clearly,
+
+as
+
+whenever
+
+;
+
+see [31]. For any
+
+, let
+
+be large enough so that
+
+(54)
+
+. But
+
+as
+
+. We thus have
+
+Note that since
+
+is uniform over
+
+, so is the trans-
+
+the following.
+
+mitted signal
+
+. It follows from (51) that the transmitted
+
+Corollary 1: If
+
+has a finite second moment and finite dif-
+
+power is
+
+.
+
+ferential entropy, then
+
+•
+
+Receiver: The receiver computes
+
+(50)
+
+(55)
+
+(56)
+
+where
+
+as
+
+.
+
+where (56) follows by specializing Lemma 1 to this case,
+
+E. Optimality of Lattice Strategies at High SNR
+
+noting that
+
+for
+
+all .
+
+From (50), we see that the asymptotic (high-SNR) rate loss
+
+Taking
+
+gives rise to the rate
+
+with respect to the no-interference case
+
+(or equivalently,
+
+to having
+
+also at the receiver), is equal to the "shaping gain"
+
+(57)
+
+0.254 bit. The role of the shaping gain here will
+
+(58)
+
+be made clear in Section IV, where we discuss the use of mul-
+
+(59)
+
+tidimensional lattice strategies for coding with finite anticipa-
+
+tion SI. Note that this result holds for general
+
+, not necessarily
+
+(60)
+
+Gaussian.
+
+It also follows from (50) that entropy-constrained quantizers
+
+where the approximation in (58) becomes tight as
+
+generate efficient strategies for the universal interference can-
+
+and, therefore,
+
+. Hence, in light of (50) this scheme is
+
+celing scheme at high SNR. From the well-known result by
+
+asymptotically optimal. The scheme (52) is similar to the tech-
+
+Gish and Pierce, we know that at "high-resolution" conditions
+
+nique for information embedding of [4] and is closely linked to the quantizer achieving the minimum entropy
+
+is
+
+Tomlinson-Harashima prcoding [35], [25].
+
+uniform, see [24]. Thus, at high SNR, the dirty-tape channel ca-F. Inflated Lattice Strategies for General SNR
+
+pacity may be approached using the error of a uniform quantizer
+
+as
+
+in (14). That is, we choose
+
+where
+
+In principle, the optimal noise entropy minimizing strategy
+
+is a "mid-thread" uniform scalar quantizer with step size
+
+function
+
+as defined in (15), gives us a capacity achieving
+
+encoding scheme as depicted in Fig. 4. Unfortunately, we have
+
+only been able to determine this optimal function in the case
+
+(51)
+
+of asymptotically high SNR. For general SNR, we resort to a
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3827
+
+p
+
+Fig. 6.
+
+Inflated lattice strategy: t (s) = 0s mod 1 with 1 =
+
+12P .
+
+judicious choice of a suboptimal strategy function. The scheme
+
+Lemma 6 (Inflated Lattice Lemma: Scalar Case): The chan-
+
+we propose, based on an "inflated" lattice strategy, is motivated
+
+nel defined by (1), (64), and (65) is equivalent in distribution to
+
+by the encoding scheme of Costa [10].
+
+the channel
+
+The development up to this point of the paper did not ne-
+
+cessitate that the constraint be a power constraint, and could
+
+(66)
+
+be extended to more general constraints. The MMSE scaling
+
+where
+
+is independent of
+
+and is given by
+
+that we next introduce does fit specifically the case of a power constraint.
+
+(67)
+
+The scheme uses a scaling coefficient
+
+, effec-
+
+and where
+
+and is statistically indepen-
+
+tively producing at the receiver and a lattice with cells of length
+
+dent of
+
+.
+
+, at the expense of adding an additional noise com-
+
+Proof: For any
+
+we get
+
+ponent with variance
+
+. The basic strategy takes the
+
+(68)
+
+form
+
+(69)
+
+(61)
+
+(70)
+
+(71)
+
+where, as before,
+
+, and the modulo operation is
+
+to the interval
+
+defined in (53). Since
+
+is periodic, it
+
+(72)
+
+is sufficient now to restrict the shift
+
+to the expanded interval
+
+(73)
+
+, and the dither to be
+
+.
+
+Notice that due to the dither
+
+, the channel input
+
+is uniform
+
+For any
+
+, the encoder sends
+
+over
+
+independently of . Since
+
+and
+
+also have the
+
+(62)
+
+same distribution the lemma follows.
+
+and the receiver computes
+
+The scaling factor
+
+should be chosen so as to maximize
+
+(63)
+
+the corresponding mutual information (minimize the entropy of
+
+). Alternatively, we may use a minimum mean-squared error
+
+where, as before, reducing the output modulo the period
+
+(MMSE)-scaling factor (as done by Costa), i.e., take
+
+produces sufficient statistics.
+
+SNR
+
+Note that the input and output alphabet (after applying the
+
+(74)
+
+SNR
+
+modulo operation) is scaled or "inflated" by a factor of
+
+relative to the basic lattice transmission scheme of Section III-E.
+
+This minimizes the variance of the effective noise prior to the
+
+Hence, we refer to these strategy functions as "inflated lattice
+
+modulo operation, i.e., the variance of
+
+.5 Thus,
+
+strategies," see Fig. 6. Alternatively, we may restrict the input
+
+(75)
+
+alphabet to
+
+as in Section III-E (defined in (53) and (51))
+
+(76)
+
+and take
+
+, if we scale instead the interference
+
+prior to subtracting it off at the transmitter, and scale the receiver (77)
+
+input prior to adding the dither. The transmission scheme then
+
+where (75) follows since the modulo operation may only reduce
+
+takes the following form.
+
+the variance of a random variable. The corresponding rate sat-
+
+•
+
+Transmitter: For any
+
+, the encoder sends
+
+isfies
+
+(64)
+
+(78)
+
+•
+
+Receiver: The receiver computes
+
+(79)
+
+(65)
+
+5It turns out that the improvement in mutual information possible using an This gives rise to an equivalent modulo lattice channel de-optimal choice of instead of
+
+is negligible when time sharing is taken
+
+scribed by the following lemma.
+
+into account (the convex envelope in (17)).
+
+
+
+
+
+3828
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+Fig. 7.
+
+(SNR) = I(T ; Y )=SNR as a function of SNR = P =P for inflated lattice strategies. The different lines correspond to different values of .
+
+where the inequality follows since a Gaussian random variable
+
+From Fig. 7, we see that
+
+. This yields a rate of ap-
+
+has the greatest entropy for a given variance [11]. We thus have proximately
+
+nats at low SNR, whereas the capacity
+
+the followinf result.
+
+with noncausal SI is
+
+nats. This indicates that the rate
+
+loss due to causality is bounded by 4 dB. This performance can
+
+Theorem 2: For any noise
+
+and arbitrary interference
+
+,
+
+be obtained by time-sharing the zero-power strategy and the op-
+
+the capacity of the channel (1) with
+
+known causally to the
+
+timal operating point, i.e., the SNR that maximizes
+
+SNR ,
+
+tranmitter satisfies
+
+which is approximately at 0 dB. We note that the above deriva-
+
+(80)
+
+tion is equivalent to applying the result of Verdú on the capacity
+
+per unit cost [36] for the class of inflated lattice strategies. The technique of [36] also relies on "time sharing" between the zero Notice that this bound may be tighter than the lower bound in
+
+strategy (symbol) and an optimal strategy (symbol). The diver-
+
+(47). To recognize this consider the case of Gaussian
+
+where
+
+genece to SNR ratio in [36] reduces to the ratio SNR . For
+
+(47) would give us the weaker bound
+
+lower bounds for the achievable transmision rates at low SNR,
+
+when the interference is Gaussian of finite variance, we refer the (81)
+
+reader to [26].
+
+Having seen that inflated lattice strategies are preferable
+
+It is interesting to find a lower bound for the achievable rate at
+
+to ordinary lattice strategies (corresponding to
+
+), we
+
+the limit of very low SNR, i.e., as SNR
+
+. We do this
+
+may attempt a further generalization by using some nonlinear
+
+for the case of Gaussian noise
+
+by numerically computing
+
+characteristic function instead of
+
+. Let
+
+be an antisym-
+
+SNR
+
+SNR
+
+(82)
+
+metric function, i.e.,
+
+, as well as satisfying
+
+. Let
+
+be such that
+
+where
+
+where
+
+is given in (78), as a function of the SNR. This
+
+. The transmision scheme would then
+
+is shown in Fig. 7. Due to the convex hull in the expression for
+
+take the following form.
+
+capacity (17), it follows that
+
+•
+
+Transmitter: For any
+
+, the encoder sends
+
+(83)
+
+(84)
+
+SNR
+
+•
+
+Receiver: The receiver computes
+
+is the slope of the capacity as a function of the SNR at SNR
+
+.
+
+In effect, this value is the maximum information per unit power
+
+(85)
+
+that can be conveyed using an inflated lattice scheme.
+
+where
+
+.
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3829
+
+Fig. 8.
+
+Generalized lattice strategy: t (s) = 0g(s mod ) with
+
+g (s)ds = P and 1 = 2g(=2).
+
+Fig. 8 depicts such generalized strategies. In effect, we consider
+
+The resulting channel is a modulo-
+
+additive noise channel
+
+general strategies as in Section III-B, but restrict attention to pe-described by the following lemma.
+
+riodic functions. The function
+
+therefore allows us some
+
+Lemma 7 (Inflated Lattice Lemma: Vector Case): The chan-
+
+freedom to "shape" the self-noise. Thus far, however, the at-
+
+nel defined by (1), (86), and (87) satisfies
+
+tempts of the authors as well as of others [28] have not been suc-cessful to improve with such generalized lattice strategies upon
+
+(88)
+
+the results obtained using regular inflated lattice strategies.
+
+with
+
+IV. LATTICE STRATEGIES FOR FINITE ANTICIPATION SI
+
+(89)
+
+A. Rates and Capacity
+
+where
+
+is a random variable distributed uniformly over the
+
+We can link our results for the causal setting to Costa's non-
+
+Voronoi region of
+
+and
+
+is defined as
+
+.
+
+causal dirty-paper channel by allowing the encoder to antici-
+
+pate
+
+states ahead. Thus,
+
+corresponds to the dirty-tape
+
+The proof is the same as that of Lemma 6, replacing all scalars
+
+channel while
+
+corresponds to the dirty-paper channel.
+
+with their vector counterparts. We refer to this derived channel
+
+We obtain achievable rates for transmission with anticipation of
+
+as a modulo lattice additive noise (MLAN) channel. The ca-
+
+order . For Gaussian noise
+
+, when
+
+goes to infinity, the cor-
+
+pacity of the MLAN channel is achieved by
+
+, and
+
+responding rate will equal the no-interference capacity, in agree-
+
+is given by
+
+ment with the result of Costa [10]. The results in this section (in (90)
+
+their preliminary version [15], ) were the basis for the nested lattice binning schemes which were developed for the dirty-paper (91)
+
+channel in [45].
+
+It is important to note that for
+
+, we derive
+
+(92)
+
+achievable rates but without a converse. The reason for this is
+
+two-fold: i) we restrict attention to lattice strategies, which as
+
+Since
+
+and
+
+are uncorrelated and
+
+, we have
+
+we already saw in the
+
+case are not necessarily optimal
+
+(93)
+
+for general SNR and/or general noise; ii) optimum coding with
+
+finite anticipation may also take advantage of past interference The minimizing
+
+(the MMSE or "Wiener" coefficient) is
+
+samples, while we consider schemes that operate only on blocks
+
+and we obtain
+
+of length . As a consequence, we also do not make use of the
+
+Gelfand-Pinsker capacity formula (11), but rather use -dimen-
+
+(94)
+
+sional Shannon strategies, i.e., functions of the form
+
+.
+
+(95)
+
+We generalize the inflated lattice encoding scheme of Sec-
+
+tion III by employing a lattice vector quantizer
+
+instead
+
+Since, for a given second moment, a Gaussian random vector
+
+of a scalar one and also having a vector dither
+
+,
+
+has the greatest entropy [11] it follows that where
+
+is the basic Voronoi region of the lattice
+
+having a
+
+second moment
+
+. The transmission scheme is given as fol-
+
+lows.
+
+(96)
+
+•
+
+Transmitter: For any
+
+, the encoder sends
+
+We thus have the following result.
+
+(86)
+
+Theorem 3: For any noise
+
+and arbitrary interference
+
+,
+
+where
+
+is defined as
+
+.
+
+the capacity of the MLAN channel (1) satisfies
+
+•
+
+Receiver: The receiver computes
+
+(97)
+
+(87)
+
+
+
+
+
+3830
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+Fig. 9.
+
+Encoding and decoding scheme for the dirty-paper channel.
+
+By taking a sequence of lattices such that
+
+(see
+
+from [19] that the error exponent of the dirty-paper channel is
+
+[43]), we may approach the interference-free capacity arbitrarily lower-bounded by the Poltyrev exponent6 at any SNR.
+
+closely for Gaussian
+
+. Therefore, for Gaussian noise as
+
+there is no rate loss at all. This agrees with the results of [10].
+
+C. Arbitrarily Varying Interference
+
+Note that this result holds at any SNR. The encoding scheme is
+
+We note that while we assumed that
+
+is independent and
+
+shown in Fig. 9.
+
+identically distributed (i.i.d.) in Theorem 1, this assumption is
+
+It is interesting to note that while, in general, for any di-
+
+not necessary for the universal interference cancelling scheme
+
+mension , the input maximizing the mutual information of the
+
+of Fig. 4 which is virtually independent of the statistics of
+
+.
+
+MLAN channel is uniquely the uniform input
+
+,
+
+However, unlike the results of the previous sections, the dither
+
+this is not the case as the dimension
+
+. In fact, for any
+
+is essential now to guarantee the achievability of these rates and
+
+, an input
+
+will also be asymp-
+
+cannot be regarded as an analytic tool. We modify Theorem 1
+
+totically capacity achieving. This follows from the fact that for
+
+for the case of arbitrary interference as follows.
+
+any such input the output
+
+in (87) will be nearly uniform. A
+
+similar result holds for Gaussian inputs
+
+. We refer
+
+Theorem 4 (Causal Case): The randomized code capacity of the reader to [21, Sec. 2.3] for a discussion of the implications the causal SI channel (1) with arbitrarily varying interference
+
+of this fact.
+
+sequence
+
+is equal to the worst case capacity
+
+of
+
+We also note that similarly to the treatment of Section III, in
+
+(18).
+
+the limit of high SNR the capacity for any noise
+
+, not neces-
+
+Likewise, for the noncausal case, we may use the lattice trans-
+
+sarily Gaussian, is
+
+mission scheme of Section IV. Thus, (97) holds for any interfer-
+
+ence sequence, even an arbitrarily varying one. In particular, for
+
+(98)
+
+Gaussian
+
+, the effect of any interference known at the trans-
+
+mitter noncausally can be canceled completely, with no power
+
+where
+
+as
+
+. Thus, in the high-SNR regime
+
+loss.
+
+for general noise
+
+the interference
+
+does not cause rate loss,
+
+Theorem 5 (Noncausal Case): The randomized code
+
+irrespective of its severeness.
+
+capacity of the noncausal SI channel (1) with arbitrarily inter-
+
+ference sequence
+
+and Gaussian i.i.d. noise
+
+is equal to
+
+B. Implications for the No-Interference Case
+
+the zero-interference capacity
+
+.
+
+The MLAN channel transformation is oblivious, due to the
+
+We note that the fact that the result of Costa does not de-
+
+dither, to the characteristics of the interference . Thus, we may
+
+pend on the interference being Gaussian was also recognized by
+
+apply the transformation even in the interference free case, i.e.,
+
+Cohen and Lapidoth [8], [6]. They showed that in the noncausal in the case of an AWGN channels. It turns out that this has some
+
+case with ergodic Gaussian noise
+
+, no loss in capacity is in-
+
+nontrivial implications.
+
+curred by any ergodic interference
+
+known to the transmitter.
+
+Forney et al. [22] introduced a
+
+-
+
+channel transforma-
+
+Although the arbitrarily varying interference case treated here is
+
+tion for the AWGN and showed that at high SNR, the error
+
+more general, it necessitates common randomness which is not
+
+exponent of the resulting channel is lower-bounded by the
+
+necessary in the ergodic interference case, see [1].
+
+Poltyrev exponent. They also proposed strutured coset coding
+
+schemes, allowing to benefit from the group symmetry of the
+
+V. SUMMARY AND EXTENSIONS
+
+-
+
+channel.
+
+We have presented a structured transmission scheme for
+
+The MLAN transformation as proposed in this work gen-
+
+the generalized dirty-paper channel model. Our treatment en-
+
+eralizes the approach of [22] by incorporating MMSE scaling compasses both the causal Shannon setting and the noncausal
+
+and by introducing dithering. This allows us to transform
+
+Gelfand-Pinsker setting. For the Shannon setting, an explicit
+
+the power-constrained AWGN channel into an unconstrained
+
+capacity formula is given for the first time, albeit only for the
+
+MLAN channel, having asymptotically (in dimension) the
+
+asymptotic case of strong interference. When the intereferece
+
+same capacity as the original channel at any SNR. This insight led to the work in [19], where lattice codes are used for coding 6In fact, a recent result by Liu et al. [32] shows that the random coding error for the AWGN channel. Conversely, since the starting point for
+
+exponent of the MLAN channel (but with 6=
+
+) is equal to that of the
+
+original AWGN channel. This implies that at rates sufficiently close to capacity, the derivation of the results of [19] is the MLAN channel, they the error exponent of the dirty-paper channel equals that of an AWGN channel equally apply to the dirty-paper channel. In particular, it follows
+
+(at the same SNR).
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3831
+
+is not as severe, performance may be improved and this calls
+
+Finally, an analysis of the error exponent is possible using the
+
+for futher research. For the Gelfand-Pinsker setting, we gener-
+
+results of [18].
+
+alized the results of Costa to arbitrary interference. The main
+
+features of the proposed schemes are lattice strategies, MMSE
+
+APPENDIX
+
+estimation, and dithering.
+
+The results presented may be extended in many directions.
+
+A. Proof of Lemma 4
+
+We briefly outline two generalizations. We first present a ca-
+
+We show that
+
+pacity theorem analogous to Theorem 1 for the noncausal case.
+
+This is an extension of a result presented in [9] to the case of a (104)
+
+continuous alphabet. Similarly to (13), define the worst interfer-
+
+ence capacity of the dirty- paper channel as
+
+where
+
+are independent of
+
+,
+
+and where
+
+. Let
+
+. It follows
+
+(99)
+
+that we may rewrite (104) as
+
+Let
+
+(105)
+
+upper convex envelope
+
+(100)
+
+Denote
+
+with
+
+. Now let
+
+where
+
+be a Gaussian random variable having the same variance as that
+
+of
+
+, i.e.,
+
+and let
+
+be a Gaussian random
+
+variable having the same variance as that of
+
+, i.e.,
+
+and where the supremum is over all continuous random vari-
+
+ables
+
+which are independent of
+
+, and all functions
+
+such
+
+that
+
+.
+
+We have
+
+Proposition 1 (Noncausal Worst Case Capacity):
+
+(106)
+
+and
+
+(107)
+
+Since the derivation in [9] is for a finite alphabet, for com-where
+
+denotes Kullback-Leibler divergence (see
+
+pleteness we include the proof in the Appendix, part C. Note that
+
+derivation of maximum entropy property in [11]). Combining reduces to
+
+of the causal case in (17) if we sub-
+
+(106) and (107) we obtain
+
+stitute a uniformly distributed
+
+. Achievability of
+
+for Gaussian
+
+can be seen by substituting
+
+and
+
+, with
+
+.
+
+(108)
+
+We next extend the results of Section III-E to more general ad-
+
+Now
+
+since
+
+and
+
+are
+
+bounded,
+
+we
+
+have
+
+ditive noise channels with SI at the transmitter than the channel
+
+. It follows that
+
+and
+
+model (1). Consider an additive noise channel
+
+as
+
+in the mean square sense and in distribution.
+
+(101)
+
+Hence, by the lower semicontinuity of the Kullback-Leibler
+
+divergence [12], [31] we have
+
+where
+
+is independent of the pair
+
+. Here,
+
+is an inter-
+
+ference term, and the noise
+
+is dependent on
+
+. We assume
+
+(109)
+
+that the double SI
+
+is available causally to the transmitter,
+
+so
+
+depends on
+
+but is conditionally independent of
+
+Clearly, since
+
+, we have
+
+given
+
+. In [17], the case of a modulo additive noise channel (with no constraints) and with
+
+was considered.
+
+Let
+
+be the optimal estimator of
+
+given
+
+in an entropy
+
+Along with (109) this implies that
+
+sense. That is,
+
+(110)
+
+(102)
+
+which since
+
+implies (105) and thus the lemma is
+
+We assume worst case interference
+
+as above. We furthermore
+
+proved.
+
+assume high SNR in the sense that for any
+
+we have
+
+. We have the following result.
+
+B. Proof of Lemma 5
+
+Proposition 2 (Additive Interference and State-Dependent
+
+In this section, we prove that
+
+Noise): The (causal) capacity of the channel (101) under high (111)
+
+SNR and strong interference conditions satisfies
+
+(103)
+
+(112)
+
+where
+
+as
+
+.
+
+
+
+
+
+3832
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 51, NO. 11, NOVEMBER 2005
+
+and also that for any
+
+C. Proof of Proposition 1
+
+Note first that the upper convex envelop operation in (100)
+
+can be replaced by conditioning on a "time-sharing" variable,
+
+(113)
+
+while letting the function
+
+depend on this variable, i.e.,
+
+(114)
+
+(126)
+
+where
+
+is independent of
+
+and is uniformly distributed over
+
+where the supremum is over all continuous random variables
+
+. To that end, we first note that (see [24])
+
+and abstract random variables
+
+such that
+
+are
+
+independent of
+
+, and over all functions
+
+such that
+
+(115)
+
+. We next show that for any random inter-
+
+ference
+
+which justifies the second step in the bounds, i.e., (112) and
+
+(114).
+
+(127)
+
+We now turn to prove (111). Let the quantizer
+
+achieve
+
+(42) up to , i.e.,
+
+By the Gelfand-Pinsker formula (11), the capacity of the
+
+channel
+
+with noncausal SI
+
+at the trans-
+
+mitter is lower-bounded by
+
+, for any pair
+
+and
+
+of random variables
+
+such that
+
+are independent
+
+of
+
+, and
+
+. Let us make the following specific
+
+choice:7
+
+and
+
+, where
+
+We have
+
+achieve the maximum in (126), and where
+
+are statistically independent of
+
+. By the definition of
+
+(116)
+
+above, we have
+
+. We
+
+(117)
+
+also have
+
+(118)
+
+(128)
+
+(119)
+
+Combining (119) and the definition of
+
+in (15), we obtain
+
+(129)
+
+(111).
+
+We next prove (113). Let
+
+be a uniform quantizer with
+
+step , and let
+
+. Since
+
+(130)
+
+(120)
+
+(131)
+
+forms a Markov chain for any value
+
+, by the data pro-
+
+cessing lemma for mutual information [11] we have (132)
+
+(133)
+
+(121)
+
+where the first inequality follows from the nonnegativity of the
+
+mutual information, after using the chain rule and substituting
+
+; the second inequality follows since taking out
+
+(122)
+
+conditions increases the conditional differential entropy; and the
+
+For any value of
+
+, the error
+
+of the
+
+last equality follows from our specific choice of
+
+and .
+
+"dithered" quantizer with respect to
+
+is at most
+
+This establishes (127). Now we prove the converse part. We
+
+, thus, the distortion is at most
+
+, so the first
+
+shall show that for
+
+uniform over
+
+, we have
+
+term above is lower-bounded by
+
+. As
+
+(134)
+
+for the second term, by the properties of entropy coded dithered
+
+quantization (ECDQ) [44] it can be written as where
+
+goes to zero as
+
+goes to infinity. We restrict at-
+
+tention to the case where
+
+has finite differential entropy, oth-
+
+erwise, both capacities in Proposition 1 go to infinity. For any
+
+(123)
+
+admissible
+
+, if
+
+then we have
+
+(124)
+
+(125)
+
+(135)
+
+Using the left-hand side of (115) the proof is complete.
+
+7Here we view T as an abstract random variable.
+
+
+
+
+
+EREZ et al. : CAPACITY AND LATTICE STRATEGIES FOR CANCELING KNOWN INTERFERENCE
+
+3833
+
+This expansion is possible since
+
+must be finite. To see
+
+[19]
+
+, "Achieving
+
+log(1 + SNR) on the AWGN channel with lattice
+
+why, note that
+
+is finite because
+
+is
+
+encoding and decoding," IEEE Trans. Inf. Theory, vol. 50, no. 10, pp.
+
+2293-2314, Oct. 2004.
+
+finite and
+
+is finite; thus, if
+
+did not exist (or was
+
+[20] U. Erez, R. Zamir, and S. Shamai (Shitz), "Additive noise channels with minus infinity), then
+
+would be infinite, and
+
+side information at the transmitter," Proc. 21st IEEE Conv. Electrical would be negative. Now, from the alternative defini-and Electronic Engineers in Israel, pp. 373-376, Apr. 2000.
+
+[21] G. D. Forney Jr., "On the role of MMSE estimation in approaching
+
+tion for
+
+in (126), we see that the expression in the first
+
+the information- theoretic limits of linear Gaussian channels: Shannon brackets of (135) is upper-bounded by
+
+(view
+
+and
+
+meets Wiener," in Proc. 41st Annu. Allerton Conf. Communication, Con-as possible choices for
+
+and
+
+, respectively), while by Lemma
+
+trol, and Computing, Monticello, IL, Oct. 2003, pp. 430-439.
+
+[22] G. D. Forney Jr., M. D. Trott, and S.-Y. Chung, "Sphere-bound-
+
+4, the second expression in brackets in (135) goes to zero as
+
+achieving coset codes and multilevel coset codes," IEEE Trans. Inf.
+
+. This establishes (134), and together with (127) com-
+
+Theory, vol. 46, no. 3, pp. 820-850, May 2000.
+
+pletes the proof of the proposition.
+
+[23] S. I. Gelfand and M. S. Pinsker, "Coding for channel with random pa-rameters," Probl. Pered. Inform. (Probl. Inf. Transm.), vol. 9, no. 1, pp.
+
+19-31, 1980.
+
+[24] A. György and T. Linder, "Optimal entropy-constrained scalar quanti-ACKNOWLEDGMENT
+
+zation of a uniform source," IEEE Trans. Inf. Theory, vol. 46, no. 7, pp.
+
+2704-2711, Nov. 2000.
+
+The authors wish to thank David Forney and Amos Lapidoth
+
+[25] H. Harashima and H. Miyakawa, "Matched-transmission technique for for helpful comments.
+
+channels with intersymbol interference," IEEE Trans. Commun. , vol.
+
+COM-20, no. 8, pp. 774-780, Aug. 1972.
+
+[26] D. Hoesli, "On the capacity per unit cost of the dirty tape channel,"
+
+REFERENCES
+
+in Winter School on Coding and Information Theory, Monte Verita, Switzerland, Feb. 2003.
+
+[1] R. Ahlswede, "Arbitrarily varying channels with states sequence known
+
+[27] F. Jelinek, "Indecomposible channels with side information at the trans-to the sender," IEEE Trans. Inf. Theory, vol. IT-32, no. 5, pp. 621-629, mitter," Inf. Control, vol. 8, pp. 36-55, 1965.
+
+Sep. 1986.
+
+[28] R. Koetter, private communication.
+
+[2] R. J. Barron, B. Chen, and G. W. Wornell, "The duality between infor-
+
+[29] A. V. Kuznetsov and B. S. Tsybakov, "Coding in a memory with defec-mation embedding and source coding with side information and some
+
+tive cells," Probl. Pered. Inform. , vol. 10, no. 2, pp. 52-60, Apr.-June applications," IEEE Trans. Inf. Theory, vol. 49, no. 5, pp. 1159-1180, 1974. English translation in Probl. Inf. Transm. , vol. 10, pp. 132-138, May 2003.
+
+1974.
+
+[3] G. Caire and S. Shamai (Shitz), "On the achievable throughput of a mul-
+
+[30] A. Lapidoth and P. Narayan, "Reliable communication under channel tiple-antenna Gaussian broadcast channel," IEEE Trans. Inf. Theory, vol.
+
+uncertainty," IEEE Trans. Inf. Theory, vol. 44, no. 6, pp. 2148-2177, 49, no. 7, pp. 1649-1706, Jul. 2003.
+
+Oct. 1998.
+
+[4] B. Chen and G. W. Wornell, "Quantization index modulation: A class of
+
+[31] T. Linder and R. Zamir, "On the asymptotic tightness of the Shannon provably good methods for digital watermarking and information em-lower bound," IEEE Trans. Inf. Theory, vol. 40, no. 6, pp. 2026-2031, bedding," IEEE Trans. Inf. Theory, vol. 47, no. 4, pp. 1423-1443, May Nov. 1994.
+
+2001.
+
+[32] T. Liu, P. Moulin, and R. Koetter, "On error exponents of nested lattice
+
+[5] A. S. Cohen. (2001, Spring) Communication With Side Information
+
+codes for the AWGN channel," IEEE Trans. Inf. Theory, submitted for (Graduate Seminar 6.962). MIT, Cambridge, MA. [Online]. Available:
+
+publication.
+
+http://web.mit.edu/6.962/www/www_spring_2001/ schedule.html
+
+[33] M. Salechi, "Capacity and coding for memories with real-time noisy
+
+[6] A. S. Cohen and A. Lapidoth, "Generalized writing on dirty paper,"
+
+defect information at encoder and decoder," Proc. Inst. Elec. Eng.-I, vol.
+
+in Proc. IEEE Int. Symp. Information Theory, Lausanne, Swtizerland, 139, no. 2, pp. 113-117, Apr. 1992.
+
+Jun./Jul. 2002, p. 227.
+
+[34] C. E. Shannon, "Channels with side information at the transmitter," IBM
+
+[7] A. S. Cohen and A. Lapidoth, "The Gaussian watermarking game," IEEE
+
+J. Res. Devel. , vol. 2, pp. 289-293, Oct. 1958.
+
+Trans. Inf. Theory, vol. 48, no. 6, pp. 1639-1667, Jun. 2002.
+
+[35] M. Tomlinson, "New automatic equalizer employing modulo arith-
+
+[8]
+
+, "On the Gaussian watermarking game," in Proc. IEEE Int. Symp.
+
+metic," Electron. Lett. , vol. 7, pp. 138-139, Mar. 1971.
+
+Information Theory, Sorrento, Italy, Jun. 2000, p. 48.
+
+[36] S. Verdú, "On channel capacity per unit cost," IEEE Trans. Inf. Theory,
+
+[9] A. S. Cohen and R. Zamir, "The rate loss in writing on dirty paper," in vol. 36, no. 5, pp. 1019-1030, Sep. 1990.
+
+Proc. Annu. Allerton Conf. Communication, Control, and Computing,
+
+[37] H. Weingarten, Y. Steinberg, and S. Shamai (Shitz), "The capacity re-Monticello, IL, Oct. 2003, pp. 819-828.
+
+gion of the gaussian MIMO broadcast channel," in Proc. Int. Symp. In-
+
+[10] M. H. M. Costa, "Writing on dirty paper," IEEE Trans. Inf. Theory, vol.
+
+formation Theory, Chicago, IL, Jun./Jul. 2004, p. 174. To be published IT-29, no. 3, pp. 439-441, May 1983.
+
+in IEEE Trans. Inf. Theory.
+
+[11] T. M. Cover and J. A. Thomas, Elements of Information Theory.
+
+New
+
+[38] F. M. J. Willems, "On Gaussian channels with side information at the York: Wiley, 1991.
+
+transmitter," in Proc. 9th Symp. Information Theory in the Benelux, En-
+
+[12] I. Csiszár, "On an extremum problem of information theory," Studia schede, The Netherlands, May 1988, pp. 129-135.
+
+Scient. Math. Hung. , pp. 57-70, 1974.
+
+[39]
+
+, "Signalling for the Gaussian channel with side information at the
+
+[13] J. J. Eggers, J. K. Su, and B. Girod, "A blind watermarking scheme based transmitter," in Proc. Int. Symp. Information Theor, Sorrento, Italy, Jun.
+
+on structured codebooks," in Proc. IEE Colloquium: Secure Images and 2000, p. 348.
+
+Image Authentication, London, U.K., Apr. 2000.
+
+[40] W. Yu and J. M. Cioffi, "Trellis precoding for the broadcast channel," in
+
+[14] U. Erez, "Noise prediction for channel coding with side information at Proc. IEEE Global Telecommunications Conf. (GLOBEECOM'01), vol.
+
+the transmitter," Master's thesis, Tel-Aviv Univ., Tel-Aviv, Israel, 1998.
+
+2, San Antonio, TX, Nov. 2001, pp. 1344-1348.
+
+[15] U. Erez, S. Shamai (Shitz), and R. Zamir, "Capacity and lattice-strategies
+
+[41]
+
+, "The sum capacity of a Gaussian vector broadcast channel," IEEE
+
+for cancelling known interference," in Proc. IEEE Int. Symp. Informa-Trans. Inf. Theory, vol. 50, no. 9, pp. 1875-1892, Sep. 2004.
+
+tion Theory and Its Applications, Honolulu, HI, Nov. 2000, pp. 681-684.
+
+[42] W. Yu, A. Sutivong, D. Julian, T. Cover, and M. Chiang, "Writing on col-
+
+[16]
+
+, "Capacity and lattice-strategies for canceling known interference,"
+
+ored paper," in Proc. Int. Symp. Information Theory, Washington, DC, in Proc. Cornell Summer Workshop on Information Theory, Ithaca, NY, Jun. 2001, p. 302.
+
+Aug. 2000, p. 4.
+
+[43] R. Zamir and M. Feder, "On lattice quantization noise," IEEE Trans. Inf.
+
+[17] U. Erez and R. Zamir, "Noise prediction for channel coding with side-Theory, vol. 42, no. 4, pp. 1152-1159, Jul. 1996.
+
+information at the transmitter," IEEE Trans. Inf. Theory, vol. 46, no. 4,
+
+[44]
+
+, "On universal quantization by randomized uniform/lattice quan-
+
+pp. 1610-1617, Jul. 2000.
+
+tizer," IEEE Trans. Inf. Theory, vol. 38, no. 2, pp. 428-436, Mar. 1992.
+
+[18]
+
+, "Error exponents of modulo additive noise channels with side in-
+
+[45] R. Zamir, S. Shamai (Shitz), and U. Erez, "Nested linear/lattice codes formation at the transmitter," IEEE Trans. Inf. Theory, vol. 47, no. 1, pp.
+
+for structured multiterminal binning," IEEE Trans. Information Theory, 210-218, Jan. 2001.
+
+vol. IT-48, pp. 1250-1276, June 2002.
+
+
+
+
+
+Document Outline
+
+
+toc Capacity and Lattice Strategies for Canceling Known Interference
+
+Uri Erez, Shlomo Shamai (Shitz), Fellow, IEEE, and Ram Zamir, Se I. I NTRODUCTION Fig.€1. The generalized dirty-paper channel.
+
+
+
+
+
+II. C HANNELS W ITH S IDE I NFORMATION AT THE T RANSMITTER Fig.€2. Channel with SI at transmitter.
+
+A. Nonexplicit Expressions for Capacity
+
+
+
+
+
+Fig.€3. Shannon's associated channel. III. R ESULTS FOR C AUSAL SI A. Capacity Formula Via Minimum Noise Entropy
+
+
+
+
+
+Fig.€4. Universal interference canceling scheme for the dirty-ta Theorem 1 (Causal Worst Case Capacity): The worst case (causal)
+
+B. Universal Interference Canceling Scheme Lemma 1 (Effective Additive-Noise Channel): The channel from $v$ Proof: $$\eqalignno{ Y'& = [t_0(U+S-v \bmod {\cal A}_L)+U+S+N] \
+
+
+
+
+
+C. Proof of Theorem 1 Lemma 2 (Direct): For any interference $S$ $$ {C}^{\rm causal}(P
+
+Lemma 3 (Converse): For $S \sim {\rm Unif}({\cal A}_L)$ $$ {C}^{ Proof of Lemma 2: We employ the universal interference canceling
+
+Proof of Lemma 3: The proof is similar to the Proof of Theorem 1
+
+
+
+
+
+Lemma 4: If $S \sim {\rm Unif}({\cal A}_L)$ and $E \{X^2 \} \leq
+
+Remark: In fact, Lemma 4 holds with respect to any $S$ of the fo
+
+
+
+
+
+D. Bounds Via Entropy-Constrained Quantization Lemma 5: Suppose $N$ has a finite differential entropy. Then $$\
+
+
+
+
+
+Fig. 5. Uniform lattice strategy: $t_0(s)={-}s \bmod \Delta$ wit Corollary 1: If $N$ has a finite second moment and finite differ
+
+E. Optimality of Lattice Strategies at High SNR
+
+F. Inflated Lattice Strategies for General SNR
+
+
+
+
+
+Fig. 6. Inflated lattice strategy: $t_0(s)={-}\alpha s \bmod \De Lemma 6 (Inflated Lattice Lemma: Scalar Case): The chan- nel def Proof: For any $v \in {\cal A}_\Delta$ we get $$\eqalignno{ Y' &
+
+
+
+
+
+Fig. 7. $\beta({\hbox{SNR}})=I(T;Y)/{\hbox{SNR}}$ as a function Theorem 2: For any noise $N$ and arbitrary interference $S$, the
+
+
+
+
+
+Fig. 8. Generalized lattice strategy: $t_0(s)={-}g(s \bmod \delt IV. L ATTICE S TRATEGIES FOR F INITE A NTICIPATION SI A. Rates and Capacity Lemma 7 (Inflated Lattice Lemma: Vector Case): The chan- nel def
+
+Theorem 3: For any noise $N$ and arbitrary interference $S$, the
+
+
+
+
+
+Fig.€9. Encoding and decoding scheme for the dirty-paper channel B. Implications for the No-Interference Case
+
+C. Arbitrarily Varying Interference Theorem 4 (Causal Case): The randomized code capacity of the cau
+
+Theorem 5 (Noncausal Case): The randomized code capacity of the
+
+
+
+
+
+V. S UMMARY AND E XTENSIONS Proposition 1 (Noncausal Worst Case Capacity): $$ {C}^{{n\, {\rm
+
+Proposition 2 (Additive Interference and State-Dependent Noise):
+
+A. Proof of Lemma 4
+
+B. Proof of Lemma 5
+
+C. Proof of Proposition 1
+
+
+
+
+
+R. Ahlswede, Arbitrarily varying channels with states sequence k
+
+R. J. Barron, B. Chen, and G. W. Wornell, The duality between in
+
+G. Caire and S. Shamai (Shitz), On the achievable throughput of
+
+B. Chen and G. W. Wornell, Quantization index modulation: A clas
+
+A. S. Cohen . (2001, Spring) Communication With Side Information
+
+A. S. Cohen and A. Lapidoth, Generalized writing on dirty paper,
+
+A. S. Cohen and A. Lapidoth, The Gaussian watermarking game, IEE
+
+A. S. Cohen and R. Zamir, The rate loss in writing on dirty pape
+
+M. H. M. Costa, Writing on dirty paper, IEEE Trans. Inf. Theory,
+
+T. M. Cover and J. A. Thomas, Elements of Information Theory . N
+
+I. Csiszár, On an extremum problem of information theory, Studia
+
+J. J. Eggers, J. K. Su, and B. Girod, A blind watermarking schem
+
+U. Erez, Noise prediction for channel coding with side informati
+
+U. Erez, S. Shamai (Shitz), and R. Zamir, Capacity and lattice-s
+
+U. Erez and R. Zamir, Noise prediction for channel coding with s
+
+U. Erez, R. Zamir, and S. Shamai (Shitz), Additive noise channel
+
+G. D. Forney Jr., On the role of MMSE estimation in approaching
+
+G. D. Forney Jr., M. D. Trott, and S.-Y. Chung, Sphere-bound-ach
+
+S. I. Gelfand and M. S. Pinsker, Coding for channel with random
+
+A. György and T. Linder, Optimal entropy-constrained scalar quan
+
+H. Harashima and H. Miyakawa, Matched-transmission technique for
+
+D. Hoesli, On the capacity per unit cost of the dirty tape chann
+
+F. Jelinek, Indecomposible channels with side information at the
+
+R. Koetter, private communication.
+
+A. V. Kuznetsov and B. S. Tsybakov, Coding in a memory with defe
+
+A. Lapidoth and P. Narayan, Reliable communication under channel
+
+T. Linder and R. Zamir, On the asymptotic tightness of the Shann
+
+T. Liu, P. Moulin, and R. Koetter, On error exponents of nested
+
+M. Salechi, Capacity and coding for memories with real-time nois
+
+C. E. Shannon, Channels with side information at the transmitter
+
+M. Tomlinson, New automatic equalizer employing modulo arithmeti
+
+S. Verdú, On channel capacity per unit cost, IEEE Trans. Inf. Th
+
+H. Weingarten, Y. Steinberg, and S. Shamai (Shitz), The capacity
+
+F. M. J. Willems, On Gaussian channels with side information at
+
+W. Yu and J. M. Cioffi, Trellis precoding for the broadcast chan
+
+W. Yu, A. Sutivong, D. Julian, T. Cover, and M. Chiang, Writing
+
+R. Zamir and M. Feder, On lattice quantization noise, IEEE Trans
+
+R. Zamir, S. Shamai (Shitz), and U. Erez, Nested linear/lattice
+
+
+
+
+

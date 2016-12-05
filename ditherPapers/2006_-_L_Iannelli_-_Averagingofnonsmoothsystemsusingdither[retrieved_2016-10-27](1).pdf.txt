@@ -1,0 +1,1827 @@
+Automatica 42 (2006) 669 - 676
+
+www.elsevier.com/locate/automatica
+
+Brief paper
+
+Averaging of nonsmooth systems using dither夡
+
+Luigi Iannellia , ∗, Karl Henrik Johanssonb, Ulf T. Jönssonc, Francesco Vascaa a Department of Engineering, University of Sannio, Piazza Roma, 21, 82100 Benevento, Italy b Department of Signals, Sensors and Systems, Royal Institute of Technology, Osquldas vägen, 10 100 44 Stockholm, Sweden c Division of Optimization and Systems Theory, Royal Institute of Technology, Lindstedts vägen, 25 100 44 Stockholm, Sweden Received 16 June 2004; received in revised form 30 September 2005; accepted 19 December 2005
+
+Abstract
+
+It was shown by Zames and Shneydor and later by Mossaheb that a high-frequency dither signal of a quite arbitrary shape can be used to narrow the effective nonlinear sector of Lipschitz continuous feedback systems. In this paper, it is shown that also discontinuous nonlinearities of feedback systems can be narrowed using dither, as long as the amplitude distribution function of the dither is absolutely continuous and has bounded derivative. The averaged system is proven to approximate the dithered system with an error of the order of dither period.
+
+䉷 2006 Elsevier Ltd. All rights reserved.
+
+Keywords: Averaging theory; Discontinuous control; Dither; Hybrid systems; Switched systems; Nonsmooth systems 1. Introduction
+
+Shneydor, 1976, 1977). Similar results were obtained later using classical averaging theory (Mossaheb, 1983).
+
+A frequently used technique to stabilize a nonlinear feed-
+
+The Lipschitz continuity assumption on the nonlinearity
+
+back system in Lure form is by injecting a high-frequency
+
+of the dithered system is often violated in practice. Indeed,
+
+dither signal, which narrows the nonlinear sector. If the dither
+
+discontinuous nonlinearities in feedback systems with high-
+
+frequency is sufficiently high, the behavior of the dithered
+
+frequency excitations appear in a large variety of applications,
+
+system will be qualitatively the same as an averaged system,
+
+including systems with adaptive control ( ˚
+
+Aström & Witten-
+
+whose nonlinearity is the convolution of the amplitude distri-
+
+mark, 1989), friction (Armstrong-Helouvry, 1991), power bution of the dither and the original nonlinearity. Analysis and
+
+electronics (Lehman & Bass, 1996), pulse-width modulation control design can then be carried out on the averaged sys-
+
+(Peterchev & Sanders, 2001), quantization (Gray & Neuhoff, tem, which in most cases is simpler to analyze due to lack
+
+1998), relays (Tsypkin, 1984), and variable-structure control of external dither signal and narrower nonlinearity. For the
+
+(Utkin, 1992). It is common to analyze these systems using case when the original nonlinearity is Lipschitz continuous, the
+
+empirical methods such as describing functions, which can
+
+scheme outlined above was rigorously justified using properties
+
+give a quite good intuitive understanding. It is hard, however,
+
+of the amplitude distribution function of the dither Zames &
+
+to get bounds on the approximation these methods provide
+
+and they may even give erroneous results, so therefore there
+
+夡 This paper was not presented at any IFAC meeting. This paper was
+
+is a need for a solid treatment of discontinuous systems with
+
+recommended for publication in revised form by Associate Editor Naomi E.
+
+high-frequency excitation. Recently, certain classes of these
+
+Leonard under the direction of Editor Hassan Khalil. The work by L. Iannelli
+
+and F. Vasca was supported by EC within the SICONOS project (IST2001-
+
+systems have been thoroughly studied, such as power convert-
+
+37172). The work by K.H. Johansson and U. Jönsson was supported by
+
+ers (Lehman & Bass, 1996), pulse-width modulated systems Swedish Research Council and by EC within the RECSYS project (IST2001-
+
+(Gelig & Churilov, 1998; Teel, Moreau, & Nesic, 2004), relay 37170).
+
+∗
+
+systems (Iannelli, Johansson, Jönsson, & Vasca, 2003a), and Corresponding author. Tel.: +39 0824 305568; fax: +39 0824 325246.
+
+stick-slip drives (Sedghi, 2003).
+
+E-mail addresses: luiannel@unina.it, luigi.iannelli@unisannio.it
+
+(L. Iannelli), kallej@s3.kth.se (K.H. Johansson), ulfj@math.kth.se
+
+The main contribution of the paper is an averaging theorem
+
+(U.T. Jönsson), vasca@unisannio.it (F. Vasca).
+
+for a general class of nonsmooth systems with a quite arbitrary
+
+0005-1098/$ - see front matter 䉷 2006 Elsevier Ltd. All rights reserved.
+
+doi:10.1016/j.automatica.2005.12.012
+
+
+
+
+
+670
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+periodic dither. The result states that the dithered and the av-
+
+When the differential equation (1) has a discontinuous right-
+
+eraged systems have qualitatively the same behavior when the
+
+hand side (due to that at least one ni is discontinuous), existence
+
+dither has sufficiently high frequency and an absolutely contin-
+
+and uniqueness of solutions depend critically on the consid-
+
+uous amplitude distribution function with bounded derivative.
+
+ered definition of solution (Filippov, 1988). In the following, The averaging theorem might be interpreted as an extension to
+
+we assume that the differential equation (1) has at least one
+
+nonsmooth feedback system of previous results, which were
+
+absolutely continuous solution x(t, x 0 ) on [0 , ∞ ) (in the sense limited to Lipschitz-continuous systems (Zames & Shneydor,
+
+of Caratheodory). We suppose that the time intervals when the
+
+1976, 1977; Mossaheb, 1983).
+
+solution is at a discontinuity point of ni are of zero Lebesgue
+
+The outline of the paper is as follows. The dithered system
+
+measure. Note that as a consequence, we do not consider
+
+and the corresponding averaged system are introduced in Sec-
+
+solutions with sliding modes. Furthermore, we suppose that
+
+tion 2. The amplitude distribution function of the dither signal
+
+the solutions have no accumulation of switching events (Zeno
+
+is thoroughly discussed, since it plays a key role in the anal-
+
+solutions).
+
+ysis. The main result on the approximation error between the
+
+The assumptions on system (1) imply that there exists a
+
+dithered and the averaged systems is presented in Section 3.
+
+positive constant Lx such that | x(t 1 ) − x(t 2 )| Lx| t 1 − t 2| for The paper is concluded in Section 4 and the proofs are reported
+
+almost all 0 t 1 t 2 < ∞. Estimates of the Lipschitz constant in Appendix.
+
+Lx can be easily obtained on any compact interval.
+
+2. Preliminaries
+
+Remark 1. The assumption on the nonlinearity ni is weak. The
+
+class of considered systems thus contains quite exotic differen-
+
+2.1. Dithered system
+
+tial equations for which, for example, existence and uniqueness
+
+of solution cannot easily be addressed. However, for most cases
+
+The dithered feedback system is defined as
+
+in applications the existence of a Caratheodory solution is rea-
+
+m
+
+
+
+sonable. Existence and uniqueness of solutions for dithered re-
+
+˙ x(t) = f
+
+lay systems are discussed in Iannelli, Johansson, Jönsson, and
+
+0 (x(t ), t ) +
+
+fi(x(t), t)ni(gi(x(t), t) + i(t)),
+
+i=
+
+Vasca (2004).
+
+1
+
+x( 0 ) = x 0.
+
+(1)
+
+Remark 2. The assumption on global Lipschitz continuity of
+
+The state x belongs to R q. The functions f
+
+the functions f
+
+i : R q × R → R q ,
+
+i , gi is used to derive the Lipschitz bound Lx .
+
+i =1 , . . . , m, are assumed to be globally Lipschitz with respect The assumption can be relaxed by assuming Lipschitzness on
+
+to both x and t, i.e., there exists a positive constant L
+
+a bounded set provided that dithered and averaged solutions
+
+f such
+
+that for all x
+
+belong to such set, see Teel and Nesic (2000).
+
+1 , x 2 ∈ R q and t 1 , t 2 0,
+
+| fi(x 1 , t 1 ) − fi(x 2 , t 2 )| Lf (| x 1 − x 2| + | t 1 − t 2| ).
+
+2.2. Dither signals and their amplitude distribution functions
+
+We further assume that f 0 is piecewise continuous with respect
+
+to t, f 0 ( 0 , t) = 0 for all t 0, and Definition 2.1. The amplitude distribution function F : R →
+
+| f 0 (x 1 , t) − f 0 (x 2 , t)| Lf | x 1 − x 2|
+
+[0 , 1] of a p-periodic dither signal : [0 , ∞ ) → R is defined as for all x 1 , x 2 ∈ R q and t 0. Similarly, the functions gi : R q × R → R
+
+F
+
+({ t ∈ [0 , p) : (t) } ),
+
+, i = 1 , . . . , m, are assumed to have a common
+
+() 1
+
+p
+
+Lipschitz constant Lg > 0, i.e.,
+
+where denotes the Lebesgue measure.
+
+| gi(x 1 , t 1 ) − gi(x 2 , t 2 )| Lg(| x 1 − x 2| + | t 1 − t 2| ) When the amplitude distribution function is absolutely con-for all x 1 , x 2 ∈ R q, t 1 , t 2 0. The nonlinearities ni : R → R, i =
+
+tinuous (with respect to its Lebesgue measure), the amplitude
+
+1 , . . . , m, are assumed to be functions of bounded variation.
+
+density function f
+
+Recall that the total variation TV of a function n : R → R is
+
+() is defined as
+
+k
+
+
+
+f()d F (),
+
+TV(n)
+
+sup
+
+| n(zi) − n(zi−1 )|,
+
+d
+
+−∞ <z 0 z 1 ··· zk< ∞ i=1
+
+which exists almost everywhere.
+
+where the supremum is taken over all finite sequences { zi} ki=
+
+The amplitude density and amplitude distribution functions
+
+0
+
+with k 1 (Wheeden & Zygmund, 1977). If the total variation is play in a deterministic framework the same role as the prob-bounded, we simply say that n is of bounded variation. Hence,
+
+ability density and cumulative distribution functions play in
+
+the functions ni can be discontinuous, but they are necessarily
+
+a stochastic framework. In particular, the amplitude distribu-
+
+bounded. Each dither signal i : [0 , ∞ ) → R is supposed tion function is bounded, monotonously increasing, continuous
+
+to be a p-periodic measurable function bounded by a positive
+
+from the right, and, if it is absolutely continuous, its derivative
+
+constant M, i.e., | i| M ∀ i.
+
+corresponds to the amplitude density function.
+
+
+
+
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+671
+
++ A
+
+( t)
+
+2.3. Averaged system
+
+0
+
+t
+
+The averaged system is given by
+
+m
+
+
+
+- A
+
+p
+
+˙ w(t) = f 0 (w(t), t) +
+
+fi(w(t), t)Ni(gi(w(t), t)),
+
+i=1
+
+F ( z)
+
+1
+
+w( 0 ) = w 0,
+
+(2)
+
+where Ni is the averaged nonlinearity defined as follows.
+
+0
+
+z
+
+Definition 2.2. For each dither signal : [0 , ∞ ) → R and
+
+- A
+
++ A
+
+nonlinearity n : R → R the averaged nonlinearity N : R → R
+
+f ( z)
+
+is defined as
+
+1
+
+
+
+N(z)
+
+n(z + ) d F(),
+
+(3)
+
+0
+
+z
+
+R
+
+where the integral is a Lebesgue-Stieltjes integral.
+
+- A
+
++ A
+
+Fig. 1. Triangular dither signal with its corresponding amplitude distribution In many cases the averaged nonlinearity can be formulated
+
+function and amplitude density function.
+
+as a time average, as the following lemma states.
+
+Lemma 2.1 ( Chung, 1974; Taylor, 1966). The following equality holds provided that either side exists:
+
++ A
+
+
+
+
+
+( t)
+
+n(z + ) d F() = 1
+
+n(z + (s)) d s.
+
+0
+
+R
+
+p [
+
+t
+
+0 ,p)
+
+- A
+
+It is interesting to investigate some aspects related to the con-
+
+p
+
+∆
+
+tinuity of the amplitude distribution function. When the ampli-
+
+F
+
+tude distribution function is absolutely continuous, we have
+
+( z)
+
+
+
+
+
+1
+
+N(z) =
+
+n(z + ) d F() =
+
+n(z + )f() d ,
+
+R
+
+R
+
+0
+
+z
+
+which is well defined under the given assumptions on n.
+
+- A
+
++ A
+
+When the Lebesgue-Stieltjes measure corresponding to the
+
+amplitude distribution function has a decomposition (relative
+
+f ( z)
+
+1
+
+to the Lebesgue measure) into an absolutely continuous part
+
+0 . 5 - ∆ /p
+
+1
+
+with derivative f
+
+⋅ ∆
+
+and an atomic part, we have
+
+A
+
+p
+
+
+
+0
+
+
+
+z
+
+N(z) =
+
+n(z + ) d F()
+
+R
+
+- A
+
+
+
+
+
++ A
+
+
+
+=
+
+n(z + )f() d +
+
+n(z + k)Fk,
+
+(4)
+
+Fig. 2. Trapezoidal dither with its amplitude distribution function and the
+
+R
+
+k
+
+corresponding generalized derivative.
+
+where Fk = 0 are the jump discontinuities corresponding to
+
+the atomic parts of the measure defined by the amplitude dis-
+
+tribution function. Square wave and trapezoidal dither signals
+
+Typical dither signals are sawtooth, triangular, sinusoidal,
+
+have this kind of amplitude distribution functions, cf., Fig. 2.
+
+trapezoidal, and square wave signals. Fig. 1 shows a triangular Eq. (4) is well defined except at possible discontinuity points
+
+dither signal together with its amplitude distribution function
+
+of n. Thus, in the case in which n is continuous, the results F and amplitude density function f. A sawtooth dither with of Zames and Shneydor (1976) and Mossaheb (1983) can be amplitude A and period p has the same amplitude distribution applied together with Eq. (4) to compute the averaged sys-function. For a trapezoidal dither, the amplitude distribution
+
+tem. If the amplitude distribution function is discontinuous in
+
+and its generalized derivative are reported in Fig. 2. Note that
+
+k and n is discontinuous in z + k, then neither these results square wave dither corresponds to = 0. It is easy to see that
+
+from the literature nor the averaging theorem in Section 3 can
+
+dither signals that are constant over nonvanishing time intervals,
+
+be applied. Indeed, it can be shown that the averaged and the
+
+such as trapezoidal and square wave signals, have discontinuous
+
+dithered systems can behave qualitatively quite different when
+
+amplitude distribution function, which is thus in contrast to
+
+n is discontinuous. See Iannelli et al. (2004) for an illustrative triangular dither.
+
+example of this case.
+
+
+
+
+
+672
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+3. Averaging theorem
+
+compact set, cannot be fulfilled when the qualitative presence
+
+of the dithered and the averaged systems are so different.
+
+The main result of the paper states conditions under which
+
+the averaged system approximates the behavior of the dithered
+
+Remark 5. Dithering can be interpreted as a technique for
+
+system for a sufficiently high dither frequency.
+
+regularization of solutions of nonsmooth systems. In fact, if n is
+
+discontinuous, the solution of (1) might not be unique. On the
+
+Theorem 3.1. Consider the dithered system (1) and the aver-other hand, if the amplitude distribution function of the dither
+
+aged system (2) under the following assumptions:
+
+is Lipschitz, then the averaged nonlinearity will be Lipschitz,
+
+so the averaged system (2) will have a unique solution. Now,
+
+(i) the dithered system has an absolutely continuous solution;
+
+from Theorem 3.1 one can conclude that by decreasing the
+
+(ii) fi and gi are globally Lipschitz with Lipschitz constants
+
+dither period, all possible solutions of (1) will become closer
+
+Lf and Lg, respectively;
+
+and closer to the unique solution of the averaged system (2).
+
+(iii) f 0 is globally Lipschitz with respect to x with Lipschitz
+
+constant Lf , and f 0 ( 0 , t) = 0;
+
+4. Conclusions
+
+(iv) ni is a function of bounded variation;
+
+(v) each dither i is p- periodic, | i| M, and has abso-It was shown that a high-frequency dither signal of a quite
+
+lutely continuous amplitude distribution function F with
+
+i
+
+arbitrary shape can be used to narrow the effective nonlin-
+
+derivative bounded by LF max i sup ∈R| f ()| < ∞
+
+ear sector of nonsmooth feedback systems. The result can be
+
+i
+
+.
+
+interpreted as an extension of existing results for Lipschitz-
+
+Then, the averaged nonlinearities Ni are globally Lips-
+
+continuous systems. The main theorem related the dynamics
+
+chitz continuous and the averaged system (2) has a unique
+
+of the dithered system with an averaged system and stated that
+
+absolutely continuous solution on [0 , ∞ ). Moreover, for the approximation error is of the order of the dither period,
+
+any compact set K ⊂ R n and any T > 0, there exists a positive under the condition that the amplitude distribution function of
+
+constant c( K , T ) such that
+
+the dither is absolutely continuous and has bounded derivative.
+
+| x(t, x 0 ) − w(t, x 0 )| c( K , T )p, ∀ x 0 ∈ K , t ∈ [0 , T ].
+
+(5)
+
+Acknowledgment
+
+Proof. See Appendix.
+
+The authors would like to thank Prof. Arne Nordmark for his
+
+precious comments and suggestions.
+
+Remark 3. It is possible to relax the periodicity assumption
+
+on the dither and instead consider F-repetitive dither signals as
+
+in Zames and Shneydor (1976). A dither signal is F-repetitive Appendix A. Proof of Theorem 3.1
+
+if there exists an unbounded sequence { tk}, 0 = t 0 < t 1 , . . . , of sampling times such that (1) the maximal repetition interval
+
+The proof is based on three lemmas. In the first lemma we
+
+sup k(tk − tk−
+
+show that the averaged nonlinearity under our assumptions is
+
+1 ) is bounded and (2) the amplitude distribution
+
+function of on every interval (tk−
+
+Lipschitz continuous, which implies that there exists a unique
+
+1 , tk ) is equal to the am-
+
+plitude distribution function of on (t
+
+absolutely continuous solution of the averaged system on any
+
+0 , t 1 ). See Iannelli et al.
+
+(2004) for details.
+
+finite time-horizon.
+
+Remark 4. The statement of the theorem appears to be fairly
+
+Lemma A.1. Suppose n is of bounded variation with total vari-
+
+tight, because examples suggest that dithering might lose its
+
+ation TV(n) and that F is absolutely continuous with deriva-
+
+effect when the hypotheses are violated. In particular, the
+
+tive f and LF = sup ∈R| f()| < ∞. Then n∞ Mn and dithered and the averaged solution may have qualitatively
+
+
+
+different behavior when the averaged nonlinearity is not Lips-
+
+N(z) =
+
+n(z + )f
+
+chitz continuous. Experimental confirmation of such behaviors
+
+() d
+
+R
+
+on a DC motor are provided in Iannelli, Johansson, Jönsson,
+
+and Vasca (2003b). We have discovered similar phenomena
+
+has a Lipschitz constant LN LF T V (n) and N∞ n∞.
+
+for limit cycles of the averaged and the dithered systems in
+
+Iannelli (2002) and Iannelli et al. (2003a,b). The reason for the Proof. Since n is of bounded variation, it follows that
+
+different behaviors in these examples is that averaged solution
+
+n∞ Mn, for some Mn > 0. Moreover, we have
+
+converges to a point of discontinuity of the nonlinearity, while
+
+
+
+
+
+the dithered system has a solution with a small amplitude
+
+
+
+
+
+ripple that perturbs the solution across the boundary of the dis-
+
+| N(z 1 ) − N(z 2 )| = [ n(z 1 + ) − n(z 2 + )]d F()
+
+R
+
+continuity. This behavior gives rise to a new type of oscillation
+
+
+
+
+
+of the dithered system, which deserves more careful analysis.
+
+= n()[d F( − z
+
+
+
+1 ) − d F( − z 2 )] .
+
+Obviously, a bound as in (5), which is uniform in every given
+
+R
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+673
+
+Let V () = F( − z 1 ) − F( − z 2 ). We have V () = 0 for By hypothesis
+
+/∈ S =[− M+min (z 1 , z 2 ), M+max (z 1 , z 2 )]. Hence, for any I = [ a, b] ⊃ S integration by parts gives
+
+˜ y − Lyp y(s) ˜ y + Lyp, ∀ s ∈ [0 , p],
+
+
+
+
+
+and thus it follows that for any ∈ R,
+
+| N(z
+
+
+
+
+
+1 ) − N(z 2 )| =
+
+n()( d F( − z 1 ) − d F( − z 2 )
+
+I
+
+
+
+F−˜ y+ ( − Lyp) F− y+ () F−˜ y+ ( + Lyp).
+
+(A.1)
+
+
+
+
+
+= n(b)V (b) − n(a)V (a) − V () d n()
+
+On the other hand, since F
+
+I
+
+− ˜ y+ is nondecreasing,
+
+
+
+sup | V ()|
+
+|d n()| L
+
+F
+
+F | z 1 − z 2| TV(n),
+
+− ˜ y+ ( − Lyp) F− ˜ y+ () F− ˜ y+ ( + Lyp).
+
+(A.2)
+
+∈ I
+
+I
+
+By combining (A.1) and (A.2) and using that F−˜ y+ () =
+
+where the last inequalities follow because V (a) = V (b) = 0 and F( + ˜ y) is Lipschitz and nonnegative, we get
+
+z
+
+
+
+1
+
+
+
+F− y+ () − F−˜ y+ ()
+
+| V ()| =
+
+f( − ) d LF| z 1 − z 2|.
+
+F
+
+z
+
+− ˜ y+ ( + Lyp) − F− ˜ y+ ( − Lyp) 2
+
+2 LF Lyp.
+
+The boundedness follows since
+
+
+
+In an analogous way,
+
+
+
+
+
+| N(z)| = n(z + )f() d n∞ f() d
+
+−2 L
+
+R
+
+R
+
+F Ly p F− y+ () − F− ˜ y+ ().
+
+= n∞
+
+So we can write
+
+f being nonnegative.
+
+F− y+ () = F−˜ y+ () + V () It should be noticed that if n is Lipschitz then the correspond-with | V ()|2 LF Lyp and thus
+
+ing averaged nonlinearity N will be Lipschitz independently
+
+
+
+
+
+on the characteristic of F, see Zames and Shneydor (1976).
+
+E = p n() d V () .
+
+Lemma A.1 says that in order to have N Lipschitz even when
+
+R
+
+n is not Lipschitz, we can impose the conditions of F being Since for s ∈ [0 , p] we have | y(s) − ˜ y| Lyp and | (s)| M, absolute continuous with bounded derivative. The next lemma
+
+is the key to the proof of Theorem 3.1.
+
+V () = 0 , ∀ /∈ [− ˜ y − Lyp − M, − ˜ y + Lyp + M] S.
+
+Lemma A.2. Suppose the signal y : [0 , p] → R has Lipschitz The function V () is of bounded variation and continuous from
+
+constant Ly. Introduce a constant ˜ y satisfying
+
+the right, since it is the difference of two functions that satisfy
+
+both these properties. By hypothesis n is of bounded variation
+
+min y(s) ˜ y max y(s).
+
+with total variation TV(n), so we can integrate by parts (Riesz
+
+s∈[0 ,p]
+
+s∈[0 ,p]
+
+& Sz-Nagy, 1990):
+
+
+
+
+
+Suppose that F is absolutely continuous with bounded deriva-
+
+n()
+
+V ()
+
+tive: L
+
+d V () = n(b)V (b) − n(a)V (a) −
+
+d n(),
+
+F = sup ∈R | f()| < ∞. Then
+
+[ a,b]
+
+[ a,b]
+
+p
+
+p
+
+
+
+
+
+where right and left limits of n and V are used in order to cope
+
+
+
+n(− y(s) + (s)) d s −
+
+n(− ˜ y + (s)) d s
+
+with discontinuities. If [ a, b] ⊃ S then V (a) = V (b) = 0, and 0
+
+0
+
+
+
+thus in general
+
+2 LF LyT V (n)p 2,
+
+
+
+
+
+where TV(n) is the total variation of n.
+
+E p V () d n() 2 p 2 LFLyT V (n), S
+
+Proof. From the definition of F we have
+
+which proves the lemma.
+
+
+
+F
+
+Lemmas A.1 and A.2 are used to prove the following result.
+
+− y+ () = 1 ({ s ∈ [0 , p) : − y(s) + (s) } ), p
+
+Lemma A.3. If the assumptions of Theorem 3.1 hold, then there so that
+
+exist constants ¯
+
+K, ˜
+
+K > 0 such that
+
+p
+
+p
+
+
+
+p
+
+p
+
+
+
+E
+
+
+
+
+
+n(− y(s) + (s)) d s −
+
+n(− ˜ y + (s)) d s
+
+
+
+fi(x, s)ni(gi(x, s)+ i) d s−
+
+fi(w, s)Ni(gi(w, s)) d s
+
+0
+
+0
+
+
+
+
+
+0
+
+0
+
+p
+
+= p n() d F
+
+
+
+− y+ () −
+
+n() d F−˜ y+ () .
+
+¯
+
+K
+
+| x(s) − w(s)| d s + ˜
+
+Kp 2.
+
+R
+
+R
+
+0
+
+674
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+Proof. For this proof we need a Lipschitz constant for x(t) on over the interval [0 , p]. This gives (A.6a). Similarly,
+
+[0 , T ]. By our assumptions we have
+
+| g
+
+
+
+i (x, t ) − gi ( ˜
+
+x, ˜ t)| Lg(Lx + 1 )p
+
+
+
+
+
+t
+
+m
+
+
+
+over the interval [0 , p]. Thus, by applying Lemma A.2 with
+
+| x(t)|= x
+
+f
+
+f
+
+0+
+
+0 (x(s), s)+
+
+i (x(s), s)ni (gi (x(s), s)
+
+− y(s) = gi(x(s), s) and − ˜ y = gi( ˜ x, ˜ t), it follows that (A.6b) 0
+
+i=1
+
+
+
+is bounded by
+
++
+
+
+
+i (s))
+
+d s
+
+2 p 2 M
+
+
+
+f LF Lg(Lx + 1 )TV(n),
+
+(A.7)
+
+
+
+where we used Mf in (A.4). For the remaining terms we use
+
+t
+
+| x
+
+that the Lipschitz constant of fiNi is
+
+0| + ( 1 + mM n)Lf
+
+| x(s)| d s + mMnT MI ,
+
+0
+
+L[ fiNi] Lf Mn + Mf LN.
+
+where we used | fi(x, s) − fi( 0 , s) + fi( 0 , s)| Lf | x(s)| +
+
+We use this to show that (A.5d) is bounded by MnLf (Lx +
+
+| fi( 0 , s)| and introduced
+
+1 )p + Mf LN Lg(Lx + 1 )p and (A.6c) follows. In an analogous way we can show that the upper bound of (A.5e) is M
+
+M
+
+nLf | x −
+
+I = max
+
+max | fi( 0 , t)|.
+
+i=
+
+w
+
+1 ,...,m t∈[0 ,T ]
+
+| + Mf LNLg| x − w|.
+
+For any p > 0, we have shown that
+
+Grönvall-Bellman Lemma gives
+
+p
+
+
+
+
+
+[ fi(x, s) · ni(gi(x, s)+ i)− fi(w, s) · Ni(gi(w, s))] d s
+
+| x(t)| (mMnMI T + | x 0| ) e ( 1+ mMn)Lf T =: Mx, t ∈ [0 , T ].
+
+0
+
+p
+
+(A.3)
+
+¯
+
+K
+
+| x − w| d s + ˜
+
+Kp 2,
+
+0
+
+This implies that | ˙ x(t)| Lf Mx + mMf Mn a.e., with with
+
+M
+
+¯
+
+f = Lf (Mx + T ) + max | fi ( 0 , 0 )|.
+
+(A.4)
+
+K = MnLf + Mf LNLg,
+
+i
+
+˜
+
+K = MnLf (Lx + 1 ) + 2 Mf LF Lg(Lx + 1 )TV(n) This gives the Lipschitz bound Lx = Lf Mx + mMf Mn. Hence,
+
++ MnLf (Lx + 1 ) + Mf LNLg(Lx + 1 ).
+
+
+
+for any ˜ t ∈ [0 , p] and ˜ x := x(˜ t), we have that | x(s) − ˜ x| Lxp for all s ∈ [0 , p].
+
+Now we can proceed by showing that the approximation
+
+Let us consider the following equality:
+
+error between the dithered and the averaged system can be
+
+arbitrarily small by increasing the dither frequency, as stated in
+
+fi(x, t)ni(gi(x, t) + i) − fi(w, t)Ni(gi(w, t))
+
+the theorem.
+
+= fi(x, t)ni(gi(x, t)+ i) − fi( ˜ x, ˜ t)ni(gi(x, t)+ i) (A.5a)
+
++ f
+
+Proof of Theorem 3.1. Consider the dithered system (1) and
+
+i ( ˜
+
+x, ˜ t)ni(gi(x, t)+ i)− fi( ˜ x, ˜ t)ni(gi( ˜ x, ˜ t)+ i) (A.5b)
+
++ f
+
+the averaged system (2) on the time interval [0 , T ] with w 0= x 0.
+
+i ( ˜
+
+x, ˜ t)ni(gi( ˜ x, ˜ t) + i) − fi( ˜ x, ˜ t)Ni(gi( ˜ x, ˜ t)) (A.5c) By integrating the right-hand sides of (1) and (2), we can write
+
++ fi( ˜ x, ˜ t)Ni(gi( ˜ x, ˜ t)) − fi(x, t)Ni(gi(x, t)) (A.5d)
+
+t
+
++ fi(x, t)Ni(gi(x, t)) − fi(w, t)Ni(gi(w, t)).
+
+(A.5e)
+
+| x(t) − w(t)|
+
+| f 0 (x, s) − f 0 (w, s)| d s
+
+0
+
+Integrating (A.5) leads to the inequality
+
+m
+
+t
+
+
+
++
+
+
+
+[ fi(x, s)ni(gi(x, s) + i)
+
+p
+
+
+
+
+
+i=1
+
+0
+
+
+
+[ fi(x, s)ni(gi(x, s) + i) − fi(w, s)Ni(gi(w, s))] d s
+
+
+
+0
+
+− fi(w, s)Ni(gi(w, s))] d s
+
+M
+
+
+
+nLf (Lx + 1 )p 2
+
+(A.6a)
+
+p
+
++ | f
+
+for all t ∈ [0 , T ].
+
+i ( ˜
+
+x, ˜ t)| [ ni(gi(x, t) + i) − ni(gi(˜ x, ˜ t) 0
+
+
+
+If we introduce = T /p, the largest integer such that
+
+
+
+p T , then by using the periodicity of i,
+
++ i)] d s
+
+(A.6b)
+
+t
+
++ M
+
+| x(t) − w(t)|
+
+| f 0 (x(s), s) − f 0 (w(s), s)| d s
+
+nLf (Lx + 1 )p 2 + Mf LN Lg(Lx + 1 )p 2
+
+(A.6c)
+
+
+
+0
+
+p
+
+
+
+−1 m
+
++ (M
+
+
+
+(k+1 )p
+
+nLf + Mf LN Lg)
+
+| x − w| d s,
+
+(A.6d)
+
++
+
+
+
+fi(x(s), s)ni(gi(x(s), s) + i(s)) d s
+
+0
+
+
+
+k=
+
+kp
+
+0 i=1
+
+
+
+where we used that the integral of (A.5c) is zero by the defini-
+
+(k+1 )p
+
+
+
+tion of the averaged nonlinearity in (3). The other terms follow
+
+−
+
+fi(w(s), s)Ni(gi(w(s), s)) d s + V 1 (p),
+
+from the following arguments. First note that
+
+kp
+
+(A.8)
+
+| fi(x, t) − fi( ˜ x, ˜ t)| Lf (Lx + 1 )p, where the last term is bounded as | V 1 (p)|2 mMf Mnp.
+
+
+
+
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+675
+
+The Lipschitz property of f 0 gives
+
+Iannelli, L. (2002). Dither for smoothing relay feedback systems: An averaging
+
+
+
+approach. Ph.D. thesis, University of Napoli Federico II, Napoli, Italy
+
+t
+
+
+
+t
+
+
+
+
+
+http://www.ing.unisannio.it/iannelli/public.htm .
+
+
+
+[ f
+
+
+
+0 (x(s), s) − f 0 (w(s), s)] d s Lf
+
+| x(s) − w(s)| d s.
+
+Iannelli, L., Johansson, K. H., Jönsson, U., & Vasca, F. (2003a). Dither
+
+0
+
+0
+
+for smoothing relay feedback systems: An averaging approach. IEEE
+
+Next, we notice that each integral in the sum of (A.8) can be
+
+Transactions on Circuits and Systems, Part I, 50(8), 1025-1035.
+
+written as
+
+Iannelli, L., Johansson, K. H., Jönsson, U., & Vasca, F. (2003b). Effects of
+
+p
+
+dither shapes in nonsmooth feedback systems: Experimental results and
+
+f
+
+theoretical insight. In Proceedings of IEEE conference on decision and
+
+i (xk(s), sk)ni (gi (xk(s), sk) + i (s)) d s
+
+control, Maui, Hawaii, USA, December.
+
+0
+
+p
+
+Iannelli, L., Johansson, K. H., Jönsson, U., & Vasca, F. (2004). On the
+
+−
+
+fi(wk(s), sk)Ni(gi(wk(s), sk)) d s,
+
+averaging of a class of hybrid systems. In Proceedings of IEEE conference 0
+
+on decision and control (Vol. 2, pp. 1400-1405), Bahamas, December.
+
+where the subscript k denotes a time translation: sk = s + kp, Lehman, B., & Bass, R. (1996). Extensions of averaging theory for power
+
+x
+
+electronics systems. IEEE Transactions on Power Electronics, 11(4), k(s) = x(s + kp), and similarly for w. Then applying Lemma
+
+p
+
+542-553.
+
+A.3, each integral
+
+(f
+
+0
+
+i (xk, sk)ni (gi (xk, sk)+ i (s))) d s can be
+
+p
+
+Mossaheb, S. (1983). Application of a method of averaging to the study
+
+approximated by
+
+f
+
+0
+
+i (wk, sk)Ni (gi (wk, sk)) d s. Indeed, the
+
+of dither in non-linear systems. International Journal of Control, 38(3), Lipschitz assumptions on fi and gi are uniform in t, so Lemma 557-576.
+
+A.3 can be applied to all functions xk. The approximation error
+
+
+
+Peterchev, A. V., & Sanders, S. R. (2001). Quantization resolution and limit p
+
+has an upper bound ¯
+
+K
+
+| x
+
+cycling in digitally controlled PWM converters. In Proceedings of IEEE
+
+0
+
+k − wk| d s + ˜
+
+Kp 2. By summing all
+
+the contributions given by the time intervals [ kp, (k + 1 )p] ⊂
+
+power electronics specialists conference, Vancouver, Canada, June.
+
+[0 , T ], we get
+
+Riesz, F., & Sz-Nagy, B. (1990). Functional analysis. New York: Dover Publications.
+
+t
+
+Sastry, S. (1999). Nonlinear systems: Analysis, stability and control. New
+
+| x(t) − w(t)| K
+
+| x(s) − w(s)| d s + m ˜
+
+KpT
+
+York: Springer.
+
+0
+
+Sedghi, B. (2003). Control design of hybrid systems via dehybridization. Ph.D.
+
++ V 1 (p) + V 2 (p), ∀ t ∈ [0 , T ], thesis, École Polytechnique Federale de Lausanne, Lausanne, Switzerland.
+
+Taylor, S. J. (1966). Introduction to measure and integration. Cambridge, where K = Lf + m ¯
+
+K = Lf + MnLf + Mf LNLg and V 2 (p) MA: Cambridge University Press.
+
+is bounded by
+
+Teel, A., Moreau, L., & Nesic, D. (2004). Input-to-state set stability of pulse width modulated systems with disturbances. Systems and Control Letters,
+
+| V 2 (p)| m ¯
+
+K(Mx + Mw)p,
+
+51.
+
+Teel, A. R., & Nesic, D. (2000). Averaging with disturbances and closeness where Mx was derived in (A.3) and Mw can in a similar way be of solutions. Systems and Control Letters, 40(5), 317-323.
+
+shown to be bounded by the same constant since w( 0 ) = x( 0 ) Tsypkin, Ya. Z. (1984). Relay control systems. Cambridge, UK: Cambridge and N∞ n∞, so that in fact Mw Mx.
+
+University Press.
+
+By applying Grönvall-Bellman Lemma (Sastry, 1999), the Utkin, V. I. (1992). Sliding modes in control and optimization. Berlin: Springer.
+
+theorem follows since
+
+Wheeden, R. L., & Zygmund, A. (1977). Measure and integral. New York, NY, USA: Marcel Deeker Inc.
+
+| x(t) − w(t)| (m ˜
+
+KTp + V 1 (p) + V 2 (p)) e KT ∀ t ∈ [0 , T ], Zames, G., & Shneydor, N. A. (1976). Dither in non-linear systems. IEEE
+
+Transactions on Automatic Control, 21(5), 660-667.
+
+where the right hand side is of order p. We have proven the
+
+Zames, G., & Shneydor, N. A. (1977). Structural stabilization and quenching bound in (5) with
+
+by dither in non-linear systems. IEEE Transactions on Automatic Control, 22(3), 352-361.
+
+c( K , T ) = m sup ( ˜
+
+KT + 2 Mf Mn + 2 ¯
+
+KMx) e KT ,
+
+x 0∈K
+
+where K, ¯
+
+K, K, Mx and Mf all depend on x 0.
+
+Luigi Iannelli was born in 1975 in Benevento,
+
+Italy. He received the Master degree ("Laurea")
+
+References
+
+in Computer Engineering from the University
+
+of Sannio in Benevento, Italy, in 1999 and the
+
+Ph.D. degree in Information Engineering from
+
+Armstrong-Helouvry, B. (1991). Control of machines with friction. Boston: the University of Napoli "Federico II", Napoli,
+
+Kluwer Academic Publisher.
+
+Italy, in 2003. During 2002 and 2003 he spent
+
+˚
+
+Aström, K. J., & Wittenmark, B. (1989). Adaptive control. Reading, MA: some time as guest researcher at the Department
+
+Addison-Wesley.
+
+of Signals, Sensors and Systems, Royal Insti-
+
+Chung, K. L. (1974). A course in probability theory. Orlando, FL, USA: tute of Technology (KTH), Stockholm, Sweden.
+
+Academic Press Inc.
+
+He held a position as Research Assistant at the
+
+Filippov, A. F. (1988). Differential equations with discontinuous righthand Dipartimento di Informatica e Sistemistica, University of Napoli "Federico
+
+II" and since 2004 he is Assistant Professor of Automatic Control with the
+
+sides. Dordrecht: Kluwer Academic Publishers.
+
+Dipartimento di Ingegneria, University of Sannio in Benevento, Italy.
+
+Gelig, A. Kh., & Churilov, A. (1998). Stability and oscillations of nonlinear His current research interests include analysis and control of switched and
+
+pulse modulated systems. Berlin: Birkhäuser.
+
+hybrid systems, automotive control and applications of control theory to
+
+Gray, R. M., & Neuhoff, D. L. (1998). Quantization. IEEE Transactions on electronic systems. Dr. Iannelli is a member of the IEEE Control Systems
+
+Information Theory, 44(6), 2325-2383.
+
+Society, IEEE Circuits and Systems Society and SIAM.
+
+
+
+
+
+676
+
+L. Iannelli et al. / Automatica 42 (2006) 669 - 676
+
+Karl H. Johansson received an M.S. and a
+
+Francesco Vasca was born in Giugliano, Napoli,
+
+Ph.D. in Electrical Engineering in 1992 and
+
+Italy, in 1967. He received the "Laurea" de-
+
+1997, respectively, both from Lund Univer-
+
+gree in Electronic Engineering and the Ph.D.
+
+sity in Sweden. He held positions as Assis-
+
+degree in Automatic Control from the Univer-
+
+tant Professor at Lund University 1997-1998
+
+sità di Napoli Federico II, Italy, in 1991 and
+
+and
+
+as Visiting
+
+Research
+
+Fellow
+
+at
+
+UC
+
+1995, respectively. Since 2000, he has been an
+
+Berkeley 1998-2000. Currently he is Asso-
+
+Associate Professor of Automatic Control with
+
+ciate Professor at the Department of Sig-
+
+the Dipartimento di Ingegneria, Università del
+
+nals, Sensors and Systems, Royal Institute of
+
+Sannio, Benevento, Italy. His research interests
+
+Technology, and holds a Senior Researcher
+
+include averaging of nonsmooth systems, dither-
+
+Position at the Swedish Research Council.
+
+ing, nonlinear dynamics and control techniques
+
+He was awarded an Individual Grant for the Advancement of Research Leaders
+
+for switched systems, automotive control and
+
+from the Swedish Foundation for Strategic Research in 2004. He received the
+
+formation control of multi-agent systems.
+
+Young Author Prize from the International Federation of Automatic Control in
+
+1996 and the Peccei Award from the International Institute of System Analysis, Austria, in 1993. He has received Young Researcher Awards from Scania,
+
+1996, and Ericsson, 1998 and 1999. He is Associate Editor of Automatica
+
+and on the Executive Committee of the European research projects HYCON
+
+and RUNES. His research interests include hybrid and embedded control
+
+systems, networked control, nonsmooth feedback, and control applications
+
+in automotive, automation and communication industries. In these areas he
+
+has co-authored more than 80 papers in journals, books and conference
+
+proceedings.
+
+Ulf T. Jönsson was born in Barsebäck, Swe-
+
+den. He received the M.Sc. degree in Electrical
+
+Engineering in 1989 and the Ph.D. degree in
+
+Automatic Control in 1996, both from Lund In-
+
+stitute of Technology, Lund, Sweden. He spent
+
+the academic year 1989-1990 at the Depart-
+
+ment of Electrical Engineering at University
+
+of California, Santa Barbara, on the education
+
+abroad scholarship. He held postdoctoral po-
+
+sitions at California Institute of Technology
+
+and at Massachusetts Institute of Technology
+
+during 1997-1999. He is now Associate Professor at the Division of Opti-
+
+mization and Systems Theory.
+
+His current research interests include design and analysis of nonlinear and
+
+uncertain control systems, periodic system theory, switched dynamical sys-
+
+tems, and convex optimization applications in systems theory.
+
+
+
+
+
+Document Outline
+
+
+Averaging of nonsmooth systems using dither62626262 Introduction
+
+Preliminaries Dithered system
+
+Dither signals and their amplitude distribution functions
+
+Averaged system
+
+
+
+
+
+Averaging theorem
+
+Conclusions
+
+Acknowledgment
+
+Appendix A. Proof of Theorem 3.1
+
+References
+
+
+
+
+

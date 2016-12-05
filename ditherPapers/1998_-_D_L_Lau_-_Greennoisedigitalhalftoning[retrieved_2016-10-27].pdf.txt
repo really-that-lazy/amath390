@@ -1,0 +1,2509 @@
+Green-Noise Digital Halftoning
+
+DANIEL L. LAU, GONZALO R. ARCE, SENIOR MEMBER, IEEE,
+
+AND NEAL C. GALLAGHER, FELLOW, IEEE
+
+In this paper, we introduce the concept of green noise-the size depending on the tone being rendered [2]. With the
+
+midfrequency component of white noise-and its advantages over advent of digital image setters (the device which converts
+
+blue noise for digital halftoning. Unlike blue-noise dither patterns, the original continuous-tone image to binary bitmap and
+
+which are composed exclusively of isolated pixels, green-noise then from electronic form to physical), printing has been
+
+dither patterns are composed of pixel-clusters making them less susceptible to image degradation from nonideal printing artifacts rapidly moving to digital binary methods [3]. Originally,
+
+such as dot-gain. Although they are not the only techniques which these digital methods attempted to imitate photomechanical
+
+generate clustered halftones, error-diffusion with output-dependent screening methods [4] through clustered dot dithering.
+
+feedback and variations based on filter weight perturbation are This type of digital halftoning is referred to as amplitude shown to be good generators of green noise, thereby allowing for modulated (AM) screening.
+
+tunable coarseness. Using statistics developed for blue noise, we closely examine the spectral content of resulting dither patterns.
+
+As an alternative to AM screening, frequency modulated
+
+We introduce two spatial-domain statistics for analyzing the spatial (FM) or stochastic screening techniques, where dots are
+
+arrangement of pixels in aperiodic dither patterns, because green-of constant size but are variably spaced according to
+
+noise patterns may be anisotropic, and therefore spectral statistics tone, are available to digital printers. Although relatively based on radial averages may be inappropriate for the study of rare in commercial printing [5], FM screening avoids the
+
+these patterns.
+
+problems associated with AM methods [4] such as moire,
+
+Keywords- Blue-noise dithering, clustered point process, dig-the interference pattern created by superimposing two or
+
+ital halftoning, green-noise dithering, point process, stochastic geometry.
+
+more regular patterns. Moire, a problem associated with
+
+color printing, is minimized in commercial printers by
+
+offsetting the orientation of the halftone screen of each
+
+I.
+
+
+
+
+
+INTRODUCTION
+
+
+color-creating a desirable circular pattern called a rosette.
+
+With the ultimate goal of accurately reproducing an
+
+Great care must be taken when aligning these screens;
+
+original continuous-tone photograph without loss of tonal
+
+otherwise, moire will result [2]. A further drawback of
+
+value or detail, printing devices such as those which rely on AM screening is image contouring, a visual banding effect
+
+dye sublimation or gravure printing have been developed
+
+created by an abruptly changing halftone texture. This
+
+that are capable of rendering continuous tone. More often
+
+artifact is minimized in AM patterns by increasing the
+
+though, printing devices are capable of only limited-tone
+
+maximum number of gray levels that a cluster can represent, reproduction, and in the case of binary output, intermediate but in order to increase the number of achievable gray
+
+tones are represented as halftones. Examples of such de-
+
+levels, the total number of pixels that compose a cluster
+
+vices are laser and ink-jet printers and facsimile machines.1
+
+must also be increased-reducing the spatial resolution of
+
+In commercial printing, three printing processes that
+
+the resulting halftone image.2
+
+produce binary tone are letterpress or relief printing, lithog-The alternative screening technique, FM screening, elimi-
+
+raphy or planographic printing, and screen or porous print-
+
+nates the need for screen angles and screen rulings, resulting ing. These printing processes have, in the past, relied on
+
+in an image without artifacts and displaying higher spatial analog photomechanical screening methods with halftones
+
+resolution; furthermore, FM screens, by using a statistical consisting of rows of dots fixed along a grid in a regular
+
+analysis of neighboring pixels, can represent images with
+
+pattern, equally spaced center-to-center. These dots vary in greater fidelity [4]. The major drawback of FM screens is
+
+Manuscript received February 11, 1998; revised October 5, 1998.
+
+dot gain-the increase in size of the printed dot relative
+
+The authors are with the Department of Electrical and Computer to the intended dot size of the original halftone film.
+
+Engineering, University of Delaware, Newark, DE 19717 USA.
+
+Publisher Item Identifier S 0018-9219(98)09351-7.
+
+1 Although current technology regarding laser and ink-jet printers does 2 By dividing a large halftone cell (the sample area belonging to a allow for multilevel output, the number of achievable gray levels is still single cluster of an AM pattern) into smaller cells, thereby creating a too limited to eliminate quantization effects, and in these cases, halftones conglomerate or super cell [6], AM halftone patterns can represent the are still required in order to produce a sufficient range of intermediate same number of gray levels but with greater spatial resolution as the size tones [1].
+
+of individual clusters is decreased.
+
+0018-9219/98$10.00  1998 IEEE
+
+2424
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+When printing halftones, dot gain creates a reduction or
+
+because it does not clash with the structure of an
+
+compression in the printed tonal range leading to a loss of image by adding one of its own or degrade it by
+
+definition and detail (contrast); furthermore, dot gain can being too "noisy" or uncorrelated.
+
+lead to "plugged" or filled-in screens and cause a shift in Therefore compared to dispersed-dot ordered dither, error
+
+color [7].
+
+diffusion creates patterns which are visually more pleasing.
+
+Due to the nature of dot gain, FM screens will typically
+
+By adding an output-dependent feedback term to er-
+
+suffer greater amounts of distortion than AM [4], but it
+
+ror diffusion, Levien [11] has shown that pixels can be
+
+is not the amount of dot gain which limits the use of
+
+clustered, forming a stochastic screen which maintains
+
+FM halftoning. Instead, it is the reproducibility of the
+
+properties of both the AM and FM screens. Furthermore,
+
+printed dot. In a repeatable process where the variation
+
+by adjusting a single parameter, Levien has demonstrated
+
+in dot size/shape from printed dot-to-printed dot is small, the ability to increase or decrease the amount of cluster-printing can rely on dot gain compensation techniques
+
+ing, thereby allowing for a tunable screen which can be
+
+to minimize introduced distortion, but in a nonrepeatable
+
+optimized according to the reliability of an imaging system process where the variation in dot size/shape is high, pattern to print individual pixels. In this paper we show that the
+
+robustness (clustering) becomes a desired, and in many
+
+spectral characteristics of these new patterns are not blue-cases a required, characteristic of the halftoning process [8].
+
+noise like traditional error-diffusion halftones but green, In summary, the choice between AM and FM screens is a
+
+i.e., containing no low-frequency or high-frequency spectral function of the imaging system's ability to print individual components.
+
+pixels. If individual pixels can be reliably reproduced, the Introducing the green-noise model to digital halftoning is
+
+halftone can be based on individual pixels. Otherwise, the
+
+the primary focus of this paper. Because of the tunability of halftone must be composed of groups of pixels which,
+
+AM-FM hybrids to create varying amounts of clustering,
+
+through clustering, form larger features that can be reliably green noise, as presented here, is a tunable model with
+
+reproduced [3].
+
+blue noise as a limiting case. In addition to introducing
+
+In this paper, we look at AM-FM hybrids, stochastic
+
+a new statistical model for digital halftoning, this paper
+
+halftoning techniques which create minority pixel clusters
+
+also introduces new spatial statistics for the evaluation of which vary, according to tone, in both their size and
+
+produced patterns. Previously, statistics for the analysis
+
+spacing. The advantage to using these techniques is that
+
+of binary halftone patterns have been based on spectral
+
+as stochastic processes, the superposition of two or more
+
+domain estimates. These spectral statistics are responsible halftone patterns does not create moire, thereby alleviating for the name "blue noise" given to stochastic patterns
+
+the need for screen angles; furthermore, by clustering
+
+created via error-diffusion and for the name "green noise"
+
+minority pixels, AM-FM hybrids are also less susceptible
+
+for AM-FM hybrid patterns. Like the spectral statistics,
+
+to the effects of dot gain. Techniques which fall in this
+
+the newly introduced spatial statistics uniquely identify the category are not new to halftoning literature and include
+
+spatial characteristics inherent in a particular halftoning such techniques as Velho's and Gomes' digital halftoning
+
+process; furthermore, being based in the spatial domain,
+
+along space-filling curves (SFC's) [9], Scheermesser's and
+
+these new statistics have interpretations which are far more Bryngdahl's digital halftoning with texture control [10], and intuitive to the viewer.
+
+Levien's error diffusion with output-dependent feedback
+
+[11]. For reasons to be discussed later, this paper focuses on II. STATISTICAL ANALYSIS OF DIGITAL HALFTONES
+
+Levien's technique, but the presented aspects of AM-FM
+
+halftoning will apply to many of the halftoning schemes
+
+A. Spectral Statistics
+
+not presented.
+
+In order to provide a mechanism for studying aperiodic
+
+In order to introduce this new screen, consider first the
+
+patterns, Ulichney [12] developed the radially averaged
+
+implementations of AM and FM halftoning. The clustering
+
+power spectra along with a measure of anisotropy. Both
+
+of pixels in AM screens has always implied using clustered-
+
+rely on estimating the power spectrum through Bartlett's
+
+dot dithering techniques for transforming continuous-tone
+
+method of averaging periodograms, i.e., the magnitude-
+
+images to binary form. FM screens, until recently, have
+
+square of the Fourier transform of the output pattern divided always implied dispersed-dot ordered dithering. Studied in
+
+by the sample size, to produce the spectral estimate
+
+.
+
+great detail by Ulichney [12], error diffusion creates dither Although anisotropies of a dither pattern can be qualita-patterns which are most pleasant in areas of uniform tone
+
+tively observed by studying three-dimensional (3-D) plots
+
+when these patterns have isotropic (radially symmetric)
+
+of
+
+, partitioning the spectral domain into a series of
+
+blue noise3 spectral characteristics. Ulichney writes the
+
+annular rings
+
+of width
+
+, as shown in Fig. 1, leads
+
+following on the subject [12].
+
+to two useful one-dimensional (1-D) statistics. The first
+
+The purpose of a dither pattern is to represent a
+
+statistic is the radially averaged power spectrum density
+
+continuous-tone level. It therefore should not have
+
+(RAPSD)
+
+, defined for discrete
+
+as the average
+
+any form or structure of its own; a pattern succeeds
+
+power in the annular ring with center radius
+
+when it is innocuous. Blue noise is visually pleasant
+
+(1)
+
+3 Blue noise refers to the high-frequency component of white noise.
+
+Such patterns have a minimal low-frequency spectral component.
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2425
+
+
+
+
+
+B. Spatial Statistics
+
+Though spectral domain techniques have been proposed,
+
+statisticians are more likely to rely on "nearest-neighbor"
+
+distributions, i.e., the distribution of points relative to a typical point. Several nearest-neighbor measures are ex-tremely useful to halftoning, and in this paper we show
+
+two such spatial-statistic metrics which can be very useful in characterizing halftone patterns. We begin with a more
+
+concise definition of a point process.
+
+The point process
+
+is a stochastic model governing the
+
+location of events, or points
+
+, within the space
+
+[13].
+
+is a sample of
+
+and will be written as
+
+. Furthermore,
+
+is a scalar quantity defined
+
+Fig. 1.
+
+By partitioning the spectral domain into a series of annular as the number of
+
+in the subset
+
+of
+
+. We assume that
+
+rings, the power spectrum P (f ) can be studied using P (f) and A(f
+
+the point process
+
+is simple, meaning that
+
+implies
+
+).
+
+, which further implies
+
+where
+
+is the number of frequency samples in
+
+for
+
+(3)
+
+. The second statistic is the anisotropy
+
+. It is
+
+else
+
+defined as
+
+where
+
+is the infinitesimally small area around
+
+. In
+
+terms of a discrete dither pattern,
+
+represents the set of
+
+minority pixels such that
+
+, for pixel index
+
+(2)
+
+indicates a minority pixel at location
+
+.
+
+now represents
+
+an aperiodic halftone process with
+
+and
+
+representing
+
+blue-noise and green-noise halftoning processes, respec-
+
+the relative variance or the "noise-to-signal" ratio [12] of tively.
+
+frequency samples of
+
+in
+
+.
+
+From its definition in (3),
+
+is a scalar random vari-
+
+Built on the premise that aperiodic patterns generated
+
+able which can be characterized in terms of its moments.
+
+in areas of uniform gray are most pleasant when patterns
+
+We start with the first-order moment, the intensity
+
+are isotropic,
+
+, a measure of how isotropic a dither
+
+pattern is, implies that the pattern with lower anisotropy is (4)
+
+the more visually pleasing of the two if both patterns have identical
+
+. Given that its purpose is to measure the
+
+For a point process to be stationary, the statistical character-strength of directional artifacts,
+
+does not indicate the
+
+istics of
+
+must be invariant to translation. If a process is
+
+direction. It is therefore possible for a dither pattern with stationary, then the intensity is constant for all
+
+strong horizontal artifacts to be indistinguishable according where
+
+is the expected number of points per
+
+to
+
+and
+
+from a pattern with strong diagonal
+
+unit area. Furthermore,
+
+represents the unconditional
+
+artifacts. The human eye being less sensitive to diagonal
+
+probability that the sample at location
+
+is a minority pixel.
+
+correlations, one may find the difference in appearance far We gain additional insight into
+
+by conditioning the
+
+from indistinguishable.
+
+probability distribution of
+
+given that a point lies at a given
+
+Note that for either statistic, a rotation in the original
+
+location. The result is a conditional distribution referred to dither pattern has no effect on either
+
+or
+
+, and
+
+as the Palm distribution [14]. A particular measure under
+
+these metrics may therefore be insufficient at describing
+
+the Palm distribution of
+
+is the quantity
+
+(or for
+
+patterns uniquely when patterns are allowed and even pre-
+
+discrete space
+
+)
+
+ferred to be anisotropic. Additional information pertaining to the direction of artifacts may then be required. In order to supplement
+
+and
+
+, we can use spatial domain
+
+(5)
+
+statistics to characterize aperiodic dither patterns. Though largely ignored in halftone literature, the importance of
+
+the ratio of the expected number of points in
+
+under the
+
+spatial domain statistics cannot be overlooked. Found in
+
+condition
+
+to the unconditional expected number of
+
+the literature of stochastic geometry (the area interested
+
+points in
+
+.
+
+, referred to as the reduced second-
+
+in modeling complicated geometrical patterns), point pro-
+
+moment measure, may be thought of as the influence at
+
+cesses have long been studied by statisticians to model such location
+
+of the point . That is, is a point at
+
+more or less
+
+things as crystal formation in granite and cell locations
+
+likely to occur because a point exists at
+
+? For stationary
+
+within organic tissue. Because point process statistics are processes,
+
+may be written as
+
+where
+
+is
+
+used to model the location of random points in space, they
+
+the distance between
+
+and
+
+while
+
+is the direction to
+
+are suited perfectly for characterizing digital halftones.
+
+from
+
+. For a point process to be isotropic, the statistical
+
+2426
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+Fig. 2.
+
+By dividing the spatial domain into a series of (left)
+
+annular rings centered around location y, the spatial arrangement of points can be studied through the use of R(r), and by looking at the expected number of points per unit area in the segment 0ay versus the ring 0y, the spatial arrangement can be studied using Dr ;r (a).
+
+characteristics of
+
+must be invariant to rotation; therefore,
+
+if
+
+is also isotropic, then
+
+.
+
+From
+
+, we can derive two spatial domain statistics
+
+in a similar fashion to
+
+and
+
+by partitioning
+
+the spatial domain into a series of annular rings
+
+(Fig. 2), with center radius
+
+, width
+
+, and centered
+
+around location
+
+. In this paper, the annular ring
+
+(a)
+
+will be the set
+
+where
+
+. The first statistic for stationary and isotropic
+
+is the pair correlation
+
+, defined as
+
+(6)
+
+the influence that the point at
+
+has at any
+
+in the annular
+
+ring
+
+. Note that for a stationary point process, the
+
+unconditional expected number of points in the ring
+
+is
+
+(the intensity times the area of
+
+).
+
+is also the average value of
+
+in the ring
+
+, and
+
+its usefulness can be seen in the interpretation that maxima of
+
+indicate frequent occurrences of the interpoint
+
+distance
+
+while minima of
+
+indicate an inhibition of
+
+points at
+
+[14].
+
+In addition to the above spatial interpretations,
+
+maintains an intimate link with the spectral domain. In
+
+particular, a frequent occurrence of the interpoint distance
+
+, indicated by maxima in
+
+, implies a peak in
+
+for radial frequency
+
+proportional in magnitude
+
+to the peak in
+
+, meaning that a larger peak leads
+
+to a larger peak in
+
+. Take for instance white-noise
+
+(b)
+
+halftoning where binary patterns are created by thresholding Fig. 3.
+
+Dither pattern, pair correlation and directional distribution an input image with uniformly distributed, uncorrelated
+
+function of (a) a dither pattern with small variation in cluster shape and (b) a dither pattern with high variation in cluster shape.
+
+(white) noise.
+
+Deriving its name from its spectral content, white-noise
+
+halftones have a
+
+which is flat for all
+
+. The lack of
+
+measure
+
+any spectral peaks implies that white-noise halftones have
+
+a pair correlation which is one for all . This is the case
+
+(7)
+
+since a completely random,4 stationary, and isotropic point process with intensity
+
+has a reduced second moment
+
+for all
+
+, and since
+
+is the average
+
+in
+
+the ring
+
+for all
+
+for all
+
+.
+
+4 This is a completely random process if Ef(dV
+
+In cases where
+
+is stationary but not isotropic,
+
+x) j y 2 g =
+
+Ef(dVx)g for all y 6= x; y 2 <.
+
+can be used to investigate anisotropy in
+
+by defining the
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2427
+
+
+
+
+
+Fig. 5.
+
+The spectral characteristics of a blue-noise halftone pat-
+
+tern in units of 2g = g(1 0 g) with: (a) a low-frequency cutoff at principle frequency fb; (b) a sharp transition region; and (c) a flat high-frequency blue-noise region.
+
+Fig. 6.
+
+The pair correlation for a blue-noise process showing: (a)
+
+a strong inhibition of minority pixels near r = 0; (b) a decreasing correlation of minority pixels with increasing r; and (c) a frequent occurrence of the interpoint distance b indicated by a series of peaks at integer multiples of b.
+
+(a)
+
+Fig. 7.
+
+Floyd-Steinberg filter weights.
+
+the expected number of points per unit area in a segment
+
+of the ring
+
+, centered
+
+around the point
+
+such that
+
+(see Fig. 2), to the expected number of points per unit
+
+area in
+
+itself. Note that for isotropic point patterns,
+
+for all , and that
+
+indicates
+
+a favoring of points at angles near
+
+while
+
+indicates an inhibition of points. Furthermore, the
+
+parameters
+
+and
+
+allow us to look at point distributions
+
+for various ranges from a point
+
+. Most notably, a near
+
+distribution for the range
+
+, a far distribution for
+
+, and an overall distribution for
+
+.
+
+Compared to the spectral statistics
+
+and
+
+, the
+
+spatial statistics
+
+and
+
+together offer a more
+
+intuitive understanding of the underlying point process
+
+.
+
+This is perhaps best witnessed in Fig. 3 where minority
+
+pixels form clusters. In this case, clustering results in a nonzero pair correlation for
+
+near zero with
+
+occurring at
+
+. This parameter
+
+is
+
+proportional to the size of clusters as
+
+. That
+
+is, the area covered by the average sized cluster of
+
+(b)
+
+pixels is equal to the area covered a circle of radius
+
+.
+
+Fig. 4.
+
+Blue-noise halftone of (a) a grayscale image and (b) a
+
+Furthermore, the peaks of
+
+, which occur at integer
+
+grayscale ramp.
+
+multiples of
+
+, indicate that pixel clusters are
+
+directional distribution function
+
+as
+
+separated center-to-center by an average distance of
+
+with
+
+the sharpness of peaks inversely proportional to the amount (8)
+
+of variation in cluster size. Fig. 3(a) and (b) shows that
+
+when the variation in cluster size and shape is small, the
+
+2428
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 8.
+
+Analysis of blue-noise halftone patterns for (a) g = 1=16 and (b) g = 1=8.
+
+pair correlation has very sharp peaks, while large variations image such that pixels are separated by an average distance lead to a pair correlation which is blurred (lower contrast between maxima and minima).
+
+for
+
+(9)
+
+for
+
+III.
+
+BLUE-NOISE HALFTONING
+
+Blue-noise halftoning, labeled as
+
+and demonstrated
+
+where
+
+is the minimum distance between addressable
+
+in Fig. 4, is characterized by a distribution of binary pixels points on the display [12], [15]. The parameter
+
+is
+
+where the minority pixels are spread as homogeneously
+
+referred to as the principle wavelength of blue noise, with as possible [12]. Distributing pixels in this manner cre-its relationship to
+
+justified by several intuitive properties.
+
+ates a pattern which is aperiodic, isotropic, and does not
+
+i) As the gray value approaches perfect white
+
+contain any low-frequency spectral components. The result
+
+or perfect black
+
+, the principle wavelength
+
+of halftoning a continuous-tone discrete-space monochrome
+
+approaches infinity.
+
+image with blue noise is a pattern which, as Ulichney [12]
+
+ii) Wavelength decreases symmetrically with equal de-
+
+describes, "is 'pleasant'-it (blue noise) does not clash with viations from black and white toward middle gray
+
+the structure of an image by adding one of its own, or
+
+.
+
+degrade it by being too 'noisy' or uncorrelated."
+
+iii) The square of the wavelength is inversely propor-
+
+tional to the number of minority pixels per unit
+
+A. Spectral Statistics
+
+area.
+
+Blue noise, when applied to an image of constant gray
+
+Again we note that the distribution of minority pixels is
+
+level , spreads the minority pixels of the resulting binary assumed to be stationary and isotropic.
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2429
+
+
+
+
+
+Fig. 10.
+
+The spectral characteristics of a green-noise halftone
+
+pattern in units of 2g = g(1 0 g) with: (a) little or no low frequency spectral components; (b) high-frequency spectral components which diminish with increased clustering; and (c) a spectral peak at f = fg.
+
+Fig. 11.
+
+The pair correlation for green noise showing: (a) pixel
+
+clustering with cluster radius rc; (b) decreasing influence as r increases; and (c) the green-noise principle wavelength g.
+
+(a)
+
+frequency spectral components; 2) a flat, high-frequency
+
+(blue-noise) spectral region; and 3) a spectral peak at cutoff frequency
+
+, the blue-noise principle frequency, such that
+
+for
+
+(10)
+
+for
+
+As will be the convention for this paper, the principle
+
+frequency is indicated in Fig. 5 by a diamond located along the horizontal axis. Also note that
+
+is plotted in units
+
+of
+
+, the variance of an individual pixel in
+
+.
+
+B. Spatial Statistics
+
+In view of Fig. 5, we can begin to characterize blue-noise
+
+halftones in terms of the pair correlation
+
+by noting
+
+that:
+
+1) few or no neighboring pixels lie within a radius of
+
+;
+
+2) for
+
+, the expected number of minority pixels
+
+per unit area approaches
+
+with increasing ;
+
+3) the average number of minority pixels within the
+
+radius
+
+increases sharply near
+
+.
+
+The resulting pair correlation for blue noise is therefore
+
+of the form in Fig. 6 where
+
+shows: 1) a strong
+
+inhibition of minority pixels5 near
+
+; 2) a decreasing
+
+correlation of minority pixels with increasing
+
+; and 3)
+
+(b)
+
+a frequent occurrence of the interpoint distance
+
+, the
+
+Fig. 9.
+
+Green-noise halftone of (a) a grayscale image and (b) a
+
+principle wavelength, indicated by a series of peaks at
+
+grayscale ramp.
+
+integer multiples of
+
+. Similar to
+
+, the principle
+
+wavelength is indicated in Fig. 6 with a diamond located
+
+Turning to the spectral domain, the spectral characteris-
+
+along the horizontal axis.
+
+tics of blue noise in terms of
+
+are shown in Fig. 5 and
+
+5 Such processes are commonly referred to as hard-core, where no two can be described by three unique features: 1) little or no low points of are within some distance r of each other.
+
+2430
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+Fig. 12.
+
+Error diffusion with hysteresis algorithm.
+
+Fig. 13.
+
+An arrangement of two hystereses and two er-
+
+ror-diffusion coefficients.
+
+(a)
+
+Fig. 14.
+
+Green-noise halftones of a grayscale ramp using two
+
+hystereses and two error coefficients with H = 1 and a left-to-right raster scan.
+
+(b)
+
+Fig. 15.
+
+Green-noise halftones of a grayscale ramp using two
+
+C. Error Diffusion
+
+hystereses and two error coefficients with: (a) H = 1=2 and (b) H = 1=2 with 50% random error filter weights.
+
+Although the original error-diffusion algorithm of Floyd
+
+and Steinberg [16] does create blue-noise patterns, Ulichney clude using a serpentine scan, randomized weight positions,
+
+[12] shows that with some variations, error diffusion is
+
+and perturbed threshold. Another variation of particular
+
+an improved generator of blue noise. These variations in-
+
+importance involves perturbing the filter weights instead
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2431
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 16.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 1=2.
+
+of the threshold. This perturbation of filter weights is
+
+benefits from aperiodic, uncorrelated structure without low-accomplished by first pairing weights of comparable value.
+
+frequency graininess, but unlike blue, green-noise patterns Then for each pair of weights, a scaled random value
+
+exhibit clustering.6 The result is a frequency content which is added to one and subtracted from the other. In order
+
+lacks the high-frequency component characteristic of blue
+
+to prevent negative values, the maximum noise amplitude
+
+noise. Hence the term "green." Furthermore, green noise
+
+(100%) is the value of the smaller weight in each pair.
+
+forms aperiodic patterns that are not necessarily radially
+
+Using the Floyd-Steinberg filter weights (Fig. 7), Ulich-
+
+symmetric. Since the contrast sensitivity function of the
+
+ney shows that perturbing each of the two pairs (7/16, 5/16) human visual system is not radially symmetric, we allow
+
+and (3/16,1/16) creates a good blue-noise process. In partic-green noise to have asymmetric characteristics. The objec-
+
+ular, adding 50% noise to each pair appears to optimize the tive is to combine the maximum dispersion attributes of
+
+tradeoff between graininess and stable texture [12]. Fig. 8
+
+blue noise with that of clustering of AM halftone patterns.
+
+shows the resulting spatial and spectral characteristics for Point process statisticians have long described cluster
+
+and
+
+using this scheme.
+
+processes such as those seen in green noise by examining
+
+the cluster process in terms of two separate processes: 1)
+
+IV. GREEN-NOISE HALFTONING
+
+Just as blue noise is the high-frequency component of
+
+6 The use of the word cluster refers to a collection of consecutive four-white noise, green noise, labeled as
+
+and demonstrated
+
+neighborhood pixels all of the same value. The definition is the same as in Fig. 9, is the mid-frequency component which, like blue, that used in [17] for a clump of marked vertices in a square lattice.
+
+2432
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 17.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 1=2 and 50% random error filter weights.
+
+the parent process which describes the location of clusters7
+
+by
+
+, relative to the origin, as
+
+and 2) the daughter process, which describes the shape
+
+(11)
+
+of clusters. In AM halftoning, clusters are placed along
+
+a regular lattice, and therefore variations in AM patterns
+
+and then defining
+
+as the th sample cluster for
+
+occur in the cluster shape. In FM halftoning, cluster shape
+
+, a sample
+
+of the green-noise halftone process
+
+is deterministic, i.e., a single pixel. It is the location of is defined as
+
+clusters that is of interest in characterizing FM patterns.
+
+Green-noise patterns, having variation in both cluster shape and cluster location, require an analysis which looks at both (12)
+
+the parent and daughter processes.
+
+the sum of
+
+translated clusters. The overall operation is
+
+Looking first at the parent process
+
+represents a
+
+to replace each point of the parent sample
+
+of process
+
+single sample of the parent process such that
+
+with its own cluster
+
+of process
+
+.
+
+where
+
+is the total number of clusters.
+
+In order to derive a relationship between the total number
+
+For the daughter process
+
+represents a single sample
+
+of clusters, the size of clusters, and the gray level of a binary cluster of
+
+such that
+
+where
+
+dither pattern,
+
+is defined as the binary dither pattern
+
+is the number of minority pixels in cluster
+
+. By first
+
+resulting from halftoning a continuous-tone discrete-space
+
+defining the translation or shift in space
+
+of a set
+
+monochrome image of constant gray level , and
+
+is
+
+7 The location being defined as the centroid of all points within the defined as the binary pixel of
+
+with pixel index
+
+. From
+
+cluster.
+
+the definition of
+
+as the total number of points of
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2433
+
+
+
+
+
+in
+
+,
+
+is the scalar quantity representing the total
+
+number of minority pixels in
+
+, and
+
+is the total
+
+number of clusters in
+
+with
+
+. The intensity
+
+being the expected number of minority pixels per unit
+
+area now can be written as
+
+for
+
+(13)
+
+for
+
+the ratio of the total number of minority pixels in
+
+to
+
+, the total number of pixels composing
+
+. Given
+
+(13),
+
+, the average number of minority pixels per cluster
+
+in
+
+is
+
+(14)
+
+the total number of minority pixels in
+
+divided by the
+
+total number of clusters in
+
+.
+
+A. Spectral Statistics
+
+Although obvious, (14) shows the very important rela-
+
+tionship between the total number of clusters, the average
+
+size of clusters, and the intensity for
+
+. AM halftoning is
+
+the limiting case where
+
+is held constant for varying
+
+, while FM halftoning is the limiting case where
+
+is held
+
+constant for varying
+
+. In addition, (14) says that the total
+
+(a)
+
+number of clusters per unit area is proportional to
+
+.
+
+For isolated minority pixels (blue noise), the square of the average separation between minority pixels (
+
+) is inversely
+
+proportional to , the average number of minority pixels per unit area [12]. By determining the proportionality constant using
+
+for
+
+, the relationship between
+
+and
+
+is determined as
+
+.
+
+In green noise, it is the minority pixel clusters which
+
+are distributed as homogeneously as possible, leading to an average separation (center-to-center) between clusters
+
+whose squares are inversely proportional to the average
+
+number of minority pixel clusters per unit area
+
+. Using
+
+the fact that
+
+, the proportionality constant
+
+can be determined such that
+
+is defined as
+
+for
+
+(15)
+
+for
+
+the green-noise principle wavelength. This implies that the parent process
+
+is itself a blue-noise point process with
+
+intensity
+
+.
+
+Assuming that the variation in cluster size is small for
+
+a given
+
+, this placement of clusters
+
+
+
+
+
+apart leads to a
+
+
+strong spectral peak in
+
+
+at
+
+, the green-noise
+
+principle frequency
+
+for
+
+(b)
+
+(16)
+
+for
+
+Fig. 18.
+
+Green-noise halftones of a grayscale ramp using two
+
+hystereses and two error coefficients with: (a) H = 1 and (b) From (16) we make several intuitive observations: 1) as
+
+H = 1 with 75% random hysteresis filter weights.
+
+the average size of clusters increases,
+
+approaches DC
+
+and 2) as the size of clusters decreases,
+
+approaches
+
+frequency spectral components; 2) high-frequency spectral
+
+. Fig. 10 illustrates the desired characteristics of
+
+components which diminish with increased clustering; and
+
+for
+
+showing three distinct features: 1) little or no low-
+
+3) a spectral peak at
+
+.
+
+2434
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 19.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 1.
+
+The sharpness of the spectral peak in
+
+at the green-
+
+(isotropic) clusters whose variation in size is small and
+
+noise principle frequency is affected by several factors.
+
+whose separation between nearest clusters is also isotropic Consider first blue noise, where the separation between
+
+with small variation.
+
+minority pixels should have some variation. The wave-
+
+B. Spatial Statistics
+
+lengths of this variation, in blue noise, should not be
+
+significantly longer than
+
+as this adds low-frequency
+
+If we assume a stationary and isotropic green-noise
+
+pattern, the pair correlation will have the form of Fig. 11
+
+spectral components to the corresponding dither pattern
+
+given the following:
+
+[12], causing
+
+to appear more white than blue. The same
+
+1) daughter pixels, on average, will fall within a circle
+
+holds true for green noise with large variations in cluster of radius
+
+centered around a parent point such that
+
+separation leading to a spectral peak at
+
+which is
+
+(the area of the circle with radius
+
+is equal
+
+not sharp but blurred as the variation in separation adds
+
+to the average number of pixels forming a cluster);
+
+new spectral components to
+
+. This whitening effect on
+
+2) neighboring clusters are located at an average distance
+
+is also created by increased variation in the size of clusters of
+
+apart;
+
+with excessively large clusters leading to low-frequency
+
+3) as
+
+increases, the influence that clusters have on
+
+components and excessively small clusters leading to high-
+
+neighboring clusters decreases.
+
+frequency components. In summary, the sharpest spectral
+
+The result is a pair correlation which has: 1) a nonzero
+
+peak at
+
+will be created when
+
+is composed of round
+
+component for
+
+due to clustering; 2) a decreasing
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2435
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 20.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 1 and 75% random hysteresis filter weights.
+
+influence as
+
+increases; and 3) peaks at integer multiples
+
+pixels is used to vary the threshold-making minority pixels of
+
+indicating the average separation of pixel clusters.
+
+more likely to occur in clusters. Furthermore, the amount
+
+Note that the parameter
+
+is also indicated by a diamond
+
+of clustering is controlled through the scalar constant
+
+,
+
+placed along the horizontal axis in Fig. 11.
+
+the hysteresis constant, with large values of
+
+leading
+
+In the case of stationary and anisotropic green-noise
+
+to large clusters and small values of
+
+leading to small
+
+patterns, the pair correlation will also be of the form of
+
+clusters.
+
+Fig. 11, but because clusters are not radially symmetric,
+
+As mentioned previously, other techniques for creating
+
+blurring occurs in
+
+near the cluster radius
+
+. In a
+
+binary dither patterns with adjustable coarseness include
+
+similar fashion, because the separation between clusters will Velho's and Gomes' digital halftoning along SFC's [9]
+
+also vary with direction, blurring will occur at each peak
+
+and Scheermesser's and Bryngdahl's digital halftoning with
+
+in
+
+located at integer multiples of
+
+.
+
+texture control [10]. SFC is a technique where a two-
+
+dimensional (2-D) image is halftoned using a 1-D clustered-
+
+C. Error Diffusion w ith Hysteresis
+
+dot dithering approach which traverses the image along a
+
+Although error diffusion is a good generator of blue
+
+space filling curve such as the Peano, Hilbert, or Sierpinsky noise, the nature of green noise to cluster pixels makes error curve. By manipulating the maximum number of pixels
+
+diffusion inappropriate. As an alternative, Levien [11] has that can form a cluster, the SFC technique can control the
+
+proposed error diffusion with output-dependent feedback
+
+amount of coarseness in resulting images, and unlike AM
+
+(Fig. 12) where a weighted sum of the previous output
+
+halftoning where the maximum number of pixels that can
+
+2436
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+form a cluster limits the number of gray levels that the
+
+pattern can represent, SFC diffuses quantization error from one cluster to the next. The result is a technique which
+
+combines the benefits of aperiodic structure with those of
+
+clustered dots.
+
+Scheermesser's and Bryngdahl's technique attempts to
+
+minimize the cost associated with a particular arrangement
+
+of dots by iteratively turning pixels "on" and "off." The
+
+cost associated with a particular arrangement of dots is
+
+determined by two factors. The first is an image met-
+
+ric which measures the difference between the perceived
+
+images of the binary halftone pattern and the continuous
+
+tone original. The second cost is a numerical texture
+
+metric which measures the relative orientation of minority
+
+pixels. Scheermesser's and Bryngdahl's technique is able
+
+to produce adjustable coarseness by adjusting the weight of the cost of the texture metric versus the perceived image
+
+metric.
+
+There are, of course, many other algorithms which pro-
+
+duce stochastic arrangements of minority pixel clusters
+
+(green noise). The reason that this paper chooses to look at Levien's technique is because it is ideally suited, based so much on Floyd's and Steinberg's original error-diffusion
+
+algorithm [16], to present an evolution of the blue-noise
+
+model originally described by Ulichney [12]-having, like
+
+(a)
+
+the green-noise model itself, blue noise as a limiting case
+
+. Furthermore, as will be shown, error diffusion
+
+with output-dependent feedback creates patterns which may
+
+be described as "good" green-noise patterns, i.e., exhibiting sharp peaks in both the spectral
+
+, and spatial
+
+domains.
+
+Mathematically, Levien's algorithm is defined as follows:
+
+(17)
+
+(18)
+
+(19)
+
+where
+
+and
+
+are the hysteresis and error-diffusion
+
+coefficients, respectively, such that
+
+.
+
+In the following sections, we look at some variations to error diffusion with output-dependent feedback and compare
+
+their results in terms of the spatial and spectral domain
+
+metrics discussed previously. These variations include the
+
+following.
+
+1) Hysteresis constant. Of paramount importance, the hysteresis constant controls the amount of clustering,
+
+and therefore it influences greatly the green-noise
+
+characteristics of resulting dither patterns. It is this
+
+(b)
+
+parameter
+
+that allows for tunable coarseness.
+
+2) Choice of error/hysteresis filter. Within the context Fig. 21.
+
+Green-noise halftones of a grayscale ramp using two
+
+hystereses and two error coefficients with: (a) H = 3=2 and (b) of Levien's definition of error diffusion with output-H = 3=2 with 50% random hysteresis filter weights.
+
+dependent feedback, many choices exist for the error
+
+filter, and coupled with the hysteresis filter, even more
+
+3) Stochastic error/hysteresis filter perturbation. Intro-possibilities can occur. For computational efficiency,
+
+duced by Ulichney [12] to improve the blue-noise
+
+as small a filter as possible is always preferred.
+
+characteristics of error diffusion, random noise can be
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2437
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 22.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 3=2.
+
+added to the weights of both the error and hysteresis
+
+In addition to the serpentine raster scan, a small hysteresis filters. This same process is described in Section III-constant
+
+produces patterns for small
+
+which
+
+C for error diffusion with four weights, and unlike the
+
+are very similar to traditional blue noise [Fig. 15(a)], but as previous two variations, the application of filter per-increases and approaches
+
+, the amount of clustering
+
+turbation to either the error diffusion or the feedback
+
+also increases, thereby shifting the spectral content from
+
+coefficients is new to Levien's technique.
+
+blue to green (Fig. 16). This behavior is indicated by
+
+for
+
+and
+
+where, for blue noise,
+
+1) Two Hystereses and Two Error Weights: The
+
+scheme
+
+and
+
+, and for this arrangement of weights,
+
+originally proposed by Levien [11], which uses only
+
+and
+
+(strictly less than
+
+). Furthermore,
+
+two hystereses and two error weights (Fig. 13), has
+
+low computational complexity but coupled with a left-
+
+as seen in Fig. 15(b), adding a perturbation of 50% ran-
+
+to-right raster scan (Fig. 14) yields poor results due to
+
+domness to the error filter weights breaks up many of
+
+strong diagonal texture patterns, thereby making mandatory
+
+the directional artifacts, which creates patterns with re-
+
+alternate scanning paths such as the serpentine (left-to-right duced diagonal correlation and increased variation in cluster then right-to-left) raster scan, which is used for this and size. Resulting patterns (Fig. 17), therefore begin to appear all other arrangements of filter weights. Note that in these noisy as the spectral peaks in
+
+at
+
+are
+
+and the following figures, the binary dither patterns are
+
+blurred. Also note that as a result of increased variation
+
+shown under ideal printing conditions unless otherwise
+
+in cluster size, the peaks and valleys of
+
+are also
+
+noted.
+
+blurred. This further indicates a dither pattern with spatial 2438
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 23.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using two hystereses and two error coefficients with H = 3=2 and 50% random hysteresis filter weights.
+
+and spectral characteristics more similar to white-noise
+
+occur without perturbation at this low gray level, but also halftones.
+
+without this perturbation, patterns exhibit strong direction In contrast to a low hysteresis constant, Fig. 18 shows
+
+artifacts-creating diagonal textures. The perturbation of
+
+the resulting patterns generated using a moderate hysteresis hysteresis weights breaks up many of these textures, espe-constant
+
+. Specifically, in Fig. 18(a), patterns
+
+cially near
+
+.
+
+exhibit clustering at all gray levels with a well-defined
+
+As a final demonstration of using two hystereses and two
+
+boundary formed between clusters. As is exhibited in
+
+error weights, Fig. 21 shows the resulting dither patterns
+
+Fig. 19 for
+
+where
+
+, this
+
+using a high hysteresis constant
+
+. Illustrated in
+
+clustering behavior is indicated by the sharp drop in
+
+Fig. 22 for
+
+and
+
+, the variation in cluster size
+
+for
+
+and by the ripple formed in
+
+with
+
+has increased relative to
+
+and
+
+as clus-
+
+peaks occurring at integer multiples of
+
+.
+
+ters are beginning to form long horizontal bars-creating
+
+Figs. 18(b) and 20 illustrate the whitening effect of
+
+textures which are not diagonal but horizontal. Adding a
+
+adding a perturbation of 75% randomness to the hysteresis
+
+perturbation of 50% randomness to the hysteresis weights
+
+weights. For each instance of
+
+, an increased variation in
+
+[Fig. 21(b)] in this scheme breaks up many of these hori-
+
+cluster size is clearly visible, most noticeably for
+
+zontal artifacts-reducing
+
+for all gray levels but also
+
+where clusters of 1, 2, and 3 pixels can be seen
+
+whitening the spectral content slightly (Fig. 23).
+
+throughout the pattern. Without perturbation at
+
+,
+
+2) Four Hysteresis and 12 Error Weights: As an investi-clusters are commonly composed of two pixels with only
+
+gation of the effects of different filter weights, Fig. 24
+
+a few composed of one. Rarely do clusters of three pixels
+
+shows the combination of the Floyd-Steinberg weights
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2439
+
+
+
+
+
+Fig. 24.
+
+An arrangement of four hysteresis and 12 error-diffusion
+
+coefficients.
+
+[16] as the hysteresis filter and the Stucki weights [18]
+
+as the error filter. Using a small hysteresis constant
+
+, Fig. 25(a) shows the resulting gray scale ramp which
+
+exhibits a larger degree of clustering relative to using two hystereses and two error weights with equivalent
+
+. Due
+
+to very small variation in cluster size, this method leads to patterns with very sharp spectral peaks in
+
+, as seen
+
+in Fig. 26, but at
+
+, the clusters form a pattern with
+
+very distinct horizontal artifacts.
+
+Figure 25(b) shows the same combination of weights
+
+but with an added perturbation of 30% randomness to
+
+the hysteresis weights and 30% randomness to the error
+
+weights. In this case, as seen in Fig. 27, many of the
+
+horizontal artifacts are broken up, and at the same time
+
+only a small amount of spectral whitening has occurred in
+
+(a)
+
+patterns for
+
+and
+
+.
+
+For a comparison of the principle frequencies and average
+
+cluster sizes for patterns generated using the described
+
+variations, see the table of Fig. 28.
+
+V.
+
+DOT GAIN
+
+As stated in the introduction, dot gain is the increase
+
+in size of the printed dot relative to the intended size, and whether a function of the mechanical printing process or the optical properties of paper, dot gain is present in all printing processes. Therefore, it cannot be eliminated. Assuming
+
+that the process is repeatable, dot gain can be anticipated and controlled [7], but in printing processes which are not repeatable [7], compensating for dot gain is a far more
+
+difficult task. In these instances, it may be more desirable to use a scheme which resists dot gain, thereby making
+
+the printed output more robust to variations in the printing process. An example where dot gain is anticipated and
+
+therefore compensated for is Pappas' and Neuhoff's [19]
+
+modified error-diffusion algorithm employing a circular
+
+dot-overlap model which models printed dots as round dots
+
+which overlap neighboring pixels, thereby causing printed
+
+halftones to appear darker than the original fraction of ones.
+
+Although for many printers the circular dot-overlap
+
+model is invalid [20], it illustrates an important aspect
+
+of dot gain with regards to digital halftoning. That being
+
+the relationship between dot gain and the perimeter-to-area (b)
+
+ratio of printed dots with higher ratios leading to higher
+
+average dot gain. In dispersed dot halftones (FM), this ratio Fig. 25.
+
+Green-noise halftones of a grayscale ramp using four
+
+hysteresis and 12 error coefficients with: (a) H = 1=2 and (b) is much higher than that for clustered dot halftones, which H = 1=2 with 30% random error filter weights and 30% random creates higher gain for dispersed dots [4]. It is for this
+
+hysteresis filter weights.
+
+2440
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+(a)
+
+(b)
+
+Fig. 26.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using four hystereses and 12 error coefficients with H = 1=2.
+
+reason that green-noise halftoning which clusters pixels is noise image [Fig. 29(b)]. Also note that for blue noise,
+
+less susceptible to the effects of dot gain, and by varying isolated white pixels are nearly erased as neighboring black the size of clusters, resulting patterns can be optimized for dots almost completely overlap the white pixels.
+
+specific dot gain characteristics with large clusters reserved for printing processes with high variation from printed
+
+VI. CONCLUSION
+
+dot-to-printed dot and small clusters reserved for printing In addition to introducing green noise, this paper has
+
+processes with low variation.
+
+introduced the use of the two statistics for the analysis of Green noise offers a wide range of halftone renditions;
+
+digital halftoning techniques: 1) the pair correlation and 2) therefore, selecting the optimal hysteresis constant for error the directional distribution function. Being spatial-domain diffusion with output-dependent feedback is an important
+
+statistics, both offer a more intuitive understanding of the problem that must be addressed based on specific printer
+
+underlying point process compared to the conventional
+
+traits. As a demonstration of the advantages of using
+
+spectral-domain statistics: the radially averaged power spec-green noise instead of blue, Fig. 29 shows the resulting
+
+trum and the anisotropy. Also in this paper, we have
+
+images using the circular dot-overlap model where the
+
+presented models in the spatial and spectral domain of both ratio of the diameter of a printed dot to the minimum
+
+blue-noise and green-noise dither patterns, and using such, distance between samples is 10:6. Note that the blue-noise
+
+we have analyzed several variations to error-diffusion with image [Fig. 29(a)] appears much darker than the green-output-dependent feedback-remarking on the attributes of
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2441
+
+
+
+
+
+(a)
+
+(b)
+
+Fig. 27.
+
+Green-noise halftone statistics for: (a) g = 1=4 and (b) g = 1=2 using four hystereses and 12 error coefficients with H = 1=2 and 30% random error filter weights and 30% random hysteresis filter weights.
+
+each variation. In effect, we have demonstrated a wide
+
+range of modifications that may be used to optimize a
+
+green-noise processes for specific printer traits.
+
+Fig. 30 shows a comparison of five major classes of
+
+dither patterns: 1) white-noise; 2) blue-noise; 3) green-
+
+noise; 4) dispersed ordered dither; and 5) clustered-dot
+
+dither. Ulichney [12], who makes a similar comparison,
+
+writes that blue noise is pleasant because it does not add
+
+a structure of its own to an image as do dispersed-order
+
+dither and clustered-dot dither, both being arranged to form a regular pattern. Blue noise also does not look too "noisy"
+
+or uncorrelated as does white noise.
+
+Green noise, being a stochastic patterning of dots, also
+
+does not add structure to an image as does dispersed-
+
+Fig. 28.
+
+Table showing the principle frequency fg and the av-
+
+erage number of pixels per cluster
+
+M for several configurations
+
+ordered dither or clustered-dot dither. It also does not
+
+of error diffusion with output-dependent feedback employing a appear noisy or uncorrelated as does white, but green
+
+serpentine raster scan.
+
+2442
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+Fig. 30.
+
+Sample halftone patterns of: (a) white-noise; (b)
+
+blue-noise; (c) green-noise; (d) dispersed-dot ordered; and (e) clustered-dot ordered dithering under (left) ideal printing conditions and (right) with circular dot-overlap model.
+
+(a)
+
+reproducing continuous tone images due to the increased
+
+spatial resolution which it achieves, but when printing
+
+conditions are not ideal, printing distortions such as dot-
+
+gain make clustered-dithering techniques such as green
+
+noise preferable to blue.
+
+In closing, we add that the impact of blue noise on digital halftoning has been wide spread and has triggered many
+
+advancements. In particular, the blue-noise mask [21] has
+
+greatly decreased the computational complexity of dithering with blue noise. Equivalent developments can be made for
+
+green noise, as is noted in [22] for the green-noise mask.
+
+REFERENCES
+
+[1] V. Ostromoukhov, P. Emmel, N. Rudaz, I. Amidror, and R.
+
+D. Hersch, "Dither algorithms for variable dot-size printers," in Proc. Int. Conf. Image Processing, 1996, pp. 553-556.
+
+[2] I. Amidror, R. D. Hersch, and V. Ostromoukhov, "Spectral analysis and minimization of moire patterns in color separation," J.
+
+Electron. Imaging, vol. 3, pp. 295-317, July 1994.
+
+[3] P. Fink, PostScript Screening: Adobe Accurate Screens.
+
+Mountain View, CA: Adobe Press, 1992.
+
+[4] M. Rodriguez, "Graphic arts perspective on digital halftoning," Proc. SPIE, Human Vision, Vision Processing and Digital Display V, vol. 2179, pp. 144-149, Feb. 1994.
+
+[5] D. Blatner and S. Roth, Real World Scanning and Halftones.
+
+Berkeley, CA: Addison-Wesley, 1993.
+
+[6] T. P. Blumer, "Image display apparatus and method using (b)
+
+halftone super cells," U.S. Patent 5 287 195, 1994.
+
+[7] M. A. Coudray, "Causes and corrections of dot gain on press,"
+
+Fig. 29.
+
+The resulting images using: (a) blue noise and (b) green
+
+Screen Printing: J. Technol. Manage. , vol. 86, pp. 18-26, Aug.
+
+noise using a circular dot-overlap model such that the ratio of 1996.
+
+the diameter of a printed dot to the minimum distance between
+
+[8] R. A. Ulichney, Digital Halftoning.
+
+Cambridge, MA: MIT
+
+samples is 10 : 6.
+
+Press, 1987.
+
+[9] L. Velho and J. M. Gomes, "Digital halftoning with space filling noise, being composed of pixel clusters, does increase
+
+curves," Comput. Graphics, vol. 25, pp. 81-90, July 1991.
+
+[10] T. Scheermesser and O. Bryngdahl, "Control of texture in image the visibility of the halftone pattern. Given ideal printing halftoning," J. Opt. Soc. Amer. A, vol. 13, pp. 1645-1652, Aug.
+
+conditions, blue noise is, therefore, the obvious choice for 1996.
+
+LAU et al. : GREEN-NOISE DIGITAL HALFTONING
+
+2443
+
+
+
+
+
+[11] R. Levien, "Output dependant feedback in error diffusion Gonzalo R. Arce (S'82-M'82-SM'93) received
+
+halftoning," in Proc. IS&T's 8th Int. Congr. Advances in the B.S.E.E. degree with highest honors from
+
+Non-Impact Printing Technologies, Oct. 1992, pp. 280-282.
+
+the University of Arkansas, Fayetteville, in 1979
+
+[12] R. A. Ulichney, "Dithering with blue noise," Proc. IEEE, vol.
+
+and the M.S. and Ph.D. degrees in electrical
+
+76, pp. 56-79, Jan. 1988.
+
+engineering from Purdue University, West
+
+[13] N. A. C. Cressie, Statistics for Spatial Data.
+
+New York: Wiley,
+
+Lafayette, IN, in 1980 and 1982, respectively.
+
+1983.
+
+Since 1982, he has been with the Department
+
+[14] D. Stoyan, W. S. Kendall, and J. Mecke, Stochastic Geometry of Electrical and Computer Engineering at the
+
+and Its Applications.
+
+New York: Wiley, 1987.
+
+University of Delaware, Newark, where he is
+
+[15] T. Mitsa and K. J. Parker, "Digital halftoning technique using currently Professor and Associate Chair. He
+
+a blue noise mask," J. Opt. Soc. Amer. , vol. 9, pp. 1920-1929, frequently serves as consultant to industry and
+
+Aug. 1992.
+
+government in the areas of digital printing, image processing, and digital
+
+[16] R. W. Floyd and l. Steinberg, "An adaptive algorithm for spatial communications. His research interests include robust and nonlinear signal gray-scale," Proc. SID, vol. 17, no. 2, pp. 75-78, 1976.
+
+processing and its applications, wireless communications, image and video
+
+[17] P. Hall, Introduction to the Theory of Coverage Processes.
+
+signal processing, secure multimedia communications, and halftoning. He New York: Wiley, 1988.
+
+holds two U.S. Patents.
+
+[18] P. Stucki, "Mecca-a multiple-error correcting computation al-Dr. Arce has served as Associate Editor of the IEEE TRANSACTIONS
+
+gorithm for bilevel image hardcopy reproduction," IBM Res.
+
+ON SIGNAL PROCESSING, Guest Editor of IEEE TRANSACTIONS ON IMAGE
+
+Lab., Zurich, Switzerland, Tech. Rep. RZ1060, 1981.
+
+P
+
+[19] T. N. Pappas and D. L. Neuhoff, "Printer models and error ROCESSING, and Guest Editor for Optics Express. He received an NSF
+
+Research Initiation Award in 1983 and the Best Paper award from the diffusion," IEEE Trans. Image Processing, vol. 4, pp. 66-79, U.S. Army's ATIRP Federated Laboratory Consortium in 1997. He is a Jan. 1995.
+
+[20] T. N. Pappas, C. Dong, and D. L. Neuhoff, "Measurement Fellow of the Center for Advanced Studies at the University of Delaware.
+
+of printer parameters for model-based halftoning," J. Electron.
+
+He is a member of the Digital Signal Processing Technical Committee of Imaging, vol. 2, pp. 193-204, July 1993.
+
+the Circuits and Systems Society and a Member of the Board of Nonlinear
+
+[21] K. J. Parker and T. Mitsa, "Method and apparatus for halftone Signal and Image Processing Society.
+
+rendering of a gray scale image using a blue noise mask," U.S.
+
+Patent 5 341 228, 1994.
+
+[22] G. R. Arce and D. L. Lau, "Method and apparatus for producing halftone images using a green noise mask," U.S. Patent pending.
+
+Neal C. Gallagher (S'72-M'75-SM'85-F'87)
+
+received the Ph.D. degree from Princeton Uni-
+
+versity, Princeton, NJ, in 1974.
+
+He is the Charles Evans Black Professor and
+
+Chair of Electrical Engineering at the University
+
+of Delaware, Newark. Currently he is working
+
+on the use of finite element methods to solve
+
+Daniel L. Lau received the B.S.E.E. degree
+
+electromagnetic problems, the use of rank order
+
+with highest distinction from Purdue University,
+
+filtering techniques to improve the performance
+
+West Lafayette, IN, in 1995. He is currently
+
+of phase locked loops, the modeling of cellular
+
+working towards the Ph.D. degree in electri-
+
+automata using wave theory, and the autofocus
+
+cal engineering at the University of Delaware,
+
+problem in SAR. Before joining the University of Delaware he was on the Newark.
+
+faculty at Purdue University for 18 years. Prior to that he was a Faculty M
+
+He has worked in image processing at the
+
+ember at Case Western Reserve University. Over the years has published Lawrence Livermore National Laboratory. His
+
+in the areas of stochastic processes, quantization and source coding, research interests include image processing, dig-electromagnetic theory, and microwave components and optics.
+
+ital halftoning, multimedia, nonlinear filters, and
+
+Dr. Gallagher is presently Editor of Applied Optics Information Pro-art conservation. He has written several articles
+
+cessing. He is a Fellow of the IEEE for his work in nonlinear digital on nonlinear filters for signal and image processing, and he has consulted signal processing, and he is a Fellow of the Optical Society of America with industry on halftoning and digital printing. His most recent work has (OSA) for his work on diffractive optics. He has held various editorial focused on accurate color reproduction.
+
+and committee positions in the IEEE, OSA, and SPIE.
+
+2444
+
+PROCEEDINGS OF THE IEEE, VOL. 86, NO. 12, DECEMBER 1998
+
+
+
+
+

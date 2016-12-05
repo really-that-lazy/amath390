@@ -1,0 +1,6641 @@
+Mechatronics 17 (2007) 73-91
+
+Modelling of an automated manual transmission system q
+
+Gianluca Lucente, Marcello Montanari *, Carlo Rossi
+
+CASY - Center for Research on Complex Automated Systems ''G. Evangelisti'', Department of Electronics, Computer and System Sciences (DEIS), University of Bologna, Viale Pepoli 3/2, 40123 Bologna, Italy Received 21 September 2005; accepted 10 November 2006
+
+Abstract
+
+Vehicles with automated manual transmissions (AMT) for gear shift control offer many advantages in terms of reduction of fuel consumption and improvement of driving comfort and shifting quality. Complexity, nonlinearity and high-order dynamics of the automated driveline, combined with strict requirements for high performance gear shifts, demand the development of driveline models, which include a detailed description of the actuators. These models can be useful for different purposes: (a) during system development, to eval-uate the achievable performance and its dependency on system properties; (b) as simulation tools for gear shift control algorithm design.
+
+In this paper, physically-based detailed nonlinear models of the electro-hydraulic actuated gearbox and of the dry clutch electro-hydraulic actuator of an automated manual transmission are developed. In order to analyze their behavior and their impact on the drivetrain during gear shifts, actuator models are integrated with a simplified transmission shafts dynamics. A reduced-order model of the gearbox actuator, which is valid when dither signal is imposed to servovalves, is developed with the aim of analyzing its properties and performances.
+
+Model parameter identification has been performed mostly by means of theoretical relations and design data. Experimental tests, performed on a commercial car, confirm that the proposed model is able to describe the actuators behavior and the main phenomena characterizing system dynamics during gear shift.
+
+2006 Elsevier Ltd. All rights reserved.
+
+Keywords: Automated manual transmission; Modelling; Automotive; Electro-hydraulic systems; Singular perturbation method 1. Introduction
+
+spreading in the last years, mostly in the European car
+
+market.
+
+Automatic transmission control represents one of the
+
+An AMT is generally constituted by a dry clutch and a
+
+key elements for the improvement of vehicle safety, com-
+
+multi-speed gearbox, both equipped with electro-mechani-
+
+fort, reliability and driving performances together with
+
+cal or electro-hydraulic actuators, which are driven by an
+
+the reduction of fuel consumption and emissions in modern
+
+Electronic Control Unit (ECU). This paper focuses on an
+
+vehicles [1]. Different approaches, such as automatic, con-electro-hydraulic actuated system, which is the most fre-
+
+tinuously variable and automated manual transmission,
+
+quent solution thanks to its lower weight and the possibility
+
+have been pursued [2,3,4]. The AMT, exploiting the avail-of integrating the actuators with existing hydraulic equip-
+
+ability of reliable drive-by-wire technologies, represents an
+
+ments. The operating modes of AMTs are usually two: semi-
+
+important solution for the automotive industry and is
+
+automatic, with the driver requesting a sequential gear shift
+
+by means of a proper interface, or fully automatic. In both
+
+cases, after the gear shift request, the ECU takes the control
+
+of the shifting strategy, by issuing suitable command signals
+
+q This paper was not presented at any IFAC meeting.
+
+*
+
+to the engine, the dry clutch and the gearbox, according to
+
+Corresponding author. Tel.: +39 0 512093874; fax: +39 0 512093871.
+
+current engine regime, driving conditions and driving mode,
+
+E-mail addresses: glucente@deis.unibo.it (G. Lucente), mmontanar-
+
+i@deis.unibo.it (M. Montanari), crossi@deis.unibo.it (C. Rossi).
+
+e.g. economical or sport profile.
+
+0957-4158/$ - see front matter 2006 Elsevier Ltd. All rights reserved.
+
+doi:10.1016/j.mechatronics.2006.11.002
+
+74
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+With respect to manual transmission, the AMT allows
+
+mainly when fast and high comfort maneuvers are
+
+to improve driving comfort and shift quality (minimum
+
+required.
+
+shifting time decreases from 0.3 s with manual transmission
+
+In this paper, physically-based nonlinear models of the
+
+to 0.1 s with AMT). For market sectors such as large-series
+
+electro-hydraulic gearbox and clutch actuators are devel-
+
+and ecological cars, AMT has the advantage of lower
+
+oped in a detailed way. Since actuator dynamics are highly
+
+weight and higher efficiency with respect to other typolo-
+
+interconnected to the driveline dynamics, it is necessary to
+
+gies of automatic transmissions. Moreover, since AMT is
+
+combine them with a drivetrain model, for model valida-
+
+directly derived from manual transmission with the inte-
+
+tion and analysis of gear shift operations. Hence, an overall
+
+gration of servo-actuators into existing devices, develop-
+
+driveline model is derived, by combining the actuator mod-
+
+ment and production costs are generally lower than other
+
+els with a simplified but sufficiently accurate model of the
+
+automatic transmissions. Furthermore, for high class sport
+
+transmission shafts. According to previous considerations,
+
+cars, vehicle dynamic performances and driving quality can
+
+the objectives of the modelling process are twofold. First,
+
+be strongly improved with respect to automatic transmis-
+
+the proposed model accurately describes the dynamics
+
+sions. It is worth to point out that one of the limitations
+
+of the servo actuated clutch and gearbox and allows to
+
+of the AMT could be driving comfort reduction, caused
+
+analyze the influence of servo actuators (and their
+
+by lack of traction during gear shift actuation. However,
+
+components) on the driveline behaviour and on gear shift
+
+this drawback is not due to intrinsic limitations of the
+
+performances. Moreover, the proposed simulation model
+
+AMT, but it can be solved by proper gear shift
+
+represents one of the key issues for the design and evalua-
+
+management.
+
+tion of gear shift control strategies. With respect to previ-
+
+An overall strategy aiming to the improvement of the
+
+ous works, the main feature of this paper is that it
+
+gear shift quality should take into account the reduction
+
+focuses on the actuator dynamics and their integration into
+
+of shifting time, the minimization of mean vehicle deceler-
+
+the overall system, thus providing a model which can be
+
+ation due to traction loss and the minimization of vehicle
+
+useful for the design of high performance gear shift
+
+and driveline oscillations due to variation of transmitted
+
+controllers.
+
+torque. Since the overall performance of the gear shift is
+
+The pursued modelling approach decomposes the drive-
+
+highly influenced by all the components involved in the
+
+line into three main subsystems: transmission shafts and
+
+AMT, a detailed model of the driveline for AMTs is useful
+
+electro-hydraulic gearbox and clutch. In Figs. 1 and 2 a both during the drivetrain system development/design
+
+sketch of the driveline and a schematic block diagram of
+
+phases and for gear shift control algorithm design.
+
+the overall model are shown. In this paper, the main focus
+
+Many researches on AMT drivetrain modelling and
+
+is devoted to modelling of the servo-actuated clutch and
+
+control have been carried out. In [5] a detailed model for gearbox.
+
+the analysis of the driveline torsional vibrations has
+
+In Sections 2.1-2.3 the gearbox actuator is modelled been developed. Transmission shafts have been modelled
+
+by decomposition into a hydro-mechanical actuator used
+
+by means of finite element technique, and dry clutch
+
+for speed selection, pressure control servovalves and con-
+
+nonlinear characteristic and gearbox backlash have been
+
+necting pipelines. The high-order, highly nonlinear model
+
+taken into account. For the same purpose, in [6] a high-takes into account the electromagnetic, hydraulic and
+
+order nonlinear model based on multi-body model formu-
+
+mechanical dynamics of the actuator. Based on this
+
+lation has been developed for a driveline with manual
+
+detailed model, a reduced-order model of the hydraulic
+
+transmission.
+
+gearbox actuator is derived applying singular perturbation
+
+Detailed models of clutch electro-hydraulic and electro-
+
+and averaging theories in Section 2.4. For model reduction mechanical actuators for AMT have been described in
+
+the presence of dither is exploited to smooth the nonlinear-
+
+[7,8], in order to derive algorithms for actuator control.
+
+ity coming from Bernoulli's equation combined with the
+
+In studies devoted to gear shift control [9,10,11,12],
+
+servovalve dead-zone. This model allows to get insight on
+
+reduced-order driveline models have been usually consid-
+
+system properties, such as frequency analysis of the linear-
+
+ered, and clutch and gearbox actuator dynamics have been
+
+ized model.
+
+described by simple models or have been neglected. In
+
+The clutch actuator model, describing the dynamic rela-
+
+[10,13] two different models describing the torsional behav-tion between applied pressure on the clutch piston and
+
+iour of the driveline during engaged and neutral phases
+
+transmissible clutch torque, is addressed in Section 3. It have been developed. Linear models have been derived
+
+represents a refinement of the model developed by the
+
+considering equivalent lumped inertias for engine, gearbox
+
+authors in [7], where the focus was on the electro-hydraulic and wheels and one torsional flexibility for the secondary
+
+dynamics.
+
+shaft. The same approach has been followed in [14] to In Section 4 actuator models are combined with the model the clutch slipping and locked phases. It is worth
+
+dynamics of the transmission shafts connecting the engine
+
+to note that in both modelling- and control-oriented papers
+
+to the wheels. In this way, by exploiting a hybrid system
+
+the effects of actuators have not been taken into account.
+
+formalism, an overall model describing how engine torque,
+
+Nevertheless, actuator dynamics cannot be neglected at
+
+clutch disk position and gearbox actuator configuration act
+
+all, since it can considerably affect shifting performances,
+
+on shaft and wheel speeds during gear shift is developed.
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+75
+
+Fig. 1. Sketch of the driveline.
+
+Te
+
+ω
+
+e
+
+e
+
+Driveline shaft states
+
+*
+
+xc
+
+T
+
+ω
+
+c
+
+T
+
+ic
+
+T
+
+w
+
+w
+
+Electro-hy
+
+Electr
+
+d
+
+o-hy raulic
+
+r
+
+clutch
+
+tc disks
+
+T
+
+isks
+
+cM
+
+clutc
+
+l
+
+h
+
+utc actuat
+
+actu or
+
+(trans.
+
+s c
+
+. u
+
+c rve) ω
+
+Clutch
+
+tc torque
+
+T
+
+torque
+
+,
+
+c
+
+ω
+
+1
+
+c
+
+c 2
+
+(stick/slip)
+
+Driveline
+
+Driv
+
+shaf
+
+sha ts
+
+ω ,ω
+
+Drivel
+
+e ine
+
+in sha
+
+h ft stat
+
+a es,
+
+s
+
+1
+
+c
+
+c 2
+
+Gea
+
+Ge rb
+
+r ox actuato
+
+ctuat r sta
+
+t tes
+
+e
+
+ω ,ω
+
+*
+
+*
+
+i , i
+
+1
+
+g
+
+g 2
+
+,
+
+e 1
+
+,
+
+,
+
+e 2
+
+,
+
+r
+
+xp
+
+Electro-hy
+
+Electr
+
+d
+
+o-hy ra
+
+r u
+
+a lic
+
+fg
+
+gearbox
+
+r
+
+actu
+
+c a
+
+tu tor
+
+ω
+
+T , T
+
+ω ,ω
+
+1
+
+g
+
+g 2
+
+1
+
+g
+
+ω
+
+1
+
+g
+
+g
+
+1
+
+g
+
+g 2
+
+Gearbox
+
+r
+
+fg
+
+Fig. 2. Block diagram of the driveline model.
+
+Preliminary results on the overall driveline model have
+
+2. Gearbox actuator model
+
+been presented by the authors in [15].
+
+Parameter identification and model validation based on
+
+In the considered servo-actuated six-speeds indirect
+
+experimental tests are presented and discussed. Experimen-
+
+gearbox, selection of the gear ratio is performed by locking
+
+tal tests and detailed analysis of the steady-state and
+
+a particular couple of cogwheels to the shafts by means of a
+
+dynamical properties of the gearbox actuator are presented
+
+two-degree-of-freedom electro-hydraulic actuator. It is
+
+in Section 5.1, while in Section 5.2 the overall model is capable of both rotating the gearbox fork to perform the
+
+validated on experimental results relative to standard
+
+selection of one of the three ranks and translating it for
+
+gear shifts. Conclusions are drawn in Section 6. Nomencla-the engagement of even or odd speeds within the same
+
+ture used through the rest of the paper is reported in
+
+rank. In this section, the model of the actuator for gear
+
+Appendix B.
+
+engagement, which is schematically shown in Fig. 3, is x 1
+
+x
+
+x 2
+
+p
+
+s
+
+s
+
+1
+
+2
+
+At
+
+Ati
+
+Piston
+
+p
+
+p
+
+p
+
+1 i
+
+2 i
+
+p
+
+1
+
+A
+
+with fork
+
+2
+
+p
+
+V
+
+V
+
+1 i
+
+2 i
+
+V
+
+p
+
+V 1
+
+2
+
+u 1
+
+p u 2
+
+i 1
+
+i 2
+
+p
+
+p
+
+p
+
+p
+
+s
+
+0
+
+s
+
+0
+
+Fig. 3. Schematic diagram of the actuator for gear engagement. When xp = 0, piston is in the middle position. When x1 = 0, x2 = 0 left and right tappets are at the internal stops respectively.
+
+
+
+
+
+76
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+derived. Gearbox actuator is interconnected to the main
+
+Assuming laminar oil flow [16, Chapter 3] through the and secondary shaft dynamics through speeds xg1, xg2
+
+orifices qk,i = goa(pk pk,i), k = 1,2, pressure dynamics are
+
+(output variables for the shaft subsystem) and transmitted
+
+given by the fluid continuity equations
+
+torques Tg1, Tg2 (input variables), which depend on the
+
+b
+
+
+
+gearbox operating condition (see Figs. 1 and 2). The elec-_p1 ¼
+
+q q
+
+A1v1 ;
+
+V
+
+1
+
+1;i
+
+tro-hydraulic actuator is decomposed into three main sub-
+
+1
+
+systems: hydraulic actuator, servovalves and pipelines.
+
+b
+
+
+
+_p2 ¼
+
+q q
+
+þ A2v2 ;
+
+Servovalve and pipeline models are the same for both the
+
+V
+
+2
+
+2;i
+
+2
+
+hydraulic circuits, denoted by lowerscripts 1,2.
+
+b
+
+
+
+_p1;i ¼
+
+q
+
+A1
+
+;
+
+V
+
+1;i
+
+;iðvp v1Þ
+
+1;i
+
+2.1. Hydraulic actuator
+
+b
+
+
+
+_p2;i ¼
+
+q
+
+A
+
+:
+
+2;i
+
+2;iðv2 vpÞ
+
+The actuator (see also Fig. 3) is composed by a piston V 2;i
+
+joined with a fork acting on the cogwheels. Left and right
+
+Tappets and piston mechanical dynamics are described by
+
+positions correspond to engaged odd and even gears
+
+the following equations
+
+respectively, while the middle position corresponds to neu-
+
+tral. Opposite axial forces can be applied by means of two
+
+_xp ¼ vp;
+
+distinct hydraulic circuits, controlled by two single-stage
+
+1
+
+
+
+pressure control valves connected to the actuator by two
+
+_vp ¼
+
+Apðp
+
+p Þ b
+
+;
+
+1;i
+
+2;i
+
+vp vp þ k1p k2p þ fg
+
+long flexible pipelines. The motion of the piston is deter-
+
+mp
+
+mined by two tappets, whose stroke is limited by mechan-
+
+_x1 ¼ v1;
+
+ical constraints. The latter ones allow to stop the tappets
+
+
+
+
+
+and the piston into positions with engaged odd and even
+
+1
+
+_v1 ¼
+
+Atp A
+
+b
+
+;
+
+1
+
+t;ip1;i
+
+v1v1 k1i þ k1e k1p
+
+speeds or into the neutral position. The tappets guarantee
+
+m1
+
+that the piston moves to the middle position when equal
+
+_x2 ¼ v2;
+
+pressures are applied, due to modification of the effective
+
+
+
+
+
+areas on the two sides of the piston: in fact, when a tappet
+
+1
+
+_v
+
+ð1Þ
+
+2 ¼
+
+At;ip A
+
+b
+
+;
+
+2;i
+
+t p2
+
+v2v2 k2e þ k2i þ k2p
+
+is in contact with the piston, the effective area on the cor-
+
+m2
+
+responding side is greater than the other one. Note that,
+
+0 6 ðxp x1Þ ? k1p P 0;
+
+in order to keep the fork in a certain position, e.g. with
+
+engaged gear, no force is required to be applied to the
+
+0 6 ðx2 xpÞ ? k2p P 0;
+
+piston.
+
+0 6 x1 ? k1i P 0;
+
+The actuator model consists of the mechanical dynamics
+
+of the tappets and the piston and the hydraulic dynamics of
+
+0 6 ðx1 x1Þ ? k1e P 0;
+
+the outer and inner chambers. The actuator volume can be
+
+0 6 x2 ? k2i P 0;
+
+divided into four chambers by the tappets and the piston:
+
+outer chambers, with pressures p
+
+0 6 ðx
+
+1, p2 acting on the tappets,
+
+2 x2Þ ? k2e P 0;
+
+are directly connected to the pipelines, while inner cham-
+
+where unilateral constraint forces, denoted by k
+
+bers have pressures p
+
+ki, kke, kkp,
+
+1,i, p2,i acting both on the tappet and
+
+with k = 1, 2, represent the forces exerted by the stops on
+
+the piston. Pressures p1,i, p2,i act on an effective area lower
+
+the tappets and between tappets and piston.
+
+than that of pressures p1, p2 and with opposing effect. An
+
+orifice connects the inner and outer chamber on each side
+
+Remark 2.1. In order to express these forces depending on
+
+of the actuator.
+
+whether or not the stop is active, the ''complementarity''
+
+Considering tappets and piston positions delimited by
+
+condition ''0 6 x ? k P 0'', which stands for x P 0, k P 0
+
+constraints x1 2 ½x1; 0, xp 2 [x1, x2] and x2 2 ½0; x2, cham-
+
+and x Æ k = 0, is used [17]. It is worth noting that the ber volumes change depending on the position of the tap-displacement with respect to the stop necessarily satisfies
+
+pets and the piston as
+
+x P 0, while it holds k P 0, since the force exerted by
+
+the stop can act in one way only. In the hybrid system
+
+V 1 ¼ V 10 þ A1x1;
+
+framework, each constraint defines two modes: the
+
+V
+
+unconstrained one, with x P 0 and k = 0 (stop is not
+
+1;i ¼ V 1;i0 þ A1;iðxp x1Þ;
+
+active), and the constrained one, with x = 0 and k P 0.
+
+V 2 ¼ V 20 A2x2;
+
+In this case, expression of the generic constraint force k can
+
+V
+
+be determined imposing x with its 1st and 2nd time
+
+2;i ¼ V 2;i0 þ A2;iðxp þ x2Þ:
+
+derivatives equal to zero in the corresponding dynamical
+
+Note that, from relations between constraints, the piston
+
+equations in (1). Expressions of kki, kke, kkp, with k = 1, 2
+
+cannot be in contact with two tappets simultaneously,
+
+in the various modes are not reported here for the sake
+
+apart in the middle position (x1 = xp = x2 = 0).
+
+of space.
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+77
+
+Violation of inequalities x P 0, k P 0 leads to mode
+
+Section 4, is the torque such that gear engagement is kept transitions. In (1), denoting with x+ the right-hand limit ( _
+
+xg1 ¼ r1 _xg2).
+
+of x at the event time when transition takes place, and sup-
+
+In order to enter neutral phase, the piston is moved
+
+posing that impacts are inelastic, i.e. no bounce occurs,
+
+toward the middle position by applying pressure p1. Dis-
+
+reset of continuous variables is performed according to
+
+engagement (state Disengagement_1) starts at xp = xD1,
+
+the following jump rules:
+
+where the piston stops, until transmitted torque T g
+
+decreases under a threshold dependent on f
+
+m
+
+g. In fact, con-
+
+vþ ¼ vþ ¼
+
+1v1 þ mp vp
+
+if x
+
+straint force f
+
+acting on the piston in this state can
+
+p
+
+1
+
+p ¼ x1; vp < v1;
+
+g ¼ f
+
+m
+
+g1
+
+1 þ mp
+
+be thought as the stiction force opposing disengaging
+
+m2v2 þ m
+
+(and hence piston movement) and whose maximum ampli-
+
+vþ ¼ vþ ¼
+
+p vp
+
+if x
+
+p
+
+2
+
+2 ¼ x
+
+m
+
+p ; v2 < vp ;
+
+2 þ mp
+
+tude is proportional to transmitted torque. Expressions of
+
+vþ ¼ 0
+
+if x
+
+ð2Þ
+
+f and f during disengagement are such that x
+
+g1
+
+g2
+
+p remains
+
+1
+
+1 ¼ 0; v1 > 0;
+
+constant. Supposing that one tappet is joined with the pis-
+
+vþ ¼ 0
+
+if x
+
+1
+
+1 ¼
+
+x1; v1 < 0;
+
+ton during disengagement and synchronization phases,
+
+vþ ¼ 0
+
+if x
+
+while the other is not in contact, they are obtained from
+
+2
+
+2 ¼ 0; v2 < 0;
+
+(1) imposing constant x
+
+vþ ¼ 0
+
+if x
+
+p as
+
+2
+
+2 ¼
+
+x2; v2 > 0:
+
+f ¼ ðA
+
+A
+
+þ A
+
+;
+
+g1
+
+p At;iÞp1;i
+
+t p1
+
+p p2;i
+
+In (1) external force fg represents the reaction force applied f ¼ ðAp At;iÞp þ Atp App :
+
+on the piston by gearbox devices acting on the cogwheels,
+
+g2
+
+2;i
+
+2
+
+1;i
+
+during gear engaging and disengaging phases. Expressions
+
+When transmitted torque decreases, i.e. when jfgj P
+
+of fg, Tg1, Tg2 and gear ratio r depend on gearbox opera-
+
+kgDjT j, cogwheels can disengage, and gearbox enters in
+
+g
+
+tions and shaft torque/speed, as defined by the automaton
+
+neutral (state Neutral), where no external force is applied
+
+relative to the 1st and 2nd gears depicted in Fig. 4. Piston to the piston (fg = 0) and transmitted torque between gear-displacements relative to disengaging and synchronization
+
+box shafts Tg1, Tg2 is null. During this phase, gearbox rank
+
+phases are related by
+
+x1 6 xD1 6 xS1 6 0 6 xS2 6 xD2 6 x2.
+
+selection can be performed if needed. In order to engage
+
+Consider the 1st to 2nd gear shift (2nd to 1st gear shift is
+
+the 2nd gear, synchronization phase (state Synchro_2) is
+
+similar, and the automaton can be simply extended to other
+
+first performed by applying pressure p1 to the piston. The
+
+speeds). When the first gear is engaged (state Engaged_1,
+
+piston stops at xp = xS2, where the synchronizer starts
+
+r = r1), the piston is on the left, i.e. x1 6 x1 6 xp 6 xD1, it
+
+working. In fact, gear engaging is possible only when main
+
+holds xg1 = r1xg2 and transmitted torques are T g1 ¼ T ,
+
+and secondary shaft speeds are related by the correct gear
+
+g
+
+T g2 ¼ r1T , where T , whose expression will be defined in
+
+ratio r
+
+g
+
+g
+
+2. The synchronizer is modelled as a device which
+
+Fig. 4. Representation of the finite state automaton for 1st and 2nd gears.
+
+
+
+
+
+78
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+applies Coulomb friction torque to the cogwheels, thus dis-
+
+ent with non null oil flow and acts as a disturbance oppos-
+
+sipating the exceeding kinetic energy of gearbox shafts on
+
+ing to the opening of the orifices. In (3), fe is the force two conic surfaces. Torque amplitude Tg1 = Tg2 is propor-applied on the plunger by a linear variable reluctance ma-
+
+tional to normal force fg applied to the gearbox fork, which
+
+chine. More details on the electro-magnetic model of the
+
+is also related to pressure applied to the piston. Hence,
+
+servovalve can be found in [7]. Since it results that the force fg ¼ f can be thought as a reaction force which op-steady-state value of f
+
+g2
+
+e is approximatively proportional to
+
+poses the piston movement. When the cogwheels engage
+
+the coil current, and taking into account the servovalve
+
+(xg1 = r2xg2), force fg becomes null and the piston moves
+
+current driver and the electro-magnetic coil dynamics, a
+
+to the right position (state Engaged_2, with xp P xD2 P
+
+linear first-order filter with time constant se between com-
+
+x2 P x2), where transmitted torques T g1 ¼ T ; T
+
+mand current i and force f
+
+g
+
+g2 ¼ r2T
+
+g
+
+e
+
+e has been introduced to model
+
+are such that gear engagement is kept.
+
+the current-controlled electrical machine.
+
+The sensing chamber pressure dynamics is given by
+
+2.2. Pressure control valve
+
+b
+
+_pc ¼
+
+ðq þ Ac0vvÞ;
+
+V
+
+oc
+
+ð4Þ
+
+A sketch of the two single-stage pressure control valves
+
+c0 Ac0xv
+
+[16] for gear engagement is shown in Fig. 5. Main feature q
+
+¼ g ðp p Þ;
+
+oc
+
+c
+
+u
+
+c
+
+of pressure control valve is that it is a closed-loop control
+
+where g ¼ n
+
+pr4oc and Poiseuille law for laminar flow q
+
+c
+
+oc 8ll
+
+oc
+
+system: pressure feedback is determined by an internal
+
+oc
+
+through the capillary tubes connecting the sensing chamber
+
+''sensing'' chamber connected by a capillary to the user
+
+to the user port has been utilized [16, Chapter 3].
+
+port, which provides a feedback force proportional to the
+
+Oil flow qu at the user port depends on the plunger posi-
+
+user pressure acting on the valve plunger.
+
+tion, which determines if the user port is connected to the
+
+The servovalve model, composed by the mass-spring-
+
+low pressure tank (dumping), to the high pressure supply
+
+damper dynamics of the plunger and by the electro-mag-
+
+(filling) or it is in the dead-zone, since the valve is over-
+
+netic dynamics, is given by
+
+lapped. The oil flow is expressed by Bernoulli's equation
+
+_x
+
+8
+
+rffiffiffi
+
+v ¼ vv;
+
+2
+
+>
+
+pffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+
+>
+
+1
+
+>nocd
+
+p p A
+
+u
+
+0
+
+d ðxvÞ
+
+if xv 6 xvd;
+
+>
+
+_v
+
+>
+
+q
+
+v ¼
+
+½f
+
+; p ; p Þ A
+
+;
+
+<
+
+m
+
+e kvxv þ fv0 bvðvvÞ þ F bðxv; pu
+
+s
+
+0
+
+cpc
+
+v
+
+q ðx
+
+Þ ¼
+
+0
+
+if x
+
+u
+
+v; pu
+
+vd 6 xv 6 xvf ;
+
+>
+
+>
+
+rffiffiffi
+
+_
+
+1
+
+1
+
+f
+
+>
+
+e ¼
+
+f
+
+k
+
+j;
+
+>
+
+2p
+
+>
+
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+
+s
+
+e þ
+
+f ji
+
+e
+
+:
+
+e
+
+se
+
+nocd
+
+p p A
+
+q
+
+s
+
+u
+
+f ðxvÞ
+
+if xv P xvf :
+
+ð3Þ
+
+ð5Þ
+
+where Fb = 2nocdb [Ad(xv)(pu p0) Af(xv)(ps pu)] is the
+
+The low pressure circuit is constituted by a tank at atmo-
+
+steady-state Bernoulli force [16, Chapter 5], which is pres-spheric pressure, hence it can be assumed that p0 ffi 0 bar,
+
+while a sufficiently large accumulator at high pressure,
+
+Spring
+
+Sensing
+
+Coil
+
+User port
+
+Spring
+
+chamber
+
+filled by a pump, provides an (almost) constant pressure
+
+ps ffi 50 bar. It is assumed that p0 6 pu(t) 6 ps, "t.
+
+pc
+
+Remark 2.2. A conceptual scheme of the servovalve model
+
+is depicted in Fig. 6. It is worth noting that, considering p0
+
+pu ,qu
+
+ps
+
+Vc0 Ac0xv and qoc Ac0vv in (4), the pressure pc is the linear first-order filtering of the user pressure p
+
+Plunger
+
+u. From (3)-
+
+Discharge
+
+Charge
+
+(5), it follows that the servovalve can be considered as a Fig. 5. Schematic diagram of the pressure control valve.
+
+closed-loop system with negative feedback, thanks to the
+
+Mechanical dynamics
+
+Current driver
+
+Output flow
+
+Pipeline
+
+eq. (5)
+
+eq. (6)
+
+Sensing chamber
+
+Fig. 6. Conceptual scheme of the pressure control valve connected to the pipeline and the gearbox actuator. ie,d stands for the dither signal, q1d for speed-dependent oil-flow disturbance.
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+79
+
+sensing chamber pressure acting on the plunger. In steady-
+
+*
+
+6
+
+p (i )
+
+state conditions and supposing a capacitive load, when
+
+x 10
+
+u e
+
+6
+
+constant current i is applied, spring, electrical and sensing
+
+e
+
+pressure forces are balanced, yielding to proportionality
+
+5
+
+between command current and user pressure. In this
+
+4
+
+condition, the plunger is in the dead-zone, and no oil
+
+flows through the valve. Dynamical properties of the
+
+3
+
+mechanical and hydraulic model of the pressure control
+
+2
+
+valve will be investigated in next sections.
+
+Pressure (Pa)
+
+1
+
+2.3. Pipeline
+
+00
+
+0.4
+
+0.8
+
+1.2
+
+1.6
+
+2
+
+Current (A)
+
+Due to vehicle layout constraints, pressure control
+
+valves are connected to the hydraulic actuator through flex-
+
+Fig. 7. Servovalve pressure vs current steady-state characteristic. Simu-ible and long (0.7 m) pipelines. In order to model the line,
+
+lation (solid) and experimental data: rising current (black mark), falling current (white mark).
+
+the dissipative modal approximation technique is adopted.
+
+A linear friction model with correction terms introduced to
+
+±0.1 A/s, starting from 0 A to 2.2 A and back, lasting
+
+compensate for frequency-dependent viscosity is consid-
+
+44 s. For currents lower than i
+
+ffi 0:6 A the valve
+
+ered, as in [18,19,7]. By means of harmonic analysis of 0 ¼ kvxvf fv0
+
+kf
+
+plunger remains in the dumping region, hence no oil flows
+
+the pipeline and mechanical and hydraulic loads, it can
+
+at the user port and p
+
+be concluded that, for the considered modelling purposes,
+
+u is null. For currents greater than i0,
+
+the steady-state characteristic is almost linear and can be
+
+the fundamental mode is sufficient to approximate the
+
+obtained from the servovalve model (3),(4) at the equilib-finite delay terms introduced by the pipeline [18]. Hence, rium as
+
+the pipeline is modelled as a 2-port system with input/out-
+
+put variables given by the servovalve and the actuator oil
+
+1
+
+p ¼
+
+ðk
+
+j k
+
+þ f
+
+flows and pressures. It is expressed in state-space form by
+
+u
+
+A
+
+f ji
+
+e
+
+vx0v
+
+v0Þ
+
+ð7Þ
+
+c
+
+the following R-L-C dynamics:
+
+2
+
+with x0 ¼ xvf during positive slope phase and x0 ¼ xvd dur-
+
+p 3
+
+v
+
+v
+
+
+
+
+
+0
+
+
+
+
+
+ing negative slope phase. In fact, note that due to the
+
+C
+
+6
+
+2 7
+
+p _
+
+pu
+
+p
+
+¼ 6
+
+7
+
+u
+
+capacitive load, oil flow is almost null and hence the valve
+
+L
+
+p 1
+
+Rpb
+
+4
+
+p 5
+
+p _
+
+q1
+
+
+
+q1
+
+plunger is on the upper or lower threshold displacement,
+
+2 a2
+
+a
+
+p
+
+p
+
+2
+
+thus leading to the hysteresis in the p ðiÞ characteristic.
+
+u
+
+e
+
+p
+
+3
+
+0
+
+For current i P 2:1 A, pressure p
+
+e
+
+u is saturated at the
+
+6
+
+
+
+
+
+2
+
+7 p
+
+supply pressure p
+
+þ 6
+
+1
+
+s ffi 5 MPa.
+
+p 1
+
+R
+
+7
+
+ð6Þ
+
+p b
+
+4Z
+
+4
+
+5
+
+
+
+p
+
+0Dnp
+
+qu
+
+2 a2
+
+a
+
+a2
+
+p
+
+p
+
+p
+
+2.4.2. Reduced-order model
+
+In this section, the frequency analysis of the gearbox
+
+where the hydraulic parameters are defined as Cp ¼ lpAp,
+
+qffiffiffiffiffi
+
+qc2p
+
+actuator is developed, in order to enlighten the dependance
+
+b
+
+L
+
+e;p
+
+p ¼ qlp, R
+
+, c
+
+, Z
+
+, D
+
+and a
+
+A
+
+p ¼ 8qmlp
+
+p ¼
+
+0 ¼ qcp
+
+n ¼ lp m
+
+p, bp
+
+of the pressure control loop bandwidth on the electro-mag-
+
+p
+
+Apr2
+
+q
+
+A
+
+p
+
+p
+
+cpr2p
+
+are correction terms to take into account frequency-depen-
+
+netic, mechanical and hydraulic model, namely servovalve,
+
+dent viscosity [18].
+
+pipeline and actuator parameters.
+
+It is worth noting that the gearbox dynamics is non-
+
+2.4. Reduced-order model of the gearbox actuator
+
+linear and hence, in principle, frequency analysis could be
+
+performed only on the system linearization in the neighbor-
+
+In this section, the steady-state characteristic of the pres-
+
+hood of an equilibrium point. Considering for simplicity the
+
+sure control servovalve is analyzed. Then, a reduced-order
+
+hydraulic actuator at constant volume, at the equilibrium
+
+model of the gearbox actuator is derived, under assump-
+
+(with constant command current) the valve plunger is in
+
+tion of application of dither signal to the command current
+
+the dead-zone. On the other hand, since the nonlinear oil
+
+and exploiting singular perturbation and averaging theo-
+
+flow function qu(xv, pu) in (5) is not differentiable with respect ries. Based on this model, the frequency response analysis
+
+to xv in xvd and xvf and is characterized by null flow/displace-
+
+is carried out.
+
+ment gain for xv 2 (xvd,xvf), it is not possible to define a lin-
+
+earized model for the servovalve subsystem (5).
+
+2.4.1. Pressure control valve steady-state characteristic
+
+However, linearization can be performed by exploiting
+
+In Fig. 7 simulated and experimental pressure vs current the presence of a dither signal superimposed to the
+
+steady-state characteristics of the pressure control valve are
+
+servovalve current. Dither is a high frequency signal which
+
+shown. They have been determined by applying a (slowly
+
+is added to nonlinear systems with the aim of averag-
+
+variable) command current profile with constant slope
+
+ing strong nonlinearities [16, Chapter 8,20]. Generally
+
+80
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+speaking, dither frequency is higher than cut-off frequency,
+
+-5
+
+q (x ,p ), q
+
+(x , p )
+
+x 10
+
+u
+
+v
+
+u
+
+u,av
+
+v
+
+u
+
+hence dither is filtered by the system and its ''low-fre-
+
+2
+
+quency'' effect is to allow the approximation of the system
+
+behaviour with a smoother one. Application of dither is a
+
+1
+
+well-known solution for mechanical and hydraulic systems
+
+/s)
+
+with stick-slip friction or relay systems. One of the theoret-
+
+3
+
+ical frameworks for stability analysis of systems with dither
+
+0
+
+is the averaging method (see [21] for general theory and oil flow (m
+
+[22-24] for application to nonlinear systems with dither).
+
+-1
+
+In the considered case, dither is exploited to smooth the
+
+nonlinearity coming from Bernoulli's equation (5) com-
+
+-2
+
+bined with the dead-zone of the overlapped servovalve.
+
+7
+
+8
+
+9
+
+10
+
+Based on the nonlinear model of the gearbox actuator
+
+-4
+
+x (m)
+
+v
+
+x 10
+
+and assuming a sinusoidal dither signal, time-scale separa-
+
+Fig. 8. Oil-flow characteristics q
+
+tion can be enlightened and exploited to define a reduced-
+
+u (xv, pu) (solid) and its averaged version
+
+qu,av(xv, pu) (marked) for pu = 25 · 105 Pa.
+
+order model. In particular, three different time scales come
+
+out: (1) the fast dynamics of the sensing chamber pressure
+
+and pipeline resonances, (2) the dither excitation frequency,
+
+Given a constant command current i, the equilibrium
+
+e
+
+equal to 100 Hz, and (3) the slow electro-magnetic and
+
+point of (8) is ðxv; vv; fe; p ÞT ¼ ðx
+
+; p ÞT with x
+
+u
+
+ve; 0; kf i
+
+e
+
+ue
+
+ve,
+
+mechanical model of the servovalve and the dominant
+
+pue
+
+such
+
+that
+
+qu,av(xve, pue) = 0
+
+and
+
+kvxve þ Acp ¼
+
+ue
+
+hydraulic dynamics. Thanks to dither, the main feature
+
+kf i þ f
+
+e
+
+v0. Performing linearization of model (8) at a given of the reduced-order model is that it is an ''averaged'' ver-equilibrium point, small signal frequency analysis of the
+
+sion of the full-order one, characterized by a smooth posi-
+
+hydraulic gearbox actuator model can be carried out. In
+
+tion/user port oil flow function: in fact, the effect of dither
+
+Fig. 9 the Bode plots of P1ðxÞ for p
+
+I
+
+ue = 10 · 105
+
+Pa,
+
+e ðxÞ
+
+is equivalent to superimpose a high-frequency sinusoidal
+
+25 · 105 Pa, 40 · 105 Pa are shown. A meaningful insight
+
+signal to the valve displacement.
+
+of the system structure can be drawn from Fig. 6. The The reduced-order system is expressed by the 4th order
+
+bandwidth of the pressure control loop, relating command
+
+model
+
+current i to the delivered actuator pressure p
+
+e
+
+u, is deter-
+
+mined by the cascade of: (a) the electro-magnetic valve sub-
+
+_xv ¼ vv;
+
+system, characterized by 1st order dynamics with 10 ms
+
+k
+
+b
+
+A
+
+f
+
+f
+
+_
+
+time constant, and (b) the valve mechanical and the main
+
+v
+
+v
+
+v
+
+c
+
+e
+
+v0
+
+v ¼
+
+x
+
+v
+
+p þ
+
+þ
+
+;
+
+m
+
+v
+
+v
+
+u
+
+v
+
+mv
+
+mv
+
+mv
+
+mv
+
+hydraulic pipeline dynamics, characterized by a bandwidth
+
+equal to 400 rad/s and poorly damped complex poles. It
+
+_
+
+1
+
+k
+
+f
+
+f
+
+e ¼
+
+f
+
+i;
+
+s
+
+e þ
+
+e
+
+results that eigenvalue positions and the overall system
+
+e
+
+se
+
+bandwidth, which is approximatively 100 rad/s, do not
+
+1 p
+
+_p
+
+ð8Þ
+
+u ¼
+
+q
+
+ðx
+
+Þ;
+
+depend significatively on the equilibrium point.
+
+C
+
+u;av
+
+v; pu
+
+p 2
+
+q ¼ 0;
+
+1
+
+*
+
+
+
+!
+
+P (ω)/I (ω)
+
+1
+
+e
+
+2a2
+
+Rpb
+
+4Z
+
+140
+
+p ¼ p þ
+
+p
+
+p
+
+0Dnp
+
+q
+
+ðx
+
+Þ;
+
+1
+
+u
+
+p
+
+a
+
+u;av
+
+v; pu
+
+p
+
+a2p
+
+120
+
+p ¼ p ;
+
+c
+
+u
+
+100
+
+where the averaged oil flow qu,av(xv,pu) is derived from (5)
+
+80
+
+Magnitude (dB)
+
+as
+
+Z
+
+60 1
+
+2
+
+3
+
+1
+
+2p
+
+10
+
+10
+
+10
+
+q
+
+ðx
+
+Þ ¼
+
+q ðx
+
+Þds;
+
+u;av
+
+v; pu
+
+2p
+
+u
+
+v þ xd cos s; pu
+
+0
+
+0
+
+where xd is the maximum amplitude of the valve plunger
+
+-90
+
+displacement induced by dither. Details on model deriva-
+
+-180
+
+tion, based on successive applications of singular perturba-
+
+tion method and averaging theory [21,25], are reported in Phase (deg) -270
+
+Appendix A.
+
+As an example, in Fig. 8 the position vs oil flow charac-1
+
+2
+
+3
+
+10
+
+10
+
+10
+
+teristics q
+
+Frequency (rad/s)
+
+u(xv, pu) and its averaged version qu,av(xv, pu), for
+
+pu = 25 · 105 Pa and with xd = 6.4 · 105 m as in the avail-
+
+Fig. 9. Bode plot of the linearized model P 1ðxÞ=IðxÞ for p
+
+e
+
+u = 10 · 105 Pa
+
+able experimental set-up, are shown.
+
+(h), pu = 25 · 105 Pa (}), pu = 40 · 105 Pa (s).
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+81
+
+3. Clutch actuator model
+
+Remark 3.1. Note that when fc,p = 0 the clutch is locked,
+
+i.e. xc2 = 0, thanks to the pre-load springs. From (9), it The automated clutch is constituted by a standard dry
+
+follows that with locked clutch the normal constraint force
+
+clutch controlled by an electro-hydraulic servo. As depicted
+
+is given by nc = fc0 + cr(xc1)fc,b(xc1) P 0, while when the
+
+in Fig. 10, the clutch actuator is constituted by disks clutch disks are not in contact it holds nc = 0. Therefore,
+
+between the flywheel and the clutch plate, whose surfaces
+
+neglecting inertial and friction terms in (9), the normal are covered with high-friction materials. The electro-constraint force nc is a nonlinear function of the clutch
+
+hydraulic clutch actuator, which is driven by a three-way
+
+position xc1, and hence of the pressure pc,p applied by the
+
+spool servovalve [7,16], applies pressure to control the dis-clutch actuator.
+
+placement of the clutch piston, which pushes on the release
+
+Assuming a stick-slip friction model [20], the maximum bearing. The transmitted torque Tc can be thought as stick-torque T
+
+slip friction, while the maximum transmissible torque
+
+cM transmissible by the disks is dependent on the
+
+axial force n
+
+(related to static friction) is modulated by the normal force
+
+c applied to the clutch plate through the so-
+
+called clutch transmissibility curve. Hence, it follows that
+
+applied to clutch disks. In [7] a clutch actuator model it is possible to control the maximum transmissible torque
+
+focusing on the hydraulic part and involving the release
+
+T
+
+bearing position as output variable has been developed.
+
+cM by controlling the clutch piston position xc1. Accord-
+
+ing to the stick-slip friction model, the torque transmitted
+
+In this section, the model is refined considering the relation
+
+by the clutch is expressed by
+
+between the force applied to the release bearing and the
+
+8
+
+transmitted clutch torque.
+
+T
+
+if ðx
+
+> c
+
+c1 ¼ xc2Þ and
+
+>
+
+>
+
+When no external force is applied, flywheel and clutch
+
+>
+
+<
+
+ðjT j 6 T
+
+c
+
+cM ðncÞÞðlockedÞ;
+
+disks are pressed together by Belville and pre-load springs
+
+T c ¼ >T
+
+and hence engine torque can be transmitted. In order to
+
+cM ðncÞ signðxc1 xc2Þ
+
+otherwise
+
+>
+
+>
+
+>
+
+:
+
+release the clutch, the hydraulic piston pushes the release
+
+ðslippingÞ;
+
+bearing: the Belville spring, acting as a lever, reduces the
+
+ð10Þ
+
+normal force applied to the clutch plates, thus separating
+
+friction disks. Note that the Belville spring acts both as a
+
+where T , whose expression will be defined in Section 4,
+
+c
+
+spring and a lever with variable coupling ratio; hence, the
+
+represents the transmitted torque maintaining locked
+
+steady-state piston force is related to the force applied to
+
+clutch disks, i.e. xc1 = xc2 and _xc1 ¼ _xc2. Note that in
+
+the clutch plate by a nonlinear relation dependent on the
+
+(10) ''locked'' refers to condition with xc2 = 0, xc1 = xc2
+
+clutch piston displacement. With these considerations in
+
+and effective transmitted torque lower than the maximum
+
+mind, the mechanical dynamics of the release bearing and
+
+one, while ''slipping'' refers or to condition with slipping
+
+the clutch plate is given by
+
+disks or to detached disks, when nc = 0 and hence TcM = 0.
+
+mc1€xc1 ¼ bc1ð_xc1Þ fc;bðxc1Þ þ Ac;pp ;
+
+c;p
+
+4. Model of transmission shafts
+
+m
+
+ð9Þ
+
+c2€
+
+xc2 ¼ bc2ð_xc2Þ crðxc1Þfc;bðxc1Þ kcxc2 fc0 þ nc;
+
+0 6 x
+
+In order to analyze and validate the actuator models
+
+c2 ? nc P 0;
+
+developed, it is necessary to combine them with the trans-
+
+where fc,p = Ac,ppc,p represents the force applied by the elec-
+
+mission shaft dynamics. For this purpose, a simplified linear
+
+tro-hydraulic actuator to the piston and nc is the unilateral
+
+model of the driveline mechanical dynamics is presented and
+
+constraint force between the two disks.
+
+integrated with the actuator models, hence obtaining an
+
+overall driveline model with hybrid structure. Even though
+
+the introduced hypothesis are restrictive and not realistic,
+
+they can be assumed for gear shift modelling purposes, since
+
+they do not have high influence on the model. Hence, despite
+
+the simplicity of the driveline model developed, it is possible
+
+to accurately describe the actuators behaviour and their
+
+effect on the driveline during the gear shift.
+
+As shown in Fig. 1, the driveline can be thought as composed by engine, clutch, gearbox, wheels and vehicle
+
+inertia, connected by flexible damped transmission shafts.
+
+Each shaft (crankshaft, main and secondary shaft) is
+
+modelled as a spring-damper element connecting two
+
+equivalent inertias, relative to the shaft and the loads. Each
+
+shaft is characterized by its input/output speeds and spring
+
+torsional displacement. Relations between shaft speeds and
+
+transmitted torques depend on clutch and gearbox operat-
+
+Fig. 10. Schematic diagram of the clutch actuator.
+
+ing conditions.
+
+
+
+
+
+82
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+The engine is modelled as an ideal torque actuator char-
+
+of Section 3, when the clutch is locked and a speed with acterized by a constant inertia connected through the
+
+gear ratio r = ri is engaged, shaft speeds are related by
+
+crankshaft to the flywheel and the clutch disks. Torque
+
+xc1 = xc2 = xc and xg1 = rxg2 = xg, and values of torques
+
+Te represents the net torque generated by the engine,
+
+T c ¼ T and T
+
+are such to guarantee that
+
+c
+
+g1 ¼ T g2=r ¼ T
+
+g
+
+considering also friction losses. For gear shift control
+
+the shafts remain connected, i.e. _
+
+xc1 ¼ _xc2 (locked clutch)
+
+purposes, a detailed model of discontinuous torque gener-
+
+and _
+
+xg1 ¼ r _xg2 (engaged gear). In this case, clutch and
+
+ation in the internal combustion engine is not considered,
+
+gearbox dynamics in (11) reduce to
+
+hence high frequency torque components dependent on
+
+ðJ c1 þ J c2Þ _
+
+xc ¼ T ec T cg;
+
+the crankshaft angle are not taken into account.
+
+
+
+
+
+J
+
+T
+
+Elements between gearbox and wheels (secondary and
+
+J
+
+g2
+
+gw
+
+g1 þ
+
+_
+
+xg1 ¼ T cg bgxg
+
+axle shafts, differential drive and tires) can be modelled
+
+r2
+
+r
+
+as a unique equivalent mass-spring-damper system under
+
+and torques transmitted by clutch and gearbox are ob-
+
+the following assumptions. The differential drive, which
+
+tained as
+
+has a constant speed ratio, is considered to be rigidly con-
+
+
+
+
+
+J
+
+T
+
+T
+
+nected to the gearbox. Backlash is neglected in the shaft
+
+T ¼
+
+c1J c2
+
+ec þ cg ;
+
+c
+
+dynamics. The viscous and elastic effects of secondary
+
+J c1 þ J c2 J c1
+
+J c2
+
+
+
+
+
+and axle shafts and tires are lumped into a unique equiva-
+
+J
+
+T
+
+rT
+
+T ¼
+
+g1J g2
+
+cg bg xg1 þ
+
+gw
+
+:
+
+lent spring-damper element. A simplified model of the tire/
+
+g
+
+r2J g1 þ J g2
+
+J g1
+
+J g2
+
+road interaction is considered, since infinite tire stiffness
+
+Note that the equivalent secondary shaft and wheel inertias
+
+and no tire slipping are assumed, i.e. output axle speed is
+
+referred to the engine are given by Jg2 and Jw respectively.
+
+algebraically related to vehicle speed. Torque T
+
+r2
+
+r2
+
+w, repre-
+
+senting the equivalent load torque applied to the wheels
+
+due to road friction, aerodynamical drag and gravitational
+
+5. Model validation and experimental results
+
+force acting on the vehicle, is assumed to be a slowly vary-
+
+ing disturbance input.
+
+In this section, the model proposed is validated with
+
+According to previous considerations, the following
+
+respect to experimental data relative to both ad hoc tests
+
+mass-spring-damper dynamics, obtained from Newton's
+
+and standard operations performed during gear shift. The
+
+law, describe the transmission shafts (see also Fig. 1) analysis proceeds in this way. First, dynamical properties
+
+of the gearbox actuator are investigated by means of tests
+
+J e _
+
+xe ¼ T e T ec;
+
+performed on a laboratory test-bench. Then, the overall
+
+J c1 _
+
+xc1 ¼ T ec T c;
+
+model is analyzed and validated on various gear shift tran-
+
+J
+
+sients. The proposed model has been realized in Matlab/
+
+c2 _
+
+xc2 ¼ T c T cg;
+
+ð11Þ
+
+Simulink/Stateflow.
+
+J g1 _
+
+xg1 ¼ T cg bgxg1 T g1;
+
+Parameters of the clutch and gearbox actuator models
+
+J g2 _xg2 ¼ T g2 T gw;
+
+have been identified from data sheets on the basis of theo-
+
+J
+
+retical and physical laws, apart spring pre-load values,
+
+w _
+
+xw ¼ T gw T w;
+
+which have been determined through experiments. Differ-
+
+with
+
+ently, viscous and elastic parameters of the drive-train
+
+T
+
+model and force/torque gains k
+
+ec ¼ kechec þ becxec;
+
+gD, kgS have been deter-
+
+mined by means of experimental tests. In this case, numer-
+
+_hec ¼ xec ¼ xe xc1;
+
+ical estimation methods based on nonlinear least square
+
+T
+
+optimization [26] have been utilized for parameter identifi-cg ¼ kcg hcg þ bcg xcg ;
+
+ð12Þ
+
+cation, comparing measured and simulated signals. It is
+
+_hcg ¼ xcg ¼ xc2 xg1;
+
+worth noting that it is not possible to identify these param-
+
+T
+
+eters from design data, since the drive-train is described by
+
+gw ¼ kgwhgw þ bgwxgw;
+
+a reduced-order model. Parameter values are reported in
+
+_hgw ¼ xgw ¼ xg2 xw:
+
+Tables B.1-B.5, where ''T'' and ''E'' stand for theoretically-based parameter identification procedures or experi-
+
+Note that torques Tec, Tcg, Tgw represent viscous and elas-
+
+mentally-based numerical estimation methods.
+
+tic torques transmitted through the transmission shafts.
+
+Torque Tc transmitted by the clutch and torques Tg1, Tg2
+
+5.1. Gearbox actuator
+
+transmitted by the gearbox are utilized to express the inter-
+
+connections between shafts. Their dependency on actuator
+
+As shown in Fig. 11, the laboratory test-bench utilized behaviour, i.e. locking/slipping of the clutch and configura-for the gearbox model validation is equipped with a gear-
+
+tion of the gearbox, has been defined in previous sections.
+
+box actuator, which is sensorized and interfaced with a
+
+Remark 4.1. As an example, according to the finite state
+
+rapid prototyping station, composed by a dSpace AutoBox
+
+automaton in Fig. 4 and the hybrid clutch actuator model platform connected to a host PC. The dSpace boards
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+83
+
+p
+
+p 1
+
+2
+
+1
+
+xp
+
+p
+
+p
+
+p
+
+p
+
+s
+
+p 1
+
+u
+
+2
+
+u
+
+1
+
+u
+
+*
+
+i
+
+*
+
+i , e 1,
+
+i ,2
+
+e
+
+M
+
+Fig. 11. Experimental test-bench.
+
+allows for actuator control (servovalve coils are actuated
+
+negligible resistive losses, due to almost null oil-flow, are
+
+through two switching amplifiers) and for data acquisition
+
+enlightened.
+
+(measured pressures are output servovalve pressures pu1,
+
+In the second test, reported in Fig. 13, the same 1.7 A pu2, actuator pressures p1, p2 and supply pressures ps, while
+
+step-wise command current profile i is applied with the
+
+e;2
+
+the piston position xp is acquired by a potentiometer). All
+
+piston in the right position, with i ¼ 0 A. In this case, pis-
+
+e;1
+
+data are sampled every 5 ms with 10 bit A/D converters.
+
+ton and tappets move toward the left mechanical stops,
+
+The testing software on the PC provides a virtual oscillo-
+
+reaching it in 80 ms. During transient, pressures pu2 and
+
+scope for data monitoring and acquisition and an interface
+
+p2 have non null regulation error with respect to the
+
+with the Simulink environment. The supply pressure is
+
+steady-state pressure vs current characteristic in Fig. 7. This maintained almost constant thanks to a high pressure accu-is due to non-null oil flow determined by the increase of the
+
+mulator filled by a pump.
+
+chamber volume, which can be roughly approximated by
+
+For validation of the gearbox model, experiments are
+
+A2vp during the phase with joined tappet and piston, and
+
+performed in order to analyze pipeline dynamics and tap-
+
+by A2,ivp during the last phase, with the tappet against the
+
+pets and piston motion. To this purpose, during tests the
+
+internal stop (x2 = 0). The oil flow required to move the pis-
+
+fork is not connected to the gearbox and is free to move.
+
+ton can be considered as a disturbance q1d acting on the
+
+Step-wise valve currents have been applied, starting from
+
+closed-loop pressure dynamics, as depicted also in Fig. 6.
+
+different initial piston displacements (engaged even or
+
+Moreover, comparison of pu2 and p2 profiles enlightens
+
+odd gear, neutral phase).
+
+pressure loss in the pipe, which can be expressed by the
+
+Aiming to validate the model with locked mechanical
+
+steady-state characteristic of the pipeline as 8Z0Dnq1d.
+
+actuator, in the first test (see Fig. 12) 1.7 A step-wise ie;2
+
+command current is applied at t = 50 ms with the piston
+
+5.2. Overall model
+
+in the left position (refer to Fig. 3), while keeping i ¼ 0
+
+e;1
+
+A. Piston and tappets position remain constant, while from
+
+The overall driveline model has been validated with
+
+transient profiles of pu2, p2 a 10 ms pipeline time delay and
+
+respect to experimental data relative to gear shifts
+
+Command current i*
+
+6 Experimental pressures p
+
+, p
+
+e2
+
+x 10
+
+u2
+
+2
+
+2
+
+5
+
+4
+
+1.5
+
+3
+
+A
+
+1
+
+Pa 2
+
+0.5
+
+1
+
+0
+
+0
+
+0
+
+0.05
+
+0.1
+
+0.15
+
+0.2
+
+0.25
+
+0
+
+0.05
+
+0.1
+
+0.15
+
+0.2
+
+0.25
+
+Piston position x
+
+6
+
+Simulated pressures p , p
+
+p
+
+x 10
+
+u2
+
+2
+
+10
+
+4
+
+0
+
+mm
+
+Pa 2
+
+-10
+
+0
+
+0
+
+0.05
+
+0.1
+
+0.15
+
+0.2
+
+0.25
+
+0
+
+0.05
+
+0.1
+
+0.15
+
+0.2
+
+0.25
+
+Time (s)
+
+Time (s)
+
+Fig. 12. Dynamic response with 1.7 A step-wise current i
+
+with initial piston position x
+
+e;2
+
+p = 12.2 mm. In the bottom left graph: experimental xp
+
+(marked), simulated xp (solid). In the right graphs: pressure pu2 (h), p2 (s).
+
+84
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+Command current i*
+
+6 Experimental pressures p
+
+, p
+
+e2
+
+x 10
+
+u2
+
+2
+
+2
+
+5
+
+4
+
+1.5
+
+3
+
+A
+
+1
+
+Pa 2
+
+0.5
+
+1
+
+0
+
+0
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+Piston position x
+
+6
+
+Simulated pressures p , p
+
+p
+
+x 10
+
+u2
+
+2
+
+5
+
+10
+
+4
+
+5
+
+3
+
+0
+
+mm
+
+Pa 2
+
+-5
+
+1
+
+-10
+
+0
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+Tappet positions x , x
+
+-4
+
+Oil flows q , q
+
+1
+
+2
+
+x 10
+
+u2
+
+2
+
+10
+
+2
+
+5
+
+/s
+
+0
+
+3
+
+mm
+
+m 1
+
+-5
+
+-10
+
+0
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+Time (s)
+
+Time (s)
+
+Fig. 13. Dynamic response with 1.7 A step-wise current i with initial piston position x e;2
+
+p = 12.2 mm. Left graphs: experimental xp (marked) and simulated
+
+xp (solid); simulated tappet positions x1 (h), x2 (s). Right graphs: pressure pu2 (h) and p2 (s); oil flow qu2 (h) and q2 (s).
+
+performed with a commercial sport car with a V8 4250 cc
+
+tively, while transmitted torques are shown in graph (c). In
+
+engine with 450 Nm maximum torque and 290 kW power.
+
+graphs (f), (h) simulated gearbox pressures p1, p2 are shown,
+
+The Electronic Control Unit (ECU) devoted to gear shift
+
+and experimental and simulated piston displacements are
+
+management has been interfaced with a dSpace AutoBox
+
+compared in graph (g). With respect to previous analysis
+
+for monitoring and data acquisition purposes. The follow-
+
+on the gearbox actuator, in this case also reaction forces
+
+ing variables are utilized for parameter identification and
+
+of gearbox cogwheels and devices such as the synchronizer,
+
+model validation: measured engine speed xe, gearbox input
+
+act as disturbances on the piston. In graph (j), experimental
+
+shaft speed xg1, wheel speed xw, applied clutch pressure
+
+and simulated clutch piston displacement xc1 are compara-
+
+pc,p and clutch position xc1, gearbox piston position xp
+
+tively reported, from which it follows that an accurate
+
+and gearbox valve command currents i ; i . Engine tor-
+
+model of the clutch actuator, influencing the driveline
+
+e;1
+
+e;2
+
+que Te is the estimated torque obtained by the ECU, taking
+
+behaviour through the transmissibility curve, is obtained.
+
+into account friction losses. Load wheel torque Tw is esti-
+
+The gear shift starts with 4000 rpm engine speed and
+
+mated from experimental data and it is approximated with
+
+constant 200 Nm engine torque, with 20 Nm load wheel
+
+a constant value during experiments. The maximum trans-
+
+torque, locked clutch and engaged 1st gear. At the gear
+
+missible clutch torque curve TcM is estimated from the
+
+shift request at t = 10 ms, engine torque goes to 90 Nm,
+
+nominal transmissibility curve, Belville spring force and
+
+clutch is required to open applying pressure pc,p to the
+
+clutch position. Note that many parameters, e.g. TcM(nc),
+
+clutch plate and gearbox current i is applied in order to
+
+e;1
+
+cr(xc1), fc,b(xc1) for clutch subsystem, are time-varying
+
+move the gearbox piston and to disengage current speed
+
+and depend on aging and temperature. Since the focus of
+
+(see profile of pressure p1). Engine and main shaft speeds
+
+the paper is not on parameter estimation methods, all the
+
+decrease and, when the gearbox transmitted torque is lower
+
+parameters are assumed to be estimated under the same
+
+than the disengaging threshold, the 1st gear disengages; at
+
+operating conditions of the tests.
+
+t = 0.11 s piston moves from the disengaging phase
+
+In Fig. 14 experimental and simulation results relative to (xp ffi 5 mm) to the neutral one. At the same time, clutch
+
+the gear shift from 1st to 2nd speed are compared. In the
+
+opens and, since the maximum clutch transmissible torque
+
+simulation, control inputs, i.e. engine torque, gearbox valve
+
+decreases, it starts slipping at t = 0.155 s (note that due to
+
+currents and clutch pressure shown in graphs (a), (e), (i)
+
+shaft stiffness it holds xe ffi xc1 and xc2 ffi xg1). The gear-
+
+have been imposed to the model. Real and simulated engine
+
+box is neutral from 0.11 s to 0.15 s, then it switches to
+
+and shaft speeds are compared in graphs (b) and (d) respec-
+
+synchronization phase, with constant piston position
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+85
+
+Engine and wheel torque T , T
+
+Real speeds ω , ω , ω
+
+e
+
+w
+
+e
+
+g1
+
+w
+
+300
+
+4000
+
+200
+
+3500
+
+100
+
+Nm
+
+rpm 3000
+
+0
+
+2500
+
+-100 0
+
+0.2
+
+0.4
+
+0.6
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+Torques T , T , T
+
+Simulated speeds ω , ω , ω , ω
+
+e
+
+cg
+
+gw
+
+e
+
+g1
+
+w
+
+g2
+
+4000
+
+400
+
+3500
+
+200
+
+Nm
+
+rpm 3000
+
+0
+
+2500
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+Time (s)
+
+Time (s)
+
+*
+
+*
+
+6
+
+Gearbox currents i
+
+, i
+
+Gearbox actuator pressure p
+
+e,1
+
+e,2
+
+x 10
+
+1
+
+5
+
+2
+
+4
+
+1.5
+
+3
+
+A
+
+1
+
+Pa
+
+2
+
+0.5
+
+1
+
+0
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+6
+
+Piston position xp
+
+x 10
+
+Gearbox actuator pressure p2
+
+5
+
+10
+
+4
+
+3
+
+0
+
+mm
+
+Pa
+
+2
+
+-10
+
+1
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+Time (s)
+
+Time (s)
+
+6
+
+x 10
+
+Clutch pressure p
+
+Clutch position x
+
+c,p
+
+c1
+
+5
+
+10
+
+4
+
+3
+
+Pa
+
+5
+
+mm
+
+2
+
+1
+
+0
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+Time (s)
+
+Time (s)
+
+Fig. 14. First to second gear shift transient with 4000 rpm initial engine speed. (a) Engine torque Te (solid) and wheel torque disturbance Tw (marked), (b), (d) real and simulated speeds xe (h), xg1 (s), r2 · xw (}) and simulated r2 · xg2 (+), (c) engine torque Te and simulated torques Tcg (h), Tgw/r2 (s), (e) gearbox currents i
+
+(solid), i
+
+(marked), (f), (h) simulated gearbox actuator pressures p
+
+e;1
+
+e;2
+
+1, p2, (g) gearbox piston position xp: experimental (solid),
+
+simulated (marked), (i) clutch actuator pressure pc,p, (j) clutch piston position xc1: experimental (solid), simulated (marked).
+
+xp ffi 6.5 mm. From 0.15 s, pressure is applied to the syn-
+
+increased up to the initial value and the clutch starts clos-
+
+chronizer, in order to engage the 2nd speed with ratio r2
+
+ing: from 0.3 s to 0.45 s the clutch slips until crankshaft
+
+between xg1 and xg2. At 0.21 s it holds xg1 = r2xg2, hence
+
+output speed and main shaft input speed are equal. After
+
+the 2nd speed is engaged and the gearbox piston moves
+
+the clutch locks (xc1 = xc2), damped oscillations are pres-
+
+toward the stop at 0.24 s. Meanwhile, engine torque is
+
+ent in the driveline shaft speeds and transmitted torques.
+
+86
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+In Fig. 15 experimental and simulation results relative to lated and experimental clutch position xc1 is obtained, since
+
+a 2nd to 1st gear shift are presented. When the gear shift is
+
+the hydraulic clutch actuator dynamics are less excited due
+
+required at 50 ms, engine speed is 2700 rpm and 90 Nm
+
+to slower transients. Second speed disengagement, per-
+
+engine torque is applied. Clutch is requested to open apply-
+
+formed applying pressures to the piston, occurs at 0.3 s,
+
+ing pressure pc,p to the release bearing. Note that with
+
+when the gearbox torque is almost null. After the neutral
+
+respect to previous tests, better agreement between simu-
+
+phase, lasting from 0.3 s to 0.63 s, the piston moves to
+
+Engine and wheel torque T , T
+
+Real speeds ω , ω , ω
+
+e
+
+w
+
+e
+
+g1
+
+w
+
+100
+
+4000
+
+50
+
+3500
+
+0
+
+Nm
+
+rpm 3000
+
+-50
+
+2500
+
+-100
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+Torques T , T , T
+
+Simulated speeds ω , ω , ω , ω
+
+e
+
+cg
+
+gw
+
+e
+
+g1
+
+w
+
+g2
+
+100
+
+4000
+
+50
+
+3500
+
+0
+
+Nm
+
+rpm 3000
+
+-50
+
+2500
+
+-100
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+Time (s)
+
+Time (s)
+
+Gearbox currents i* , i*
+
+Gearbox actuator pressure p
+
+e,1
+
+e,2
+
+x 106
+
+1
+
+5
+
+2
+
+4
+
+1.5
+
+3
+
+A
+
+1
+
+Pa
+
+2
+
+0.5
+
+1
+
+0
+
+0
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+Piston position x
+
+Gearbox actuator pressure p
+
+p
+
+x 106
+
+2
+
+5
+
+10
+
+4
+
+3
+
+0
+
+mm
+
+Pa
+
+2
+
+-10
+
+1
+
+0
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+Time (s)
+
+Time (s)
+
+6
+
+x 10
+
+Clutch pressure p
+
+Clutch position x
+
+c,p
+
+c1
+
+5
+
+10
+
+4
+
+3
+
+Pa
+
+5
+
+mm
+
+2
+
+1
+
+0
+
+0
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+Time (s)
+
+Time (s)
+
+Fig. 15. Second to first gear shift transient. (a) Engine torque Te (solid) and wheel torque disturbance Tw (marked), (b), (d) real and simulated speeds xe (h), xg1 (s), r1 · xw (}) and simulated r1 · xg2 (+), (c) engine torque Te and simulated torques Tcg (h), Tgw/r1 (s), (e) gearbox currents i (s), i (h), e;1
+
+e;2
+
+(f), (h) simulated gearbox actuator pressures p1, p2, (g) gearbox piston position xp: experimental (solid), simulated (marked), (i) clutch actuator pressure pc,p, (j) clutch piston position xc1: experimental (solid), simulated (marked).
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+87
+
+the synchronization threshold 2.5 mm, pressure p2 is
+
+rent i and q
+
+e
+
+u is defined by (5). In (4) terms dependent on applied to the synchronizer and main shaft speed xg1
+
+volume variation and speed can be neglected, while in (1)
+
+increases. When xg1 = r1 · xg2, the 1st gear engages and
+
+the actuator volume is supposed to be constant (fixed xp,
+
+the piston moves to the mechanical stop. Meanwhile, from
+
+x1, x2). Parameters are defined as sc ¼ V c0, C
+
+and
+
+bg
+
+1 ¼ V 10
+
+c
+
+b
+
+0.1 s to 1.0 s the engine speed is increased by applying
+
+R0 ¼ ðRpbp 4Z0 DnpÞ. Amplitude and phase of the sinusoidal
+
+p
+
+a
+
+a2
+
+engine torque, in order to reduce duration of the clutch
+
+p
+
+p
+
+dither signal at frequency xd can be expressed as functions
+
+slipping phase. At 1.0 s clutch starts closing and engine tor-
+
+of the induced valve plunger displacement, by inverting
+
+que goes to 90 Nm. The clutch slipping phase ends when
+
+the electromechanical servovalve model and recalling (7).
+
+xe ffi xc1 = xc2 ffi xg1 at 2.1 s.
+
+With the purpose of enlightening that the steady-state
+
+Comparison of simulated and experimental profiles dur-
+
+effect of dither is to add a sinusoidal component
+
+xv
+
+ing gear shift shows good matching between the proposed
+
+on the plunger position, introduce the following prelimin-
+
+model and the real system. Hence, the proposed model is
+
+ary definitions:
+
+xv ¼ xd cos xdt, vv ¼ xd xd sin xd t,
+
+f e ¼
+
+able to capture the gearbox and clutch actuators behaviour
+
+ðm
+
+k
+
+ðs _
+
+f
+
+and to enlighten the interaction between actuators and the
+
+vx2
+
+d
+
+vÞxd cos xd t bvxd xd sin xd t,
+
+ie;d ¼ 1
+
+k
+
+e
+
+e þ
+
+f eÞ.
+
+f
+
+main drivetrain dynamics.
+
+In the following, (A.1) is rewritten in standard form in order to apply singular perturbation and averaging methods.
+
+In order to enlighten time-scale separation through com-
+
+6. Conclusions
+
+parison of the magnitude of model coefficients, it is neces-
+
+sary to apply scaling to the state and input variables. To
+
+Detailed physically-based models of electro-hydraulic
+
+this aim, first introduce error variables with respect to the
+
+servo-actuated gearbox and clutch of a car equipped with
+
+dither-dependent evolution: ~
+
+x
+
+, ~
+
+v
+
+an AMT have been developed and integrated with a simpli-
+
+v ¼ xv
+
+xv fv0
+
+k
+
+v ¼ vv
+
+vv,
+
+v
+
+~
+
+f
+
+fied model of transmission shafts and engine. As enlight-
+
+e ¼ fe
+
+f e.
+
+Define
+
+scaled
+
+variables
+
+as
+
+~
+
+xvn ¼ kx~xv,
+
+~
+
+~
+
+ened by the comparison of experimental and simulated
+
+vvn ¼ kv~vv, ~
+
+f en ¼ kf f e, pun = kppu, q1n = kqq1, p1n = kpp1,
+
+p
+
+. Scaling factors, defined
+
+results, the presented model shows the influence of the actu-
+
+cn = kppc, qun = kq qu, i ¼ k
+
+en
+
+ii
+
+e
+
+by simulation analysis and based on physical consider-
+
+ators for gear shift control on the gear shift quality and per-
+
+ations, are specified such that the magnitude of the scaled
+
+formance, which represents a relevant aspect for system and
+
+variables is O(1) as k
+
+control algorithm design. The gearbox actuator model,
+
+x = 3 · 102,
+
+kv = 1, kp = 106,
+
+k
+
+whose parameters have been determined by a physically-
+
+q = 104, kf = 1, ki = 101. Hence, system (A.1) is rewritten as
+
+based identification procedure, is able to reproduce in an
+
+accurate way the gearbox dynamics during gear shifts.
+
+_~xvn ¼ an~vvn;
+
+_
+
+kvn
+
+bvn
+
+1 ~
+
+Acn
+
+Appendix A. Reduced-order model of the gearbox actuator
+
+~
+
+vvn ¼
+
+~
+
+x
+
+~
+
+v
+
+f
+
+p ;
+
+m
+
+vn
+
+vn þ
+
+en
+
+cn
+
+vn
+
+mvn
+
+mvn
+
+mvn
+
+_~
+
+1 ~
+
+kfn
+
+A simplified model of the gearbox actuator obtained
+
+f en ¼
+
+f
+
+i ;
+
+s
+
+en þ
+
+en
+
+e
+
+se
+
+from (1) and (3)-(6) is recalled here for the sake of clarity: 1
+
+p
+
+p
+
+
+
+_pun ¼
+
+q þ q ð~xvn þ xdn cos xdt; p Þ ;
+
+_x
+
+1n
+
+un
+
+un
+
+v ¼ vv;
+
+Cpn
+
+2
+
+2
+
+
+
+k
+
+b
+
+A
+
+f
+
+f
+
+1
+
+p 1
+
+Rpnb
+
+p 1
+
+_v
+
+v
+
+v
+
+c
+
+v0
+
+e
+
+p
+
+ðA:2Þ
+
+v ¼
+
+x
+
+v
+
+p þ
+
+þ
+
+;
+
+_q
+
+p
+
+
+
+q
+
+
+
+p
+
+m
+
+v
+
+v
+
+c
+
+1n ¼
+
+un
+
+1n
+
+1n
+
+v
+
+mv
+
+mv
+
+mv
+
+mv
+
+Lpn
+
+2 a2
+
+a
+
+2 a2
+
+p
+
+p
+
+p
+
+
+
+
+
+!
+
+_
+
+1
+
+1
+
+f e ¼
+
+f
+
+k
+
+þ i
+
+;
+
+s
+
+e þ
+
+f
+
+ie
+
+e;d
+
+þ R0 q ð~x
+
+Þ ;
+
+e
+
+se
+
+pn un
+
+vn þ xdn cos xd t; pun
+
+1
+
+p
+
+p
+
+
+
+_p
+
+1
+
+u ¼
+
+q þ q ðx
+
+Þ ;
+
+C
+
+1
+
+u
+
+v; pu
+
+_
+
+p
+
+2
+
+2
+
+p1n ¼
+
+q ;
+
+1n
+
+
+
+!
+
+C1n
+
+1
+
+p 1
+
+R
+
+1
+
+1
+
+p b
+
+p 1
+
+_q
+
+p
+
+_p
+
+p
+
+
+
+p ;
+
+1 ¼
+
+p
+
+q
+
+p þ R0 q ðx
+
+Þ ;
+
+cn ¼
+
+un
+
+cn
+
+L
+
+u
+
+1
+
+1
+
+p u
+
+v; pu
+
+s
+
+s
+
+p
+
+2 a2
+
+a
+
+2 a2
+
+p
+
+p
+
+p
+
+c
+
+c
+
+1
+
+where
+
+xdn = kxxd
+
+and
+
+q ð~x
+
+Þ ¼
+
+un
+
+vn þ xdn cos xd t; pun
+
+_p1 ¼
+
+q ;
+
+C
+
+1
+
+k
+
+ðf
+
+ð~x
+
+p Þ and normalized
+
+1
+
+qqu
+
+v0=kv þ k1
+
+x
+
+vn þ xdn cos xd tÞ; k1
+
+p
+
+un
+
+1
+
+coefficients (labelled with ''n'') and other parameters di-
+
+_pc ¼
+
+ðp p Þ:
+
+s
+
+u
+
+c
+
+rectly follow from (A.1) and definition of scaled variables.
+
+c
+
+Main feature of (A.2) is that, differently from (A.1), the ef-
+
+ðA:1Þ
+
+fect of dither enters directly in the nonlinear function qu
+
+It is derived under the following simplifications and
+
+through the sinusoidal displacement
+
+xv. This fact is profit-
+
+assumptions. In (3) Bernoulli forces are neglected, linear able for application of averaging theory.
+
+friction force bvvv is supposed, a sinusoidal dither signal
+
+In the considered set-up, the dither signal is a
+
+ie,d at frequency xd is superimposed to the command cur-
+
+100 Hz square wave with 0.5 A peak-peak amplitude.
+
+88
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+
+
+!
+
+Approximating dither with its first harmonic, it follows
+
+d~
+
+q
+
+R
+
+1n
+
+1
+
+p 1
+
+pnbp
+
+that x
+
+¼
+
+
+
+~
+
+p
+
+~
+
+q
+
+;
+
+d = 6.4 · 105 m, i.e. comparable with the dead-zone
+
+d
+
+1
+
+1
+
+t
+
+n
+
+n
+
+f
+
+l L
+
+2 a2
+
+a
+
+f
+
+pn
+
+p
+
+of the overlapped valve (see Table B.1). Considering values p
+
+in Tables B.1-B.3 and analyzing coefficients of (A.2), two-d~
+
+p1n
+
+1
+
+ðA:6Þ
+
+time scale is enlightened. In fact, partitioning state vari-
+
+¼
+
+~
+
+q
+
+d
+
+1n;
+
+tf
+
+l C
+
+f
+
+1n
+
+ables into slow xs ¼ ð~xvn; ~vvn; ~
+
+f en; p Þ and fast x
+
+un
+
+f = (q1n,
+
+p
+
+d~
+
+p
+
+1
+
+1n, pcn) components, system (A.2) can be expressed in cn ¼
+
+~
+
+pcn;
+
+compact form as
+
+dtf
+
+l s
+
+f
+
+c
+
+dxs ¼ f
+
+;
+
+which is linear and exponentially stable, while the reduced-
+
+dt
+
+sðxs; tÞ þ Bsxf þ Busi
+
+en
+
+ðA:3Þ
+
+order model is obtained as
+
+dxf ¼ A
+
+dt
+
+f xf þ ff ðxs; tÞ;
+
+dxs
+
+1
+
+B
+
+B
+
+¼
+
+f
+
+s A1f
+
+us i ;
+
+ðA:7Þ
+
+where time-varying terms are due to dither-dependent
+
+ds
+
+x
+
+sðxs; sÞ
+
+f
+
+f ðxs; sÞ þ
+
+en
+
+d
+
+xd
+
+xd
+
+plunger displacement
+
+xv. Defining bounding coefficients
+
+i.e.
+
+ls, lf for the dynamics (A.3) such that jfs(xs, t)j 6 lsjxsj,
+
+"xs,t, jBsj 6 ls, jBusj 6 ls and jff(xs,t)j 6 lfjxsj, "xs,t,
+
+d~
+
+xvn
+
+a
+
+¼ n ~v
+
+jA
+
+vn;
+
+fj 6 lf, it holds ls 102 < xd 6 · 102 < lf 104, which
+
+ds
+
+xd
+
+corresponds to time-scale separation between the slow
+
+d~
+
+v
+
+k
+
+b
+
+1
+
+A
+
+dynamics of the electro-magnetic and mechanical servo-
+
+vn ¼
+
+vn
+
+~
+
+x
+
+vn
+
+~
+
+cn
+
+vn
+
+~
+
+vvn þ
+
+f en
+
+p ;
+
+un
+
+valve system with the fundamental hydraulic line dynamics
+
+ds
+
+xdmvn
+
+xdmvn
+
+xdmvn
+
+xdmvn
+
+and the fast dynamics of the sensing chamber and pipeline
+
+d~
+
+f en
+
+1 ~
+
+kfn
+
+resonances.
+
+¼
+
+f
+
+i ;
+
+ds
+
+x
+
+en þ
+
+en
+
+d se
+
+xdse
+
+Now, derivation of the averaged model can be per-
+
+formed, following two steps: first, singular perturbation
+
+dp
+
+1
+
+p
+
+un ¼
+
+q ð~x
+
+Þ:
+
+un
+
+vn þ xdn cos s; pun
+
+technique is applied to remove the fast state variables x
+
+ds
+
+x
+
+2
+
+f,
+
+d Cpn
+
+then averaging method is applied in order to define the
+
+ðA:8Þ
+
+reduced-order model, with a smoothed version of the posi-
+
+tion/flow nonlinear characteristic.
+
+Noting that ls < xd and defining the small parameter
+
+In order to express the model (A.3) in the standard form
+
+
+
+ls
+
+s,
+
+, the reduced-order model (A.7) can be rewritten as x
+
+for singular perturbation, define s , x
+
+d
+
+dt and f , xd , hence
+
+lf
+
+
+
+
+
+obtaining
+
+dxs
+
+1
+
+B
+
+B
+
+¼
+
+s
+
+us
+
+s
+
+fsðxs; sÞ
+
+A1f
+
+i ;
+
+ðA:9Þ
+
+f
+
+f ðxs; sÞ þ
+
+en
+
+dx
+
+ds
+
+l
+
+l
+
+l
+
+s
+
+s
+
+s
+
+s
+
+1
+
+1
+
+1
+
+¼
+
+f
+
+B
+
+B
+
+;
+
+ds
+
+x
+
+sðxs; sÞ þ
+
+sxf þ
+
+usi
+
+en
+
+d
+
+xd
+
+xd
+
+ðA:4Þ
+
+where dependency on s is present through Bernoulli's
+
+dx
+
+1
+
+1
+
+
+
+f
+
+equation only, functions fs, ff are 2p-periodic in s, i.e.
+
+f
+
+¼
+
+A
+
+f
+
+ds
+
+l
+
+f xf þ l f ðxs; sÞ;
+
+f
+
+f
+
+fs(xs,s) = fs(xs,s + 2p), ff (xs, s) = ff (xs,s + 2p), and from
+
+definition of l
+
+where from scaling and relations between l
+
+s all the coefficients in brackets are of order
+
+s,xd,lf, it fol-
+
+O(1). Hence, the averaging method can be applied to
+
+lows that the right-hand side terms have O(1) magnitude,
+
+(A.9). Defining the averaged flow, dependent on dither and f is a small coefficient (this property is related to the
+
+displacement amplitude x
+
+fact that hydraulic resonances and sensing chamber
+
+d, as
+
+Z
+
+dynamics are faster than dither frequency).
+
+1
+
+2p
+
+ð
+
+Þ ¼
+
+ð
+
+Þ
+
+System (A.4) is in standard form for singular perturba-q
+
+~
+
+x
+
+q
+
+~
+
+x
+
+ds;
+
+ðA:10Þ
+
+un;av
+
+vn; pun
+
+2p
+
+un
+
+vn þ xdn cos s; pun
+
+0
+
+tion, with slow variables xs and fast variables xf in the slow
+
+time s. Performing singular perturbation reduction, the
+
+it follows that the averaged model is
+
+slow manifold is obtained by imposing f = 0 in the last
+
+equation of (A.4) as
+
+d~
+
+x
+
+a
+
+x
+
+vn
+
+n
+
+f ðxs; sÞ ¼ A1f
+
+f
+
+f ðxs; sÞ
+
+(see also
+
+¼
+
+~
+
+vvn;
+
+(A.2)), i.e.
+
+ds
+
+xd
+
+d~
+
+v
+
+k
+
+b
+
+1
+
+A
+
+q
+
+¼ 0;
+
+vn
+
+vn
+
+vn
+
+~
+
+cn
+
+1n
+
+¼
+
+~
+
+x
+
+~
+
+v
+
+f
+
+p ;
+
+ds
+
+x
+
+vn
+
+vn þ
+
+en
+
+un
+
+d mvn
+
+xdmvn
+
+xdmvn
+
+xdmvn
+
+2a2
+
+p
+
+¼ p þ
+
+p R0 q ;
+
+ðA:5Þ
+
+1n
+
+un
+
+p
+
+pn un
+
+d~
+
+f en
+
+1
+
+k
+
+¼
+
+~
+
+f
+
+fn
+
+en þ
+
+i ;
+
+en
+
+p
+
+¼ p :
+
+ds
+
+xdse
+
+xdse
+
+cn
+
+un
+
+dp
+
+1
+
+p
+
+The boundary layer dynamics expressed with variables
+
+un ¼
+
+q
+
+ð~x
+
+Þ:
+
+ds
+
+x
+
+2 un;av vn; pun
+
+~
+
+x
+
+d Cpn
+
+f ¼ xf þ A1f
+
+f
+
+f ðxs; sÞ ¼ ð~
+
+q1n; ~
+
+p1n; ~
+
+pcnÞT in the fast time-
+
+scale t
+
+ðA:11Þ
+
+f , s is given by d~
+
+xf ¼ Af ~x
+
+
+
+f , i.e.
+
+f
+
+dtf
+
+lf
+
+
+
+
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+89
+
+Note that (A.11) together with (A.5) are equivalent to (8)
+
+Table B.2
+
+expressed in the physical variables and time. Since, for
+
+Pipeline and oil parameters
+
+given command current i ðsÞ, the origin of the error model
+
+Name
+
+Symbol
+
+Value
+
+en
+
+of (A.11) with respect to the nominal solution is exponen-Oil density
+
+q
+
+852 kg/m3
+
+tially stable, from averaging theorem [21, Theorem 8.3] it (T, @25 C)
+
+follows that for sufficiently small difference in the initial
+
+Oil dynamic viscosity
+
+l
+
+240 · 103 Pa s
+
+(T, @25 C)
+
+conditions the solution xsa(s) of (A.11) approximates the Oil kinematic viscosity
+
+m
+
+282 · 106 m2/s
+
+solution
+
+xsr(s) of (A.8) with an error O(s), i.e.
+
+(T, @25 C)
+
+xsa(s) xsr(s) = O(s). Since (A.8) is the reduced-order Oil bulk modulus
+
+b
+
+600 MPa
+
+model of the singularly perturbed system (A.4) with expo-
+
+(T, @25 C)
+
+nentially stable boundary layer model (A.6), from Tikho-Pipeline radius
+
+rp
+
+3.18 · 103 m (T)
+
+Pipeline cross sectional area
+
+A
+
+nov's theorem on the infinite time interval [21, Theorem
+
+p
+
+31.7 · 106 m2 (T)
+
+Pipeline length
+
+lp
+
+0.7 m (T)
+
+9.4] it follows that the solution xsr(s) and the quasi-steady Pipeline effective bulk modulus
+
+be,p
+
+52 MPa
+
+state solution
+
+xf ðxsr; sÞ defined in (A.5) asymptotically (T, @25 C)
+
+approximate the solution x
+
+Frequency-dependent correction
+
+a
+
+s(s), xf(s) of the full-order model
+
+p
+
+1.04 (T)
+
+(A.2) with an error O(
+
+term for damping coefficient
+
+f),
+
+i.e. xsr(s) xs(s) = O(f),
+
+and natural frequency
+
+
+
+xf ðxsr; sÞ xf ðsÞ ! Oðf Þ. Hence, it follows that xsa(s)
+
+Frequency-dependent correction
+
+bp
+
+3.1 (T)
+
+xs(s) = O(s + f),
+
+xf ðxsa; sÞ xf ðsÞ ! Oðs þ f Þ, which
+
+term for damping coefficient
+
+proves that (8) is an approximation of the full-order and natural frequency
+
+gearbox actuator model.
+
+Appendix B. Nomenclature and model parameters
+
+Table B.3
+
+Table B.1
+
+Gearbox actuator variables and parameters
+
+Servovalve variables and parameters
+
+Name
+
+Symbol
+
+Value
+
+Name
+
+Symbol
+
+Value
+
+Downstream pipeline (outer
+
+pk, pk,i
+
+Pa
+
+Plunger position
+
+xv
+
+m
+
+chamber) pressure and internal
+
+Plunger speed
+
+vv
+
+m/s
+
+chamber pressure (k = 1,2)
+
+Electromagnetic force
+
+fe
+
+N
+
+Downstream pipeline flow and
+
+qk, qk,i
+
+m3/s
+
+Command current
+
+i
+
+A
+
+tappet orifice flow (k = 1,2)
+
+e
+
+User pressure (upstream pipeline
+
+pu
+
+Pa
+
+Position of piston, left and right
+
+xp, x1,
+
+m
+
+pressure)
+
+hydraulic tappet
+
+x2
+
+User flow (upstream pipeline oil flow)
+
+qu
+
+m3/s
+
+Speed of piston, left and right
+
+vp, v1,
+
+m/s
+
+Sensing chamber pressure
+
+pc
+
+Pa
+
+hydraulic tappet
+
+v2
+
+Force applied by the gearbox
+
+f
+
+Supply pressure
+
+p
+
+g
+
+N
+
+s
+
+50 · 105 Pa (T)
+
+devices to the piston
+
+Discharge pressure
+
+p0
+
+0 Pa (T)
+
+Plunger mass
+
+mv
+
+0.021 kg (T)
+
+External tappet constraint
+
+
+
+x1
+
+12.2 · 103 m (T)
+
+Spring stiffness
+
+kv
+
+2700 N/m (T)
+
+External tappet constraint
+
+
+
+x2
+
+12.2 · 103 m (T)
+
+Spring pre-load
+
+fv0
+
+2.62 N (E)
+
+disengaging threshold displacement
+
+xD1
+
+6.4 · 103 m (T)
+
+Friction forces
+
+bv(vv)
+
+N (T)
+
+disengaging threshold displacement
+
+xD2
+
+6.4 · 103 m (T)
+
+Friction coefficient
+
+bv
+
+6.0 N s/m (T)
+
+Synchronization threshold
+
+xS1
+
+4.8 · 103 m (T)
+
+Electro-mechanical constant
+
+kf
+
+8.5 N/A (T)
+
+displacement
+
+Electro-magnetic time-constant
+
+se
+
+10 · 103s (T)
+
+Synchronization threshold
+
+xS2
+
+4.8 · 103 m (T)
+
+Dumping threshold displacement
+
+xvd
+
+8.5 · 104 m (T)
+
+displacement
+
+Filling threshold displacement
+
+xvf
+
+9.0 · 104 m (T)
+
+Volume of the outer chamber for
+
+Vk0
+
+6.45 · 106 m3 (T)
+
+Dumping and filling user port orifice
+
+Ad(xv),
+
+m2 (T)
+
+xk = 0, xp = 0 (k = 1,2)
+
+areas
+
+Af(xv)
+
+Volume of the inner chamber for
+
+Vk,i0
+
+1.86 · 106 m3 (T)
+
+User port discharge coefficient
+
+cd
+
+0.6 (T)
+
+xk = 0, xp = 0 (k = 1,2)
+
+User port equivalent Bernoulli
+
+cdb
+
+0.32 (T)
+
+Cross-sectional area of the outer
+
+Ak
+
+5.54 · 104 m2 (T)
+
+coefficient
+
+chamber (k = 1,2)
+
+User port number of orifices
+
+no
+
+2 (T)
+
+Cross-sectional area of the inner
+
+Ak,i
+
+2.1 · 104 m2 (T)
+
+Sensing chamber effective area
+
+Ac
+
+2.63 · 106 m2 (T)
+
+chamber (k = 1,2)
+
+Sensing chamber cross-sectional area
+
+Ac0
+
+3.0 · 106m2 (T)
+
+Piston effective area
+
+Ap
+
+2.1 · 104 m2 (T)
+
+Sensing chamber volume at xv = 0
+
+Vc0
+
+1.66 · 108m3 (T)
+
+Tappet outer effective area
+
+At
+
+4.76 · 104 m2 (T)
+
+Number of capillary tubes of the
+
+noc
+
+4 (T)
+
+Tappet inner effective area
+
+At,i
+
+1.32 · 104 m2 (T)
+
+sensing chamber
+
+Tappet orifice conductance
+
+goa
+
+3.6 · 107 m3/(s Pa) (T)
+
+Sensing capillary radius
+
+roc
+
+9 · 105 m (T)
+
+Piston mass
+
+mp
+
+0.326 kg (T)
+
+Sensing capillary length
+
+loc
+
+2.6 · 103 m (T)
+
+Tappet mass (k = 1,2)
+
+mk
+
+0.062 kg (T)
+
+Sensing capillary conductance
+
+gc
+
+1.7 · 1013 m3/
+
+Piston friction coefficient
+
+bvp
+
+4500 Ns/m (T)
+
+(s Pa) (T)
+
+Tappet friction coefficient (k = 1,2)
+
+bvk
+
+900 Ns/m (T)
+
+
+
+
+
+90
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+Table B.4
+
+References
+
+Clutch actuator variables and parameters
+
+Name
+
+Symbol
+
+Value
+
+[1] Schoner HP. Automotive mechatronics. Contr Eng Practice 2004;12
+
+(11):1343-51.
+
+Pressure applied to the piston
+
+pc,p
+
+Pa
+
+[2] Link M, Vos B, Eggert E, Nasdal R. The automated shift transmis-
+
+Piston (release bearing) and plate
+
+xc1,xc2
+
+m
+
+sion (AST) - possibilities and limits in production-type vehicles, SAE
+
+displacements
+
+Paper 2001-01-0881 (2001).
+
+Axial constraint force
+
+nc
+
+N
+
+[3] Wagner G. Application of transmission systems for different driveline Transmissibility curve
+
+TcM (nc)
+
+Nm (T)
+
+configurations
+
+in
+
+passenger
+
+cars,
+
+SAE
+
+Paper
+
+2001-01-0882
+
+Piston mass
+
+mc1
+
+0.75 kg (T)
+
+(2001).
+
+Plate mass
+
+mc2
+
+6.0 kg (T)
+
+[4] Wheals JC, Crewe C, Ramsbottom M, Rook S, Westby M.
+
+Piston cross-sectional area
+
+Ac,p
+
+665 · 106 m2
+
+Automated manual transmissions - a European survey and proposed
+
+(T)
+
+quality shift metrics, SAE Paper 2002-01-0929 (2002).
+
+Belville spring force and spring pre-
+
+fc,b (xc1), fc0
+
+N (E)
+
+[5] Couderc P, Callenare J, Hagopian JD, Ferraris G. Vehicle driveline
+
+load
+
+dynamic behaviour: Experimentation and simulation. J Sound Vib
+
+Belville coupling ratio
+
+cr(xc1)
+
+(T)
+
+1998;218 (1):133-57.
+
+Pre-load spring stiffness
+
+kc
+
+N/m (E)
+
+[6] Centea D, Rahnejat H, Menday MT. Non-linear multi-body dynamic
+
+Friction forces
+
+bc1ð_xc1Þ; bc2ð_xc2Þ
+
+N (T)
+
+analysis for the study of clutch torsional vibrations (judder). Appl
+
+Math Model 2001;25 (3):177-92.
+
+[7] Montanari M, Ronchi F, Rossi C, Tilli A, Tonielli A. Control and
+
+performance evaluation of a clutch servo system with hydraulic
+
+Table B.5
+
+actuation. Contr Eng Practice 2004;12 (11):1369-79.
+
+Transmission shafts variables and parameters
+
+[8] Fen L, Yuxuan L, Jianwu Z, Hongcheng H. Robust control
+
+Name
+
+Symbol
+
+Value
+
+for automated clutch of amt vehicle, SAE Paper 2002-01-0933
+
+Engine speed
+
+x
+
+(2002).
+
+e
+
+rad/s
+
+Total engine torque
+
+T
+
+[9] Lee H, Sul S, Cho H, Lee J. Advanced gear-shifting and clutching
+
+e
+
+Nm
+
+Crankshaft output speed (flywheel-
+
+x
+
+strategy for a parallel-hybrid vehicle. IEEE Ind Appl Mag 2000;6
+
+c1, xc2
+
+rad/s
+
+primary clutch disk) and main shaft
+
+(6):26-32.
+
+input speed (secondary clutch disk)
+
+[10] Pettersson M, Nielsen L. Gear shift by engine control. IEEE Trans
+
+Main shaft output speed (gearbox
+
+x
+
+Contr Syst Technol 2000;8 (3):495-507.
+
+g1, xg2
+
+rad/s
+
+primary shaft) and secondary shaft
+
+[11] Zanasi R, Visconti A, Sandoni G, Morselli R. Dynamic modeling and
+
+input speed (gearbox secondary
+
+control of a car transmission system. In: Proc. IEEE/ASME Int.
+
+shaft)
+
+Conf. Advanced Intelligent Mechatronic, Vol. 1, Como (Italy), 8-12
+
+Wheel speed
+
+x
+
+July, 2001, p. 416-21.
+
+w
+
+rad/s
+
+Crankshaft, main shaft and secondary
+
+h
+
+rad
+
+[12] Bemporad A, Borodani P, Mannelli M. Hybrid control of an
+
+ec, hcg,
+
+shaft torsional displacement
+
+h
+
+automotive robotized gearbox for reduction of consumptions
+
+gw
+
+Crankshaft, main shaft and secondary
+
+x
+
+rad/s
+
+and emissions. Lecture notes in computer science 2003;2623:
+
+ec,
+
+shaft relative speed
+
+x
+
+81-96.
+
+cg,
+
+x
+
+[13] Fredriksson J, Egardt B. Nonlinear control applied to gearshifting in gw
+
+Crankshaft, main shaft and secondary
+
+T
+
+Nm
+
+automated manual transmissions. In: Proc. 39th IEEE Conf. Deci-
+
+ec, Tcg,
+
+shaft transmitted torque
+
+T
+
+sion Control, Sidney, Australia, 2000, p. 444-49.
+
+gw
+
+Transmitted clutch torque
+
+T
+
+[14] Garofalo F, Glielmo L, Iannelli L, Vasca F. Smooth engagement for
+
+c
+
+Nm
+
+Input and output gearbox torques
+
+T
+
+automotive dry clutch. In: Proc. 40th IEEE Conf. Decision Control,
+
+g1, Tg2
+
+Nm
+
+(torques transmitted to the primary
+
+Orlando, Florida, USA, 2001, p. 529-34.
+
+and secondary gearbox cogwheels)
+
+[15] Lucente G, Montanari M, Rossi C. Modelling of a car driveline for
+
+Total wheel load torque
+
+T
+
+servo-actuated gear-shift control, in: Proc. IEEE International
+
+w
+
+Nm
+
+Actual speed ratio
+
+r
+
+Symposium on Industrial Electronics (ISIE 2005), Dubrovnik
+
+(Croatia), June 20-23, 2005.
+
+Equivalent engine inertia
+
+Je
+
+0.159 kgm2 (T)
+
+[16] Merritt
+
+H.
+
+Hydraulic
+
+control
+
+systems. New
+
+York: Wiley;
+
+Equivalent flywheel inertia
+
+Jc1
+
+0.0159 kgm2 (T)
+
+1967.
+
+Equivalent clutch disk inertia
+
+Jc2
+
+0.0159 kgm2 (T)
+
+[17] van der Schaft AJ, Schumacher H. Complementarity modeling
+
+Equivalent gearbox primary shaft
+
+Jg1
+
+0.039 kgm2 (T)
+
+of hybrid systems. IEEE Trans Automat Contr 1998;43 (4):
+
+inertia
+
+483-90.
+
+Equivalent gearbox secondary shaft
+
+Jg2
+
+0.039 kgm2 (T)
+
+[18] Yang WC, Tobler WE. Dissipative modal approximation of fluid
+
+inertia
+
+transmission lines using linear friction model. ASME J Dyn Syst,
+
+Equivalent wheels, differential drive,
+
+Jw
+
+14.0 kgm2 (T)
+
+Measurement, Control 1991;113 (1):152-62.
+
+tires and vehicle inertia
+
+[19] Tunay I, Rodin E, Beck A. Modeling and robust control design for
+
+Crankshaft torsional stiffness
+
+kec
+
+32 · 103 Nm/rad (E)
+
+aircraft brake hydraulics. IEEE Trans Contr Syst Technol 2001;9
+
+Main shaft torsional stiffness
+
+kcg
+
+3.2 · 103 Nm/rad (E)
+
+(2):319-29.
+
+Secondary shaft torsional stiffness
+
+kgw
+
+16 · 103Nm/rad (E)
+
+[20] Armstrong B, Dupont P, Canudas de Wit C. A survey of
+
+Crankshaft friction coefficient
+
+bec
+
+100 Nms/rad (E)
+
+models, analysis tools and compensation methods for the con-
+
+Main shaft friction coefficient
+
+bcg
+
+4.0 Nms/rad (E)
+
+trol of machines with friction. Automatica 1994;30 (7):1083-
+
+Main shaft friction coefficient
+
+bg
+
+0.012 Nms/rad (E)
+
+138.
+
+Secondary shaft friction coefficient
+
+bgw
+
+90 Nms/rad (E)
+
+[21] Khalil HK. Nonlinear systems. Upper Saddle River, NJ: Prentice
+
+Gear ratios
+
+r1, r2
+
+{3.286,2.158} (T)
+
+Hall; 1996.
+
+Force/torque gain during disengaging
+
+kgD
+
+40 m1 (E)
+
+[22] Zames G, Shneydor NA. Dither in nonlinear systems. IEEE Trans
+
+Torque/force gain during
+
+kgS
+
+0.13 m (E)
+
+Automat Cont 1976;21 (5):660-7.
+
+synchronization
+
+G. Lucente et al. / Mechatronics 17 (2007) 73-91
+
+91
+
+[23] Pervozvanski AA, Canudas de Wit C. Asymptotic analysis of the
+
+[25] Krstic M, Wang H. Stability of extremum seeking feedback for
+
+dither effect in systems with friction. Automatica 2002;38 (1):105-
+
+general nonlinear dynamic systems. Automatica 2000;36 (4):595-
+
+13.
+
+601.
+
+[24] Iannelli L, Johansson KH, Jonsson UT, Vasca F. Averaging of
+
+[26] Optimization toolbox user's guide. Natick (MA): The MathWorks,
+
+nonsmooth systems using dither. Automatica 2006;42 (4):669-76.
+
+Inc., 2002.
+
+
+
+
+
+Document Outline
+
+
+Modelling of an automated manual transmission system Introduction
+
+Gearbox actuator model Hydraulic actuator
+
+Pressure control valve
+
+Pipeline
+
+Reduced-order model of the gearbox actuator Pressure control valve steady-state characteristic
+
+Reduced-order model
+
+
+
+
+
+Clutch actuator model
+
+Model of transmission shafts
+
+Model validation and experimental results Gearbox actuator
+
+Overall model
+
+
+
+
+
+Conclusions
+
+Reduced-order model of the gearbox actuator
+
+Nomenclature and model parameters
+
+References
+
+
+
+
+

@@ -1,0 +1,4417 @@
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+2293
+
+Achieving 12 log(1 + SNR) on the AWGN Channel
+
+With Lattice Encoding and Decoding
+
+Uri Erez , Member, IEEE, and Ram Zamir , Senior Member, IEEE
+
+Abstract-We address an open question, regarding whether a signal-to-noise ratio SNR
+
+, i.e., under any power
+
+lattice code with lattice decoding (as opposed to maximum-like-
+
+constraint
+
+on the transmitted signal
+
+lihood (ML) decoding) can achieve the additive white Gaussian
+
+noise (AWGN) channel capacity. We first demonstrate how min-
+
+imum mean-square error (MMSE) scaling along with dithering
+
+(3)
+
+(lattice randomization) techniques can transform the power-con-
+
+strained AWGN channel into a modulo-lattice additive noise
+
+channel, whose effective noise is reduced by a factor of
+
+1+SNR
+
+SNR .
+
+There are two aspects to signal space codebook design for
+
+For the resulting channel, a uniform input maximizes mutual
+
+the power-constrained AWGN channel. The granular structure
+
+information, which in the limit of large lattice dimension becomes of the codebook corresponds to the inter-codeword Euclidean
+
+1 log(1 +
+
+2
+
+SNR), i.e., the full capacity of the original power
+
+distances, hence, it determines the decoding error probability.
+
+constrained AWGN channel. We then show that capacity may
+
+also be achieved using nested lattice codes, the coarse lattice
+
+The structure of the shaping region of the codebook determines serving for shaping via the modulo-lattice transformation, the
+
+the power-volume tradeoff; hence, the gap from capacity [17].
+
+fine lattice for channel coding. We show that such pairs exist for Several different approaches for using structured codes for
+
+any desired nesting ratio, i.e., for any signal-to-noise ratio (SNR).
+
+the AWGN channel correspond to different ways of taking into
+
+Furthermore, for the modulo-lattice additive noise channel lattice account the power constraint. Shannon's theory suggests that
+
+decoding is optimal. Finally, we show that the error exponent of
+
+the proposed scheme is lower bounded by the Poltyrev exponent.
+
+the codewords of a good code should look like realizations
+
+of a zero-mean independent and identically distributed (i.i.d.)
+
+Index Terms-Additive white Gaussian noise (AWGN) channel, Gaussian source with power
+
+. For large codebook dimension
+
+dirty paper channel, dither, Euclidean distance, lattice decoding, minimum mean-square error (MMSE) estimation, nested codes,
+
+, this is equivalent to a uniform distribution over a sphere of
+
+Poltyrev exponent, random lattice ensemble, shaping.
+
+radius
+
+. Slepian considered the use of group codes for
+
+the AWGN channel in [30], where the codewords lie on the surface of this sphere of radius
+
+.
+
+I. INTRODUCTION
+
+The central line of development in the application of lattices
+
+THE search for low-complexity, structured encoding and for the AWGN channel, and the most directly related to the decoding for the additive white Gaussian noise (AWGN)
+
+problem we study, originated in the work of de Buda. De Buda's
+
+channel
+
+theorem [9] states that a spherical lattice code, i.e., a code with second moment
+
+, which is the intersection of a lattice with a
+
+(1)
+
+sphere, can approach arbitrarily closely (in the limit of high di-
+
+mension) the AWGN channel capacity. To achieve the best error
+
+inspired the minds of researchers and continues to challenge the
+
+exponent of the AWGN channel (or at least the lower bounds
+
+communication community today [21], [4]. The goal is to find to the error exponent [22, Sec. 7.3], which are tight above the codes with rates approaching capacity
+
+critical rate), a "thin" spherical region is taken instead of a full sphere. This result has been corrected and refined by several au-SNR
+
+(2)
+
+thors [24], [31], [28], [26].
+
+However, when a lattice code is defined in this manner, much
+
+which allow for decoding with low probability of error at af-
+
+of the structure and symmetry of the underlying lattice is lost. In
+
+fordable complexity. It is desired to accomplish that for any
+
+addition, the optimality of this scheme relies on maximum-like-
+
+lihood (ML) decoding, i.e., requires finding the lattice point in-Manuscript received June 5, 2001; revised January 30, 2004. This work was side the sphere which is closest to the received signal. The re-supported in part by the Israel Academy of Science #65/01. The material in this sulting decision regions are not fundamental regions of the lat-paper was presented in part at the IEEE International Symposium on Information Theory, Washington, DC, June 2001 and the IEEE International Symposium tice and are unbounded. In contrast, lattice decoding amounts on Information Theory, Lausanne, Switzerland, June/July 2002.
+
+to finding the closest lattice point, ignoring the boundary of the
+
+U. Erez was with the Department of Electrical Engineering-Systems, Tel-code. Such an unconstrained search preserves the lattice sym-
+
+Aviv University, Ramat-Aviv 89978, Israel. He is now with the Signals, Information and Algorithms Laboratory, The Massachusetts Institute of Technology, metry in the decoding process and saves complexity, and thus it
+
+Cambridge, MA USA (e-mail uri@allegro.mit.edu).
+
+attracted special attention [1], [28].
+
+R. Zamir is with the Department of Electrical Engineering-Systems, Tel-Aviv When restricted to lattice decoding, however, existing lat-University, Ramat-Aviv 89978, Israel (e-mail: zamir@eng.tau.ac.il).
+
+Communicated by R. Urbanke, Associate Editor for Coding Techniques.
+
+tice coding schemes can transmit reliably only at rates up to
+
+Digital Object Identifier 10.1109/TIT.2004.834787
+
+SNR [10], [28]. This loss of "one" in the rate formula 0018-9448/04$20.00 © 2004 IEEE
+
+
+
+
+
+2294
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+means significant degradation in performance at low SNR and
+
+We derive our results in several steps. Section II establishes
+
+zero rate for SNR
+
+. In fact, it was conjectured [10], [28],
+
+the necessary background on lattice codes. Section III analyzes
+
+[26] that with lattice decoding the rate SNR cannot be
+
+the Shannon capacity of the modulo-
+
+channel which incor-
+
+surpassed. See also the discussion in [20], [31].
+
+porates dithering and linear scaling. Theorem 1 shows that
+
+We show that with a slightly different definition of lat-
+
+for a good shaping lattice
+
+, the capacity of this channel ap-
+
+tice transmission and lattice decoding, the full capacity
+
+proaches the capacity of the original power-constrained AWGN
+
+SNR of the channel may be achieved. Our approach
+
+channel (2). Then, Section IV describes the proposed nested
+
+is based on transforming the power-constrained channel into
+
+lattice encoding/decoding scheme. Theorems 2 and 3 state
+
+an unconstrained modulo-lattice additive noise channel, and our main results, that this scheme can approach capacity for
+
+enhancing the SNR by one using linear minimum mean-square
+
+two types of lattice decoders: a noise-matched lattice decoder error (MMSE) estimation principles. This improves upon
+
+and a Euclidean lattice decoder, respectively. The difference previous lattice-based representations of the AWGN channel in
+
+between the two follows from the fact that the effective noise
+
+that, for a "good" lattice
+
+, the transformation is (asymptoti-
+
+in the modulo-
+
+channel is not exactly Gaussian, though it
+
+cally in the dimension
+
+) information preserving at any SNR.
+
+approaches Gaussianity for good shaping lattices.
+
+The modulo-
+
+channel allows to incorporate a coding lattice
+
+Before turning to the more technical sections which establish
+
+, in a configuration called "nested lattice codes, "
+
+.
+
+this result, we illustrate in Section V the role of linear (biased)
+
+The latter is a slight generalization of the concept of Voronoi
+
+estimation in decoding, by a simple example of scalar (uncoded)
+
+constellations [7], [16].
+
+transmission.
+
+Conway and Sloane were the first to propose Voronoi constel-
+
+Section VI extends the discussion to random coding error
+
+lations, where the Voronoi region of a "self-similar" sublattice
+
+exponents. Theorem 4 shows that the error exponent of the
+
+replaces the sphere as the shaping region of the lattice code [7],
+
+modulo-
+
+channel at rate
+
+is at least as good as the Poltyrev
+
+[16]. As will be shown later, there indeed exist lattices with a exponent for un-constrained channels, [28], calculated at a quasi-spherical Voronoi region having good shaping properties
+
+volume-to-noise ratio of
+
+. Note that the latter is inferior
+
+[32], [11]. More general lattice constructions based on multi-to the optimal exponent of the power-constrained AWGN
+
+level coset codes were proposed in [20]. In our framework, the channel for rates below capacity. Section VII provides a con-shaping sublattice
+
+is not necessarily self-similar to the coding
+
+struction for a "good" random ensemble of nested lattice pairs
+
+lattice
+
+. See also [35], [18], and the references therein for fur-
+
+. Finally, Theorem 5 in Section VIII makes the last
+
+ther discussion, links, and applications of this configuration.
+
+step and proves that the Poltyrev exponent can be achieved by
+
+A key ingredient in our lattice transmission scheme is
+
+Euclidean lattice decoding of a good nested lattice code, from
+
+common randomness in the form of a dither variable
+
+, where
+
+which Theorems 2 and 3 follow as corollaries. Most of the
+
+is uniformly distributed over the shaping region
+
+, i.e., over
+
+technical detail is relegated to the appendixes.
+
+the basic Voronoi region of
+
+. We subtract the dither from
+
+Throughout the paper, we use the notation
+
+to specify
+
+the channel input and add it to the MMSE-estimated channel
+
+any function of
+
+such that
+
+as
+
+. In a sim-
+
+output
+
+, where addition and subtraction are modulo- ,
+
+ilar manner, we denote
+
+,
+
+, etc. All logarithms in this
+
+and
+
+is the "Wiener coefficient" which achieves
+
+paper are natural logarithms and rates are in nats.
+
+MMSE
+
+II. PRELIMINARIES: LATTICES, QUANTIZATION,
+
+Dithering is a common randomization technique in lattice quan-
+
+LATTICE DECODING
+
+tization for source coding, used to assure that the mean-squared quantization error exactly meets the distortion constraint for
+
+A lattice
+
+is a discrete subgroup of the Euclidean space
+
+any source input, and to decorrelate the quantization error from
+
+with the ordinary vector addition operation. Thus, if
+
+are
+
+the source [33]. Similarly, in our scheme, the dither assures in
+
+, it follows that their sum and difference are also in
+
+. A
+
+that the input power exactly meets the power constraint
+
+lattice
+
+may be specified in terms of a generating matrix. Thus,
+
+for every codeword, and decorrelates the estimation error
+
+an
+
+real-valued matrix
+
+defines a lattice
+
+by
+
+from the channel input.1 Due to that, the effective noise in
+
+the dithered modulo-
+
+channel is statistically independent of
+
+(4)
+
+the input (although it is slightly non-Gaussian). As a result,
+
+ML decoding of the nested lattice code is equivalent to lattice That is, the lattice is generated by taking all integer linear com-decoding. This further implies that for large dimensions, the
+
+binations of the basis vectors.
+
+rate
+
+of the scheme with lattice decoding can approach the
+
+A coset of
+
+in
+
+is any translated version of it, i.e., the set
+
+mutual information rate of the modulo-
+
+channel, which for
+
+is a coset of
+
+for any
+
+. The fundamental Voronoi
+
+good shaping lattices approaches
+
+region of
+
+, denoted by , is a set of minimum Euclidean
+
+norm coset representatives of the cosets of . Every
+
+can
+
+SNR
+
+be uniquely written as
+
+MMSE
+
+1Note that the orthogonality principle implies ~
+
+X0X ? ~
+
+X but not ~
+
+X0X ?X.
+
+(5)
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2295
+
+with
+
+,
+
+, where
+
+is a nearest neighbor of
+
+BSC and coding for the AWGN channel are widely regarded as
+
+in
+
+, and
+
+is the apparent error
+
+. We
+
+analogous to some extent. Both are additive noise channels
+
+may thus write
+
+(11)
+
+(6)
+
+with addition understood to be modulo-two for the BSC channel
+
+and ordinary addition over the reals for the AWGN channel. The
+
+and
+
+. For a comprehensive introduction to lat-
+
+BSC coding problem leads to a code in Hamming space, the
+
+tices we refer the reader to [19].
+
+AWGN coding problem to a code in Euclidean space.
+
+It will prove useful in the sequel to consider more general
+
+Linear codes are the counterpart of lattices for the case of a
+
+fundamental regions and quantizers. Let
+
+be any fundamental
+
+BSC, and a minimum Hamming distance decoder is the coun-
+
+region of
+
+, i.e., every
+
+can be uniquely written as
+
+terpart of lattice decoding. It is well known that linear codes can
+
+where
+
+and
+
+. We correspondingly
+
+achieve not only the capacity of the BSC channel but also the
+
+define the quantizer associated with
+
+by
+
+best known exponential bounds on error probability, see, e.g.,
+
+if
+
+(7)
+
+[2]. Furthermore, for the BSC channel, ML decoding amounts to minimum Hamming distance decoding. Thus, minimum Ham-This is a nearest neighbor quantizer (as above) if we choose
+
+ming distance decoding is optimal in the case of a BSC channel.
+
+to be a fundamental Voronoi region
+
+. But in general there are
+
+When trying to take the analogy farther, one is however con-
+
+many other choices for
+
+(e.g., the basic parallelepiped [6]), all fronted with a basic problem. In a typical communication sce-have the same volume, denoted
+
+, which is given by the in-
+
+nario over the AWGN channel, the transmitter is usually subject
+
+verse density of the lattice points in space. Define the modulo-
+
+to some constraint, the most common being an average power
+
+operation corresponding to
+
+as follows:
+
+constraint as in (3). This feature is not present in the BSC/linear
+
+case. In the next section, we describe a method for transforming
+
+(8)
+
+the AWGN into a modulo additive noise channel. This maintains
+
+Note that this implies that
+
+for all
+
+.
+
+the parallelism between the two channel models and eventually
+
+For a nearest neighbor quantizer, we omit the subscript
+
+, i.e.,
+
+shows that the capacity of the AWGN channel may be achieved
+
+.
+
+using lattice codes and Euclidean lattice decoding.
+
+The second moment per dimension associated with
+
+is de-
+
+fined as
+
+III. MODULO-LATTICE ADDITIVE NOISE CHANNEL
+
+We describe a technique derived in [12] to transform the (9)
+
+power-constrained AWGN channel into a modulo-lattice addi-
+
+where
+
+is a random vector uniformly distributed over
+
+and
+
+tive noise (MLAN) channel. The transformation is not strictly
+
+. For a fixed lattice,
+
+is minimized if we
+
+information lossless in the sense that it does not preserve
+
+choose
+
+as the fundamental Voronoi region . The normalized
+
+the mutual information. However, for a "good" lattice, the
+
+second moment of
+
+is defined as (see, e.g., [6])
+
+(information) loss goes to zero as the dimension of the lattice,
+
+, goes to infinity. This suffices for achieving the channel's
+
+capacity, albeit may result in a suboptimal error exponent, as
+
+(10)
+
+shown in Section VI. For related background, see the treatment
+
+of MLAN channels in [20].
+
+The normalized second moment
+
+is always greater than
+
+Let
+
+be a random variable uniformly distributed over
+
+as
+
+, the normalized second moment of an infinite-dimensional
+
+defined above. We employ
+
+as a dither signal. It is assumed that
+
+sphere. It is known that for sufficiently large dimension there
+
+is known to both transmitter and receiver (common random-
+
+exist lattices whose Voronoi region
+
+approaches a sphere in
+
+ness) and is independent of the channel. The following property
+
+the sense that
+
+is as close to
+
+as desired [32]. This is
+
+is extensively used in the sequel.
+
+equivalent to saying that a random vector
+
+uniform over
+
+is closer to white Gaussian noise in the sense of normalized
+
+Lemma 1: For any random variable
+
+, statistically in-
+
+entropy, that is
+
+is close to
+
+. We say that
+
+dependent of
+
+, we have that the sum
+
+such lattices are "good for quantization" [35].
+
+is uniformly distributed over
+
+, and is statistically independent
+
+A lattice decoder is simply a Euclidean quantizer, or more
+
+of
+
+.
+
+generally, a quantizer with respect to a fundamental region
+
+.
+
+A proof in the context of dithered quantization can be found
+
+That is, the decoder quantizes the received vector to obtain the
+
+in [33]. The following is a simpler proof by group-theoretic hypothesized codeword. Since most practical decoding algo-considerations, that was pointed out to the authors by
+
+rithms for lattice codes indeed attempt lattice decoding rather
+
+G. D. Forney, Jr.
+
+than ML decoding, it would be desirable if such lattice decoding
+
+were near optimal.
+
+Proof: Since
+
+runs through
+
+as
+
+runs
+
+When considering the performance of lattice decoding, it is
+
+through
+
+, and the density
+
+is constant over
+
+, the
+
+insightful to consider the similarity to linear coding for the bi-density
+
+is constant over
+
+nary symmetric channel (BSC). The problems of coding for the
+
+for any
+
+.
+
+
+
+
+
+2296
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+A. The MLAN Channel Transformation
+
+The lattice is scaled so that the second moment of
+
+is
+
+,
+
+We transform a block of
+
+uses of the AWGN channel
+
+i.e.,
+
+into an
+
+-dimensional MLAN channel. The input al-
+
+phabet of this channel is a fundamental region
+
+of the lattice
+
+(22)
+
+which we call the shaping lattice. We later restrict our attention to the fundamental Voronoi region
+
+.
+
+By Lemma 1, due to the dither, for any , the average transmitted
+
+Given
+
+and the dither
+
+, the output of the transmitter is
+
+power is
+
+given by a modulo lattice operation
+
+(23)
+
+(12)
+
+Upon reception,
+
+is multiplied by some "attenu-
+
+B. Capacity of the MLAN Channel
+
+ating factor"
+
+to be specified later, and the dither
+
+is then added. The result is reduced modulo- , giving
+
+Since the equivalent channel (15) is additive modulo- ,
+
+taking the input to be uniform over the Voronoi region of
+
+,
+
+(13)
+
+i.e.,
+
+, achieves its capacity. With this choice, the
+
+(14)
+
+output
+
+is also uniformly distributed over
+
+. The resulting
+
+information rate is
+
+The resulting channel from to
+
+is a modulo- additive noise
+
+channel described by the following lemma:
+
+(24)
+
+Lemma 2 ("Inflated Lattice Lemma" [12]): The channel (25)
+
+from
+
+to
+
+, defined by (1), (12), and (13), is equivalent in
+
+distribution to the channel
+
+(26)
+
+(15)
+
+where (26) follows from the definition of the normalized second
+
+where
+
+is independent of and is distributed as
+
+moment (10) and from (22).
+
+We are still left with the freedom of choosing
+
+. Choosing
+
+(16)
+
+results in an effective noise
+
+in (21),
+
+where
+
+is a random variable uniformly distributed over
+
+and
+
+i.e.,
+
+does not have a self-noise component. When
+
+is large
+
+is statistically independent of
+
+.
+
+and
+
+, and if
+
+is a "good" lattice for quantization,
+
+i.e.,
+
+, it can be shown that the effect of the modulo
+
+We refer to the resulting channel as a
+
+-MLAN channel.
+
+operation on the noise entropy becomes negligible. We would
+
+The component
+
+will be termed "self-noise" in
+
+therefore have
+
+and a resulting information
+
+the sequel. We see that the equivalent noise is the weighted
+
+rate2 of
+
+. As mentioned in the Introduction, this rate
+
+sum of a Gaussian vector and a uniform random vector, folded
+
+was previously conjectured to be the greatest achievable with
+
+(aliased) into the fundamental region
+
+. When
+
+, the
+
+lattice decoding.
+
+MLAN transformation amounts to effectively "inflating" the
+
+Nevertheless, we can do better by taking the MMSE
+
+lattice and scaling the noise by different factors as explained in
+
+coefficient
+
+Section V.
+
+SNR
+
+Proof:
+
+SNR
+
+(17)
+
+With this choice, we have
+
+(18)
+
+(27)
+
+(19)
+
+(20)
+
+(28)
+
+where (20) follows since the modulo operation is distributive so
+
+(29)
+
+the dither cancels out. The lemma follows, since the distribution
+
+where the inequality follows since for a Voronoi region
+
+of
+
+is independent of
+
+by Lemma 1, and it has the same
+
+for any
+
+. Therefore, the effective noise
+
+distribution as
+
+, i.e., it is uniform over
+
+.
+
+power is reduced by a factor of
+
+(as if the noise were
+
+For an input power constraint, the best choice for a shaping attenuated by a factor of
+
+), so the effective SNR of the
+
+region
+
+is a fundamental Voronoi region of the lattice relative to
+
+MLAN channel is at least
+
+the Euclidean norm. We denote this choice by
+
+. Note that
+
+(up to a boundary set of measure zero) and therefore
+
+SNR
+
+in this case
+
+so that it is increased by one.
+
+(21)
+
+2It is interesting to note that the information rate of
+
+log(2eP ) 0 h(N)
+
+where
+
+means
+
+.
+
+is achievable with = 1 even when N = Y 0 X is not independent of X.
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2297
+
+Consider now a sequence of lattices
+
+which are good for
+
+Nevertheless, for a more restricted class of nested lattices (see
+
+quantization as defined above, that is,
+
+.
+
+Sections VII and VIII), Euclidean lattice decoding becomes
+
+asymptotically optimal as the dimension goes to infinity, hence
+
+Theorem 1 (Capacity of MLAN Channel): For the MLAN
+
+it achieves capacity as well. This result is formally stated in
+
+channel, if we choose
+
+,
+
+, and if the
+
+Theorem 3 in Section IV.C.
+
+sequence of lattices
+
+satisfies
+
+, then
+
+A nested lattice code is a lattice code whose boundary region
+
+is the Voronoi region of a sublattice. This may be visualized as
+
+SNR
+
+in Fig. 1. The use of nested lattices goes back to the works of
+
+Conway and Sloane [7] and Forney [16] (where they were called Proof: Since the capacity of the original AWGN channel
+
+"Voronoi codes" or "Voronoi constellations").5 More recently,
+
+is
+
+SNR , it follows from the data processing
+
+such codes found application in Wyner-Ziv and dirty paper en-
+
+inequality that
+
+coding [35].
+
+The shaping sublattice (i.e., the coarse lattice) is
+
+, the lat-
+
+SNR
+
+(30)
+
+tice defining the MLAN channel. We will choose
+
+so that its
+
+average power per dimension is
+
+and its normalized second
+
+Since the entropy of
+
+is upper-bounded by the the entropy of
+
+moment approaches that of a sphere, namely,
+
+. The fine lat-
+
+a white Gaussian vector with the same second moment [22], we tice should be good for channel coding, i.e., it should achieve
+
+have from (27) that
+
+the Poltyrev exponent, as explained in Section VII.
+
+Formally, we say that a lattice
+
+(the coarse lattice) is nested
+
+(31)
+
+in
+
+(the fine lattice) if
+
+, i.e., if
+
+is a sublattice of
+
+.6 The fundamental Voronoi regions of
+
+and
+
+are denoted
+
+which implies from (26)
+
+by
+
+and
+
+, respectively; their corresponding volumes by
+
+and
+
+, where
+
+divides
+
+by construction. We call
+
+the
+
+nesting ratio. The points of the set
+
+SNR
+
+(32)
+
+(33)
+
+By assumption
+
+. Thus combining (30)
+
+are called the coset leaders of
+
+relative to
+
+; for each
+
+,
+
+and (32), the theorem follows.
+
+the shifted lattice
+
+is called a coset of
+
+relative to
+
+Therefore, with
+
+and a proper choice of shaping
+
+. The set of all cosets, i.e., the quotient group of
+
+by
+
+, is
+
+lattice
+
+, the capacity of the MLAN channel indeed approaches
+
+denoted by
+
+. It follows that there are
+
+different cosets,
+
+the capacity of the original power constrained AWGN channel.3
+
+whose union gives the fine lattice
+
+This entails drawing a random code according to the distribu-
+
+(34)
+
+tion
+
+, and applying ML decoding relative to the
+
+effective modulo-noise
+
+[22]. In the next section, we show
+
+how to replace the uniform random code by a lattice code.
+
+The coding rate of the nested lattice code is defined as
+
+IV. NESTED LATTICES FOR SHAPING AND CODING
+
+It follows that
+
+As in the case of a BSC channel, we shall see that it is possible
+
+to achieve capacity using linear codes instead of a code drawn at nesting ratio
+
+(35)
+
+random. For the MLAN channel, this means using a nested lat-
+
+tice code, where the coarse lattice
+
+is used for shaping so it is a
+
+good quantizer, and the fine lattice
+
+defines the codewords so
+
+A. Encoding/Decoding Scheme
+
+it is a good channel code. Furthermore, for the MLAN channel
+
+lattice decoding is optimal, so that we will obtain a lattice en-We now incorporate a lattice code into the modulo transfor-
+
+coding/decoding scheme to replace the random-code/ML-de-
+
+mation scheme of Section III, with nested lattice codes replacing
+
+coding scheme of Section III, having the same capacity. The
+
+the random codebook, as shown in Fig. 2. Let
+
+be a
+
+scheme is described in Section IV-A below, and its optimality
+
+rate-
+
+nested lattice code as defined in (35), with
+
+.
+
+is stated in Theorem 2 in Section IV-B.
+
+Let
+
+denote modulo-lattice operation with respect to the
+
+A delicate point is, however, that the effective noise in
+
+Voronoi region
+
+of the coarse lattice. Let
+
+denote some fun-
+
+the MLAN channel is not precisely Gaussian for any finite
+
+damental region of the fine lattice
+
+to be specified later, and
+
+dimension; hence, lattice decoding no longer means Euclidean
+
+let
+
+denote the corresponding lattice quantizer.
+
+decoding but rather decoding with a noise-matched "metric."4
+
+5Conway and Sloane's original definition [7] was limited to self-similar lattices. Forney's Voronoi codes, allow, by construction, any nesting relation. Here 3Inspired by a preprint of our work, Forney suggested to view this as a canon-we prefer to use the name "nested codes," which links to the more general con-ical model which connects between Wiener theory and Shannon theory [18].
+
+text of algebraic binning [35].
+
+4We use here the (popular) term "decoding metric" although the distance mea-6In some publications, the coarse lattice is denoted 3 (for shaping) or 3
+
+sure induced by ML decoding is not necessarily a metric.
+
+(for quantization), while the fine lattice is denoted 3 (for coding).
+
+
+
+
+
+2298
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+Fig. 1.
+
+Nested lattices of ratio three.
+
+Fig. 2.
+
+Encoding/decoding scheme.
+
+Fig. 3.
+
+Equivalent modulo-additive noise channel. Addition is modulo-3.
+
+• Message selection: Associate a message with each
+
+This transmission scheme is depicted in Fig. 2, where
+
+member of the set of coset leaders
+
+as defined in
+
+is denoted by
+
+. By the "distributive" property of the modulo
+
+(33).7
+
+operation, we can rewrite (37) as
+
+• Encoding: Let the dither
+
+be defined by
+
+.
+
+(38)
+
+Given the message
+
+, the encoder sends
+
+(39)
+
+(36)
+
+(40)
+
+Consequently, by Lemma 1 and (23),
+
+is uniform over
+
+where (39) follows since
+
+from (13) (with
+
+(independent of ) and the average transmitted power is
+
+), and (40) follows by the inflated lattice lemma (Lemma
+
+.
+
+2) where
+
+. The equivalent channel
+
+• Decoding: Let
+
+as in Section III. The decoder
+
+from
+
+to
+
+is illustrated in Fig. 3.
+
+computes
+
+Since the channel is modulo additive and
+
+is nested in
+
+,
+
+(37)
+
+the decoding error probability for any codeword
+
+is given by
+
+7In fact, c may be replaced by any member of the coset 3 .
+
+(41)
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2299
+
+B. Noise-Matched Lattice Decoding
+
+where
+
+Since we use
+
+(or more precisely
+
+) as a channel code
+
+(45)
+
+for the MLAN channel with noise
+
+which is not Gaussian
+
+(or spherically symmetric), the optimal decoding region
+
+is
+
+not the Voronoi region of
+
+with respect to Euclidean metric.
+
+Accordingly, there are two natural simplified (suboptimal)
+
+Rather, we define
+
+, a fundamental region of
+
+, to be a ML
+
+decoders to be considered. First, we may approximate
+
+with
+
+decoding region with respect to
+
+of the zero codeword. Thus,
+
+a white Gaussian vector
+
+having the same second moment
+
+is a fundamental region satisfying8
+
+, and thus use the "folded Euclidean metric"
+
+(42)
+
+(46)
+
+A decoder using the quantizer
+
+will be called an ML
+
+lattice decoder or a noise-matched lattice decoder. Note that the
+
+The decoder may further be simplified by dropping the sum,
+
+decoder is a lattice decoder in the sense that the decoding re-
+
+keeping only the largest term, resulting in the metric
+
+gions are congruent but is not a (Euclidean) nearest neighbor
+
+(47)
+
+decoder since
+
+is not quite spherically symmetric.
+
+Theorem 2 (Capacity-Achieving Nested Lattices With ML
+
+The metric
+
+gives rise to a Euclidean quantization cell
+
+Lattice Decoding): For any
+
+, there exists a sequence of
+
+, so the decoding operation in (37) becomes
+
+-dimensional nested lattice pairs
+
+whose rate
+
+, and the decoding error probability (41)
+
+as defined in (35) is greater than
+
+for sufficiently large ,
+
+becomes
+
+and whose decoding error probability (41) vanishes as
+
+(48)
+
+(43)
+
+Since decoding according to
+
+is suboptimal (i.e., mismatched
+
+Theorem 2 can be deduced by a suitable modification (to
+
+decoding),
+
+in (48) is in general larger than the decoding error
+
+nested lattices) of the analysis in [26]. Here we obtain it as probability in (43). Nevertheless, the following theorem shows
+
+a corollary to Theorem 5, which deals with the error proba-
+
+that capacity can still be approached using appropriate nested
+
+bility of a Euclidean decoder. The latter is strictly inferior to lattice pairs.
+
+the noise-matched decoder assumed here and thus Theorem 2
+
+indeed follows from Theorem 5.
+
+Theorem 3 (Capacity-Achieving Nested Lattices With Eu-
+
+clidean Decoding): For any
+
+, there exists a sequence of
+
+C. Euclidean Lattice Decoding
+
+-dimensional nested lattice pairs
+
+whose rate
+
+As we observed, a somewhat disagreeable aspect of the noise-
+
+as defined in (35) is greater than
+
+for sufficiently large ,
+
+matched lattice decoder is that the decoding "metric" is now
+
+and whose decoding error probability (48) satisfies as
+
+coupled to the choice of shaping lattice
+
+(via the probability
+
+(49)
+
+density of the self-noise
+
+). Moreover, the decoding metric
+
+has memory. This is in contrast to the single-letter form of the
+
+Theorem 3 follows as a corollary to Theorem 5 in
+
+Euclidean decoding metric, corresponding to white Gaussian
+
+Section VIII, which goes further and bounds the error ex-
+
+noise.
+
+ponent of a nested lattice code with Euclidean lattice decoding.
+
+Looking at the definition of
+
+(21), we see that there are
+
+As a final remark, we note that, in practice, the folded Euclidean
+
+two elements to this non-Euclidean nature of the decoder
+
+metric (46) may allow to approach capacity with a less de-
+
+which we may separate. Define
+
+so
+
+manding nested lattice construction and may be advantageous
+
+that
+
+. The first element is that the self-noise
+
+in practice, see [13], [14].
+
+is distributed uniformly over
+
+rather than being Gaussian.
+
+The second is that the sum
+
+V. LINEAR ESTIMATION, BIAS AND INFLATED
+
+is then reduced modulo- . We may correspondingly depict
+
+LATTICE DECODING
+
+the operation of a noise-matched decoder as follows. Upon
+
+receiving a vector
+
+, for every codeword
+
+first
+
+In this section, we illustrate the effect of using an inflated
+
+compute the densities
+
+for all
+
+, then sum
+
+lattice decoder9 by considering a one-dimensional example,
+
+them. That is, the metric associated with codeword
+
+is the sum
+
+without the use of a dither. We consider uncoded pulse ampli-
+
+over all metrics of its coset
+
+, so that
+
+tude modulation (PAM) transmission and compare the average
+
+error probability of an inflated (or scaled) lattice decoder with
+
+(44)
+
+that of a noninflated lattice decoder. The inflated lattice de-
+
+coding approach relates to the issue of biased versus unbiased 8Note that is not uniquely defined by (42) as ties may be broken in dif-
+
+estimation in the context of detection. We attempt to shed some
+
+ferent ways. One possibility is to take to be the union of all points either
+
+light on the merits of these two approaches.
+
+satisfying (42) with strict inequality, or in case of a tie, belonging to the Voronoi region V .
+
+9The term "inflated" will be explained later in this section.
+
+
+
+
+
+2300
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+Fig. 4.
+
+Regular slicer (black circles and solid lines), lattice quantizer decoder (black circles, solid and dashed lines), and inflated lattice quantizer decoder (empty circles and dotted lines).
+
+Assume an element of a 4-PAM constellation is sent over
+
+We may alternatively view the inflated lattice decoder as using
+
+an additive noise channel with AWG noise as illustrated in
+
+linear estimation prior to quantization. That is, we may keep the
+
+Fig. 4. That is, let
+
+and assume that the
+
+step size
+
+and decode as
+
+four symbols are equiprobable, i.e.,
+
+for
+
+. The receiver observes
+
+where
+
+. A minimum-distance (ML) decoder would
+
+decode as follows:
+
+where
+
+is a linear estimator of
+
+given
+
+. Note that
+
+the estimator is biased and the estimation error
+
+is statistically dependent on the transmitted symbol
+
+(as no
+
+dither is used). The optimizing scaling factor
+
+SNR may
+
+be found numerically.
+
+These decision regions correspond to a standard slicer. The re-
+
+A suboptimal choice, at least for this one dimensional ex-
+
+sulting average probability of error is
+
+ample, is to use MMSE scaling. The MMSE criterion chooses
+
+so as to minimize the expected estimation error
+
+. The re-
+
+(50)
+
+sulting (Wiener) coefficient is
+
+SNR
+
+. Fig. 5
+
+compares the average error probability as a function of the SNR
+
+(51)
+
+of the a regular slicer, a lattice quantizer, and a scaled (inflated) lattice quantizer. The performance of the inflated lattice quan-where
+
+tizer is depicted for various values of
+
+as well as for the MMSE
+
+value
+
+SNR . The lower envelope of the dashed lines
+
+(52)
+
+corresponds to
+
+SNR . It is seen that the inflated lattice
+
+quantizer has a substantial gain over the standard (unscaled) lat-
+
+denotes the standard
+
+function to avoid confusion with the
+
+tice quantizer at low SNR.
+
+quantizer function
+
+to be used next.
+
+We conclude that when using a lattice quantizer at the de-
+
+Suppose now that we replace the slicer with a one-dimen-
+
+coder, we may gain by using a biased linear estimator prior to sional midrise lattice quantizer
+
+of step size
+
+, so
+
+quantization. In contrast, when a regular slicer (with half open
+
+that
+
+where
+
+boundary decision regions) is used, the unbiased estimator is iff
+
+for
+
+clearly superior as it performs ML detection.
+
+In this one-dimensional example, the distinction between a
+
+Hence, the two outer decision boundaries in Fig. 4 come into
+
+minimum-distance decoder and a strict lattice quantizer decoder
+
+play. The average probability of error of this system is
+
+may seem of minor significance, affecting only the boundary
+
+. We obviously lose with respect to the ML decoder
+
+points. However, in high dimensions, the boundary codewords
+
+by bounding the decision regions of the two outer symbols
+
+are typical and the distinction becomes of central importance.
+
+and .
+
+This may be visualized by the multidimensional lattice trans-
+
+Consider now a third decoder that uses a one-dimensional
+
+mission scheme with inflated lattice decoder depicted in Fig. 6.
+
+lattice quantizer but this time with step size
+
+where
+
+The noise is Gaussian and is depicted as a sphere. In high di-
+
+, so that
+
+, as illustrated in Fig. 4. We call
+
+mensions, almost all transmitted lattice points lie near the sur-
+
+such a decoder an inflated lattice decoder or simply an inflated face of a sphere of radius
+
+. One such point is consid-
+
+quantizer. We may optimize the scaling coefficient
+
+so as to
+
+ered in the figure. With a nonscaled lattice decoder, correct de-
+
+minimize the averaged error probability
+
+coding occurs when the noise falls within the Voronoi region.
+
+(53)
+
+When the noise is large, this original Voronoi region is com-
+
+pletely contained in and is strictly smaller than the noise sphere.
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2301
+
+Fig. 5.
+
+Comparison of performance of regular slicer, regular (unscaled) lattice quantizer, and inflated lattice quantizer with MMSE scaling. The dashed lines correspond to inflated lattice quantizers with fixed values of = 0:1; 0:2; . . . ; 1.
+
+Fig. 6.
+
+Inflated lattice decoder. Bold lines = Voronoi regions of original lattice code; thin lines = decoding regions of the inflated lattice; small circles = actual transmitted codewords; bold circles = inflated (imaginary) codebook.
+
+Thus, the probability of correct decoding is proportional to the
+
+inal Voronoi region, which is strictly smaller than one. With
+
+relative portion of the noise sphere contained inside the orig-
+
+an inflated lattice decoder, the probability of correct decoding
+
+
+
+
+
+2302
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+is proportional to the relative portion of the noise sphere (cen-
+
+Define
+
+to be the limit supremum (over
+
+) of the av-
+
+tered at the transmitted codeword) contained inside the inflated erage probability of error of the codewords within
+
+,
+
+Voronoi region. The latter region is centered around the associ-
+
+the size of the cube going to infinity. Denote the best possible ated point of the inflated lattice, which we call "the imaginary
+
+average probability of error for a given
+
+by
+
+transmitted point." We can see in the figure that the intersec-
+
+tion of the noise sphere with the inflated Voronoi region has a
+
+larger volume than the volume of the original Voronoi region.
+
+Thus, the inflated lattice decoder has a smaller probability of
+
+where the infimum is over all codebooks with VNR . Poltyrev
+
+error. Note also that if we were to increase the scaling ratio, at
+
+showed in [28] that
+
+some point the noise sphere would cease to intersect the inflated
+
+Voronoi region. Thus, the optimal scaling ratio is finite. Further-
+
+(55)
+
+more,
+
+SNR
+
+SNR as the dimension goes to
+
+infinity.
+
+where
+
+, the "Poltyrev exponent," is given by
+
+VI. RANDOM CODING ERROR EXPONENTS OF THE MLAN
+
+CHANNEL AND THE POLTYREV EXPONENT
+
+We now show that the random coding error exponents of the
+
+(56)
+
+MLAN channel are related to the Poltyrev exponent [28], [20].
+
+and corresponds, as for finite capacity channels, to the random
+
+We first give a heuristic explanation of the relation, arriving at an coding and expurgated bounds on the error exponent [22].
+
+expression for the MLAN error exponent. A rigorous derivation
+
+The problem of coding for the MLAN channel is rather
+
+is then given in Section VI-A.
+
+similar to Poltyrev's problem of coding for the unconstrained
+
+Poltyrev studied the problem of coding for the unconstrained
+
+AWGN channel. Whereas in the first problem the alphabet is
+
+AWGN channel with the input alphabet being the whole space
+
+compact, i.e., it is the Voronoi region
+
+of a lattice, in the latter
+
+. In this setting, the notion of capacity becomes meaningless
+
+it is unbounded, i.e., the entire Euclidean space
+
+. Thus, we
+
+as infinite rates of transmission are possible. Instead, the error
+
+might suspect that the decoding error probability in the two
+
+probability (of an ML decoder) is measured against the normal-
+
+problems may be related if we measure it in both cases against
+
+ized density of the codewords. We now formalize these notions.
+
+codeword density. A minor difference is that the noise in the
+
+Let
+
+be an infinite constellation of points (codewords)
+
+MLAN channel is not strictly Gaussian but rather approaches a
+
+and let
+
+be an -dimensional cube of
+
+Gaussian distribution asymptotically as the dimension
+
+side length
+
+centered at the origin. Denote by
+
+(with a proper choice of a sequence of shaping lattices).
+
+Consider a code of rate
+
+for the MLAN channel with a fun-
+
+damental Voronoi region of volume
+
+and with
+
+the density of the constellation. Note that
+
+is the
+
+average volume of a Voronoi region of a codeword. Given
+
+an AWGN of variance
+
+the (normalized per dimension)
+
+The number of codewords is
+
+and thus the volume per code-
+
+volume-to-noise ratio (VNR)10
+
+is defined as
+
+word is
+
+giving a codeword density
+
+(54)
+
+(57)
+
+Note that
+
+is the asymptotic (in dimension ) squared
+
+As the effective noise has variance
+
+radius of a sphere of volume
+
+. Thus,
+
+has the significance of
+
+the ratio of the squared "radius of a spherical Voronoi region"
+
+to the variance of the noise. When
+
+, a "spherical" Voronoi
+
+region has the same radius as the standard deviation of the noise;
+
+we may associate with the code and channel a corresponding
+
+for smaller , an error is highly likely and reliable communica-
+
+effective VNR
+
+tion is not to be expected. Thus,
+
+has the significance of
+
+capacity. See the discussion in [20, Sec. II-C] where this is re-SNR
+
+ferred to as the "sphere bound."
+
+(58)
+
+using the fact that for a (high-dimensional) almost-spherical
+
+Voronoi region
+
+, we have
+
+. Note that
+
+10The term VNR was coined in [20] where it is denoted by . In [28] 2e
+
+is called the generalized signal to noise ratio and is denoted by , i.e, Poltyrev's when
+
+. We now show that for a lattice with
+
+close
+
+differs from ours by a factor of 2e.
+
+to
+
+(i.e., with an approximately spherical shaping region in
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2303
+
+a second moment sense) the error probability in ML decoding
+
+with
+
+and
+
+. Thus, Lemma
+
+of an optimal code is indeed bounded by (55) with
+
+replaced
+
+5 expresses Poltyrev's random coding exponent in terms of
+
+by
+
+.
+
+Gallager's random coding exponent of a
+
+-
+
+channel.
+
+Recall from (27) that for
+
+, the variance per dimen-
+
+A. Detailed Analysis
+
+sion of
+
+is
+
+. Thus, comparing (63) with (64) we see
+
+Denote by
+
+and
+
+the random coding and ex-
+
+that if
+
+were white and Gaussian, then the random coding
+
+purgated error exponents, respectively, of the -MLAN channel
+
+exponent of the MLAN channel would approach the Poltyrev
+
+, as characterized in Lemma 2, rel-
+
+random coding exponent as
+
+. Theorem 4 specifies
+
+ative to an input distribution uniform over the alphabet
+
+.
+
+under what conditions this holds, and also extends this to the
+
+Note that for a modulo additive-noise channel, a uniform input
+
+expurgated exponent.11
+
+indeed maximizes the random coding and expurgated bounds
+
+We first introduce the following definitions. Let
+
+denote
+
+[22]. Let
+
+the covering radius of
+
+, i.e.,
+
+is the radius of the smallest
+
+ball containing the Voronoi region . Also, let
+
+denote the ef-
+
+(59)
+
+fective radius of the Voronoi region, i.e., the radius of a sphere
+
+having the same volume as
+
+. Finally, substituting the effective
+
+so that
+
+is a lower bound to the true error exponent of the
+
+VNR
+
+from (58) in the Poltyrev exponent
+
+-MLAN channel.
+
+given in (56), we get (65) at the bottom of the page. The fol-
+
+As we have seen, choosing a shaping lattice
+
+with nor-
+
+lowing theorem is proved in Appendix A.
+
+malized second moment
+
+close enough to
+
+and
+
+, ensures a vanishing loss in capacity in the MLAN
+
+Theorem 4 (Random-Coding Error Exponent for a Fixed
+
+transformation. We now analyze the resulting error exponent.
+
+Shaping Lattice): For any
+
+-dimensional lattice
+
+, the error
+
+The random coding error exponent of a modulo additive noise
+
+exponent of the
+
+-MLAN channel satisfies
+
+channel can be expressed conveniently in terms of Renyi en-
+
+tropies, see, e.g., [15]. For the
+
+-MLAN channel, this gives
+
+(66)
+
+where
+
+is the Poltyrev exponent
+
+(67)
+
+and
+
+(60)
+
+(68)
+
+where
+
+and
+
+is the density of the codewords as defined
+
+in (57), and where the Renyi entropy of order
+
+is defined by
+
+with
+
+,
+
+, and
+
+denoting the covering radius, effective
+
+radius, and normalized second moment of
+
+, respectively, and
+
+(61)
+
+denoting the normalized second moment of an -sphere.
+
+To achieve the Poltyrev exponent
+
+at
+
+,
+
+where
+
+denotes the probability density of
+
+. Taking into
+
+we would thus like
+
+and
+
+to be small. To that end, we
+
+account that
+
+, we have
+
+confine ourselves to a more stringent class of shaping lattices .
+
+Following a result of Rogers [29], [6], there exist lattices whose (62)
+
+covering density, i.e.,
+
+, satisfies
+
+(69)
+
+(63)
+
+for some positive constants
+
+and . We shall refer to such a
+
+Let
+
+. In Lemma 5 in Appendix A, we show
+
+sequence of lattices as "Rogers-good." By the proof of Lemma
+
+that for
+
+1 of [32], this implies in particular that for such a sequence of 11Unfortunately, unlike for the case of capacity (corresponding to regular en-
+
+(64)
+
+tropy, i.e., Renyi entropy of order
+
+= 1), there seems to be no direct way to
+
+bound the difference between
+
+h (N ) and h (Z) in terms of log(2eG(3)).
+
+(65)
+
+
+
+
+
+2304
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+lattices
+
+as
+
+. Also, from (69) it follows
+
+The expurgated exponent is given by [22, p. 342]
+
+that
+
+SNR
+
+SNR
+
+(74)
+
+SNR
+
+as
+
+.
+
+for
+
+Corollary 1: For a sequence of Rogers-good lattices
+
+SNR
+
+(75)
+
+(70)
+
+where
+
+is given in (65).
+
+Fig. 7 compares the exponents
+
+and
+
+for several
+
+SNR values. We note that at high SNR, the random coding and
+
+Remarks:
+
+straight-line sections of
+
+tend to the Poltyrev expo-
+
+• Note that
+
+vanishes at
+
+, i.e., at
+
+nent. This can be seen more clearly in Fig. 8, where the random
+
+coding exponents are plotted as a function of the SNR and
+
+.
+
+Note that
+
+does not depend on the SNR. We also note
+
+that at high SNR
+
+is twice as large as
+
+.
+
+which is the well-known capacity of the original AWGN
+
+channel.
+
+VII. AN ENSEMBLE OF GOOD NESTED LATTICE CODES
+
+• As noted, the exponent in (56) was derived by Poltyrev
+
+The scheme presented in Section IV-A assumes a nested pair
+
+[28] in the context of coding for the unconstrained AWGN
+
+of lattices such that the coarse lattice is good for quantization
+
+channel. In fact, the proof of Theorem 4 may be considered
+
+while the fine one is good for AWGN coding under ML de-
+
+as an alternative simplified approach to proving Poltyrev's
+
+coding. In Section IV-C, we further assumed the existence of
+
+result. A similar simplification has been done previously
+
+nested lattice pairs which allow Euclidean lattice decoding to
+
+in [20, Sec. VIII].
+
+be (asymptotically) optimal.
+
+• In a preliminary version of this work, it was conjectured
+
+We now define, for any coding rate (35), a random ensemble
+
+that (70) is in fact an equality, i.e., that the error exponent
+
+of nested lattice pairs
+
+. We show that most members of
+
+of the MLAN channel asymptotically equalts the Poltyrev
+
+the ensemble satisfy that the coarse lattice
+
+is simultaneously
+
+exponent. A recent result [25], however, shows that a Rogers-good (a good quantizer) and Poltyrev-good (a good
+
+better error exponent can be achieved with an
+
+which is
+
+channel code), while the fine lattice
+
+is Poltyrev-good.
+
+different than
+
+and that, in fact, the random coding
+
+This will allow us to prove Theorem 5 which shows that the
+
+error exponent is (asymptotically) equal to that of the
+
+probability of error in the transmission scheme of Section IV-A
+
+original power-constrained channel as given in (71). This
+
+satisfies
+
+.
+
+surprising result implies that at least at high transmission
+
+Clearly, by integer scaling a lattice we may obtain "self-sim-
+
+rates, the MLAN transformation does not lose in error
+
+ilar" nested lattices for any integer nesting ratio. For example, exponent.
+
+Fig. 1 depicts a self-similar nested lattice pair of dimension
+
+two. The nine codewords are depicted as full circles. Note that
+
+B. Comparison With the Error Exponents of the
+
+the open circles are identical
+
+to full circles. Here, the
+
+Power-Constrained AWGN Channel
+
+nesting ratio is three. A lattice may also have a sublattice that
+
+is a scaled and rotated version of it; see [5]. In general, the pair Denote the random coding error exponent of the original
+
+of nested lattices discussed in this paper need not be similar and
+
+power-constrained channel (1), (3) by
+
+SNR (where
+
+the nesting ratio does not have to be an integer. We note that in
+
+and
+
+are related via
+
+). This exponent is given
+
+[27] a related construction of nested trellis codes is given that is by [22, p. 340] (71) and (72) (at the bottom of the page) for better suited for applications.
+
+We begin with a description of Loeliger's type A construction
+
+SNR
+
+SNR
+
+SNR
+
+of a random
+
+- lattice ensemble [26]. See [6] for a general definition of Construction A. The construction of a good -di-
+
+(73)
+
+mensional lattice consists of the following steps [11]:
+
+SNR
+
+(71)
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+SNR
+
+(72)
+
+SNR
+
+SNR
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2305
+
+Fig. 7.
+
+Comparison of the random coding and expurgated error exponents of the power-constrained AWGN channel (dashed line) and the Poltyrev exponent (solid line). The circles in the figure separate the expurgated, straight-line, and random coding parts of the curves, respectively.
+
+Fig. 8.
+
+Comparison of random coding exponent of the power-constrained AWGN channel (solid line) and the Poltyrev random coding exponent (dashed line).The curves depicted are all above the critical rates of the respective channels.
+
+1) Draw a generating vector
+
+according to
+
+The goodness of this lattice ensemble for AWGN channel
+
+i.i.d.,
+
+.
+
+coding and for quantization is shown in [11]. We extend the discussion to the generation of a pair of nested lattices which 2) Define the discrete codebook,
+
+is good for the MLAN channel. We use a transformed version
+
+(76)
+
+of
+
+above as the fine lattice. As for a coarse (shaping) lat-
+
+tice, we use a lattice
+
+that is simultaneously Rogers-good and
+
+3) Apply Construction A to lift
+
+to
+
+and form the lattice:
+
+Poltyrev-good. This is necessary for Euclidean decoding to be
+
+adequate, since a Euclidean decoder "ignores" the folding of
+
+(77)
+
+the noise and hence we would like the probability of folding
+
+
+
+
+
+2306
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+to be (exponentially) small. In [11], it is shown that a lattice rate as defined in (35) approaches
+
+, and whose decoding error
+
+may indeed simultaneously be Rogers-good for covering and
+
+probability (48) under Euclidean lattice decoding satisfies
+
+Poltyrev-good for channel coding. That is, we may take
+
+(more
+
+precisely, the sequence of such lattices) such that the following
+
+(80)
+
+two properties hold:
+
+where
+
+as
+
+, and
+
+is the Poltyrev expo-
+
+1)
+
+for some constants and , where
+
+nent given in (56).
+
+and
+
+are the covering radius and the effective radius,
+
+respectively, associated with
+
+.
+
+Since
+
+for all
+
+, Theorem 5 implies that for
+
+every rate
+
+smaller than capacity,
+
+goes to zero as
+
+,
+
+2) For any
+
+which is Theorem 3. Furthermore, since Euclidean decoding is
+
+suboptimal relative to ML decoding, Theorem 2 follows as well.
+
+(78)
+
+Proof: Assume the ensemble of nested lattices defined in
+
+the previous section with
+
+, covering radius
+
+, ef-
+
+where
+
+is the VNR of the coarse lattice (viewed
+
+fective radius
+
+, and coding rate
+
+. Note that the coarse lattice
+
+as a channel code) relative to a noise
+
+.
+
+is fixed and not drawn at random. We wish to evaluate the
+
+Note that the first property implies that
+
+as
+
+error probability
+
+in lattice decoding of a random member of
+
+. Let
+
+denote the generating matrix of this lattice.
+
+this ensemble using the standard random-coding error exponent
+
+From the construction of the fine lattice
+
+above, we have
+
+method [22] (as done, e.g., by Poltyrev [28] and Loeliger [26]).
+
+that the -dimensional cubic lattice
+
+may be viewed as nested
+
+But this method assumes ML decoding, while as explained in
+
+in the resulting lattice, i.e.,
+
+. The nesting ratio is given
+
+Section IV-C, Euclidean decoding may not be ML. To overcome
+
+by
+
+this difficulty, we first bound
+
+by the probability of error in
+
+the presence of "truncated Gaussian" noise,
+
+, for which Eu-
+
+clidean decoding is optimal. To establish this bound, we need to (79)
+
+define a few auxiliary random vectors.
+
+Recall that
+
+so that
+
+.
+
+so the coding rate (35) is
+
+. We now
+
+That is,
+
+is the effective noise prior to the modulo operation.
+
+apply the linear transformation
+
+to
+
+to obtain the modified
+
+In Lemmas 6 and 11 in Appendix A we show that there exists a
+
+lattice
+
+such that
+
+is the desired nested lattice pair.
+
+Gaussian vector
+
+with
+
+Note that the transformation does not affect the nesting ratio.
+
+Since the unit cubic lattice
+
+is a sublattice of
+
+, it follows
+
+that
+
+is a sublattice of
+
+.
+
+We may view the construction as starting with a self-similar
+
+pair of nested lattices
+
+as depicted in Fig. 1. The
+
+(81)
+
+nesting ratio at this point is
+
+. We then dilute the lattice
+
+by picking one of its points, along with all its multiples
+
+such that
+
+modulo- , and throwing away all the remaining points. This
+
+results in a new lattice
+
+and a nesting ratio of
+
+. Since the
+
+(82)
+
+total number of codewords is , for a given rate
+
+we must
+
+choose
+
+, where
+
+denotes rounding to the nearest
+
+where
+
+is defined in (67), and
+
+is defined in (69).
+
+prime, and apply the above construction.
+
+That is, the density of
+
+is not "much" greater than that of
+
+For large
+
+, the resulting ensemble is "matched" to the
+
+the density of a Gaussian distribution with a "slightly" greater
+
+-MLAN channel, in the sense that the codewords of the fine
+
+variance. Note that the bound is uniform in , i.e.,
+
+does
+
+lattice
+
+become uniform over the Voronoi region of . Hence,
+
+not depend on . Thus, we may bound the probability of error
+
+a typical member of the ensemble approaches the optimum
+
+by
+
+random-coding error exponent of this channel. These facts are
+
+proved in the next section.
+
+(83)
+
+Unfortunately, we cannot apply the random-coding error
+
+VIII. ERROR ANALYSIS IN EUCLIDEAN LATTICE DECODING
+
+exponent of Theorem 4 to bound
+
+, since
+
+In this section, we prove that capacity as well as the Poltyrev
+
+is not a modulo-
+
+noise. Also, we cannot apply it to bound
+
+exponent may be approached arbitrarily closely using nested
+
+, because for this noise
+
+is not an ML
+
+lattices from the ensemble described in Section VII and a
+
+region. Instead, we shall bound this probability in terms of
+
+Euclidean decoding metric as defined in Section IV-C. Specifi-
+
+, where
+
+is a truncated version of
+
+limited
+
+cally, we prove the following theorem.
+
+to the Voronoi region of
+
+. That is,
+
+has the following
+
+distribution:
+
+Theorem 5 (Error Exponent in Euclidean Lattice Decoding):
+
+For any rate
+
+SNR , there exists a sequence
+
+(84)
+
+of -dimensional nested lattice pairs
+
+whose coding
+
+otherwise
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2307
+
+where
+
+Furthermore, the distribution of the difference between any two
+
+codewords is also uniform. The pairwise distribution is thus
+
+(85)
+
+identical to that obtained by drawing each codeword indepen-
+
+dently and uniformly over the basic grid
+
+as done
+
+is the probability of truncation. Since
+
+, we have
+
+in the random code ensemble. Therefore (see [22]), these two ensembles have the same random coding error exponent. It may
+
+also be shown that with probability going to one (as
+
+)
+
+Thus,
+
+a lattice drawn from the proposed nested lattice ensemble will
+
+satisfy the expurgated error exponent bound in (92). Thus, the
+
+(86)
+
+probability of error for this ensemble of nested lattices when
+
+(87)
+
+used over a
+
+-MLAN channel with ML decoding is gov-
+
+(88)
+
+erned by the error exponent
+
+. Furthermore, since
+
+and the density of
+
+is proportional to
+
+Note that from (81), the equivalent VNR of the coarse lattice
+
+inside
+
+and zero elsewhere, it follows that Euclidean decoding
+
+(viewed as a channel code) relative to
+
+is
+
+is ML for this channel. Thus,
+
+(94)
+
+We can now combine (83), (88), (89), Lemma 3, Lemma 4,
+
+so from (78) the second term in (88) is upper-bounded by
+
+and (94), to obtain
+
+(89)
+
+We now turn to evaluate the first term in (88),
+
+.
+
+Consider a
+
+-MLAN channel
+
+(95)
+
+(90)
+
+(96)
+
+The next lemma shows that when
+
+is simultaneously good in
+
+where the second inequality follows because the first exponent
+
+the above meaning, the exponent of this channel is arbitrarily
+
+dominates. This establishes Theorem 5.
+
+close to the Poltyrev exponent for large enough dimension .
+
+Lemma 3: If
+
+is Rogers-good and Poltyrev-good, then
+
+IX. CONCLUSION
+
+the random coding exponents of the
+
+-MLAN channel
+
+We have demonstrated that using nested lattice codes in con-
+
+satisfy
+
+junction with an MMSE-scaled transformation of the AWGN
+
+channel into a modulo additive noise channel, lattice codes can
+
+(91)
+
+achieve capacity using lattice decoding. It should be noted, however, that the precise definition of lattice encoding and decoding
+
+The lemma is proved in Appendix B.
+
+used throughout this work differs somewhat from that in pre-
+
+We next show that we may replace the random code with a
+
+vious works.
+
+lattice from the ensemble defined in the previous section without
+
+This transformation of the original power-constrained
+
+affecting the error exponent. Consider first the random code
+
+channel into a modulo additive-noise channel, though sufficient
+
+(nonlattice) ensemble obtained by applying a uniform distribu-
+
+for achieving capacity, is not strictly information lossless. The
+
+tion over the fine grid
+
+. Denote the union of the
+
+error exponent is lower-bounded by the Poltyrev exponent,
+
+random coding and expurgated error exponent corresponding to
+
+which was derived in [28] in the context of coding for the this ensemble by
+
+unconstrained AWGN channel.
+
+As illuminated by Forney [18], the combination of MMSE
+
+(92)
+
+estimation with a dithered lattice code presented here offers a
+
+useful connection between Wiener and Shannon theories. Re-
+
+where, as above,
+
+. The next lemma is proved in
+
+cent work indeed indicates that the underlying principle may
+
+Appendix C.
+
+find application in diverse areas of digital communications, see,
+
+Lemma 4: If
+
+is Rogers-good, then
+
+e.g., [23]. The random dither can be replaced in practice by a suitable deterministic translation of the fine lattice [18]. As (93)
+
+discussed in Section V, for finite-dimensional (e.g., uncoded)
+
+modulation, the best linear estimator slightly deviates from the
+
+The claim for the expurgated exponent may be proved
+
+MMSE solution. Section V also presents equivalent forms of the
+
+similarly.
+
+estimation-lattice-decoding scheme.
+
+Consider now the ensemble of nested codes defined in
+
+Similar observations were made in the source coding context,
+
+Section VII. It can be seen that each codeword in the ensemble
+
+by incorporating filters with dithered lattice quantizers [34].
+
+is uniformly distributed over the basic grid
+
+.
+
+Here the role of shaping is accomplished by entropy coding.
+
+
+
+
+
+2308
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+As in the scaled MLAN transformation, with "good" lattices
+
+Proof: Let
+
+. Using the the fact that for Renyi
+
+and optimum filters, entropy coded dithered lattice quantiza-
+
+entropy (as for Shannon entropy),
+
+,
+
+tion achieves Shannon's rate-distortion function for Gaussian
+
+we can rewrite (99) as
+
+sources.
+
+(100)
+
+The proposed encoding scheme may easily be generalized to
+
+nonwhite Gaussian noise/linear Gaussian intersymbol interfer-
+
+Define
+
+. The Renyi entropy of order
+
+of a (generic)
+
+ence (ISI) channels. The scheme also is related to "dirty paper"
+
+Gaussian random variable
+
+with variance
+
+is
+
+coding techniques. In particular, the coarse lattice component
+
+of the nested code plays a role similar to that of the "lattice
+
+(101)
+
+strategy" for canceling interference known to the transmitter
+
+[12], stemming from the work of Costa on the "dirty paper"
+
+(102)
+
+channel [8]. Indeed, the present work was directly motivated by [12]. In this respect, it confirms that various lattice-theoretic (103)
+
+schemes such as trellis shaping and precoding for ISI channels
+
+may be extended so as to achieve capacity at any SNR and there substituting
+
+. We therefore have
+
+is no "inherent" precoding loss. See [35], [27], [13] for a detailed account.
+
+The notion of "good" nested lattices is central to our ap-
+
+(104)
+
+proach. Such codes are useful for "structured binning" [3], [35].
+
+Taking the derivative of
+
+with respect to , we get
+
+As mentioned in Section VII, one approach to the construction
+
+of such codes is by using self-similar lattices [5]. However, this (105)
+
+approach is limited and it is not clear that any nesting ratio may
+
+be approached with self-similar lattices. The construction given
+
+Thus, an extremum occurs when
+
+in Section VII is more general and allows for any nesting ratio.
+
+Furthermore, it may readily be interpreted in terms of conven-
+
+(106)
+
+tional coding techniques in the spirit of trellis shaping [17].
+
+or, equivalently, when
+
+(107)
+
+APPENDIX A
+
+It is easy to verify that this extremum is indeed a maximum.
+
+RANDOM CODING ERROR EXPONENTS OF MLAN CHANNEL
+
+Substituting (106) and (107) in (104), we get
+
+In this appendix, we prove the following two propositions
+
+which together constitute Theorem 4.
+
+Proposition 1:
+
+(108)
+
+(97)
+
+(109)
+
+for
+
+where
+
+and
+
+are
+
+From the definition of
+
+(57), we get
+
+defined in (67) and (68), respectively.
+
+Proposition 2:
+
+(110)
+
+(98)
+
+SNR
+
+Substituting (110) for
+
+in (109) we get
+
+for
+
+.
+
+Before proving the first proposition, we introduce two
+
+(111)
+
+lemmas. We use the following identity that relates the Poltyrev
+
+random coding exponent to that of an "infinite-dimensional"
+
+Finally, from (107) and (110) we note that
+
+corresponds
+
+MLAN channel.
+
+to a rate
+
+satisfying
+
+Lemma 5 (Poltyrev Exponent as a "Spherical" MLAN Expo-
+
+(112)
+
+nent I):
+
+from which we obtain the critical rate
+
+(99)
+
+(113)
+
+with
+
+and
+
+.
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2309
+
+We next define a number of auxiliary random variables. Let
+
+We are now ready to prove Proposition 1.
+
+be the covering radius of . Denote by
+
+a ball of radius
+
+Proof of Proposition 1: We may bound the random coding
+
+and let
+
+be the second moment per dimension of
+
+.
+
+error exponent of the
+
+-MLAN channel as follows:
+
+We have (see, e.g., [32], for details)
+
+(124)
+
+(114)
+
+where
+
+denotes the normalized second moment of an
+
+(125)
+
+-sphere. Note that
+
+is the second moment of a ball con-
+
+taining
+
+, which has second moment
+
+. Thus,
+
+.
+
+(126)
+
+Define the following:
+
+•
+
+where
+
+is the identity matrix of
+
+dimension ;
+
+(127)
+
+•
+
+;
+
+•
+
+.
+
+(128)
+
+The variance of
+
+is related to that of
+
+by the following
+
+lemma.
+
+Lemma 6:
+
+(129)
+
+(115)
+
+(130)
+
+(131)
+
+Proof: Recall that
+
+and that
+
+satisfies
+
+. Since a ball has the smallest normalized
+
+where (125) follows since the function
+
+is convex-
+
+for
+
+second moment, it follows that
+
+; (126) follows by Lemma 9 proved below; (129)
+
+follows by Lemma 6 and since
+
+; and
+
+(131) follows by Lemma 5.
+
+(116)
+
+Expurgated Exponent: We next bound the expurgated error
+
+exponent [22] of the
+
+-MLAN channel. Since for a modulo ad-
+
+(117)
+
+ditive noise channel the expurgated exponent is achieved by a
+
+uniform input, we have (132)-(134) at the bottom of the fol-
+
+(118)
+
+lowing page. The last expression my be rewritten as follows.
+
+For the -MLAN channel, define the generalized Bhattacharyya
+
+distance of order
+
+by
+
+Now from (118) and (23), we see that
+
+(119)
+
+(135)
+
+(120)
+
+Recall the definition of
+
+, the effective noise prior to folding,
+
+i.e.,
+
+. For the noise
+
+, define
+
+(121)
+
+(122)
+
+(136)
+
+We similarly define
+
+. Thus, we may write
+
+On the other hand, we have
+
+(123)
+
+(137)
+
+from which follows the left inequality in (115).
+
+We have the following lemma.
+
+
+
+
+
+2310
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+Lemma 7:
+
+Proof: Let us first compute
+
+. We use the fol-
+
+lowing property of Gaussian distributions:
+
+(138)
+
+(147)
+
+Proof: See (139)-(145) at the bottom of the page, where
+
+(141) and (143) follow since
+
+for positive
+
+(148)
+
+and
+
+and
+
+.
+
+where
+
+. This follows since
+
+We also have the following identity (analogous to Lemma 5)
+
+that relates the Poltyrev expurgated exponent to that of an "infi-
+
+nite-dimensional" spherical MLAN channel.
+
+(149)
+
+Lemma 8 (Poltyrev Exponent as a "Spherical" MLAN Expo-
+
+(150)
+
+nent II):
+
+(146)
+
+(151)
+
+(152)
+
+for
+
+with
+
+.
+
+(132)
+
+(133)
+
+(134)
+
+(139)
+
+(140)
+
+(141)
+
+(142)
+
+(143)
+
+(144)
+
+(145)
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2311
+
+We obtain
+
+or
+
+(153)
+
+(168)
+
+We are now ready to prove Proposition 2.
+
+Proof of Proposition 2: We bound the MLAN expurgated
+
+(154)
+
+exponent by (169)-(180) at the top of the following page, where
+
+(171) follows by Lemma 7, (172) follows by Lemma 10, (178)
+
+(155)
+
+follows by Lemma 6, and (180) follows from Lemma 8.
+
+The straight-line part of the bound on
+
+in The-
+
+(156)
+
+orem 4 now follows by combining the results for the random
+
+coding exponent and the expurgated exponent.
+
+(157)
+
+Lemma 9: For any
+
+(158)
+
+(181)
+
+Proof: Using Lemma 11, which is proved below, for any
+
+(159)
+
+Plugging (159) into the left-hand side of (146) and substituting
+
+(182)
+
+, it is left to show that
+
+(160)
+
+(183)
+
+(184)
+
+for
+
+with
+
+. Differenti-
+
+ating the left side of (160), we get
+
+Lemma 10: For any
+
+(185)
+
+(161)
+
+Proof: Using Lemma 11 which is proved below, for any
+
+(162)
+
+Equating to zero, we obtain
+
+(163)
+
+or equivalently
+
+(164)
+
+(186)
+
+Substituting (164) into (160), we have
+
+Lemma 11:
+
+(187)
+
+Proof: Let
+
+denote a random vector uniformly dis-
+
+tributed over a ball of radius
+
+and
+
+denotes its density
+
+(165)
+
+(188)
+
+elsewhere
+
+Taking into account that
+
+, we get
+
+where
+
+is the volume of a unit sphere of dimension . Since
+
+is uniformly distributed over
+
+, for any
+
+we have
+
+(166)
+
+(189)
+
+Finally, note that from (164), we have that
+
+corresponds
+
+to a rate satisfying
+
+Thus,
+
+(167)
+
+(190)
+
+
+
+
+
+2312
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+(169)
+
+(170)
+
+(171)
+
+(172)
+
+(173)
+
+(174)
+
+(175)
+
+(176)
+
+(177)
+
+(178)
+
+(179)
+
+(180)
+
+We next observe that for any
+
+We thus get
+
+(191)
+
+where
+
+is defined after (114), i.e., is Gaussian having the same
+
+second moment as
+
+defined in (188). To see this note that for
+
+we have
+
+(200)
+
+(192)
+
+Recall that
+
+Using (114) we have that
+
+(201)
+
+(193)
+
+and
+
+Combining (192) and (193), we get that for
+
+, we have
+
+(202)
+
+(194)
+
+It follows from (200)-(202) that
+
+We also have for any
+
+such that
+
+(195)
+
+(203)
+
+(196)
+
+(197)
+
+APPENDIX B
+
+PROOF OF LEMMA 3: EXPONENT OF TRUNCATED GAUSSIAN
+
+(198)
+
+MLAN CHANNEL
+
+Since
+
+is monotonically decreasing with
+
+, we have
+
+The random coding error exponent of the
+
+-MLAN
+
+that (194) together with (198) imply that for any
+
+channel is given by
+
+(199)
+
+(204)
+
+
+
+
+
+EREZ AND ZAMIR: ACHIEVING
+
+SNR ON THE AWGN CHANNEL
+
+2313
+
+We further have (recall that
+
+is truncated version of
+
+, see
+
+where
+
+is assumed to be any Rogers-good lattice. Consider a
+
+(84))
+
+ball of radius
+
+and volume
+
+. We have
+
+(205)
+
+(216)
+
+(206)
+
+Since
+
+, this gives
+
+(217)
+
+(207)
+
+For Rogers-good lattices, we have
+
+Taking
+
+we get
+
+and
+
+(208)
+
+Combined with (216), this implies that for any
+
+Similarly, we have
+
+(218)
+
+(209)
+
+where here
+
+. Recalling that
+
+Therefore, following the steps in the proof of Theorem 4 we get
+
+, we also have for any
+
+(210)
+
+(219)
+
+This completes the proof.
+
+For any
+
+APPENDIX C
+
+PROOF OF LEMMA 4: EXPONENT ROBUST TO FINE
+
+QUANTIZATION OF INPUT
+
+(220)
+
+Consider the random coding error exponent corresponding to
+
+By the Cauchy-Schwarz inequality
+
+a uniform distribution over the basic grid
+
+. It is
+
+given by
+
+(221)
+
+(211)
+
+Therefore,
+
+where we have (212) at the bottom of the page. Compare this
+
+with the random coding exponent corresponding to a uniform
+
+input, which is given by
+
+(222)
+
+Now
+
+(213)
+
+where we have (214) at the bottom of the page. We next show
+
+that for any
+
+and
+
+(223)
+
+The last two inequalities imply that
+
+(215)
+
+(224)
+
+(212)
+
+(214)
+
+
+
+
+
+2314
+
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 50, NO. 10, OCTOBER 2004
+
+Consequently, we obtain (215). Substituting (215) into (214), it
+
+[15] U. Erez and R. Zamir, "Error exponents of modulo additive noise follows that
+
+channels with side information at the transmitter," IEEE Trans. Inform.
+
+Theory, vol. 47, pp. 210-218, Jan. 2001.
+
+[16] G. D. Forney Jr., "Multidimensional constellations - Part II: Voronoi (225)
+
+constellations," IEEE J. Select. Areas Commun. , vol. 7, no. 6, pp.
+
+941-958, Aug. 1989.
+
+[17]
+
+, "Trellis shaping," IEEE Trans. Inform. Theory, vol. 38, pp.
+
+This proves the lemma.
+
+281-300, Mar. 1992.
+
+[18]
+
+, "On the role of MMSE estimation in approaching the information-
+
+theoretic limits of linear Gaussian channels: Shannon meets Wiener,"
+
+ACKNOWLEDGMENT
+
+in Proc. 41st Annu. Allerton Conf. Communication, Control, and Computing, Allerton House, Monticello, IL, Oct. 2003, pp. 430-439.
+
+The authors wish to thank G. Poltyrev for early discussions
+
+[19]
+
+, "Coset codes-I: Introduction and geometrical classification," IEEE
+
+which contributed to the development of some of the ideas in
+
+Trans. Inform. Theory, vol. 34, pp. 1123-1151, Sept. 1988.
+
+[20] G. D. Forney Jr., M. D. Trott, and S. Y. Chung, "Sphere-bound-achieving this work. The authors are also indebted to G. D. Forney, Jr. and
+
+coset codes and multilevel coset codes," IEEE Trans. Inform. Theory, to H. A. Loeliger for very helpful comments.
+
+vol. 46, pp. 820-850, May 2000.
+
+[21] G. D. Forney Jr. and G. Ungerboeck, "Modulation and coding for
+
+linear Gaussian channels," IEEE Trans. Inform. Theory, vol. 44, pp.
+
+REFERENCES
+
+2384-2415, Oct. 1998.
+
+[22] R. G. Gallager, Information Theory and Reliable Communica-
+
+[1] E. Agrell, T. Eriksson, A. Vardy, and K. Zeger, "Closest point search tion.
+
+New York: Wiley, 1968.
+
+in lattices," IEEE Trans. Inform. Theory, vol. 48, pp. 2201-2214, Aug.
+
+[23] H. El Gamal, G. Caire, and M. O. Damen, "On the role of MMSE
+
+2002.
+
+in lattice decoding: Achieving the optimal diversity-vs-multiplexing
+
+[2] A. Barg and G. D. Forney Jr., "Random codes: Minimum distances and tradeoff," in Proc. 41st Annu. Allerton Conf. Communication, Con-error exponents," IEEE Trans. Inform. Theory, vol. 48, pp. 2568-2573, trol, and Computing, Allerton House, Monticello, IL, Oct. 2003, pp.
+
+Sept. 2002.
+
+231-241.
+
+[3] R. J. Barron, B. Chen, and G. W. Wornell, "On the duality between
+
+[24] T. Linder, C. Schlegel, and K. Zeger, "Corrected proof of de Buda's information embedding and source coding with side information and
+
+theorem," IEEE Trans. Inform. Theory, vol. 39, pp. 1735-1737, Sept.
+
+some applications," in Proc. Int. Symp. Information Theory (ISIT), 1993.
+
+Washington, DC, June 2001, p. 300.
+
+[25] T. Liu, P. Moulin, and R. Koetter, "On error exponents of nested lattice
+
+[4] A. R. Calderbank, "The art of signaling: Fifty years of coding theory,"
+
+codes for the AWGN channel," IEEE Trans. Inform. Theory, submitted IEEE Trans. Inform. Theory, vol. 44, pp. 2561-2595, Oct. 1998.
+
+for publication.
+
+[5] J. H. Conway, E. M. Rains, and N. J. A. Sloane, "On the existence of
+
+[26] H. A. Loeliger, "Averaging bounds for lattices and linear codes," IEEE
+
+similar sublattices," Canad. J. Math. , submitted for publication.
+
+Trans. Inform. Theory, vol. 43, pp. 1767-1773, Nov. 1997.
+
+[6] J. H. Conway and N. J. A. Sloane, Sphere Packings, Lattices and
+
+[27] T. Philosof, U. Erez, and R. Zamir, "Combined shaping and precoding Groups.
+
+New York: Springer-Verlag, 1988.
+
+for interference cancellation at low SNR," in Proc. Int. Symp. Informa-
+
+[7]
+
+, "Voronoi regions of lattices, second moments of polytopes, and
+
+tion Theory (ISIT2003), Yokohama, Japan, June 2003, p. 68.
+
+quantization," IEEE Trans. Inform. Theory, vol. IT-28, pp. 211-226,
+
+[28] G. Poltyrev, "On coding without restrictions for the AWGN channel,"
+
+Mar. 1982.
+
+IEEE Trans. Inform. Theory, vol. 40, pp. 409-417, Mar. 1994.
+
+[8] M. H. M. Costa, "Writing on dirty paper," IEEE Trans. Inform. Theory,
+
+[29] C. A. Rogers, Packing and Covering.
+
+Cambridge, U.K.: Cambridge
+
+vol. IT-29, pp. 439-441, May 1983.
+
+Univ. Press, 1964.
+
+[9] R. de Buda, "Some optimal codes have structure," IEEE J. Select. Areas
+
+[30] D. Slepian, "Group codes for the Gaussian channel," Bell Syst. Tech. J. , Commun. , vol. 7, pp. 893-899, Aug. 1989.
+
+vol. 47, pp. 575-602, 1968.
+
+[10]
+
+, "The upper error bound of a new near-optimal code," IEEE Trans.
+
+[31] R. Urbanke and B. Rimoldi, "Lattice codes can achieve capacity on the Inform. Theory, vol. IT-21, pp. 441-445, July 1975.
+
+AWGN channel," IEEE Trans. Inform. Theory, vol. 44, pp. 273-278,
+
+[11] U. Erez, S. Litsyn, and R. Zamir, "Lattices that are good for (almost) Jan. 1998.
+
+everything," IEEE Trans. Inform. Theory, submitted for publication.
+
+[32] R. Zamir and M. Feder, "On lattice quantization noise," IEEE Trans.
+
+[12] U. Erez, S. Shamai (Shitz), and R. Zamir, "Capacity and lattice strate-Inform. Theory, vol. 42, pp. 1152-1159, July 1996.
+
+gies for cancelling known interference," IEEE Trans. Inform. Theory,
+
+[33]
+
+, "On universal quantization by randomized uniform/lattice quan-
+
+submitted for publication.
+
+tizer," IEEE Trans. Inform. Theory, vol. 38, pp. 428-436, Mar. 1992.
+
+[13] U. Erez and S. ten Brink, "A close-to-capacity dirty paper coding
+
+[34]
+
+, "Information rates of pre/post filtered dithered quantizers," IEEE
+
+scheme," IEEE Trans. Inform. Theory, submitted for publication.
+
+Trans. Inform. Theory, vol. 42, pp. 1340-1353, Sept. 1996.
+
+[14]
+
+, "Approaching the dirty paper limit for canceling known interfer-
+
+[35] R. Zamir, S. Shamai (Shitz), and U. Erez, "Nested linear/lattice codes ence," in Proc. 41st Annual Allerton Conf. Communication, Control, and for structured multiterminal binning," IEEE Trans. Inform. Theory, vol.
+
+Computing, Allerton House, Monticello, IL, Oct. 2003, pp. 799-808.
+
+48, pp. 1250-1276, June 2002.
+
+
+
+
+
+Document Outline
+
+
+toc Achieving $ {{ 1}\over { 2}}\log (1+ {\hbox{SNR}})$ on the AWGN
+
+Uri Erez, Member, IEEE, and Ram Zamir, Senior Member, IEEE I. I NTRODUCTION
+
+II. P RELIMINARIES: L ATTICES, Q UANTIZATION, L ATTICE D ECODING
+
+III. M ODULO -L ATTICE A DDITIVE N OISE C HANNEL Lemma 1: For any random variable $ {\mmb X}\!\in \!\Omega $, sta Proof: Since $ {\mmb y}- {\mmb x} ~{\rm mod}_{\Omega}~ \Lambda $
+
+
+
+
+
+A. The MLAN Channel Transformation Lemma 2 ( Inflated Lattice Lemma [ 12 ] ): The channel from $ {\ Proof: $$\eqalignno{{\mmb Y}^{\prime} = &\, [\alpha ({\mmb X}_{\
+
+
+
+
+
+B. Capacity of the MLAN Channel Theorem 1 (Capacity of MLAN Channel): For the MLAN channel, if w Proof: Since the capacity of the original AWGN channel is $C \tr
+
+
+
+
+
+IV. N ESTED L ATTICES FOR S HAPING AND C ODING A. Encoding/Decoding Scheme
+
+
+
+
+
+Fig. 1.  Nested lattices of ratio three.
+
+Fig. 2.  Encoding/decoding scheme.
+
+Fig. 3.  Equivalent modulo-additive noise channel. Addition is m B. Noise-Matched Lattice Decoding Theorem 2 (Capacity-Achieving Nested Lattices With ML Lattice De
+
+
+
+
+
+C. Euclidean Lattice Decoding Theorem 3 (Capacity-Achieving Nested Lattices With Euclidean Dec
+
+
+
+
+
+V. L INEAR E STIMATION, B IAS AND I NFLATED L ATTICE D ECODING
+
+
+
+
+
+Fig. 4.  Regular slicer (black circles and solid lines), lattice
+
+Fig. 5. Comparison of performance of regular slicer, regular (un
+
+Fig. 6.  Inflated lattice decoder. Bold lines = Voronoi regions VI. R ANDOM C ODING E RROR E XPONENTS OF THE MLAN C HANNEL AND T A. Detailed Analysis Theorem 4 (Random-Coding Error Exponent for a Fixed Shaping Latt
+
+Corollary 1: For a sequence of Rogers-good lattices $\Lambda ^{(
+
+
+
+
+
+B. Comparison With the Error Exponents of the Power-Constrained
+
+
+
+
+
+VII. A N E NSEMBLE OF G OOD N ESTED L ATTICE C ODES
+
+
+
+
+
+Fig. 7.  Comparison of the random coding and expurgated error ex
+
+Fig. 8.  Comparison of random coding exponent of the power-const VIII. E RROR A NALYSIS IN E UCLIDEAN L ATTICE D ECODING Theorem 5 (Error Exponent in Euclidean Lattice Decoding): For an Proof: Assume the ensemble of nested lattices defined in the pre
+
+
+
+
+
+Lemma 3: If $\Lambda $ is Rogers-good and Poltyrev-good, then th
+
+Lemma 4: If $\Lambda $ is Rogers-good, then $$E^{r}_{\Lambda }(R
+
+
+
+
+
+IX. C ONCLUSION
+
+R ANDOM C ODING E RROR E XPONENTS OF MLAN C HANNEL Proposition 1: $$E_{\Lambda} ^{r}(R) \geq E_{P}^{r}\left (e^{2(C
+
+Proposition 2: $$E_{\Lambda} ^{x}(R) \geq E_{P}^{x}\left (e^{2(C
+
+Lemma 5 (Poltyrev Exponent as a Spherical MLAN Exponent I): $$\m Proof: Let $\delta ^{\ast }= {{ e^{R}}\over { \sqrt {2 \pi e P_{
+
+
+
+
+
+Lemma 6: $$\eqalignno{{{ n}\over { n+2}} \cdot {{ P_{X} P_{N}}\o Proof: Recall that $ {\mmb B}\sim {\rm Unif}( {\cal B}(R_{u}))$
+
+Proof of Proposition 1: We may bound the random coding error exp
+
+
+
+
+
+Expurgated Exponent: We next bound the expurgated error exponent
+
+Lemma 7: $$D^{\rm Bhatt}_{\rho} (\Lambda ; {\mmb N}^{\prime}) \l Proof: See (139) (145) at the bottom of the page, where (141) an
+
+
+
+
+
+Lemma 8 (Poltyrev Exponent as a Spherical MLAN Exponent II): $$\ Proof: Let us first compute $D^{\rm Bhatt}_{\rho} (Z)$ . We use
+
+Proof of Proposition 2: We bound the MLAN expurgated exponent by
+
+
+
+
+
+Lemma 9: For any $\rho >0$ $${{ 1}\over { n}}\rho h_{ \bar {\rho Proof: Using Lemma 11, which is proved below, for any $\rho >0$
+
+
+
+
+
+Lemma 10: For any $\rho >1$ $${{ 1}\over { n}} \rho D^{\rm Bhatt Proof: Using Lemma 11 which is proved below, for any $\rho >0$ $
+
+
+
+
+
+Lemma 11: $${{ 1}\over { n}} \log {{ f_{ {\mmb N}^{\prime\prime} Proof: Let $ {\mmb B}$ denote a random vector uniformly distribu
+
+
+
+
+
+P ROOF OF L EMMA 3: E XPONENT OF T RUNCATED G AUSSIAN MLAN C HAN
+
+P ROOF OF L EMMA 4: E XPONENT R OBUST TO F INE Q UANTIZATION OF
+
+E. Agrell, T. Eriksson, A. Vardy, and K. Zeger, Closest point se
+
+A. Barg and G. D. Forney Jr., Random codes: Minimum distances an
+
+R. J. Barron, B. Chen, and G. W. Wornell, On the duality between
+
+A. R. Calderbank, The art of signaling: Fifty years of coding th
+
+J. H. Conway, E. M. Rains, and N. J. A. Sloane, On the existence
+
+J. H. Conway and N. J. A. Sloane, Sphere Packings, Lattices and
+
+M. H. M. Costa, Writing on dirty paper, IEEE Trans. Inform. Theo
+
+R. de Buda, Some optimal codes have structure, IEEE J. Select. A
+
+U. Erez, S. Litsyn, and R. Zamir, Lattices that are good for (al
+
+U. Erez, S. Shamai (Shitz), and R. Zamir, Capacity and lattice s
+
+U. Erez and S. ten Brink, A close-to-capacity dirty paper coding
+
+U. Erez and R. Zamir, Error exponents of modulo additive noise c
+
+G. D. Forney Jr., Multidimensional constellations Part II: Voron
+
+G. D. Forney Jr., M. D. Trott, and S. Y. Chung, Sphere-bound-ach
+
+G. D. Forney Jr. and G. Ungerboeck, Modulation and coding for li
+
+R. G. Gallager, Information Theory and Reliable Communication .
+
+H. El Gamal, G. Caire, and M. O. Damen, On the role of MMSE in l
+
+T. Linder, C. Schlegel, and K. Zeger, Corrected proof of de Buda
+
+T. Liu, P. Moulin, and R. Koetter, On error exponents of nested
+
+H. A. Loeliger, Averaging bounds for lattices and linear codes,
+
+T. Philosof, U. Erez, and R. Zamir, Combined shaping and precodi
+
+G. Poltyrev, On coding without restrictions for the AWGN channel
+
+C. A. Rogers, Packing and Covering . Cambridge, U.K.: Cambridge
+
+D. Slepian, Group codes for the Gaussian channel, Bell Syst. Tec
+
+R. Urbanke and B. Rimoldi, Lattice codes can achieve capacity on
+
+R. Zamir and M. Feder, On lattice quantization noise, IEEE Trans
+
+R. Zamir, S. Shamai (Shitz), and U. Erez, Nested linear/lattice
+
+
+
+
+

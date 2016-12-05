@@ -1,0 +1,4473 @@
+960
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+Performance Analysis of Existing and New Methods
+
+for Data Hiding With Known-Host Information in
+
+Additive Channels
+
+Fernando Perez-González , Member, IEEE, Felix Balado, and Juan R. Hernández Martin , Member, IEEE
+
+Abstract-A considerable amount of attention has been paid tampering efforts. The requirements for these applications also
+
+lately to a number of data hiding methods based in quantization, vary considerably. One of the most elusive of these requirements
+
+seeking to achieve in practice the results predicted by Costa
+
+has been, since the first attempts, robustness, i.e., the ability to for a channel with side information at the encoder. With the
+
+survive intentional or unintentional attacks aiming at removing
+
+objective of filling a gap in the literature, this paper supplies a fair comparison between significant representatives of both this or modifying the embedded payload.
+
+family of methods and the former spread-spectrum approaches
+
+Although a young discipline, digital data hiding has already
+
+that make use of near-optimal ML decoding; the comparison is
+
+gone through two different phases. During the first one,
+
+based on measuring their probabilities of decoding error in the algorithms flooded the literature, in most cases, with weak
+
+presence of channel distortions. Accurate analytical expressions theoretical grounds and with little concern about robustness or
+
+and tight bounds for the probability of decoding error are given and validated by means of Monte Carlo simulations. For dithered performance [1], [2]. The second phase started with the recog-modulation (DM), a novel technique that allows us to obtain
+
+nition that the data hiding problem was in fact a particular case tighter bounds to the probability of error is presented. Within of communications [3], clearing the way for using well-known the new framework, the strong points and weaknesses of both
+
+techniques, such as spread-spectrum, and facilitating subse-
+
+methods are distinctly displayed. This comparative study allows quent performance analyses. In addition, researchers started to
+
+us to propose a new technique named "quantized projection"
+
+(QP), which, by adequately combining elements of those previous look at data hiding under the light of Information Theory, thus
+
+approaches, produces gains in performance.
+
+helping to establish fundamental limits on performance. Within
+
+this framework the problem of embedding can be assimilated
+
+Index Terms-Data hiding, dither modulation, quantization index modulation, quantized projection, spread-spectrum.
+
+to optimally encoding the information to be hidden by shaping
+
+the host signal under certain perceptual restrictions; next,
+
+this signal goes through a statistical channel representing the
+
+I. INTRODUCTION
+
+eventual attacks before arriving to the decoder, which tries to
+
+DATAhidingisthegenericnamegiventoanumberoftech- recover the embedded information from the channel output as niques having the common characteristic of inserting a
+
+reliably as possible.
+
+certain set of data into a regular signal without noticeably mod-
+
+A third and current phase started when Cox et al. [4] identi-ifying it. The growing amount of exchanged information since
+
+fied that the data hiding problem could in addition be seen as
+
+the expansion of the Internet during the last decade has moti-
+
+one of communications with side information at the encoder.
+
+vated active and prolific research in this field. It has also fo-
+
+Soon afterwards, an important result by Costa [5] was rescued cused the attention of the investigations on multimedia signals
+
+by Chen and Wornell in [6]. In his paper, Costa gave a so-
+
+(i.e., image, video and audio) as typical host signals for car-
+
+lution for obtaining null host signal interference for a known
+
+rying the hidden data. The kind of multimedia applications of
+
+realization of a Gaussian host signal and a random Gaussian
+
+data hiding ranges from steganography, where the sheer act of
+
+channel. Then, the problem with side information only at the
+
+the embedding tries to be concealed, to copyright enforcement
+
+encoder-usually termed as "blind" data hiding-could be seen
+
+and/or fingerprinting, where the hidden information has to reli-
+
+as equivalent to having full side information at the decoder. A
+
+ably identify the host signal and/or its legal owner even under
+
+number of down-to-earth implementations aiming at practically
+
+approaching Costa's construction have sprung up since then
+
+[6]-[8], consisting, in most cases, of quantization procedures.
+
+Manuscript received February 4, 2002; revised November 21, 2002. This This family of approaches, that from now on will be referred to
+
+work was supported in part by the Xunta de Galicia under Projects PGIDT01
+
+as known-host-state methods, has been claimed to improve the PX132204PM and PGIDT02 PXIC32205PN, the European project Certimark (Certification of Watermarking Technologies), IST-1999-10987, and the performance of those usually called "spread spectrum" [3], [9],
+
+CYCIT project AMULET under Reference TIC2001-3697-C03-01. The
+
+which use different forms of diversity. In principle, the latter do associate editor coordinating the review of this paper and approving it for not make use of host signal state information, although they are
+
+publication was Dr. Ali N. Akansu.
+
+F. Perez-González and F. Balado are with the Departamento Teoría de la Señal not completely unaware of it as most of them utilize the host
+
+y Comunicaciones, ETSI Telecomunicacion, Universidad de Vigo, 36200 Vigo, state for determining the maximum allowed perceptual distor-Spain (e-mail: {fperez@tsc.uvigo.es; fiz@tsc.uvigo.es).
+
+tion. Moreover, in their best performing versions, they employ
+
+J. R. Hernández Martín is with Nagravision S. A., Lausanne, Switzerland (e-mail: juan-ramon.hernandez@nagra.com).
+
+statistical information about the host signal to construct optimal Digital Object Identifier 10.1109/TSP.2003.809368
+
+or near-optimal detectors. This usage of host signal statistics
+
+1053-587X/03$17.00 © 2003 IEEE
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+961
+
+in their detection algorithms permits us to denominate them
+
+known-host-statistics methods.
+
+The first objective of this paper is to provide a fair and
+
+rigorous comparison of the performance yielded by some of
+
+the most important representatives of these two families of
+
+methods, which is lacking in the literature. Some previous
+
+analyses rely on questionable assumptions and/or simplifica-
+
+tions, which we will try to overcome. A further motivation
+
+for revisiting some recently proposed methods leans on the
+
+fact that Costa's scheme is only optimal for a certain class
+
+of channels and host signals. In fact, we will show that as
+
+Fig. 1.
+
+Generic data hiding procedure.
+
+frequently happens with real-world communications systems,
+
+channel capacity, important as it is, becomes secondary to other
+
+from
+
+. Before the encoding stage, a perceptual mask vector
+
+performance measurements, such as the bit error probability.
+
+is computed from
+
+in the appropriate domain, taking into ac-
+
+We will see that since known-host-state methods do not use host
+
+count the characteristics of the human visual system (HVS) and
+
+signal information in their detection procedures-i.e., detectors
+
+indicating the maximum allowed energy that produces the least
+
+act in a "deterministic" fashion-in certain cases, they happen
+
+noticeable modification of the corresponding sample from the
+
+to be too sensitive to certain power-limited channel distortions.
+
+host signal. Next, using a cryptographic key
+
+, a watermark
+
+On the other hand, even though known-host-statistics methods
+
+is produced from the desired binary information vector
+
+using
+
+present the so-called host signal interference (meaning that a a certain function
+
+. Without loss of generality,
+
+zero probability of decoding error is not attainable), we will
+
+we will write the watermarked signal as the addition
+
+.
+
+verify that in some cases, they prove to be robust enough to
+
+In the sequel, we will concentrate only on the problem of
+
+better withstand such channel perturbations. All considered,
+
+hidden information decoding rather than watermark detection,
+
+this suggests that there may exist better practical approaches
+
+and we will use the decoding bit error probability
+
+as the
+
+that encompass both watermarking philosophies, i.e., the use
+
+final performance measurement. Other performance indices,
+
+of channel state information together with host signal statistics such as the signal-to-noise ratio (SNR) [6], [10] or the mutual information. This door was already opened by Chen and Wor-information [7] between the sent message and the channel nell, who proposed the idea of "spreading" known-host-state
+
+output, have also been proposed. Nevertheless, we feel that in
+
+schemes (spread transforms), much in the same way as additive
+
+the data hiding problem, the probability of decoding error is
+
+spread spectrum schemes improve its operating signal-to-noise
+
+the most reasonable measurement for comparing two methods.
+
+ratio (SNR) [10]. In this paper, we will propose a variant First, as it will be further developed throughout this paper,
+
+called quantized projection, which will be analyzed from the
+
+different SNRs might eventually lead to the same value of
+
+perspective of its probability of bit error, providing accurate
+
+under different underlying statistical models for the host signal.
+
+formulas for its computation and showing how computationally
+
+Second, the mutual information measurement establishes an
+
+attractive choices of the parameters offer excellent performance
+
+upper bound on the admissible rate that can usually be achieved
+
+and robustness in front of channel distortions.
+
+only under certain ideal conditions.
+
+The paper is organized as follows. In Section II, the basic def-
+
+We will also assume that we want to hide only one binary digit
+
+initions and conventions are formulated. Next, in Sections III
+
+of information that we consider to be mapped to an antipodal
+
+and IV, we analyze the behavior of some of the most representa-
+
+symbol
+
+. Two cases will be addressed:
+
+tive known-host-state and known-host-statistics methods under
+
+• Unidimensional case, where only one host signal sample
+
+channel distortions.The conclusions from thses sections serve
+
+is used to convey the information bit. Although not
+
+to propose the quantized projection scheme in Section V, which
+
+very practical by itself due to the associated high
+
+, this
+
+we demonstrate improves the former methods. Last, we com-
+
+case is interesting because it reveals the underlying mech-
+
+pare the empirical and predicted probabilities of decoding error
+
+anisms that appear when many dimensions are used.
+
+of all of these methods in Section VI, and we draw the final con-
+
+• Multidimensional case, in which the information bit is em-
+
+clusions in Section VII.
+
+bedded using a set
+
+of key-dependent
+
+pseudorandomly chosen indices selecting
+
+sam-
+
+ples from
+
+. Obviously, in this case, the obtained results
+
+II. PROBLEM FORMULATION
+
+will depend on the partition
+
+and should be averaged over
+
+We will restrict our analysis to data hiding in still images, as
+
+all possible partitions for a given host signal (see [11]). In most of the prevalent algorithms have taken this kind of host sig-this paper this averaging is not undertaken, because for
+
+nals for benchmarking purposes. The model that we will follow
+
+comparison purposes it is sufficient to consider a single
+
+is summarized in Fig. 1. Let
+
+be a vector containing the sam-
+
+partition.
+
+ples of the host signal that will convey the hidden information;
+
+It is also important to observe that in the multidimensional
+
+these vector samples are taken in a certain domain of interest that case, no form of coding other than repetition will be consid-we will discuss later. We will make the hypothesis that
+
+is a
+
+ered. As this paper targets the comparison of several families of zero-mean random variable (r.v.); should this not be true, the ex-methods, it is out of its scope the consideration of better coding position would remain valid after subtracting the nonzero mean
+
+strategies, which are of course possible, as it has been shown
+
+
+
+
+
+962
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+previously [11]. Thus, repetition coding can be regarded as the perceptual weighting is taken into account. This is achieved by
+
+simplest way of achieving the necessary gain for the data hiding
+
+means of the following set of constraints:
+
+problem (for which the SNR is very low) and serves as a base-
+
+line for the comparison of "raw" algorithms. Moreover, repeti-
+
+(1)
+
+tion (or, equivalently, spreading) is very well-suited against at-where the
+
+account for the perceptual characteristics of the
+
+tacks such as cropping. We will see the effect of this kind of
+
+HVS and ideally are determined to produce the least visible
+
+coding with the appearance of a factor
+
+(repetition coding
+
+impact for a certain watermark energy. Note that if the pseu-gain) governing the asymptotic performance of the multidimen-
+
+dorandom samples
+
+in (1) are chosen so that their mean-
+
+sional analyses. Since increasing the size
+
+of the embedding
+
+squared values take their extremal values, it is immediate to
+
+set will always reduce the probability of error, the actual choice write
+
+of
+
+will be only limited by the ratio between the number of
+
+available samples and the amount of payload to be hidden.
+
+A. Embedding Distortion
+
+Therefore, it is clear that simultaneously meeting the set of
+
+A crucial aspect when performing a rigorous analysis lies in
+
+constraints in (1) automatically leads to an MSE bound having
+
+the election of proper distortion measures. Let us consider first fewer degrees of freedom for allocating the admissible distor-the issue of embedding distortion. We will adhere to the often tion, which also rules out the global compensation phenomenon
+
+used global mean-squared error (MSE) distortion [12], [10],
+
+discussed above.
+
+which for the single bit case is defined as
+
+Having treated the embedding distortion
+
+, let us introduce
+
+the squared root ratio of the host signal variance and the embed-
+
+ding distortion, i.e.,
+
+where
+
+is a random process representing the watermark. A
+
+that allows us to define the document-to-watermark ratio as straightforward generalization of this definition is possible for DWR
+
+.
+
+the multibit case.
+
+B. Channel Distortion
+
+The MSE, being adequate for measuring the total power
+
+devoted to the watermark, should be handled with care when
+
+Before arriving at the receiver, the watermarked signal un-
+
+dealing with visibility constraints. Although just constraining
+
+dergoes an additive probabilistic channel with zero-mean noise
+
+to remain below a certain level is very convenient from an
+
+independent of
+
+, yielding a received signal
+
+.
+
+analytical point of view (e.g., Costa's result was enunciated
+
+This channel models certain attacking operations. By virtue of
+
+for this type of restriction), it is at the same time questionable the pseudorandom choice of the indices in
+
+, we may assume
+
+for the purpose of data hiding in images because it is not
+
+for the multidimensional case that the samples in
+
+are also
+
+well-matched to the characteristics of the HVS, as explicitly
+
+mutually independent, with diagonal covariance matrix
+
+mentioned in [12]. It is widely recognized that the masking diag
+
+.
+
+phenomena affecting the HVS and exploited for the invisible
+
+The channel distortion is defined similarly to the embedding embedding of information respond to local effects. All existing
+
+distortion, that is
+
+approaches to modeling distortions that are unnoticeable to
+
+the HVS take into account this fact, be it the just noticeable
+
+distortion function (JND) [13] in the spatial domain, the noise visibility function (NVF) [14] applicable to different domains, As with the DWR, it will be useful to introduce the following
+
+or equivalent models in other domains of interest like the DCT.
+
+square-root ratio:
+
+The main drawback encountered is that unacceptably high
+
+local distortions (from the perceptual perspective) could be
+
+globally compensated to meet the established restriction. An
+
+alternative consisting of a weighted MSE is discussed in [12].
+
+that relates the power of embedding and channel distortions. In
+
+This type of distortion measurement is appropriate when the
+
+addition, we will call WNR
+
+the watermark-to-noise
+
+weighting refers to local neighborhoods of the signal, e.g.,
+
+ratio.
+
+sub-bands in a frequential transform or vicinities in spatial
+
+As discussed in the previous section, if some sort of per-
+
+coordinates. In the extreme case, these neighborhoods consist
+
+ceptual shaping is introduced in the noise distribution (which
+
+only of one element, and the weighted MSE criterion is
+
+will be likely the case, even for certain unintentional attacks), formally equivalent to the samplewise one, which is discussed
+
+a simple constraint on
+
+will not be enough, and rather, a
+
+below.
+
+set of conditions similar to (1) will be required. Typically, this In view of the discussion above, it seems reasonable to con-shaping will imply that
+
+will be approximately propor-
+
+strain the local variance of the watermark in such a way that
+
+tional to
+
+, for all
+
+. This consideration will be useful
+
+global compensations are not possible, and at the same time,
+
+when deriving optimal decoding strategies.
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+963
+
+It is difficult to answer the question of what choice of the
+
+probability distribution function (pdf) of the distortion, under
+
+a restriction on its variance, causes the worst
+
+on the re-
+
+ceiver. In general, it will heavily depend on both the embed-
+
+ding and detection methods employed. The Gaussian channel
+
+has been commonly used in previous analyses of known-host-
+
+state data hiding schemes [7], [10] as a reference for measuring system performance; one argument supporting this choice is that
+
+Gaussian channel models can be expected to be good for a va-
+
+Fig. 2.
+
+Uniform dithered quantizer.
+
+riety of applications in which robustness against unintentional
+
+attacks is required [10]. In addition, in [15], it is remarked that the dithered quantizers, depicted in Fig. 2, respectively, belong the additive white Gaussian noise channel is of interest because
+
+to the unidimensional lattices
+
+it can be easily applied to any watermarking method, giving
+
+upper capacity bounds to a more general scenario. Also, it has
+
+(2)
+
+been shown in [16] that under the assumption of a Gaussian host signal, the Gaussian channel is the optimal attack under MSE
+
+(3)
+
+distortion restrictions. For all these reasons, we will consider
+
+this type of distortion in our analysis.
+
+where
+
+is an arbitrary value that may be made key-dependent.
+
+However, we will also show how a simple uniform pdf can
+
+Since this offset
+
+is known to the decoder, its value is unim-
+
+sometimes cause more harm to the performance of certain
+
+portant for the performance analysis; we choose
+
+for the
+
+methods than Gaussian noise with the same variance. There
+
+remainder of the section. In this way , the watermarked signal
+
+are three reasons for also choosing this pdf; first, it leads in
+
+turns out to be the quantization centroid closest to , i.e.,
+
+many cases to tractable analytical expressions of performance
+
+that permit gain insight into the behavior of the algorithms;
+
+second, we will show that it can be an especially harmful attack
+
+the watermark being just the quantization error:
+
+to some of the algorithms analyzed, as many of the existing
+
+known-host-state methods are based on uniform quantizers.
+
+Last, this kind of noise is unintentionally present whenever the
+
+watermarked signal is finely quantized (or requantized) [17].
+
+Assuming that the quantization bins are small and
+
+smooth enough, leading to the validity of Schuchman's condi-
+
+tion [17], the watermark can be considered to have a pdf that is C. Modeling
+
+roughly constant within each individual bin.
+
+In Section IV, we will assume that the host signal
+
+is defined
+
+Taking for instance the lattice
+
+, this means that
+
+in the DCT domain since a statistical model will be necessary.
+
+,
+
+, and
+
+. In this way,
+
+The reason for the election of this domain is twofold; first, since the quantization error has a uniform pdf on
+
+, and the
+
+good statistical models are available for the elements of , it is distortion for a given cell is the variance of this uniformly dis-possible to arrive at a complete theoretical formulation of the
+
+tributed random variable, i.e.,
+
+. As both quantizers are uni-
+
+problem that will allow a fair comparison between the different
+
+form and dithered, the average embedding distortion will also be
+
+classes of algorithms; second, the DCT has important practical
+
+.
+
+implications (for instance, it is used in the JPEG standard). Con-Decoding is simply performed by quantization of
+
+,
+
+sequently, the perceptual mask will be computed in this domain.
+
+which amounts to a minimum Euclidean distance decoder
+
+The details into the calculation of such mask were given in [18].
+
+(4)
+
+III. KNOWN-HOST-STATE METHODS
+
+Distortion-compensated QIM (DC-QIM) [6], which is also As previously said, we denote with this name those methods
+
+called the scalar Costa scheme (SCS) in [7] for the DM case, using side information but no host signal statistics.
+
+follows a principle similar to that of QIM, but it tries to prac-
+
+tically approach the results of Costa's optimum codebook. For
+
+A. Unidimensional Case
+
+this purpose, it takes as the watermark the quantization error
+
+scaled by a certain constant , i.e.,
+
+We will first briefly review the principles of some basic ap-
+
+proaches for the unidimensional case. In binary quantization
+
+index modulation (QIM) [19], the basic procedure is to quantize using one of two quantizers, depending on the binary value
+
+which is alleged to work in the same way as the optimizable
+
+to be embedded. We will concentrate our attention on the spe-
+
+constant
+
+used in [5]. Observe that for
+
+, the method
+
+cial case of QIM known as dither modulation (DM) [20], as it reduces to QIM. Once again, and as we will do throughout the
+
+is the one that has been commonly analyzed in the literature;
+
+paper, we consider only in our analysis the dither modulation
+
+however, the same kind of analysis is valid for other quantiza-
+
+implementation, i.e., DC-DM. Assuming again uniformity in
+
+tion approaches. In this case, the centroids
+
+and
+
+of
+
+the quantization bin, we have that the quantization error
+
+is
+
+
+
+
+
+964
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+also uniformly distributed in the interval
+
+, and the
+
+Once again, we must note that neither DM nor DC-DM nor
+
+watermarked signal
+
+GDC-DM use statistical knowledge about
+
+to extract the em-
+
+bedded information.
+
+1) Performance Analysis: Let
+
+and
+
+denote the deci-
+
+sion regions associated with
+
+and
+
+, respectively. In
+
+follows now a uniform distribution
+
+addition, let us assume that the watermarked sample is corrupted
+
+. Therefore,
+
+,
+
+by an additive random distortion
+
+with pdf
+
+, yielding
+
+and decoding is also made, as in (4).
+
+. In this case, it is straightforward
+
+We should remark that there is a difference between this
+
+to determine
+
+since by symmetry
+
+procedure and the assumptions of Costa's result, where the
+
+host signal interference rejection is achieved specifically for
+
+Gaussian sources. By contrast, for the DC-DM method, host
+
+signal statistics are unimportant because in any case, uniformity is assumed to hold inside the quantization bins.
+
+In order to obtain an integral expression for
+
+, it is useful
+
+In addition, DC-DM can be modified without transgressing
+
+to take into account that this probability is independent of the
+
+orthogonality in the sense specified in [7]. Clearly, we can use quantization bin of
+
+in which
+
+lies. This independence
+
+the uniform quantization error to generate the watermark fol-
+
+with the quantization bin is a consequence of the periodicity in
+
+lowing any arbitrary law
+
+and not just
+
+,
+
+and the assumption of
+
+constant within any bin. Thus,
+
+as in DC-DM. Notice that the variable obtained by this trans-
+
+it is sufficient to compute
+
+by conditioning
+
+to lie in, say, the
+
+formation is also orthogonal to . In fact, and just to illustrate 0th bin of
+
+so that
+
+.
+
+the possible advantages brought about by this formulation, we
+
+Now, let
+
+. Then, we can write
+
+propose as an academic example a variant of DC-DM named
+
+GDC-DM (Gaussian DC-DM) in which
+
+(7)
+
+It is easy to see that for the uncompensated DM
+
+; there-
+
+fore, in this case,
+
+. On the other hand, for DC-DM
+
+where
+
+is the transformation of a uniform variable into a
+
+and GDC-DM,
+
+and
+
+, respec-
+
+zero-mean Gaussian variable with variance
+
+. For this end,
+
+tively; consequently,
+
+will be the convolution of
+
+with
+
+the normalized error
+
+is fed into the inverse complemen-
+
+a uniform and a normal pdf, respectively.
+
+tary cumulative Gaussian distribution function
+
+, with
+
+QIM (and so, DM) has been considered to a large extent as a
+
+. This transformation just
+
+"provably good" method, due to its property of presenting zero
+
+maps the uniform error
+
+to a Gaussian distribution. Since this
+
+probability of decoding error for certain amplitude-bounded at-
+
+new pdf is unbounded, it might well occur that 1) the water-
+
+tacks. Indeed, for DM as long as
+
+for
+
+,
+
+mark becomes more perceptible, and 2) it could induce more
+
+we have
+
+. The same can be said of DC-DM, whereas
+
+decoding errors. Concerning visibility, as long as
+
+is small
+
+GDC-DM presents a nonzero
+
+, even with no attacks. For this
+
+enough, the local MSE constraints enunciated in Section II-A
+
+kind of bounded attacks, we can write (7) as
+
+are not violated, but it is clear that these constraints do not
+
+capture all perceptual phenomena; therefore, applicability of
+
+(8)
+
+GDC-DM would require prior extensive perceptual testing,
+
+constituting an open line of research. As for the decoding
+
+where
+
+the interval centered at
+
+, where
+
+.
+
+performance, the shape of the new pdf will prove to be advan-
+
+a) Uniform Noise: Let us assume a uniform pdf between
+
+tageous when the attacking distortion is uniform noise, as in
+
+and
+
+as the additive random attack. It can be argued that
+
+this case, the pdf of
+
+will yield higher probabilities inside the
+
+for a uniform quantizer and under the ignorance of the position
+
+correct detection bin (see Section III-A1).
+
+of the quantization centroids, this is a worst-case attack. Then, As now
+
+, and noting that
+
+and
+
+are not
+
+the distortion introduced by this channel (which is just the noise independent random variables, the embedding distortion in this
+
+power) is
+
+.
+
+case is
+
+For DM, we have that
+
+and
+
+. Then, following (8), one finds
+
+that the probability of error is
+
+that can be rewritten as
+
+(5)
+
+with
+
+. As previously commented, we see that as long as
+
+where
+
+the noise is bounded in a way such that
+
+, we have that
+
+is zero, which provides a certain degree of provable robustness.
+
+Unfortunately, when
+
+, the bit error probability starts to
+
+(6)
+
+grow rapidly. It is interesting to note that when
+
+,
+
+;
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+965
+
+therefore, the channel is useless. In fact, the bit error probability channel is simply
+
+. In this case, it is possible to
+
+can take a maximum value of
+
+when
+
+. From these
+
+analytically determine the value of
+
+for DM since using (7),
+
+results, we can conclude that for uniform channels with a dis-
+
+we have
+
+tortion comparable with that introduced by the watermark, the
+
+DM modulation scheme in the unidimensional case produces
+
+poor results.
+
+For DC-DM, we have that for
+
+, the resulting
+
+pdf is
+
+which results in
+
+(12)
+
+where
+
+.
+
+For DC-DM, we have once again the convolution of a uniform
+
+distribution with a Gaussian; thus,
+
+has the same expression
+
+For
+
+, the same formula applies swapping
+
+and
+
+as (10) after replacing and
+
+by
+
+and
+
+, respectively.
+
+. Now,
+
+In this case,
+
+is found through numerical integration, and
+
+; therefore, the probability of error for
+
+is
+
+.
+
+As for GDC-DM,
+
+is just the convolution of two
+
+Gaussian pdfs and, therefore, a Gaussian pdf with variance
+
+. A formula similar to (12) applies for
+
+, and the
+
+parameter
+
+takes the value
+
+. Following the same kind
+
+of normalization performed in (11), we can write
+
+(9)
+
+(13)
+
+where
+
+. Note that it is still possible to have a zero
+
+probability of error for
+
+whenever the first condition
+
+in (9) applies. Nonetheless, if
+
+, in any case, we will
+
+with
+
+. It can be shown that (13) achieves its minimum
+
+have
+
+. We observe that for values of
+
+, we get
+
+at
+
+when
+
+.
+
+probabilities lower than
+
+. For instance, for the case
+
+,
+
+Full discussion and comparisons of these results are made in
+
+(9) is minimized at
+
+with a
+
+; therefore, this
+
+Section VI.
+
+method clearly outperforms DM in this scenario.
+
+Last, we consider GDC-DM, in which the watermark has a
+
+B. Multidimensional Case
+
+Gaussian pdf that makes
+
+of infinite length. In this case
+
+In multidimensional DM, one binary information symbol is
+
+hidden by using a
+
+-dimensional uniform quantizer
+
+on
+
+(10)
+
+the host image, resulting in
+
+Now,
+
+is computed using (7) by means of numerical integra-
+
+tion, and
+
+. Substituting (5) into (10) and using ,
+
+we can write, after some algebraic manipulations, an approxi-
+
+The uniform quantizers
+
+and
+
+are such that the
+
+mation to
+
+(actually an upper bound) as
+
+corresponding centroids are the points in the lattices
+
+(14)
+
+(15)
+
+(11)
+
+where
+
+is an arbitrary vector that may be key-dependent to in-
+
+troduce an additional degree of uncertainty. In arriving at (14)
+
+with
+
+and
+
+defined in (6). For
+
+, this proba-
+
+and (15), we have assumed that the allowable perceptual distor-
+
+bility presents a minimum lower than
+
+for
+
+, which
+
+tion at every sample is identical.
+
+permits a performance improvement over DC-DM. This is a
+
+Since the presence of an offset
+
+in the above description of
+
+simple proof that DC-DM is not optimal in the sense of min-
+
+the lattices does not alter the final results, we will assume from imizing the probability of decoding error. In fact, even better
+
+now on that
+
+.
+
+alternatives to GDC-DM could have been chosen, for instance,
+
+Now, let
+
+be the watermarked image that has been
+
+taking
+
+to be a truncated (amplitude limited) Gaussian pdf
+
+corrupted by a noise vector . As in (4), given the channel output instead of a pure Gaussian.
+
+, the minimum Euclidean distance decoder simply decides
+
+b) Gaussian Noise: When the pdf of the attack is
+
+Gaussian with variance
+
+, the distortion introduced by this
+
+
+
+
+
+966
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+Fig. 4.
+
+Regions S and S (L = 3).
+
+P.3:
+
+.
+
+Proof: Without loss of generality, assume that
+
+is
+
+located in the positive orthant
+
+. Let
+
+be its closest centroid
+
+Fig. 3.
+
+Centroids and decision regions (L = 2).
+
+in
+
+. Then, it is easy to show that
+
+must belong to
+
+and
+
+then must be of the form
+
+, where
+
+The decision regions associated with
+
+and
+
+are
+
+is an odd number such that
+
+for all
+
+. Now,
+
+denoted by, respectively,
+
+and
+
+. In the sequel, we will
+
+consider the centroid
+
+.
+
+find it useful to identify the decision regions associated with
+
+It is obvious that
+
+and that
+
+has non-negative
+
+each of the centroids in the lattices
+
+and
+
+. To that end, let
+
+components. Defining the vector
+
+as
+
+, we
+
+be any centroid; then, we will denote by
+
+the
+
+can write
+
+Voronoi cell associated with , i.e.,
+
+(16)
+
+where the first inequality follows from the fact that
+
+It follows immediately from (16) that
+
+for any
+
+and the second from the non-negativeness of the
+
+components of
+
+.
+
+Thus, for any
+
+, there is a centroid in
+
+at minimum
+
+distance among all centroids. Consequently,
+
+.
+
+The centroids and decision regions
+
+and
+
+for the case
+
+If the perceptual mask is not constant, it is easy to see that the are depicted in Fig. 3. The Voronoi cells
+
+are gener-
+
+quantization step in each dimension
+
+should be now pro-
+
+alized truncated octahedra [21]. We will find useful to denote portional to
+
+. This has the effect of stretching the regions
+
+by
+
+the generalized octahedron that contains the origin and is
+
+and, consequently, the octahedron
+
+. If the noise variance
+
+limited by all the hyperplanes having the form:
+
+at each sample is proportional to
+
+(perceptually-shaped
+
+noise), then it is possible to rescale both the octahedron and the noise by dividing the th sample by
+
+to recover the original
+
+setup with a constant perceptual mask and i.i.d. noise. A more
+
+general setup has been considered in [22].
+
+where
+
+is any vector such that
+
+,
+
+,
+
+1) Performance Analysis: In order to obtain the bit error and
+
+. These hyperplanes simply bisect the segments
+
+probability of multidimensional DM, we assume without loss of
+
+that connect the origin
+
+and its nearest neighbors in
+
+. It is
+
+generality that the vector
+
+, which corresponds
+
+straightforward to see that the set
+
+is also the convex hull of
+
+to
+
+, is sent. Then, we have that
+
+all the points
+
+having only one nonzero component with
+
+value
+
+. Obviously,
+
+, with equality only when
+
+. Both regions are depicted in Fig. 4 for
+
+.
+
+Several geometrical properties will later allow us to obtain
+
+For the determination of
+
+, one might be tempted to resort to
+
+upper bounds to the bit error probability:
+
+the well-known union bound with the
+
+nearest neighbors of
+
+P.1 [21] : Let
+
+be the Voronoi cell associated with the zero
+
+belonging to
+
+; unfortunately, for moderate values of
+
+,
+
+centroid, i.e.,
+
+. Then, for any other codeword
+
+the results become impractical (the bound for
+
+is greater than
+
+, its decision region is such that
+
+1) due to the overlap between the different decision regions that result when only two centroids (i.e.,
+
+and its nearest neigh-
+
+bors
+
+) are taken into account. On the other hand, consid-
+
+P.2: By construction, it follows that the set
+
+is symmetric
+
+eration of a single nearest neighbor, as done in [10], produces with respect to the coordinate planes.
+
+overly optimistic results.
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+967
+
+For obtaining a useful upper bound, we will follow a different
+
+Then, following the established notation, we have that
+
+strategy. Recalling properties P.1 and P.3, it is possible to con-
+
+,
+
+; therefore, we can compute the mean
+
+clude that
+
+and variance of
+
+as
+
+Var
+
+where
+
+denotes the complement of
+
+in
+
+.
+
+and
+
+can be approximated by
+
+If the pdf of
+
+is symmetric with respect to the coordinate
+
+planes, from property P.2, the above evaluation of the bound
+
+can be reduced to
+
+where
+
+. Again, for the special case
+
+, we have that
+
+for any . Note that for
+
+, the CLT approximation
+
+holds only as an upper bound.
+
+(17)
+
+b) Gaussian Noise: In this case,
+
+is a random vector with
+
+i.i.d. components with zero mean and variance
+
+, that is
+
+where
+
+is the positive orthant, and
+
+is an auxiliary random
+
+vector with i.i.d. components whose pdf is
+
+where
+
+is the noise covariance matrix that takes the form
+
+(18)
+
+, where
+
+is the
+
+identity matrix.
+
+otherwise
+
+Now, the i.i.d. components of the auxiliary random vector
+
+given by (18) have a one-sided Gaussian distribution that may be
+
+Now, let
+
+. Then, the random variable
+
+is
+
+regarded as a particular case of a Nakagami-
+
+pdf with param-
+
+the convolution of
+
+independent random variables with pdf
+
+eter
+
+[24]. Since the one-sided Gaussian distribution is
+
+, and
+
+is the integral of its tail from
+
+to in-
+
+highly skewed, the CLT approximation to the bound
+
+is only
+
+finity. This arrangement allows to transform the
+
+-dimensional
+
+valid for very large
+
+. On the other hand, this approximation
+
+problem into a unidimensional one. By the central limit theorem
+
+becomes very simple to compute; for this reason, we give here
+
+(CLT), as
+
+,
+
+tends to a normal curve. Then, for
+
+the result, noting that its practical utility is limited by the actual very large,
+
+can be approximated by a Gaussian pdf whose
+
+values of
+
+and . Even worse, as discussed above, when
+
+is
+
+mean and variance would suffice to compute the desired proba-
+
+large, the CLT approximation to
+
+fails to give an upper bound
+
+bility as
+
+to
+
+(see Fig. 11).
+
+For calculating (19) in this case, we follow the procedure out-
+
+lined above by introducing the auxiliary random variable
+
+and
+
+(19)
+
+Var
+
+computing its mean and variance as
+
+Furthermore, since the components of
+
+and, therefore, those
+
+of
+
+are i.i.d., then
+
+, and Var
+
+Var
+
+.
+
+However, a word of caution is needed here because the
+
+process of building the one-sided distribution
+
+may pro-
+
+duce highly skewed pdfs, whose sum converges very slowly
+
+to a Gaussian distribution as
+
+increases [23]. If this is the
+
+Var
+
+case, the Gaussian approximation to
+
+may underestimate the
+
+importance of the tails of
+
+and give results that are no
+
+longer an upper bound to the true
+
+.
+
+a) Uniform Noise: Here, for i.i.d. noise components, we
+
+have that
+
+,
+
+. It is interesting to point out
+
+Therefore, the CLT approximation for the upper bound
+
+to
+
+that although for this case it is possible to derive an analytical the bit error probability is
+
+expression for
+
+, the exact result becomes quite involved and
+
+has little interest. For this reason, we will analyze it using the Gaussian approximation described above.
+
+Second, we remark that on the range
+
+(or, equivalently,
+
+), the upper bound (19) becomes in this case a good
+
+where
+
+and is valid for
+
+large.
+
+approximation of
+
+. This is due to the fact that the one-sided
+
+In any case, we have succeeded in accurately computing
+
+uniform distribution is symmetric with respect to its mean and
+
+for any range of
+
+and by adapting the procedure first given by
+
+highly localized [23].
+
+Beaulieu in [24] and [25] for analyzing the performance of equal
+
+
+
+
+
+968
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+gain diversity communications receivers in fading channels. The
+
+which is adequate when information is hidden in the DCT do-
+
+steps needed to solve our problem are outlined in Appendix A.
+
+main. Thus, the pdf of each
+
+has the form
+
+We must mention that the bound given by
+
+is asymptoti-
+
+cally tight as
+
+. In the limit, the probability that
+
+falls in
+
+(20)
+
+but not in
+
+becomes negligible.
+
+where
+
+. We allow the Laplacian distribution
+
+C. Connections With Costa's Result
+
+to vary in each sample of
+
+to better fit the host signal statistics
+
+in the multidimensional case.
+
+Even though the random code proposed by Costa is imprac-
+
+One of the most important advantages of these type of
+
+tical because of its exponential complexity, we can draw some
+
+methods happens to be the difficulty to severely modify the
+
+interesting conclusions if we carefully analyze how the random
+
+host signal's underlying pdf for a power-constrained channel.
+
+codewords are generated. Under the conditions of [5], each This relative invariance of the statistical properties of
+
+is
+
+codebook contains approximately
+
+codewords, with
+
+naturally translated into a graceful degradation of performance
+
+the host signal length and
+
+, that can be
+
+in the presence of distortion as the statistical characterization of written as
+
+the host signal is the basis for the optimization at the decoding stage. Thus, the
+
+yielded at the decoder in a noise-free
+
+scenario will not vary too fast when applying growing channel
+
+distortions. Alternatively, disregarding the channel state in-
+
+troduces an inherent probability of error; those channels uses
+
+Given a certain
+
+and a certain message
+
+, the encoder
+
+that are known beforehand to provoke an error at the decoder
+
+searches the codebook
+
+for a codeword
+
+such that
+
+(due to the eventual presence of host signal samples with
+
+is nearly orthogonal to
+
+. Every codebook divides
+
+large amplitudes) are nonetheless employed for modulating
+
+into as many regions as codewords it contains, and in each
+
+information.
+
+of these regions, the encoding consists in applying a certain
+
+linear mapping to
+
+. When
+
+, regions are mapped into
+
+A. Unidimensional Case
+
+single points; in other words, the encoder is equivalent to a set As in Section III, we will consider first the unidimensional
+
+of vector quantizers (one for each possible message
+
+. In
+
+case. As a representative of the known-host-statistics family, we this case, the number of codewords per message is
+
+,
+
+choose an amplitude modulation method, in which the water-
+
+but since
+
+is increasing with , when
+
+diminishes, the
+
+marked sample
+
+is obtained after adding the watermark
+
+to
+
+number of codewords per codebook also decreases. In the limit,
+
+the host image . In this case, the watermark is computed from
+
+, and we have only one codeword; for this case,
+
+the information symbol as
+
+, with
+
+a key-dependent
+
+the encoder is equivalent to an additive watermarking scheme
+
+pseudorandom variable for which
+
+and
+
+a
+
+that is similar to spread-spectrum watermarking techniques
+
+quantity chosen so that the perceptual constraint is met. Then,
+
+extensively studied in the literature, in which knowledge of the
+
+for this method,
+
+.
+
+host signal is not used by the encoder.
+
+1) Performance Analysis: It can be shown [18] that the opHence, the value of
+
+determines how close the encoder is to
+
+timal ML decoder for this scheme decides
+
+if
+
+a pure vector quantizer. When
+
+, a zero probability of
+
+error can be achieved with
+
+, i.e., with a set of quantizers.
+
+However, when
+
+, it turns out that capacity is not achieved
+
+or, equivalently, if
+
+. Let
+
+be the watermarked
+
+with a set of quantizers but with a value of
+
+less than one.
+
+sample that has been corrupted by additive noise with pdf
+
+.
+
+In conclusion, as the noise power
+
+increases, it is better to
+
+Assuming that
+
+takes the values
+
+with probability 1/2,1 by
+
+reduce the number of codewords and let a portion of the host
+
+symmetry, the bit error probability will be
+
+signal pass through the encoder and be superimposed onto the
+
+quantization centroid. By doing this, even though part of the host (21)
+
+signal appears at the output of the decoder as what might seem
+
+to be a host interference, the probability of error can be reduced, and thus, a higher information rate can be achieved.
+
+where
+
+. It is interesting to note that in
+
+the case when there is no distortion present in the channel, i.e.,
+
+, we have that
+
+; therefore
+
+IV. KNOWN-HOST-STATISTICS METHODS
+
+(22)
+
+These methods rely on a probabilistic characterization of the
+
+with
+
+. Hence, even in the absence of channel distor-
+
+host data that is employed in order to develop an optimal [in
+
+tion, this statistical extraction method is not "provably robust": the maximum likelihood (ML) sense] information decoder. This
+
+is not zero even for null distortions. Nevertheless, we want
+
+statistical characterization is available in some domains such as to know how a nonzero distortion would modify this probability
+
+the DCT, the discrete wavelet transform (DWT), or the discrete
+
+1This choice minimizes the bit error probability while meeting the constraint Fourier transform (DFT). For the sake of simplicity, we will
+
+Efs g = 1. The proof of this fact follows from the convexity of the integral of concentrate in the case where
+
+is modeled by a Laplacian pdf,
+
+the tail of f (t).
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+969
+
+For this distortion,
+
+, and numerical integration is
+
+required to compute
+
+after inserting (24) into (21). As in the
+
+previous case, the calculated
+
+will be dependent on , and the
+
+previous discussion on the effects of the DWR applies similarly.
+
+B. Multidimensional Case
+
+For the indices selected by
+
+,
+
+is obtained as the addition
+
+of the watermark
+
+to the host image , where
+
+is computed
+
+as
+
+,
+
+. Note that this choice implic-
+
+itly uses repetition coding, allowing for a fair comparison with
+
+the results obtained in Section III-B. We must recall again that
+
+better encoding alternatives have been explored to enhance these
+
+methods [11].
+
+1) Performance Analysis: Assuming a Laplacian distribu-
+
+tion for , the ML sufficient statistic [18] can be written as Fig. 5.
+
+Example of a known-host-statistics method dependence with the DWR
+
+(theoretical values).
+
+by evaluating
+
+for the same kind of distortions presented in
+
+If, without loss of generality, we suppose that
+
+is sent,
+
+Section III-A1.
+
+then
+
+can be written as
+
+a) Uniform Noise: When
+
+follows a uniform distribution
+
+between
+
+and , we have that
+
+(25)
+
+Using this statistic, the decision made is
+
+sgn
+
+. For a large
+
+value of
+
+, we may assume a Gaussian approximation for ,
+
+This integral can be split into two parts, yielding
+
+and we compute its mean and variance as
+
+(23)
+
+Now, the derivation of
+
+becomes simple by using (21)
+
+(26)
+
+Var
+
+Var
+
+where now,
+
+, and
+
+. It is quite important
+
+to note that just as in (22), this probability of error depends on (27)
+
+the DWR (i.e.,
+
+). We can see in Fig. 5 its dependence with
+
+this parameter. It becomes evident that the lower the DWR, the
+
+where
+
+; therefore,
+
+depends again on the
+
+lower the attainable probabilities of decoding error, reflecting
+
+DWR. When
+
+, the expectation in (26) has the opposite
+
+that the statistical knowledge of
+
+is successfully exploited by
+
+sign. The details of the calculation of
+
+and Var
+
+the decoder. At the same time, the
+
+plot becomes less flat
+
+can be found in Appendix B. We have to remark that in the
+
+when channel distortions are progressively comparable with or
+
+derivation of the first- and second-order moments of , we are
+
+greater than
+
+because the noise pdf has an increasing relative
+
+taking a further step compared to what was done in [18], where importance when compared with the pdf of .
+
+the host signal
+
+was considered to be deterministic.
+
+b) Gaussian Noise: For the case in which
+
+is a
+
+Thus, we have that the probability of bit error is given by
+
+zero-mean Gaussian random variable with variance
+
+, we
+
+have that
+
+(28)
+
+Var
+
+As in Section IV-A1, we get
+
+even without considering
+
+channel distortions. In the case where
+
+is corrupted by additive
+
+noise , (26) and (27) have to be recalculated for the pdf of
+
+, assuming that the optimal detector for the Laplacian case
+
+(24)
+
+is used regardless of
+
+. In general, the calculated probabilities
+
+will show the observed dependence on the DWR.
+
+
+
+
+
+970
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+Interestingly, for the special case in which
+
+and the
+
+show that for large spreading gains, the hypothesis of host data
+
+watermark-to-noise ratio is constant at each sample, a factor
+
+uniform inside the Voronoi cells has to be abandoned, with the
+
+appears at the numerator inside
+
+in (28), thus showing the
+
+consequence that the size of the cells can be larger, and thus,
+
+effect of repetition coding mentioned in Section II.
+
+the performance can be better than expected. Unfortunately,
+
+a) Uniform Noise: In this case,
+
+is the uniform noise
+
+as we will see, this perspective complicates the corresponding
+
+vector added to the watermarked signal, with
+
+,
+
+theoretical analysis. Another improvement over the original
+
+, and
+
+. The mean and variance of
+
+are derived in
+
+STDM method is that here, we will take into account not only
+
+Appendix B.
+
+that the embedding power is in general different at each sample
+
+b) Gaussian Noise: When the distortion is Gaussian
+
+but that this also occurs to channel distortion (see Section II-A).
+
+noise, we have again the pdf (24) with particular parameters
+
+Soon after the STDM method was proposed, Ramkumar et al.
+
+for each sample. For this formula, closed-form expressions of
+
+put forward the idea of improving it by means of distortion com-
+
+and Var
+
+cannot be obtained, and we have to
+
+pensation, in what was called Type III schemes [26], computing resort to numerical integration.
+
+the achievable rate for the special case in which the embedding
+
+distortion is hard-limited at a certain value. On the other hand, Eggers et al. considered in [7] the so-called spread-transform V. QUANTIZED PROJECTION METHODS
+
+scalar Costa scheme (STSCS), which is equivalent to compen-
+
+As it was discussed in the previous section, the performance
+
+sating the embedding distortion in the STDM method, and de-
+
+of known-host-statistics methods becomes quite independent of
+
+termined its achievable rate. Taking into account that none of
+
+the distortion level that is present in the additive channel. This these works has dealt with theoretical error probabilities, in Sec-is attributable to the fact that for high DWRs, the statistics of the tion V-B, we will also give rise to the concept of distortion-com-host image dominate those of the additive noise in such a way
+
+pensated QP (DC-QP) and analyze its performance.
+
+that the ML detector remains the same despite of channel dis-
+
+tortions. Unfortunately, we will show in Section VI how known-
+
+A. Watermarking With Correlation-Based Uniform QP
+
+host-state schemes usually have better performance, especially
+
+In the basic QP case, the projection function consists of com-
+
+as the degree of diversity
+
+increases. One can explain this
+
+puting a weighted cross-correlation between the watermarked
+
+poorer behavior of known-host-statistics methods by noticing
+
+image and the watermark; therefore, for a single transmitted bit, that they are equivalent to using an infinite quantization step on the projection
+
+is such that
+
+the decision variable . Thus, when the host vector
+
+is such that
+
+the decision variable for the unwatermarked case falls far apart
+
+from the decision threshold (here located at the origin), there
+
+(29)
+
+is no possibility of effectively conveying an information bit by
+
+modifying
+
+so that
+
+falls in the desired side of the threshold
+
+because of the perceptual limit in the achievable embedding dis-
+
+In a second stage,
+
+is quantized with a uniform scalar quantizer
+
+tortion.
+
+with step
+
+so that the centroids of the decision cells associated
+
+This consideration opens the door for other watermarking
+
+with
+
+and
+
+are given by the unidimensional lattices
+
+schemes that effectively combine the advantages of both known-
+
+in (2) and (3) with
+
+, due to symmetry considerations
+
+host-statistics and host-state methods. The idea is to employ
+
+on the pdf of the host signal projection that we will see next.
+
+a projection function that produces a scalar decision variable
+
+It can be shown that dividing by
+
+in (29) becomes the
+
+(playing the same role as
+
+in known-host-statistics methods)
+
+optimal decoding strategy whenever the noise is perceptually
+
+but then uniformly quantizing this variable in a similar way as
+
+shaped, i.e., when its variance is proportional to the perceptual DM methods. For this reason, we will call the resulting scheme
+
+mask. Although it is possible to determine the optimal decoding
+
+the quantized projection (QP) method. In implementing this
+
+strategy for any other noise joint distribution, this path will not idea, one faces the problem of finding the watermark such that
+
+be taken here. In this regard, it is important to note that the
+
+when adding it to the host image, the subsequent projection re-
+
+STDM proposal in [10] was carried out with the same spreading sults in the desired centroid. The fact that
+
+in (25) is nonlinear
+
+vector for both embedding and decoding stages, which is not our
+
+in the watermark hinders the search for a solution. As a compro-
+
+case. Of course, the improvement given by the structure pro-
+
+mise, we have decided to use a standard cross-correlation for the posed in (29) will become important when the set of perceptual
+
+projection function because it is linear, and it would be the op-
+
+masks
+
+,
+
+has a significant "spectrum," and it will be
+
+timal ML decoding function were the statistics of the host image
+
+null for constant perceptual masks.
+
+Gaussian, as we discussed in [9].
+
+If
+
+denotes the
+
+th sample of the watermark, then it is
+
+QP methods have their roots in the influential proposal by
+
+possible to rewrite (29) as
+
+Chen and Wornell of the spread-transform dither modulation
+
+(STDM) [10] that effectively combines quantization-based schemes with the diversity afforded by spread-spectrum
+
+methods. Specifically, we will stick to the particular case of
+
+where
+
+is the projected watermark
+
+STDM, where only one transformed component is quantized
+
+since, as we will show, it yields the minimum probability of
+
+(30)
+
+error. However, we will depart from this form of STDM to
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+971
+
+and with a similar definition for the projected host image
+
+.
+
+where
+
+. Of course, a Gaussian pdf also results
+
+The projected watermark
+
+is selected in such a way that
+
+for any
+
+if the host image
+
+is normally distributed. In any case,
+
+when added to the projected image
+
+,
+
+assuming an equiprobable information bit , we have
+
+the result is a member of the desired lattice. Thus, in order to
+
+transmit
+
+, the embedder finds
+
+with the smallest magni-
+
+(35)
+
+tude such that
+
+, which can be immediately adapted
+
+to account for the case
+
+.
+
+where
+
+Now, the problem that faces the embedder is to select the wa-
+
+termark samples
+
+,
+
+so that (30) is satisfied. Since there
+
+are infinitely many solutions to this problem, it would be pos-
+
+sible to exploit this fact to provide additional robustness against attacks. In fact, this problem resembles the so-called knapsack problem [27] (an NP-complete one) that was the base for some cryptographic algorithms, although it was later abandoned for
+
+not providing enough security. For our purposes, we will content
+
+ourselves with choosing
+
+,
+
+, to become proportional to
+
+. It can be shown that under our perceptual constraints, this
+
+choice minimizes the probability of error. Then, the watermark
+
+samples are perceptually weighted by their respective masks.
+
+Then
+
+(31)
+
+(36)
+
+and where
+
+is the pdf of
+
+. Similarly, we can write
+
+with
+
+a real number that will be determined next. To this end,
+
+simply substitute (31) into (30) so that
+
+, and finally
+
+Noticing that
+
+and the pseudorandom sequence
+
+are sta-
+
+tistically independent and that
+
+, it is immediate to
+
+write
+
+(37)
+
+(32)
+
+Substituting (36) and (37) into (35) and operating, we have
+
+where
+
+.
+
+It is interesting to note that while the random variables
+
+,
+
+are mutually uncorrelated, this is far from being the case
+
+(38)
+
+if one considers the random variables
+
+,
+
+.
+
+In order to simplify the performance analysis of this data
+
+where
+
+hiding method, let us assume a constant perceptual mask, i.e.,
+
+, for all
+
+. Although an analysis for varying per-
+
+(39)
+
+ceptual masks is still possible by following the lines here pre-
+
+sented, our assumption leads to more compact results. With this
+
+Having obtained the distortion
+
+for arbitrary
+
+and ,
+
+assumption, (32) becomes
+
+we will determine the bit error probability. As before, let
+
+,
+
+, where
+
+has zero-mean i.i.d. components
+
+(33)
+
+with an arbitrary pdf and variance
+
+so that
+
+. Now,
+
+the projection
+
+becomes
+
+Now, we are left with the problem of evaluating
+
+. To
+
+meet this objective, it is necessary to statistically characterize the random variable
+
+. Since the
+
+,
+
+are statistically
+
+where the projected watermark
+
+was defined in (30), and the
+
+independent, it is possible to resort to the CLT to show that for projected host image
+
+and noise
+
+are similarly defined using
+
+large
+
+,2
+
+can be accurately modeled by a Gaussian pdf with
+
+and
+
+, respectively, instead of
+
+.
+
+zero mean and variance given by
+
+For large
+
+, we can again apply the CLT to state that for a
+
+wide class of distributions in
+
+, the pdf of
+
+can be approx-
+
+(34)
+
+imated by a zero-mean Gaussian pdf with variance
+
+equal to
+
+2The validity of the large L assumption is supported by the results of Section V-C.
+
+(40)
+
+
+
+
+
+972
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+The bit error probability
+
+can be determined by taking into
+
+methods although now in a weaker fashion. Finally, we must
+
+account the symmetry in the problem; therefore, it is enough to
+
+note that since in practice very large values of
+
+are required for
+
+consider the errors made when decoding a transmitted
+
+.
+
+this gain to become significant, this desirable feature will show Similarly to (12), this probability can be written as
+
+up in robust data hiding applications (i.e., for negative WNRs),
+
+where it is also most welcome.
+
+(41)
+
+Last, when
+
+is large, the sum (41) is dominated by the
+
+term corresponding to
+
+; therefore,
+
+can be approximated
+
+by
+
+In order to rewrite
+
+in terms of the desired parameters, we
+
+may use (33) and (38) to obtain
+
+(42)
+
+where again, the right-hand side is actually an upper bound to
+
+with
+
+such that
+
+.
+
+(43)
+
+B. Distortion-Compensated Quantized Projection
+
+Now, using (40) and (42), it is immediate to write
+
+The projection function and quantization centroids are the
+
+same as in the previous section, as given by (2) and (3) as well
+
+(44)
+
+as (29). Given the projected host image
+
+, the projected water-
+
+mark
+
+is selected in such a way that
+
+which can be plugged into (41) to yield the desired expression
+
+for
+
+. For a further interpretation of this result, let us write
+
+in
+
+(47)
+
+(43) in terms of the DWR, the WNR, and
+
+. Thus, by making
+
+where
+
+,
+
+denotes the closest centroid to
+
+in the
+
+use of (34) and (42), and after some trivial algebra, we obtain
+
+lattices
+
+,
+
+given in (2) and (3), with
+
+.
+
+The watermark samples are selected according to the method
+
+presented in Section V-A, which implies choosing the scaling
+
+factor
+
+as in the QP method, where
+
+is now given by (47).
+
+(45)
+
+Compared with the previous method, this Costa-based variant
+
+of the QP method, which we will term distortion-compensated
+
+with the function
+
+defined as
+
+QP (DC-QP) in the sequel, scales the quantization error in the
+
+projected domain by . This in turn implies that the development
+
+in Section V-A for determining
+
+can be easily adapted to
+
+the present case to yield
+
+It can be shown that
+
+is one to one and monotonically in-
+
+creasing for
+
+. Then, inversion of (45) yields
+
+(48)
+
+where
+
+was given in (39).
+
+(46)
+
+Regarding the bit error probability
+
+for a zero-mean addi-
+
+tive i.i.d. noise channel with distortion
+
+, the problem
+
+Finally,
+
+can be written as
+
+becomes more involved due to the presence of the residual error.
+
+We will assume without loss of generality that the symbol
+
+is sent. Then, the probability of bit error can be written as
+
+error
+
+(49)
+
+It is easy to see that
+
+monotonically increases from
+
+to
+
+as the ratio
+
+goes from 0 to
+
+. Thus, the parameter
+
+can
+
+where
+
+is the pdf of
+
+, and
+
+error
+
+is the proba-
+
+be interpreted as a measure of the uniformity of the projected
+
+bility of error for a given value of
+
+. Recall that
+
+is a
+
+host signal
+
+within the quantization bins of size
+
+. If
+
+zero-mean Gaussian pdf with variance
+
+. In order
+
+is constant within any bin,
+
+. However, it is interesting
+
+to determine
+
+, note that if
+
+to see that as
+
+increases, a significant portion of
+
+(50)
+
+(which will have a Gaussian shape) will be contained in the two
+
+bins closest to the origin, and then,
+
+approaches
+
+. Conse-
+
+for some integer
+
+, then following (47), the undistorted pro-
+
+quently, by increasing
+
+, one may obtain an additional gain on
+
+jected watermarked image
+
+becomes
+
+the SNR of at most
+
+(1.25 dB), besides the expected diversity
+
+gain of
+
+. This additional gain depends not only on
+
+but on the
+
+document-to-watermark ratio
+
+as well; therefore, the smaller
+
+When
+
+is large, it is possible to simplify the analysis by
+
+the DWR, the larger this extra gain will be if
+
+is kept constant.
+
+considering that whenever there exists a decoding error, it is
+
+From this latter observation, we may conclude that
+
+actually
+
+due to
+
+lying in the Voronoi cells associated to
+
+depends on the DWR as it happened with known-host-statistics
+
+one of the neighboring centroids to
+
+in
+
+, namely,
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+973
+
+and
+
+. From here, it is possible
+
+to conclude that
+
+error
+
+(51)
+
+where
+
+is such that (50) holds.
+
+After substituting (51) into (49) and after some tedious but
+
+straightforward algebraic manipulations, it is possible to arrive at the following result:
+
+Fig. 6.
+
+Theoretical bit error probability versus for different values of the DWR, D = D , and L = 20.
+
+• For moderate
+
+, experimentation shows that the optimal
+
+(52)
+
+value of
+
+depends on the ratio
+
+, as is to be expected
+
+from (53). Nevertheless, optimization experiments (cf. Fig. 6)
+
+show that the optimal
+
+also depends on the DWR in contrast
+
+where
+
+was defined in (43). The integral in (52) must be eval-
+
+with Costa's result in which the host image (there the "channel
+
+uated numerically, but it is interesting to see that in any case, it state") does not show up in the optimal value of . The reason
+
+depends only on ,
+
+,
+
+, and , i.e., the WNR, the DWR, the
+
+for this difference must be found in the fact that Costa's method number of dimensions used, and the size of the residual error,
+
+has unlimited complexity, which is obviously not our case (un-
+
+respectively. Bear in mind that the ratio
+
+in (52) may be
+
+less
+
+is made unpractically large). Interestingly, knowledge of
+
+written as a function of
+
+and the DWR [cf. (46)].
+
+the image second-order statistics becomes useful when trying
+
+It is interesting to optimize
+
+in (52) in terms of . In Fig. 6,
+
+to optimize performance. Moreover, for larger DWRs, there is
+
+we plot
+
+as a function of
+
+for
+
+,
+
+and for two
+
+more room for improvement by choosing the proper value of .
+
+values of DWR. Some important remarks can be drawn:
+
+• The optimal value of
+
+that results in each case is smaller
+
+than one; hence, note that the DC-QP method offers to the de-
+
+C. Generalizing the DC-QP Method
+
+signer an improvement over the QP method by choosing an ap-
+
+propriate value of
+
+. Note that as QP is equivalent to DC-QP
+
+The DC-QP method described in Sections V-A and B can
+
+with
+
+, it is clear that DC-QP for the optimal
+
+will never
+
+be generalized in such a way that the quantization operations
+
+perform worse than QP. However, if the operating WNR is not
+
+take place in a vector subspace, introducing dimensionality as
+
+known at the embedder's side (recall that the WNR also depends
+
+an additional degree of freedom. This idea is borrowed from the
+
+on the attacking power), it may be safer to set
+
+since too
+
+general formulation of STDM given by Chen and Wornell [10]
+
+small a
+
+will increase the bit error probability (cf. Fig. 6).
+
+and has the advantage of filling the gamut between the basic
+
+• Since the DC-QP scheme resembles Costa's method, one
+
+DC-QP method and a multidimensional distortion-compensated
+
+might expect that the optimal parameter
+
+, there derived for
+
+dither modulation (DC-DM) method (itself a generalization of
+
+maximizing capacity, should become similar to the one here
+
+the multidimensional DM scheme), for which the dimension-
+
+obtained. In Costa's paper, the optimal value is
+
+ality of the projected subspace equals that of the set . Formally, NSR where NSR is the noise-to-signal ratio. In the QP method,
+
+let
+
+be the dimensionality of the projected subspace; then, for
+
+the NSR after projection becomes
+
+, which can be
+
+the DC-QP method,
+
+, whereas for the DC-DM method,
+
+rewritten as
+
+, with
+
+.
+
+Then, (29) now reads
+
+(53)
+
+(54)
+
+Consequently, the NSR for the QP method approaches 0
+
+asymptotically when
+
+, and then, the optimal value of
+
+where
+
+is a projection matrix with orthog-
+
+achieved with Costa's procedure approaches 1 asymptotically
+
+onal columns. Several ways of constructing
+
+are possible, all
+
+for
+
+. Numerical optimization experiments show that
+
+giving essentially the same results; therefore, here, we will adopt this is in fact the case when
+
+is minimized in terms of
+
+so
+
+the simplest, also used for example in [26], which consists of that DC-QP asymptotically approaches QP.
+
+dividing the set of indices
+
+in
+
+nonoverlapping subsets
+
+,
+
+
+
+
+
+974
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+, each with cardinality
+
+.3 Then, for the th
+
+vector
+
+, we have that
+
+otherwise.
+
+As before, we can write the projected watermarked image in
+
+terms of the projected host image and the projected watermark,
+
+i.e.,
+
+. Then, in a generalized QP scheme (that is,
+
+with no distortion compensation), the watermark
+
+should be
+
+selected as the minimum Euclidean norm vector such that
+
+be-
+
+longs to the desired information-dependent lattice, as in (14) and (15), with
+
+dimensions instead of
+
+.
+
+In a generalized DC-QP scheme,
+
+is chosen as the minimum
+
+norm vector such that its projection
+
+satisfies
+
+, where
+
+is a selectable real parameter, and
+
+, with
+
+an
+
+-dimensional quantizer as in (14) and (15).
+
+We are interested in determining the value of
+
+that mini-
+
+Fig. 7.
+
+Performance of generalized QP, using multidimensional DC-DM at
+
+mizes
+
+for a given WNR and for the optimal value of . A
+
+the projection (L = 20). Lines and symbols stand for theoretical values and similar setup is considered in [26] and [7] to obtain the value of empirical data, respectively.
+
+that maximizes the achievable rate of a certain data hiding
+
+method. In order to keep the discussion simple, we will assume
+
+to be the same as that given by Costa) and then differentiate this constant perceptual masks, i.e.,
+
+,
+
+, and i.i.d.
+
+bound in terms of the parameter
+
+. Due to a lack of space, we
+
+Gaussian noise. First, note that the analysis of Section V-A can
+
+do not show the calculations here, but note that for any fixed
+
+be repeated to derive a relation between the projected-noise vari-WNR, the union bound to
+
+monotonically increases with
+
+ance
+
+and the quantization step
+
+so that (44) transforms into
+
+for
+
+, which, given the discrete nature of
+
+, provides
+
+additional support to the hypothesis that
+
+produces the
+
+minimum
+
+.
+
+Therefore, we conclude that working with just one projected
+
+Second, the procedure given in Section II-B can be adapted to
+
+dimension is optimal for this family of data hiding methods and,
+
+the present case by considering that now
+
+should be replaced
+
+as a corollary, that the basic DC-QP method always performs by the sum of a Gaussian r.v. with variance
+
+and a r.v. uniform
+
+better than the multidimensional DC-DM scheme. These con-
+
+in the interval
+
+and noting that, instead
+
+clusions are in good agreement with the experimental results
+
+of
+
+dimensions, we have
+
+. As for the DC-DM case, an exact
+
+reported by Eggers and Girod in [28], who compared the SCS
+
+analysis of
+
+is not possible, but the method detailed in Ap-
+
+(equivalently, DC-DM) method with repetition coding, and the
+
+pendix A can also be used to yield an accurate upper bound. Un-
+
+spread-transform SCS method, both of which hold close like-
+
+fortunately, the fact that the pdf of projected noise is now more ness with our two extremal cases (DC-DM and DC-QP, respec-involved makes the computations rather lengthy; therefore, they
+
+tively).
+
+are not included here and will be published in preliminary form
+
+It is also interesting to relate our results to the achievable
+
+in [22]. With this theoretical upper bound, one can see that the rates computed in [28] for spread-transform-like methods. As optimal value of
+
+is 1, meaning that the basic DC-QP gives the
+
+shown there, for Costa's scheme, spreading can only reduce the
+
+best performance in the class of generalized DC-QP schemes.
+
+achievable rate (the "critical slope" is never attained). The same To illustrate this, in Fig. 7, we depict the probability of error happens with diversity in digital communications for Gaussian
+
+versus the parameter
+
+for different WNRs, showing both
+
+channels; after all, capacity formulas are identical in both cases.
+
+the analytical bound (which is asymptotically tight) and the out-
+
+However, this does not mean that increasing the spreading factor
+
+come of 8
+
+10 Monte Carlo simulations. For each WNR and
+
+will ever increase
+
+; on the contrary, as readily seen in (52),
+
+pair, the distortion parameter
+
+is chosen to minimize
+
+, and
+
+should be made as large as possible, limited only by the pay-
+
+it is found by exhaustive search. The same tendency (increase in
+
+load to be hidden. Of course, with better coding schemes and/or
+
+with
+
+) was perceived for many more WNRs tested by the
+
+constellations, it would be possible to fall closer to capacity than authors and not shown here. A further justification for this be-what is achieved through just spreading. Nevertheless, if coding
+
+havior is afforded by working with the union bound and making
+
+is to be used, spreading may be useful for pushing up the op-
+
+the simplification that the projected-noise variance follows a
+
+erating WNR to values for which good codes are known. Inter-
+
+Gaussian distribution (as is for instance done in [7]).The advan-estingly, Eggers and Girod have shown in [28] that for nega-tage of this formulation is that it allows us to analytically obtain tive WNRs, the spread-transform SCS method may increase the
+
+the value of
+
+that minimizes the union bound (and that happens
+
+achievable rate by augmenting , thus recovering part of the rate
+
+that is lost due to the suboptimality of this data hiding scheme.
+
+3Here, we assume that L=M takes an integer value, neglecting possible Since for a given WNR there is an optimal
+
+beyond which the
+
+border effects. If the M projection vectors are allowed to overlap, as is done in
+
+[10], this problem is completely overcome, even though the analysis turns out achievable rate decreases, this suggests concatenating diversity
+
+to be more complex. In both cases, the results are equivalent.
+
+(to improve the WNR) and channel coding.
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+975
+
+D. Connections of QP With Costa's Result
+
+We have seen in Section III-C that in Costa's encoding
+
+scheme, the
+
+parameter lets a part of the host signal
+
+traverse
+
+the encoder and appear at the input. In fact, when
+
+, the
+
+whole host signal gets to the output. In the generalized QP,
+
+instead of quantizing , we alternatively quantize the projection
+
+of
+
+into a subspace and leave the part of
+
+orthogonal to that
+
+subspace intact.
+
+Let us assume that the projection matrix
+
+given in (54) has
+
+orthonormal columns (note that this normalization does not
+
+have any impact on performance, although
+
+has to be scaled
+
+accordingly). The watermark is computed as
+
+where
+
+is an
+
+-dimensional quantizer. The watermark can
+
+alternatively be expressed as
+
+Fig. 8.
+
+Bit error probability versus WNR for the unidimensional case: uniform noise. DWR = 6:0 dB. Lines and symbols stand for theoretical values and where
+
+is an
+
+-dimensional codeword, lying
+
+empirical data, respectively.
+
+in the subspace spanned by
+
+. Therefore, the
+
+signal received at the decoder is
+
+it has a nonzero probability of error for ranges where DM is
+
+error-free. We may observe also that GDC-DM improves on the
+
+performance of DC-DM for large channel distortions, showing
+
+Now, it is easy to see that the role played by
+
+in Costa's
+
+that the alleged optimality of the latter does not apply to this
+
+random coding scheme is now played by the matrix
+
+. The
+
+type of channel.
+
+role is similar in the sense that it performs a linear transformaThe statistical method in this case seems to perform worse
+
+tion on
+
+with an energy reduction. The rest of the energy of
+
+than GDC-DM and DC-DM for a wide range of WNRs, but its
+
+, i.e.,
+
+, or the projection of
+
+onto the subspace
+
+robustness is noteworthy. The slope of its curve is the least steep orthogonal to the subspace spanned by
+
+, can be
+
+of all the methods; the reason for this behavior was explained in employed to compensate for distortions introduced by the quan-Section IV. Noticeably, for WNR values lower than zero, the
+
+tizer. Recall that the
+
+term in Costa's scheme was used
+
+known-statistics method continues to improve its performance
+
+in a similar way.
+
+with respect to the known-state methods; for the depicted ex-
+
+In fact, for a given maximum average watermark distortion
+
+ample, it performs better than all the other methods for WNR
+
+, projecting into a subspace allows us to increase the size of
+
+dB and below.
+
+the quantization cells. As a consequence, the minimum distance
+
+It is also very important to recognize again that the plot for
+
+between quantization centroids associated with different mes-
+
+the known-host-statistics method is drawn for a DWR of 6 dB.
+
+sages can be increased. In other words, the performance against
+
+Notably, lower values of DWR are advantageously exploited by
+
+noise can be improved. One may compute the capacity of the
+
+this kind of procedures to diminish the probability of error, as
+
+QP method, assuming that
+
+is a random matrix, to show that it
+
+illustrated for the particular case of Fig. 5; as we have shown in is lower than that given by Costa.
+
+previous publications [29], one straightforward way of reducing the DWR consists in applying Wiener filtering to estimate the
+
+VI. EXPERIMENTAL RESULTS AND COMPARISONS
+
+original host signal. Unfortunately, a rather small value of the
+
+In this section, the theoretical probabilities of error obtained
+
+DWR ( dB) would be needed for this method to catch up with
+
+in Sections III-V are compared and validated with empirical
+
+the best performing ones for WNR
+
+dB. By contrast, the
+
+data generated through Monte Carlo simulations. In the plots,
+
+for the known-host-state methods remains constant for different
+
+theoretical values are represented by lines, whereas empirical
+
+DWR values as they are unaware of the statistical properties of
+
+data are represented by symbols.
+
+the host signal used for the embedment. It must be stressed that
+
+First, in Fig. 8, the
+
+'s for the unidimensional cases under
+
+further improvements of the known-host-statistics methods take
+
+uniform noise are compared. Both DC-DM and GDC-DM are
+
+place when a more accurate modeling of
+
+is used. We recall
+
+presented for the respective optimized values
+
+and
+
+that the Laplacian model is chosen here for representing a good
+
+at WNR
+
+dB. This choice is reasonable, as
+
+compromise between accuracy and ease of analytical manipu-
+
+the level of attacking distortion is unknown beforehand by the
+
+lation. More exact models such as the generalized Gaussian or
+
+encoder.
+
+other heavy tailed pdfs have been proposed to model DCT co-
+
+It is remarkable that the
+
+of DM grows from 0 to
+
+for
+
+efficients with outstanding results [18].
+
+values of WNR decreasing from 6 to 0 dB, and it worsens for
+
+Fig. 9 shows the performance of the aforementioned
+
+negative vales. By contrast, DC-DM is much more well-behaved
+
+methods for the Gaussian case. The
+
+versus WNR curves
+
+when presented with distortions of importance, even though
+
+corresponding to DC-DM and GDC-DM are depicted for their
+
+
+
+
+
+976
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+Fig. 9.
+
+Bit error probability versus WNR for the unidimensional case:
+
+Fig. 10.
+
+Bit error probability versus WNR for the multidimensional case (L =
+
+Gaussian noise. DWR = 6:0 dB. Lines and symbols stand for theoretical 40): uniform noise. Lines and symbols stand for theoretical values and empirical values and empirical data, respectively.
+
+data, respectively.
+
+respective optimum values
+
+and
+
+at
+
+WNR
+
+dB. In general, we can draw the same conclusions
+
+from these results as for the uniform noise case although, by
+
+comparison with Fig. 8, it becomes clear that Gaussian noise is
+
+not at all a worst-case attack for DM, as the largest distortion
+
+only causes now a
+
+lower than
+
+. This reveals that analyses
+
+of DM under Gaussian channels may overstate its potential.
+
+On the other hand, now, the DC-DM method proves to perform
+
+better than GDC-DM, thus making evident that the Gaussian
+
+channel fits better to this method. The same reasoning above
+
+about the known-statistics method readily applies here.
+
+Next, the multidimensional cases for DM and the
+
+known-host-statistics method, under uniform and Gaussian
+
+noise, respectively, are presented in Figs. 10 and 11. The performance of the known-host-statistics method has been evaluated
+
+for the particular case of
+
+and a constant WNR to
+
+allow for a fair comparison with the known-host-state case that
+
+Fig. 11.
+
+Bit error probability versus WNR for the multidimensional case
+
+was analyzed under this assumption. The sensitivity to noise
+
+(L = 20): Gaussian noise. Lines and symbols stand for theoretical values and of the latter is evident from a glance at both plots; in addition, empirical data, respectively.
+
+it becomes apparent, as in the unidimensional case, that the
+
+uniform channel is a worse attack than the Gaussian channel.
+
+In Fig. 12, the results for QP and DC-QP are presented.
+
+Regarding the theoretical approximation used for predicting
+
+For both cases, the final performance is excellent, outdoing by
+
+its performance, we can see that while the CLT approximation
+
+several orders of magnitude in
+
+the other multidimensional
+
+agrees almost perfectly with the empirical results in the uniform methods with the same
+
+. Notice that although DC-QP offers
+
+case, for the Gaussian channel, it cannot even upperbound the
+
+an improvement over QP for every value of the WNR, the
+
+empirical values of
+
+when the WNR grows beyond 3 dB.
+
+resulting gain is small. Furthermore, the performance curve
+
+As explained in Section III-B, this effect is due to the slow
+
+for DC-QP is obtained under the assumption that the operating
+
+convergence of the summation in (17) to a true Gaussian,
+
+WNR is known at the embedder so that the optimal value of
+
+considering that we are only using
+
+. Therefore, it is
+
+can be used. If, in a practical application, this knowledge is
+
+necessary to resort to the bound derived in the Appendix A,
+
+not available, then use of the uncompensated QP (i.e.,
+
+which we can see becomes a very tight approximation to
+
+for
+
+is recommended.
+
+large values of the WNR.
+
+Next, in Fig. 13, the theoretical performance values of QP and
+
+Last, note that the known-host-statistics method now remains
+
+DC-QP for different values of
+
+are shown. The
+
+parameters
+
+almost invariable for the whole range of allowed distortions and, are empirically obtained for optimizing DC-QP at each value
+
+remarkably, for the two different noise sources applied. As in the of the WNR. We can see that impressively low probabilities of
+
+unidimensional case, the method improves for lower DWRs by
+
+error are attainable. Observe that the predicted values are so low contrast with the invariability of the known-host-state one.
+
+that its empirical simulation becomes difficult; the soundness of
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+977
+
+Fig. 12.
+
+Bit error probability versus WNR for QP (L = 20): DWR = 25:0
+
+Fig. 14.
+
+Performance comparison between QP and STDM with real data
+
+dB. Lines and symbols stand for theoretical values and empirical data, (Lena image) and noise variance locally proportional to the perceptual mask respectively.
+
+(L = 20). Lines and symbols stand for theoretical values and empirical data, respectively.
+
+the correlation weights (i.e.,
+
+in (29). It is also worth
+
+seeing that the performance of QP in Fig. 14 is worse than in
+
+Fig. 12 for the same WNR, this being due to the larger DWR
+
+corresponding to the former.
+
+VII. CONCLUSIONS
+
+Throughout this paper, we have compared the performance
+
+of know-host-state and known-host-statistics methods. Even
+
+though the former offer strong host-signal rejection properties
+
+by disregarding its underlying features, we have seen that the
+
+host-signal statistical properties can play a significant role in the resulting performance when correctly taken into account.
+
+This fact is reflected in the improvement obtained by means
+
+of the QP method that we have proposed and analyzed. In all
+
+cases, we have given theoretical formulas that allow to assess
+
+Fig. 13.
+
+Theoretical bit error probability versus WNR compared for QP (solid and predict performance for different scenarios with a high
+
+lines) and DC-QP (dashed lines) for increasing values of L: ( DWR = 25:0
+
+degree of accuracy.
+
+dB).
+
+One important conclusion that must be drawn is that Gaussian
+
+channels and Gaussian host signal models do not offer in all
+
+our results is supported by the empirical validation of Fig. 12. As cases upper bounds to performance measured in terms of the
+
+a final observation, note that as depicted in Fig. 6, QP methods
+
+bit error probability. Apart from their excellent performance,
+
+are also DWR-dependent, thus gathering the best properties ex-
+
+one important advantage of the newly proposed QP techniques
+
+hibited by known-host-statistics and known-host-state methods.
+
+is that even for moderate values of
+
+, they free us from the
+
+Finally, in Fig. 14, we compare the performance of QP with
+
+necessity of accurately modeling both the host signal and the
+
+that of STDM in a real case, using data from the well-known
+
+channel. Of particular importance is the fact that QP becomes
+
+gray-scale Lena image (256
+
+256). As QP does not need
+
+insensitive to the actual statistics of the channel noise, as long statistical modeling for the host signal, in this example, the
+
+as the latter is independent from the host image.
+
+data hiding process takes place in the spatial domain using
+
+Several extensions to the work presented here are currently
+
+a perceptual mask computed following [30] and applying being investigated. First, multidimensional QIM lattices other
+
+no Wiener preprocessing, which leads to a very large DWR
+
+than the checkerboard one can be analyzed with the techniques
+
+(approximately 40 dB). The distortion consists of independent
+
+given here; in this case, additional gains can be expected.
+
+additive Gaussian noise, with its variance shaped at each sample
+
+Second, some more work is necessary in order to establish
+
+to match the perceptual mask. The orthonormal vector used
+
+the performance of good channel codes within the data hiding
+
+for STDM spreading is just the perceptual mask multiplied
+
+framework, especially for known-host-state methods. Since the
+
+by a zero-mean, unit-variance pseudorandom sequence and
+
+idea of distortion compensation already introduces significant
+
+normalized in energy, i.e.,
+
+,
+
+. The
+
+gains, new coding schemes that are especially tailored to this
+
+advantage of QP over STDM is attributable to the optimality of
+
+scenario deserve further attention. Finally, improved linear
+
+
+
+
+
+978
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+and nonlinear projection functions for the QP method will be
+
+The series above is point-wise convergent with an accuracy
+
+investigated; this relaxation already offers significant advan-
+
+that depends on the value of
+
+. A greater accuracy is obtained
+
+tages whenever knowledge of the statistics of the host signal is
+
+for larger values of
+
+, but this requires truncation to more terms
+
+available. Therefore, one might expect a similar behavior when
+
+in the series for a practical implementation. We have used a
+
+dealing with QPs.
+
+value of
+
+and truncation to 1000 terms in our simula-
+
+tions. Regarding the evaluation of the confluent hypergeometric
+
+APPENDIX
+
+function that arises in (56), this can be done by means of another convergent series since [31]
+
+A. Procedure for the Computation of the Upper Bound
+
+in
+
+the Multidimensional DM Method With Gaussian Channel
+
+Noise
+
+In this Appendix, we adapt and simplify the procedure pre-
+
+sented in [24] for the sum of
+
+Nakagami-
+
+distributions. The
+
+B. Calculation of
+
+and Var
+
+for the
+
+numerical procedure given in [24] is valid for any integer
+
+,
+
+Known-Statistics Multidimensional Case
+
+whereas here, we need to deal with the sum of
+
+Nakagami-
+
+We assume that
+
+and
+
+are the only random variables
+
+distributions.
+
+in (25) and that the latter takes the values
+
+with equal proba-
+
+We want to compute
+
+bility. After integrating over
+
+, we get the following expres-
+
+sions for the summands:
+
+(55)
+
+where
+
+,
+
+is a one-sided Gaussian (Nakagami-
+
+)
+
+distribution with pdf given by
+
+Var
+
+To ease the manipulation, these equations can be rewritten as
+
+otherwise.
+
+(57)
+
+It is convenient to consider instead the normalized random
+
+variables
+
+so that (55) can be rewritten as
+
+Var
+
+(58)
+
+.
+
+Averaging over the pdf of
+
+, we have
+
+(59)
+
+where now,
+
+.
+
+Let
+
+denote the characteristic function of
+
+. Then,
+
+Var
+
+Var
+
+turns out to be [31]
+
+Var
+
+Var
+
+(56)
+
+(60)
+
+where
+
+is the Kummer confluent hypergeometric func-
+
+tion defined in [32].
+
+Therefore, for the noiseless case, we have to compute the dif-
+
+Let
+
+for any positive integer and with
+
+a suf-
+
+ferent expectations in (59) and (60) using the pdf of
+
+given
+
+ficiently large real number. Then, following [25],
+
+may be
+
+by (20) and the expressions (57) and (58), resulting in
+
+written as
+
+Var
+
+where
+
+is defined as
+
+For the calculation of the same expectations when uniform
+
+noise is added, we must use instead the pdf of
+
+and
+
+denotes the four quadrant phase of the complex
+
+given by (23). As this pdf is symmetrical and has two parts, for
+
+number .
+
+the case
+
+, we may divide now each integral in the
+
+
+
+
+
+PEREZ-GONZALEZ et al. : PERFORMANCE ANALYSIS OF EXISTING AND NEW METHODS FOR DATA HIDING
+
+979
+
+interval
+
+into two integrals in the intervals
+
+[4] I. J. Cox, M. L. Miller, and A. L. McKellips, "Watermarking as commu-and
+
+, respectively. Thus, we can write
+
+as
+
+nications with side information," Proc. IEEE, vol. 87, pp. 1127-1141, July 1999.
+
+[5] M. H. Costa, "Writing on dirty paper," IEEE Trans. Inform. Theory, vol.
+
+IT-29, pp. 439-441, May 1983.
+
+[6] B. Chen and G. W. Wornell, "Preprocessed and postprocessed quantization index modulation methods for digital watermarking," Proc. SPIE, Security Watermarking Multimedia Contents, pp. 48-59, Jan. 2000.
+
+[7] J. J. Eggers, J. K. Su, and B. Girod, "A blind watermarking scheme based on structured codebooks," in Proc. Inst. Elect. Eng. Conf. Secure Images Image Authentication, London, U.K., Apr. 2000.
+
+[8] M. Ramkumar, "Data hiding in multimedia: Theory and applications,"
+
+Ph.D. dissertation, New Jersey Inst. Technol., Newark, NJ, Jan. 2000.
+
+[9] J. R. Hernández and F. Perez-González, "Statistical analysis of watermarking schemes for copyright protection of images," Proc. IEEE, vol.
+
+(61)
+
+87, Special Issue on Identification and Protection of Multimedia Information, pp. 1142-1166, July 1999.
+
+[10] B. Chen and G. W. Wornell, "Quantization index modulation: A class of As for Var
+
+, using also the same restriction on
+
+, we
+
+provably good methods for digital watermarking and information em-may summarize its calculation in the following expression:
+
+bedding," IEEE Trans. Inform. Theory, vol. 47, pp. 1423-1443, May 2001.
+
+[11] F. Perez-González, J. R. Hernández, and F. Balado, "Approaching the Var
+
+capacity limit in image watermarking: A perspective on coding techniques for data hiding applications," Signal Process. , vol. 81, Special Section on Information Theoretic Aspects of Digital Watermarking, pp.
+
+1215-1238, June 2001.
+
+[12] P. Moulin and M. Mıhçak, "A framework of evaluating the data-hiding capacity of image sources," IEEE Trans. Image Processing, vol. 11, pp.
+
+1029-1042, Sept. 2002.
+
+[13] R. B. Wolfgang, C. I. Podilchuk, and E. J. Delp, "Perceptual watermarks for digital images and video," Proc. IEEE, vol. 87, pp. 1108-1125, July 1999.
+
+[14] S. Voloshynovskiy, A. Herrigel, N. Baumgärtner, and T. Pun, "A sto-chastic approach to content adaptive digital image watermarking," in Proc. 3rd Int. Workshop Inform. Hiding
+
+Dresden, Germany, Oct. 1999.
+
+[15] J. J. Eggers, R. Bäuml, and B. Girod, "Digital watermarking facing attacks by amplitude scaling and additive white noise," in Proc. 4th Int.
+
+ITG Conf. Source Channel Coding, Berlin, Germany, Jan. 2002.
+
+[16] P. Moulin and J. O'Sullivan, "Information-theoretic analysis of information hiding," Univ. Illinois, Urbana, IL, Dec. 2001, to be published.
+
+[17] L. Schuchman, "Dither signals and their effect on quantization noise,"
+
+IEEE Trans. Commun. Technol. , vol. CT-12, pp. 162-165, Dec. 1964.
+
+[18] J. R. Hernández, M. Amado, and F. Perez-González, "DCT-domain watermarking techniques for still images: Detector performance analysis and a new structure," IEEE Trans. Image Processing, vol. 9, Special Issue on Image and Video Processing for Digital Libraries, pp. 55-68, Jan. 2000.
+
+[19] B. Chen and G. W. Wornell, "Provably robust digital watermarking,"
+
+Proc. SPIE, vol. 3845 of Multimedia Syst. Applications II, pp. 43-54, 1999.
+
+[20]
+
+, "Dither modulation: A new approach to digital watermarking
+
+and information embedding," Proc. SPIE, vol. 3657 of Security (62)
+
+Watermarking Multimedia Contents, pp. 342-353, 1999.
+
+[21] J. Conway and N. Sloane, Sphere Packings, Lattices and Groups, 3rd ed.
+
+New York: Springer, 1999, vol. 290 of Comprehensive Studies
+
+The statistics in (61) and (62) can be similarly obtained for the Math..
+
+case
+
+.
+
+[22] F. Perez-González and F. Balado, "Nothing but a kiss: A novel and accurate approach to assessing the performance of multidimensional distortion-compensated dither modulation," in Proc. 5th ACKNOWLEDGMENT
+
+Int. Workshop Inform. Hiding, ser. Lecture Notes in Computer Science
+
+Noorwijkerhout, The Netherlands, Oct. 2002.
+
+The authors gratefully acknowledge Dr. J. J. Eggers for kindly
+
+[23] K. Bury, Statistical Models in Applied Science.
+
+Malabar, FL: Krieger,
+
+reading and discussing the manuscript and providing valuable
+
+
+
+
+
+1975.
+
+
+suggestions, P. Comesaña for helping with some simulations,
+
+[24] N. C. Beaulieu and A. A. Abu-Dayya, "Analysis of equal gain diversity on Nakagami fading channels," IEEE Trans. Commun. , vol. 39, pp.
+
+and the anonymous reviewers for their constructive comments.
+
+225-234, Feb. 1991.
+
+[25] N. C. Beaulieu, "An infinite series for the computation of the com-R
+
+plementary probability distribution function of a sum of independent EFERENCES
+
+random variables and its application to the sum of Rayleigh random vari-
+
+[1] R. G. van Schyndel, A. Z. Tirkel, and C. F. Osborne, "A digital water-ables," IEEE Trans. Commun. , vol. 38, pp. 1463-1474, Sept. 1990.
+
+mark," in Proc. IEEE Int. Conf. Image Processing, Austin, TX, 1994,
+
+[26] M. Ramkumar, A. Akansu, and X. Cai, "Floating signal constellations pp. 86-89.
+
+for multimedia steganography," in Proc. IEEE Int. Commun. Conf. , New
+
+[2] W. Bender, D. Gruhl, N. Morimoto, and A. Lu, "Techniques for data Orleans, LA, June 2000, pp. 249-253.
+
+hiding," IBM Syst. J. , vol. 35, no. 3/4, pp. 313-336, 1996.
+
+[27] M. R. Schroeder, Number Theory in Science and Communication, 2nd
+
+[3] I. J. Cox, J. Kilian, F. T. Leighton, and T. Shamoon, "Secure spread spec-ed.
+
+New York: Springer-Verlag, 1990, Springer Series Inform. Sci..
+
+trum watermarking for multimedia," IEEE Trans. Image Processing, vol.
+
+[28] J. J. Eggers and B. Girod, Informed Watermarking.
+
+Boston, MA:
+
+6, pp. 1673-1687, Dec. 1997.
+
+Kluwer, 2002.
+
+
+
+
+
+980
+
+IEEE TRANSACTIONS ON SIGNAL PROCESSING, VOL. 51, NO. 4, APRIL 2003
+
+[29] J. R. Hernández, F. Perez-González, J. M. Rodríguez, and G. Nieto, "PerFelix Balado received the telecommunications engi-
+
+formance analysis of a 2D-multipulse amplitude modulation scheme for neering degree from the University of Vigo, Vigo,
+
+data hiding and watermarking of still images," IEEE J. Select. Areas Spain, in 1996, where he is currently pursuing the
+
+Commun. , vol. 16, pp. 510-524, May 1998.
+
+Ph.D. degree in the field of watermarking and data
+
+[30] J. R. Hernández, F. Perez-González, and J. M. Rodríguez, "Coding hiding.
+
+and synchronization: A boost and a bottleneck for the development He is currently an Associate Researcher at the Uni-of image watermarking," in Proc. COST #254 Int. Workshop Intell.
+
+versity of Vigo.
+
+Commun.
+
+L'Aquila, Italy, June 1998, pp. 77-82.
+
+[31] I. Gradshteyn and I. Ryzhik, Table of Integrals, Series, and Products, 5th ed.
+
+San Diego, CA: Academic, 1994.
+
+[32] M. Abramowitz and I. Stegun, Handbook of Mathematical Functions.
+
+Washington, DC: Nat. Bureau Stand., 1972.
+
+Fernando Perez-González (M'90) received the
+
+telecommunications
+
+engineer
+
+degree
+
+from
+
+the
+
+University of Santiago, Santiago, Spain, in 1990
+
+and the Ph.D. degree from the University of Vigo,
+
+Vigo, Spain, in 1993, also in telecommunications
+
+engineering.
+
+Juan R. Hernández Martín (M'99) received the In-
+
+He joined the faculty of the School of Telecom-
+
+geniero de Telecomunicación degree from the Uni-
+
+munications Engineering, University of Vigo, as
+
+versity of Vigo, Vigo, Spain, in 1993, the M.S. de-
+
+an Assistant Professor in 1990 and is currently a
+
+gree in electrical engineering from Stanford Univer-
+
+Professor with the same institution. He has visited
+
+sity, Stanford, CA, in 1996, and the Ph.D. degree in
+
+the University of New Mexico, Albuquerque, for
+
+telecommunications engineering from the University
+
+different periods spanning ten months. His research interests lie in the areas of Vigo, in 1998.
+
+of digital communications, adaptive algorithms, and digital watermarking. He Until 1999, he was with the Department of Com-has been the manager of a number of projects concerned with digital television munication Technologies, University of Vigo, where
+
+and radio, both for satellite and terrestrial broadcasting. He is coeditor of the he worked on digital communication, digital televi-book Intelligent Methods in Signal Processing and Communications (Boston, sion, conditional access systems, and digital waterMA: Birkhauser, 1997), has been Guest Editor of two special sections of the marking. Since 1999, he has worked for Ascom AG and Lysis SA, Lausanne, EURASIP journal Signal Processing devoted to signal processing for commu-Switzerland on quality of service for VoIP applications and on digital television nications, and has co-edited a Feature Topic of the IEEE COMMUNICATIONS
+
+systems. He is currently working for Nagravision SA, Lausanne.
+
+MAGAZINE devoted to digital watermarking.
+
+Dr. Hernández Martín's Ph.D. thesis on watermarking techniques for the Dr. Perez-González was the Chairman of the Fifth Baiona Workshop on copyright protection of digital images received an extraordinary award from Emerging Technologies in Telecommunications, held in Baiona, Spain, in 1999
+
+the University of Vigo and the best thesis on electronic commerce award by and will chair the Sixth workshop, which will take place September 2003.
+
+the Colegio Oficial de Ingenieros de Telecomunicación of Spain.
+
+
+
+
+
